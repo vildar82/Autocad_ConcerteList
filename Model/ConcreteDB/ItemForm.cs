@@ -76,7 +76,8 @@ namespace Autocad_ConcerteList
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
 
                     // Запуск лисп функции
-                    InvokeLisp.CreateBlock(); // Передать параметры панели
+                    var itemRow =  itemGroupTableList.GetItemById(itemId.Value).FirstOrDefault();
+                    InvokeLisp.CreateBlock(itemRow); // Передать параметры панели
                 }
                 else
                 {
