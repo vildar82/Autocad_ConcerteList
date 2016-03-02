@@ -17,10 +17,10 @@ namespace Autocad_ConcerteList
       /// <summary>
       /// Создание марки панели ЖБИ - в базе и передача параметров панели в лисп функцию для создания блока в чертеже
       /// </summary>
-      [CommandMethod("PIK", "SB_Concrete_CreatePanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
-      public void SB_Concrete_CreatePanel()
+      [CommandMethod("PIK", "SB_RegistrationPanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
+      public void SB_RegistrationPanel()
       {
-         Logger.Log.StartCommand(nameof(SB_Concrete_CreatePanel));
+         Logger.Log.StartCommand(nameof(SB_RegistrationPanel));
          Document doc = Application.DocumentManager.MdiActiveDocument;
          if (doc == null) return;
 
@@ -46,7 +46,7 @@ namespace Autocad_ConcerteList
             doc.Editor.WriteMessage($"\nОшибка экспорта колористических индексов: {ex.Message}");
             if (!ex.Message.Contains("Отменено пользователем"))
             {
-               Logger.Log.Error(ex, $"{nameof(SB_Concrete_CreatePanel)}. {doc.Name}");
+               Logger.Log.Error(ex, $"{nameof(SB_RegistrationPanel)}. {doc.Name}");
             }
          }
       }

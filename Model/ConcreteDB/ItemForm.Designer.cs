@@ -94,7 +94,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(289, 562);
+            this.panel1.Size = new System.Drawing.Size(281, 573);
             this.panel1.TabIndex = 0;
             // 
             // seriesCheckedListBox
@@ -123,6 +123,7 @@
             this.formworkmirrorTextBox.Size = new System.Drawing.Size(259, 20);
             this.formworkmirrorTextBox.TabIndex = 9;
             this.formworkmirrorTextBox.Tag = "dbo.I_R_Item.FormworkMirror";
+            this.formworkmirrorTextBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             this.formworkmirrorTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.formworkmirrorTextBox_KeyDown);
             // 
             // formworkTextBox
@@ -133,6 +134,7 @@
             this.formworkTextBox.Size = new System.Drawing.Size(259, 20);
             this.formworkTextBox.TabIndex = 6;
             this.formworkTextBox.Tag = "dbo.I_R_Item.Formwork";
+            this.formworkTextBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             this.formworkTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.formworkTextBox_KeyDown);
             // 
             // thicknessTextBox
@@ -143,6 +145,7 @@
             this.thicknessTextBox.Size = new System.Drawing.Size(259, 20);
             this.thicknessTextBox.TabIndex = 5;
             this.thicknessTextBox.Tag = "dbo.I_R_Item.Thickness";
+            this.thicknessTextBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             this.thicknessTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.thicknessTextBox_KeyDown);
             // 
             // heigthTextBox
@@ -153,6 +156,7 @@
             this.heigthTextBox.Size = new System.Drawing.Size(259, 20);
             this.heigthTextBox.TabIndex = 4;
             this.heigthTextBox.Tag = "dbo.I_R_Item.Height";
+            this.heigthTextBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             this.heigthTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.heigthTextBox_KeyDown);
             // 
             // lenghtTextBox
@@ -163,6 +167,7 @@
             this.lenghtTextBox.Size = new System.Drawing.Size(259, 20);
             this.lenghtTextBox.TabIndex = 3;
             this.lenghtTextBox.Tag = "dbo.I_R_Item.Lenght";
+            this.lenghtTextBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             this.lenghtTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.lenghtTextBox_KeyDown);
             // 
             // volumeTextBox
@@ -171,6 +176,7 @@
             this.volumeTextBox.Name = "volumeTextBox";
             this.volumeTextBox.Size = new System.Drawing.Size(259, 20);
             this.volumeTextBox.TabIndex = 13;
+            this.volumeTextBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             this.volumeTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.volumeTextBox_KeyDown);
             // 
             // weigthTextBox
@@ -179,6 +185,7 @@
             this.weigthTextBox.Name = "weigthTextBox";
             this.weigthTextBox.Size = new System.Drawing.Size(259, 20);
             this.weigthTextBox.TabIndex = 12;
+            this.weigthTextBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             this.weigthTextBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.weigthTextBox_KeyDown);
             // 
             // electricsIdxTextBox2
@@ -196,6 +203,7 @@
             this.electricsIdxTextBox1.Name = "electricsIdxTextBox1";
             this.electricsIdxTextBox1.Size = new System.Drawing.Size(224, 20);
             this.electricsIdxTextBox1.TabIndex = 10;
+            this.electricsIdxTextBox1.TextChanged += new System.EventHandler(this.updateItemEntry);
             this.electricsIdxTextBox1.KeyDown += new System.Windows.Forms.KeyEventHandler(this.electricsIdxTextBox1_KeyDown);
             // 
             // balconycutComboBox
@@ -208,6 +216,7 @@
             this.balconycutComboBox.TabIndex = 8;
             this.balconycutComboBox.Tag = "dbo.I_S_BalconyDoor.BalconyCut";
             this.balconycutComboBox.ValueMember = "BalconyCut";
+            this.balconycutComboBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             // 
             // balconyDoorComboBox
             // 
@@ -219,12 +228,13 @@
             this.balconyDoorComboBox.TabIndex = 7;
             this.balconyDoorComboBox.Tag = "dbo.I_S_BalconyDoor.BalconyDoor";
             this.balconyDoorComboBox.ValueMember = "BalconyDoor";
+            this.balconyDoorComboBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             // 
             // markLabel
             // 
             this.markLabel.AutoSize = true;
             this.markLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.markLabel.Location = new System.Drawing.Point(6, 532);
+            this.markLabel.Location = new System.Drawing.Point(6, 531);
             this.markLabel.Name = "markLabel";
             this.markLabel.Size = new System.Drawing.Size(49, 13);
             this.markLabel.TabIndex = 56;
@@ -232,7 +242,7 @@
             // 
             // okButton
             // 
-            this.okButton.Location = new System.Drawing.Point(208, 526);
+            this.okButton.Location = new System.Drawing.Point(208, 546);
             this.okButton.Name = "okButton";
             this.okButton.Size = new System.Drawing.Size(60, 24);
             this.okButton.TabIndex = 55;
@@ -248,6 +258,7 @@
             this.itemGroupComboBox.Size = new System.Drawing.Size(259, 21);
             this.itemGroupComboBox.TabIndex = 2;
             this.itemGroupComboBox.Tag = "dbo.I_S_ItemGroup.ItemGroup";
+            this.itemGroupComboBox.TextChanged += new System.EventHandler(this.updateItemEntry);
             // 
             // label13
             // 
@@ -358,7 +369,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(289, 562);
+            this.ClientSize = new System.Drawing.Size(281, 573);
             this.Controls.Add(this.panel1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Name = "ItemForm";
