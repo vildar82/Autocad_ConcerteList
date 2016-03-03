@@ -71,8 +71,7 @@ namespace Autocad_ConcerteList
 #endif
                         this.Hide();
                         // Запуск лисп функции                        
-                        InvokeLisp.CreateBlock(resultData); // Передать параметры панели
-                        this.Show();
+                        InvokeLisp.CreateBlock(resultData); // Передать параметры панели                        
                     }
                     else
                     {
