@@ -83,6 +83,7 @@ namespace Autocad_ConcerteList
             }
             catch (Exception ex)
             {
+                Logger.Log.Error(ex, "okButton_Click");
                 MessageBox.Show(ex.Message, "Ошибка",  MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }

@@ -32,6 +32,11 @@
     <DefineConstants>TRACE;NODB</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
+    <UpdateAssemblyFileVersion>True</UpdateAssemblyFileVersion>
+    <UpdateAssemblyInfoVersion>False</UpdateAssemblyInfoVersion>
+    <AssemblyVersionSettings>None.None.DayOfYearStamp.Increment</AssemblyVersionSettings>
+    <AssemblyFileVersionSettings>None.None.DayOfYearStamp.Increment</AssemblyFileVersionSettings>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject />
