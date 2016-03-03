@@ -22,18 +22,18 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                             .ToDictionary(f => f.Name);
 
-        private static Dictionary<string, string> dictEvalProps = new Dictionary<string, string>()
-        {
-            { "dbo.I_S_ItemGroup.ItemGroup", "ItemGroup" },
-            { "dbo.I_R_Item.Lenght","Length" },
-            { "dbo.I_R_Item.Height","Height" },
-            { "dbo.I_R_Item.Thickness","Thickness" },
-            { "dbo.I_R_Item.Formwork","Formwork" },
-            { "dbo.I_S_BalconyDoor.BalconyDoor","BalconyDoor" },
-            { "dbo.I_S_BalconyCut.BalconyCut","BalconyCut" },
-            { "dbo.I_R_Item.FormworkMirror","FormworkMirror" },
-            { "dbo.I_R_Item.Electrics","Electrics" }            
-        };        
+        //private static Dictionary<string, string> dictEvalProps = new Dictionary<string, string>()
+        //{
+        //    { "dbo.I_S_ItemGroup.ItemGroup", "ItemGroup" },
+        //    { "dbo.I_R_Item.Lenght","Length" },
+        //    { "dbo.I_R_Item.Height","Height" },
+        //    { "dbo.I_R_Item.Thickness","Thickness" },
+        //    { "dbo.I_R_Item.Formwork","Formwork" },
+        //    { "dbo.I_S_BalconyDoor.BalconyDoor","BalconyDoor" },
+        //    { "dbo.I_S_BalconyCut.BalconyCut","BalconyCut" },
+        //    { "dbo.I_R_Item.FormworkMirror","FormworkMirror" },
+        //    { "dbo.I_R_Item.Electrics","Electrics" }            
+        //};        
 
         public Eval (string eval, ItemEntryData itemEntryData)
         {   
@@ -71,12 +71,18 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
             var splitByOperators = evaluate.Split(charOperands).Select(i=>i.Trim());
             foreach (var itemOperand in splitByOperators)
             {
-                string fieldName;
-                if (dictEvalProps.TryGetValue(itemOperand, out fieldName))
+                if (itemOperand.StartsWith("dbo"))
                 {
+                    string fieldName = itemOperand.Split('.').Last();
                     string fieldValue = getFieldValue(fieldName);
                     evaluate = evaluate.Replace(itemOperand, fieldValue);
-                }                
+                }
+                //string fieldName;                
+                //if (dictEvalProps.TryGetValue(itemOperand, out fieldName))
+                //{
+                //    string fieldValue = getFieldValue(fieldName);
+                //    evaluate = evaluate.Replace(itemOperand, fieldValue);
+                //}                
             }                        
 
             // Вычисление

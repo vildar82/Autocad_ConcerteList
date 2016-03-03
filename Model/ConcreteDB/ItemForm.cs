@@ -49,7 +49,7 @@ namespace Autocad_ConcerteList
                         var sCreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
                         decimal? itemId = itemGroupTableList.InsertNewItemStore(itemGroupId, resultData.Length, resultData.Height,
-                            resultData.Thicknes, resultData.Formwork, resultData.FormworkMirror, resultData.Electrics,
+                            resultData.Thickness, resultData.Formwork, resultData.FormworkMirror, resultData.Electrics,
                             balconyDoorId, balconyCutId, resultData.Weight, resultData.Volume, sCreateDate, sCreateDate) as decimal?;
 
                         //series
@@ -64,11 +64,9 @@ namespace Autocad_ConcerteList
                         }
 
                         //tier???
-
-                        // Получение записи панели из базы по ItemId
-                        var itemRow = itemGroupTableList.GetItemById(itemId.Value).FirstOrDefault();
+                                                
                         //result message                        
-                        MessageBox.Show(this, $"Марка '{itemRow.HandMark}' успешно занесена в БД", "Информация",
+                        MessageBox.Show(this, $"Марка '{resultData.Mark}' успешно занесена в БД", "Информация",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
 #endif
                         this.Hide();

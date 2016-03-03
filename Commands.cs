@@ -17,7 +17,7 @@ namespace Autocad_ConcerteList
       /// <summary>
       /// Создание марки панели ЖБИ - в базе и передача параметров панели в лисп функцию для создания блока в чертеже
       /// </summary>
-      [CommandMethod("PIK", "SB_RegistrationPanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
+      [CommandMethod("PIK", "SB_RegistrationGBI", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
       public void SB_RegistrationPanel()
       {
          Logger.Log.StartCommand(nameof(SB_RegistrationPanel));

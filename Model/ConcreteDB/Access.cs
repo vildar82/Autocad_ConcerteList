@@ -8,7 +8,7 @@ namespace Autocad_ConcerteList.ConcreteDB
 {
    public static class Access
    {
-      private static List<string> _accessUsers = new List<string>() { "LukashovaTS", "khisyametdinovvt" };
+      private static List<string> _accessUsers = new List<string>() { "LukashovaTS", "khisyametdinovvt", "kuznetsov_av" };
 
       public static bool Success()
       {

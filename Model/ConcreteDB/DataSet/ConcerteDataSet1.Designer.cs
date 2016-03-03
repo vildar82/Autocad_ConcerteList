@@ -2843,7 +2843,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             private global::System.Data.DataColumn columnItemGroupId;
             
-            private global::System.Data.DataColumn columnLenght;
+            private global::System.Data.DataColumn columnLength;
             
             private global::System.Data.DataColumn columnHeight;
             
@@ -2946,9 +2946,9 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn LenghtColumn {
+            public global::System.Data.DataColumn LengthColumn {
                 get {
-                    return this.columnLenght;
+                    return this.columnLength;
                 }
             }
             
@@ -3160,7 +3160,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             public I_R_ItemRow AddI_R_ItemRow(
                         string HandMark, 
                         I_S_ItemGroupRow parentI_S_ItemGroupRowByFK_I_R_Item_I_S_ItemGroup, 
-                        short Lenght, 
+                        short Length, 
                         short Height, 
                         short Thickness, 
                         short Formwork, 
@@ -3187,7 +3187,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         null,
                         HandMark,
                         null,
-                        Lenght,
+                        Length,
                         Height,
                         Thickness,
                         Formwork,
@@ -3250,7 +3250,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 this.columnItemId = base.Columns["ItemId"];
                 this.columnHandMark = base.Columns["HandMark"];
                 this.columnItemGroupId = base.Columns["ItemGroupId"];
-                this.columnLenght = base.Columns["Lenght"];
+                this.columnLength = base.Columns["Length"];
                 this.columnHeight = base.Columns["Height"];
                 this.columnThickness = base.Columns["Thickness"];
                 this.columnFormwork = base.Columns["Formwork"];
@@ -3283,8 +3283,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 base.Columns.Add(this.columnHandMark);
                 this.columnItemGroupId = new global::System.Data.DataColumn("ItemGroupId", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnItemGroupId);
-                this.columnLenght = new global::System.Data.DataColumn("Lenght", typeof(short), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnLenght);
+                this.columnLength = new global::System.Data.DataColumn("Length", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLength);
                 this.columnHeight = new global::System.Data.DataColumn("Height", typeof(short), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHeight);
                 this.columnThickness = new global::System.Data.DataColumn("Thickness", typeof(short), null, global::System.Data.MappingType.Element);
@@ -5791,17 +5791,17 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public short Lenght {
+            public short Length {
                 get {
                     try {
-                        return ((short)(this[this.tableI_R_Item.LenghtColumn]));
+                        return ((short)(this[this.tableI_R_Item.LengthColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Lenght\' в таблице \'I_R_Item\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Length\' в таблице \'I_R_Item\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableI_R_Item.LenghtColumn] = value;
+                    this[this.tableI_R_Item.LengthColumn] = value;
                 }
             }
             
@@ -6200,14 +6200,14 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsLenghtNull() {
-                return this.IsNull(this.tableI_R_Item.LenghtColumn);
+            public bool IsLengthNull() {
+                return this.IsNull(this.tableI_R_Item.LengthColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetLenghtNull() {
-                this[this.tableI_R_Item.LenghtColumn] = global::System.Convert.DBNull;
+            public void SetLengthNull() {
+                this[this.tableI_R_Item.LengthColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10376,7 +10376,6 @@ SELECT ItemTierId, ItemId, TierId FROM I_nn_Item_Tier WHERE (ItemTierId = @ItemT
             tableMapping.ColumnMappings.Add("ItemId", "ItemId");
             tableMapping.ColumnMappings.Add("HandMark", "HandMark");
             tableMapping.ColumnMappings.Add("ItemGroupId", "ItemGroupId");
-            tableMapping.ColumnMappings.Add("Lenght", "Lenght");
             tableMapping.ColumnMappings.Add("Height", "Height");
             tableMapping.ColumnMappings.Add("Thickness", "Thickness");
             tableMapping.ColumnMappings.Add("Formwork", "Formwork");
@@ -10398,14 +10397,15 @@ SELECT ItemTierId, ItemId, TierId FROM I_nn_Item_Tier WHERE (ItemTierId = @ItemT
             tableMapping.ColumnMappings.Add("ItemModifyDate", "ItemModifyDate");
             tableMapping.ColumnMappings.Add("BalconyDoorId", "BalconyDoorId");
             tableMapping.ColumnMappings.Add("BalconyCutId", "BalconyCutId");
+            tableMapping.ColumnMappings.Add("Length", "Length");
             this._adapter.TableMappings.Add(tableMapping);
             this._adapter.DeleteCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.DeleteCommand.Connection = this.Connection;
             this._adapter.DeleteCommand.CommandText = "DELETE FROM [I_R_Item] WHERE (([ItemId] = @Original_ItemId) AND ((@IsNull_HandMar" +
                 "k = 1 AND [HandMark] IS NULL) OR ([HandMark] = @Original_HandMark)) AND ((@IsNul" +
                 "l_ItemGroupId = 1 AND [ItemGroupId] IS NULL) OR ([ItemGroupId] = @Original_ItemG" +
-                "roupId)) AND ((@IsNull_Lenght = 1 AND [Lenght] IS NULL) OR ([Lenght] = @Original" +
-                "_Lenght)) AND ((@IsNull_Height = 1 AND [Height] IS NULL) OR ([Height] = @Origina" +
+                "roupId)) AND ((@IsNull_Length = 1 AND [Length] IS NULL) OR ([Length] = @Original" +
+                "_Length)) AND ((@IsNull_Height = 1 AND [Height] IS NULL) OR ([Height] = @Origina" +
                 "l_Height)) AND ((@IsNull_Thickness = 1 AND [Thickness] IS NULL) OR ([Thickness] " +
                 "= @Original_Thickness)) AND ((@IsNull_Formwork = 1 AND [Formwork] IS NULL) OR ([" +
                 "Formwork] = @Original_Formwork)) AND ((@IsNull_FormworkMirror = 1 AND [FormworkM" +
@@ -10435,8 +10435,8 @@ SELECT ItemTierId, ItemId, TierId FROM I_nn_Item_Tier WHERE (ItemTierId = @ItemT
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_HandMark", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "HandMark", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ItemGroupId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroupId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ItemGroupId", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Lenght", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Lenght", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Length", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Height", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Thickness", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -10479,12 +10479,12 @@ SELECT ItemTierId, ItemId, TierId FROM I_nn_Item_Tier WHERE (ItemTierId = @ItemT
             this._adapter.DeleteCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_BalconyDoorId", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyDoorId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.InsertCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.InsertCommand.Connection = this.Connection;
-            this._adapter.InsertCommand.CommandText = @"INSERT INTO [I_R_Item] ([HandMark], [ItemGroupId], [Lenght], [Height], [Thickness], [Formwork], [FormworkMirror], [Electrics], [Colour], [Additional], [MosColour], [NCS], [RAL], [Weight], [Volume], [ArcHeight], [ArcWidth], [Article1C], [Code1C], [DocumentLink], [ItemCreateDate], [ItemModifyDate], [BalconyCutId], [BalconyDoorId]) VALUES (@HandMark, @ItemGroupId, @Lenght, @Height, @Thickness, @Formwork, @FormworkMirror, @Electrics, @Colour, @Additional, @MosColour, @NCS, @RAL, @Weight, @Volume, @ArcHeight, @ArcWidth, @Article1C, @Code1C, @DocumentLink, @ItemCreateDate, @ItemModifyDate, @BalconyCutId, @BalconyDoorId);
-SELECT ItemId, HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, FormworkMirror, Electrics, Colour, Additional, MosColour, NCS, RAL, Weight, Volume, ArcHeight, ArcWidth, Article1C, Code1C, DocumentLink, ItemCreateDate, ItemModifyDate, BalconyCutId, BalconyDoorId FROM I_R_Item WHERE (ItemId = SCOPE_IDENTITY())";
+            this._adapter.InsertCommand.CommandText = @"INSERT INTO [I_R_Item] ([HandMark], [ItemGroupId], [Length], [Height], [Thickness], [Formwork], [FormworkMirror], [Electrics], [Colour], [Additional], [MosColour], [NCS], [RAL], [Weight], [Volume], [ArcHeight], [ArcWidth], [Article1C], [Code1C], [DocumentLink], [ItemCreateDate], [ItemModifyDate], [BalconyCutId], [BalconyDoorId]) VALUES (@HandMark, @ItemGroupId, @Length, @Height, @Thickness, @Formwork, @FormworkMirror, @Electrics, @Colour, @Additional, @MosColour, @NCS, @RAL, @Weight, @Volume, @ArcHeight, @ArcWidth, @Article1C, @Code1C, @DocumentLink, @ItemCreateDate, @ItemModifyDate, @BalconyCutId, @BalconyDoorId);
+SELECT ItemId, HandMark, ItemGroupId, Length, Height, Thickness, Formwork, FormworkMirror, Electrics, Colour, Additional, MosColour, NCS, RAL, Weight, Volume, ArcHeight, ArcWidth, Article1C, Code1C, DocumentLink, ItemCreateDate, ItemModifyDate, BalconyCutId, BalconyDoorId FROM I_R_Item WHERE (ItemId = SCOPE_IDENTITY())";
             this._adapter.InsertCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@HandMark", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "HandMark", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Length", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.InsertCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10509,7 +10509,7 @@ SELECT ItemId, HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, Formw
             this._adapter.UpdateCommand = new global::System.Data.SqlClient.SqlCommand();
             this._adapter.UpdateCommand.Connection = this.Connection;
             this._adapter.UpdateCommand.CommandText = "UPDATE [I_R_Item] SET [HandMark] = @HandMark, [ItemGroupId] = @ItemGroupId, [Leng" +
-                "ht] = @Lenght, [Height] = @Height, [Thickness] = @Thickness, [Formwork] = @Formw" +
+                "th] = @Length, [Height] = @Height, [Thickness] = @Thickness, [Formwork] = @Formw" +
                 "ork, [FormworkMirror] = @FormworkMirror, [Electrics] = @Electrics, [Colour] = @C" +
                 "olour, [Additional] = @Additional, [MosColour] = @MosColour, [NCS] = @NCS, [RAL]" +
                 " = @RAL, [Weight] = @Weight, [Volume] = @Volume, [ArcHeight] = @ArcHeight, [ArcW" +
@@ -10518,8 +10518,8 @@ SELECT ItemId, HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, Formw
                 "ifyDate, [BalconyCutId] = @BalconyCutId, [BalconyDoorId] = @BalconyDoorId WHERE " +
                 "(([ItemId] = @Original_ItemId) AND ((@IsNull_HandMark = 1 AND [HandMark] IS NULL" +
                 ") OR ([HandMark] = @Original_HandMark)) AND ((@IsNull_ItemGroupId = 1 AND [ItemG" +
-                "roupId] IS NULL) OR ([ItemGroupId] = @Original_ItemGroupId)) AND ((@IsNull_Lengh" +
-                "t = 1 AND [Lenght] IS NULL) OR ([Lenght] = @Original_Lenght)) AND ((@IsNull_Heig" +
+                "roupId] IS NULL) OR ([ItemGroupId] = @Original_ItemGroupId)) AND ((@IsNull_Lengt" +
+                "h = 1 AND [Length] IS NULL) OR ([Length] = @Original_Length)) AND ((@IsNull_Heig" +
                 "ht = 1 AND [Height] IS NULL) OR ([Height] = @Original_Height)) AND ((@IsNull_Thi" +
                 "ckness = 1 AND [Thickness] IS NULL) OR ([Thickness] = @Original_Thickness)) AND " +
                 "((@IsNull_Formwork = 1 AND [Formwork] IS NULL) OR ([Formwork] = @Original_Formwo" +
@@ -10543,14 +10543,14 @@ SELECT ItemId, HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, Formw
                 "e)) AND ((@IsNull_BalconyCutId = 1 AND [BalconyCutId] IS NULL) OR ([BalconyCutId" +
                 "] = @Original_BalconyCutId)) AND ((@IsNull_BalconyDoorId = 1 AND [BalconyDoorId]" +
                 " IS NULL) OR ([BalconyDoorId] = @Original_BalconyDoorId)));\r\nSELECT ItemId, Hand" +
-                "Mark, ItemGroupId, Lenght, Height, Thickness, Formwork, FormworkMirror, Electric" +
+                "Mark, ItemGroupId, Length, Height, Thickness, Formwork, FormworkMirror, Electric" +
                 "s, Colour, Additional, MosColour, NCS, RAL, Weight, Volume, ArcHeight, ArcWidth," +
                 " Article1C, Code1C, DocumentLink, ItemCreateDate, ItemModifyDate, BalconyCutId, " +
                 "BalconyDoorId FROM I_R_Item WHERE (ItemId = @ItemId)";
             this._adapter.UpdateCommand.CommandType = global::System.Data.CommandType.Text;
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@HandMark", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "HandMark", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Length", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -10577,8 +10577,8 @@ SELECT ItemId, HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, Formw
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_HandMark", global::System.Data.SqlDbType.NVarChar, 0, global::System.Data.ParameterDirection.Input, 0, 0, "HandMark", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_ItemGroupId", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroupId", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_ItemGroupId", global::System.Data.SqlDbType.Decimal, 0, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Lenght", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
-            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Lenght", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Length", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
+            this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Length", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Height", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Original_Height", global::System.Data.SqlDbType.SmallInt, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._adapter.UpdateCommand.Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@IsNull_Thickness", global::System.Data.SqlDbType.Int, 0, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Original, true, null, "", "", ""));
@@ -10632,83 +10632,55 @@ SELECT ItemId, HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, Formw
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT ItemId, HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, FormworkMirror, Electrics, Colour, Additional, MosColour, NCS, RAL, Weight, Volume, ArcHeight, ArcWidth, Article1C, Code1C, DocumentLink, ItemCreateDate, ItemModifyDate, BalconyCutId, BalconyDoorId FROM I_R_Item";
+            this._commandCollection[0].CommandText = @"SELECT ItemId, HandMark, ItemGroupId, Length, Height, Thickness, Formwork, FormworkMirror, Electrics, Colour, Additional, MosColour, NCS, RAL, Weight, Volume, ArcHeight, ArcWidth, Article1C, Code1C, DocumentLink, ItemCreateDate, ItemModifyDate, BalconyCutId, BalconyDoorId FROM I_R_Item";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"SELECT        ItemId, HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, FormworkMirror, Electrics, Colour, Additional, MosColour, NCS, RAL, Weight, Volume, 
-                         ArcHeight, ArcWidth, Article1C, Code1C, DocumentLink, ItemCreateDate, ItemModifyDate, BalconyCutId, BalconyDoorId
-FROM            I_R_Item
-WHERE        (ItemId = @itemId)";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].CommandText = "dbo.InsertNewItemStore";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.StoredProcedure;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoorId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCutId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 24, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Volume", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 24, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemCreateDate", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemModifyDate", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"INSERT INTO I_R_Item
-                         (ItemGroupId, Lenght, Height, Thickness, Formwork, FormworkMirror, Electrics, BalconyDoorId, BalconyCutId, Weight, Volume, ItemCreateDate, ItemModifyDate)
-VALUES        (@ItemGroupId,@Lenght,@Height,@Thickness,@Formwork,@FormworkMirror,@Electrics,@BalconyDoorId,@BalconyCutId,@Weight,@Volume,@ItemCreateDate,@ItemModifyDate);   
-SELECT SCOPE_IDENTITY()";
-            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoorId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyDoorId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCutId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyCutId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Volume", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Volume", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemCreateDate", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "ItemCreateDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemModifyDate", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "ItemModifyDate", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = "dbo.InsertNewItemStore";
-            this._commandCollection[3].CommandType = global::System.Data.CommandType.StoredProcedure;
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@RETURN_VALUE", global::System.Data.SqlDbType.Int, 4, global::System.Data.ParameterDirection.ReturnValue, 10, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 5, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoorId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCutId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 24, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Volume", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 24, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemCreateDate", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemModifyDate", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, null, global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[4].Connection = this.Connection;
-            this._commandCollection[4].CommandText = @"SELECT        COUNT(*) AS count
+            this._commandCollection[2].CommandText = @"SELECT        COUNT(*) AS count
 FROM            I_R_Item FULL OUTER JOIN
                          I_nn_Item_Series ON I_R_Item.ItemId = I_nn_Item_Series.ItemId FULL OUTER JOIN
                          I_S_Series ON I_nn_Item_Series.SeriesId = I_S_Series.SeriesId FULL OUTER JOIN
                          I_S_BalconyCut ON I_R_Item.BalconyCutId = I_S_BalconyCut.BalconyCutId FULL OUTER JOIN
                          I_S_BalconyDoor ON I_R_Item.BalconyDoorId = I_S_BalconyDoor.BalconyDoorId FULL OUTER JOIN
                          I_S_ItemGroup ON I_R_Item.ItemGroupId = I_S_ItemGroup.ItemGroupId
-WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Lenght) AND (I_R_Item.Height = @Height) AND (I_R_Item.Thickness = @Thickness) AND 
+WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Length = @Length) AND (I_R_Item.Height = @Height) AND (I_R_Item.Thickness = @Thickness) AND 
                          (I_R_Item.Formwork = @Formwork OR
                          @Formwork IS NULL) AND (I_S_BalconyDoor.BalconyDoor = @BalconyDoor OR
                          @BalconyDoor IS NULL) AND (I_S_BalconyCut.BalconyCut = @BalconyCut OR
                          @BalconyCut IS NULL) AND (I_R_Item.FormworkMirror = @FormworkMirror OR
                          @FormworkMirror IS NULL) AND (I_R_Item.Electrics = @Electrics OR
                          @Electrics IS NULL)";
-            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoor", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyDoor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCut", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyCut", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Length", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Length", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoor", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyDoor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCut", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyCut", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10730,18 +10702,6 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual ConcerteDataSet.I_R_ItemDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            ConcerteDataSet.I_R_ItemDataTable dataTable = new ConcerteDataSet.I_R_ItemDataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ConcerteDataSet.I_R_ItemDataTable GetItemById(decimal itemId) {
-            this.Adapter.SelectCommand = this.CommandCollection[1];
-            this.Adapter.SelectCommand.Parameters[0].Value = ((decimal)(itemId));
             ConcerteDataSet.I_R_ItemDataTable dataTable = new ConcerteDataSet.I_R_ItemDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -10784,7 +10744,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
                     decimal Original_ItemId, 
                     string Original_HandMark, 
                     global::System.Nullable<decimal> Original_ItemGroupId, 
-                    global::System.Nullable<short> Original_Lenght, 
+                    global::System.Nullable<short> Original_Length, 
                     global::System.Nullable<short> Original_Height, 
                     global::System.Nullable<short> Original_Thickness, 
                     global::System.Nullable<short> Original_Formwork, 
@@ -10822,9 +10782,9 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
-            if ((Original_Lenght.HasValue == true)) {
+            if ((Original_Length.HasValue == true)) {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(0));
-                this.Adapter.DeleteCommand.Parameters[6].Value = ((short)(Original_Lenght.Value));
+                this.Adapter.DeleteCommand.Parameters[6].Value = ((short)(Original_Length.Value));
             }
             else {
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
@@ -11013,7 +10973,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
         public virtual int Insert(
                     string HandMark, 
                     global::System.Nullable<decimal> ItemGroupId, 
-                    global::System.Nullable<short> Lenght, 
+                    global::System.Nullable<short> Length, 
                     global::System.Nullable<short> Height, 
                     global::System.Nullable<short> Thickness, 
                     global::System.Nullable<short> Formwork, 
@@ -11047,8 +11007,8 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            if ((Lenght.HasValue == true)) {
-                this.Adapter.InsertCommand.Parameters[2].Value = ((short)(Lenght.Value));
+            if ((Length.HasValue == true)) {
+                this.Adapter.InsertCommand.Parameters[2].Value = ((short)(Length.Value));
             }
             else {
                 this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
@@ -11202,7 +11162,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
         public virtual int Update(
                     string HandMark, 
                     global::System.Nullable<decimal> ItemGroupId, 
-                    global::System.Nullable<short> Lenght, 
+                    global::System.Nullable<short> Length, 
                     global::System.Nullable<short> Height, 
                     global::System.Nullable<short> Thickness, 
                     global::System.Nullable<short> Formwork, 
@@ -11227,7 +11187,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
                     decimal Original_ItemId, 
                     string Original_HandMark, 
                     global::System.Nullable<decimal> Original_ItemGroupId, 
-                    global::System.Nullable<short> Original_Lenght, 
+                    global::System.Nullable<short> Original_Length, 
                     global::System.Nullable<short> Original_Height, 
                     global::System.Nullable<short> Original_Thickness, 
                     global::System.Nullable<short> Original_Formwork, 
@@ -11261,8 +11221,8 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
             else {
                 this.Adapter.UpdateCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            if ((Lenght.HasValue == true)) {
-                this.Adapter.UpdateCommand.Parameters[2].Value = ((short)(Lenght.Value));
+            if ((Length.HasValue == true)) {
+                this.Adapter.UpdateCommand.Parameters[2].Value = ((short)(Length.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[2].Value = global::System.DBNull.Value;
@@ -11410,9 +11370,9 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
                 this.Adapter.UpdateCommand.Parameters[27].Value = ((object)(1));
                 this.Adapter.UpdateCommand.Parameters[28].Value = global::System.DBNull.Value;
             }
-            if ((Original_Lenght.HasValue == true)) {
+            if ((Original_Length.HasValue == true)) {
                 this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(0));
-                this.Adapter.UpdateCommand.Parameters[30].Value = ((short)(Original_Lenght.Value));
+                this.Adapter.UpdateCommand.Parameters[30].Value = ((short)(Original_Length.Value));
             }
             else {
                 this.Adapter.UpdateCommand.Parameters[29].Value = ((object)(1));
@@ -11602,7 +11562,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
         public virtual int Update(
                     string HandMark, 
                     global::System.Nullable<decimal> ItemGroupId, 
-                    global::System.Nullable<short> Lenght, 
+                    global::System.Nullable<short> Length, 
                     global::System.Nullable<short> Height, 
                     global::System.Nullable<short> Thickness, 
                     global::System.Nullable<short> Formwork, 
@@ -11627,7 +11587,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
                     decimal Original_ItemId, 
                     string Original_HandMark, 
                     global::System.Nullable<decimal> Original_ItemGroupId, 
-                    global::System.Nullable<short> Original_Lenght, 
+                    global::System.Nullable<short> Original_Length, 
                     global::System.Nullable<short> Original_Height, 
                     global::System.Nullable<short> Original_Thickness, 
                     global::System.Nullable<short> Original_Formwork, 
@@ -11648,108 +11608,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
                     string Original_ItemModifyDate, 
                     global::System.Nullable<decimal> Original_BalconyCutId, 
                     global::System.Nullable<decimal> Original_BalconyDoorId) {
-            return this.Update(HandMark, ItemGroupId, Lenght, Height, Thickness, Formwork, FormworkMirror, Electrics, Colour, Additional, MosColour, NCS, RAL, Weight, Volume, ArcHeight, ArcWidth, Article1C, Code1C, DocumentLink, ItemCreateDate, ItemModifyDate, BalconyCutId, BalconyDoorId, Original_ItemId, Original_HandMark, Original_ItemGroupId, Original_Lenght, Original_Height, Original_Thickness, Original_Formwork, Original_FormworkMirror, Original_Electrics, Original_Colour, Original_Additional, Original_MosColour, Original_NCS, Original_RAL, Original_Weight, Original_Volume, Original_ArcHeight, Original_ArcWidth, Original_Article1C, Original_Code1C, Original_ItemCreateDate, Original_ItemModifyDate, Original_BalconyCutId, Original_BalconyDoorId, Original_ItemId);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
-        public virtual int InsertNewItem(global::System.Nullable<decimal> ItemGroupId, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, global::System.Nullable<short> FormworkMirror, string Electrics, global::System.Nullable<decimal> BalconyDoorId, global::System.Nullable<decimal> BalconyCutId, global::System.Nullable<float> Weight, global::System.Nullable<float> Volume, string ItemCreateDate, string ItemModifyDate) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
-            if ((ItemGroupId.HasValue == true)) {
-                command.Parameters[0].Value = ((decimal)(ItemGroupId.Value));
-            }
-            else {
-                command.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            if ((Lenght.HasValue == true)) {
-                command.Parameters[1].Value = ((short)(Lenght.Value));
-            }
-            else {
-                command.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            if ((Height.HasValue == true)) {
-                command.Parameters[2].Value = ((short)(Height.Value));
-            }
-            else {
-                command.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            if ((Thickness.HasValue == true)) {
-                command.Parameters[3].Value = ((short)(Thickness.Value));
-            }
-            else {
-                command.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            if ((Formwork.HasValue == true)) {
-                command.Parameters[4].Value = ((short)(Formwork.Value));
-            }
-            else {
-                command.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            if ((FormworkMirror.HasValue == true)) {
-                command.Parameters[5].Value = ((short)(FormworkMirror.Value));
-            }
-            else {
-                command.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            if ((Electrics == null)) {
-                command.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[6].Value = ((string)(Electrics));
-            }
-            if ((BalconyDoorId.HasValue == true)) {
-                command.Parameters[7].Value = ((decimal)(BalconyDoorId.Value));
-            }
-            else {
-                command.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            if ((BalconyCutId.HasValue == true)) {
-                command.Parameters[8].Value = ((decimal)(BalconyCutId.Value));
-            }
-            else {
-                command.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            if ((Weight.HasValue == true)) {
-                command.Parameters[9].Value = ((float)(Weight.Value));
-            }
-            else {
-                command.Parameters[9].Value = global::System.DBNull.Value;
-            }
-            if ((Volume.HasValue == true)) {
-                command.Parameters[10].Value = ((float)(Volume.Value));
-            }
-            else {
-                command.Parameters[10].Value = global::System.DBNull.Value;
-            }
-            if ((ItemCreateDate == null)) {
-                command.Parameters[11].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[11].Value = ((string)(ItemCreateDate));
-            }
-            if ((ItemModifyDate == null)) {
-                command.Parameters[12].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[12].Value = ((string)(ItemModifyDate));
-            }
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            int returnValue;
-            try {
-                returnValue = command.ExecuteNonQuery();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            return returnValue;
+            return this.Update(HandMark, ItemGroupId, Length, Height, Thickness, Formwork, FormworkMirror, Electrics, Colour, Additional, MosColour, NCS, RAL, Weight, Volume, ArcHeight, ArcWidth, Article1C, Code1C, DocumentLink, ItemCreateDate, ItemModifyDate, BalconyCutId, BalconyDoorId, Original_ItemId, Original_HandMark, Original_ItemGroupId, Original_Length, Original_Height, Original_Thickness, Original_Formwork, Original_FormworkMirror, Original_Electrics, Original_Colour, Original_Additional, Original_MosColour, Original_NCS, Original_RAL, Original_Weight, Original_Volume, Original_ArcHeight, Original_ArcWidth, Original_Article1C, Original_Code1C, Original_ItemCreateDate, Original_ItemModifyDate, Original_BalconyCutId, Original_BalconyDoorId, Original_ItemId);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -11757,7 +11616,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
         public virtual object InsertNewItemStore(global::System.Nullable<decimal> ItemGroupId, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, global::System.Nullable<short> FormworkMirror, string Electrics, global::System.Nullable<decimal> BalconyDoorId, global::System.Nullable<decimal> BalconyCutId, global::System.Nullable<float> Weight, global::System.Nullable<float> Volume, string ItemCreateDate, string ItemModifyDate) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
             if ((ItemGroupId.HasValue == true)) {
                 command.Parameters[1].Value = ((decimal)(ItemGroupId.Value));
             }
@@ -11862,16 +11721,16 @@ WHERE        (I_S_ItemGroup.ItemGroup = @ItemGroup) AND (I_R_Item.Lenght = @Leng
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual object IsMarkExecute(string ItemGroup, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, string BalconyDoor, string BalconyCut, global::System.Nullable<short> FormworkMirror, string Electrics) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[4];
+        public virtual object IsMarkExecute(string ItemGroup, global::System.Nullable<short> Length, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, string BalconyDoor, string BalconyCut, global::System.Nullable<short> FormworkMirror, string Electrics) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
             if ((ItemGroup == null)) {
                 command.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
                 command.Parameters[0].Value = ((string)(ItemGroup));
             }
-            if ((Lenght.HasValue == true)) {
-                command.Parameters[1].Value = ((short)(Lenght.Value));
+            if ((Length.HasValue == true)) {
+                command.Parameters[1].Value = ((short)(Length.Value));
             }
             else {
                 command.Parameters[1].Value = global::System.DBNull.Value;

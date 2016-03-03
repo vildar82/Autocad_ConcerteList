@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;NODB</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -73,7 +73,7 @@
     <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet.cs">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet.Designer.cs">
+    <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
@@ -105,6 +105,7 @@
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <SubType>Designer</SubType>
+      <LastGenOutput>ConcerteDataSet1.Designer.cs</LastGenOutput>
     </None>
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xss">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
