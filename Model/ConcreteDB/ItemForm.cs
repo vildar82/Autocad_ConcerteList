@@ -68,15 +68,19 @@ namespace Autocad_ConcerteList
                         //result message                        
                         MessageBox.Show(this, $"Марка '{resultData.Mark}' успешно занесена в БД", "Информация",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
-#endif
-                        this.Hide();
+#endif                        
                         // Запуск лисп функции                        
-                        InvokeLisp.CreateBlock(resultData); // Передать параметры панели                        
+                        this.Hide();
+                        InvokeLisp.CreateBlock(resultData);
                     }
                     else
                     {
-                        MessageBox.Show(this, $"Марка '{resultData.Mark}' уже существует в БД", "Информация",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        if (MessageBox.Show(this, $"Марка '{resultData.Mark}' уже существует в БД. \nСоздать блок? ", "Информация",
+                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                        {
+                            this.Hide();
+                            InvokeLisp.CreateBlock(resultData);
+                        }
                     }
                 }
             }
