@@ -65,10 +65,11 @@ namespace Autocad_ConcerteList
 
             try
             {
-                // Проверка доступа. Только Лукашовой.
+                // Проверка доступа. Только Лукашовой?????
                 if (!Access.Success())
                 {
                     doc.Editor.WriteMessage("\nОтказано в доступе.");
+                    // Прерывание создания групповой спецификации
                     return RegystryPanels.ReturnCancel();
                 }                
 
@@ -91,9 +92,9 @@ namespace Autocad_ConcerteList
                     // Непредвиденная ошибка
                     Logger.Log.Fatal(ex, $"{nameof(Lisp_SB_RegistrationsPanels)}. {doc.Name}");
                 }
-            }
-            // Ничего не получилось. Прерывание создания спецификации. Устранение ошибке в программе.
-            return RegystryPanels.ReturnCancel();
+                // Возврат - ошибка
+                return RegystryPanels.ReturnError();
+            }            
         }
     }
 }

@@ -57,8 +57,18 @@ namespace Autocad_ConcerteList.SpecRegistration
             return new ResultBuffer(new TypedValue[]
                     {
                         new  TypedValue((int)LispDataType.Int32, -1)
-                    }
-                );
-        }            
+                    });
+        }
+        /// <summary>
+        /// Ошибка в программе регистрации панелей.
+        /// </summary>
+        /// <returns></returns>
+        public static ResultBuffer ReturnError()
+        {
+            return new ResultBuffer(new TypedValue[]
+                    {
+                        new  TypedValue((int)LispDataType.Int32, 0)
+                    });
+        }
     }
 }
