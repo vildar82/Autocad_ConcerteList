@@ -26,9 +26,9 @@ namespace Autocad_ConcerteList
                 if (resultData.IsCheck)
                 {
                     //check exsist
-                    var itemGroupTableList = new I_R_ItemTableAdapter();
-                    var oCount = itemGroupTableList.IsMarkExecute(resultData.ItemGroup,
-                                                                    resultData.Length,
+                    var itemConstructTableList = new I_J_ItemConstructionTableAdapter();
+                    var oCount = itemConstructTableList.IsMarkExecute(resultData.ItemGroup,
+                                                                    resultData.Lenght,
                                                                     resultData.Height,
                                                                     resultData.Thickness,
                                                                     resultData.Formwork,
@@ -48,23 +48,23 @@ namespace Autocad_ConcerteList
                         var balconyCutId = (decimal?)balconycutComboBox.SelectedValue == -1 ? null : (decimal?)balconycutComboBox.SelectedValue;
                         var sCreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-                        decimal? itemId = itemGroupTableList.InsertNewItemStore(itemGroupId, resultData.Length, resultData.Height,
-                            resultData.Thickness, resultData.Formwork, resultData.FormworkMirror, resultData.Electrics,
-                            balconyDoorId, balconyCutId, resultData.Weight, resultData.Volume, sCreateDate, sCreateDate) as decimal?;
+                        var itemId = itemConstructTableList.InsertItem(itemGroupId, resultData.Lenght, resultData.Height,
+                            resultData.Thickness, resultData.Formwork, balconyDoorId, balconyCutId, resultData.FormworkMirror,
+                            resultData.Electrics, resultData.Weight, resultData.Volume);
 
                         //series
                         if (itemId != null && seriesCheckedListBox.SelectedItems.Count > 0)
                         {
-                            var itemSeriesTableList = new I_nn_Item_SeriesTableAdapter();
+                            var itemSeriesTableList = new I_J_ItemSeriesTableAdapter();
                             foreach (DataRowView item in seriesCheckedListBox.SelectedItems)
                             {
                                 var seriesId = (decimal?)item.Row["SeriesId"];
-                                itemSeriesTableList.InsertNewSeries(itemId, seriesId);
+                                itemSeriesTableList.InsertNewSeries((int)itemId, seriesId);
                             }
                         }
 
                         //tier???
-                                                
+
                         //result message                        
                         MessageBox.Show(this, $"Марка '{resultData.Mark}' успешно занесена в БД", "Информация",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
@@ -94,7 +94,7 @@ namespace Autocad_ConcerteList
         private void ItemForm_Load(object sender, EventArgs e)
         {
             //Series
-            var seriesTableList = new I_S_SeriesTableAdapter();
+            var seriesTableList = new I_C_SeriesTableAdapter();
             seriesCheckedListBox.DataSource = seriesTableList.GetData();
             seriesCheckedListBox.DisplayMember = "Series";
             seriesCheckedListBox.ValueMember = "SeriesId";

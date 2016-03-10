@@ -32,7 +32,7 @@ namespace Autocad_ConcerteList.ConcreteDB
                    new TypedValue((int)LispDataType.ListBegin),
                    new TypedValue((int)LispDataType.Text,"\"Length\""),
                    new TypedValue((int)LispDataType.DottedPair),
-                   new TypedValue((int)LispDataType.Int16, itemEntryData.Length),
+                   new TypedValue((int)LispDataType.Int16, itemEntryData.Lenght),
                    new TypedValue((int)LispDataType.ListEnd),
                    new TypedValue((int)LispDataType.ListBegin),
                    new TypedValue((int)LispDataType.Text,"\"Height\""),

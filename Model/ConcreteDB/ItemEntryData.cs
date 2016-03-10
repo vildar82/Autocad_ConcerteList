@@ -15,7 +15,7 @@ namespace Autocad_ConcerteList.ConcreteDB
         public string Mark { get; set; }
         public List<string> SeriesList;
         public string ItemGroup { get; set; }
-        public short? Length { get; set; }
+        public short? Lenght { get; set; }
         public short? Height { get; set; }
         public short? Thickness { get; set; }
         public short? Formwork { get; set; }
@@ -43,7 +43,7 @@ namespace Autocad_ConcerteList.ConcreteDB
             SeriesList = (from DataRowView checkedItem in _sourceForm.seriesCheckedListBox.CheckedItems
                           select checkedItem["Series"].ToString()).ToList();
             ItemGroup = ((DataRowView)_sourceForm.itemGroupComboBox.SelectedItem).Row["ItemGroup"].ToString();
-            Length = short.TryParse(_sourceForm.lenghtTextBox.Text, out tmpIntValue) ? (short?)tmpIntValue : null;
+            Lenght = short.TryParse(_sourceForm.lenghtTextBox.Text, out tmpIntValue) ? (short?)tmpIntValue : null;
             Height = short.TryParse(_sourceForm.heigthTextBox.Text, out tmpIntValue) ? (short?)tmpIntValue : null;
             Thickness = short.TryParse(_sourceForm.thicknessTextBox.Text, out tmpIntValue) ? (short?)tmpIntValue : null;
             Formwork = short.TryParse(_sourceForm.formworkTextBox.Text, out tmpIntValue) ? (short?)tmpIntValue : null;
@@ -60,7 +60,7 @@ namespace Autocad_ConcerteList.ConcreteDB
             if (actualFormulaValue == null)
             {
                 var formulaTableList = new I_C_FormulaTableAdapter();
-                ConcerteDataSet.I_C_FormulaRow actualFormulaRow = formulaTableList.GetData().FirstOrDefault();
+                ConcerteDataSet.I_C_FormulaRow actualFormulaRow = formulaTableList.GetData().Last();
                 actualFormulaValue = actualFormulaRow["FormulaValue"].ToString();
             }
             if (actualFormulaValue != null)
@@ -102,7 +102,7 @@ namespace Autocad_ConcerteList.ConcreteDB
                 }
 
                 // Проверка длины
-                if (Length == null)
+                if (Lenght == null)
                 {
                     res = false;
                     _sourceForm.errorValueProvider.SetError(_sourceForm.lenghtTextBox, "Error!");
