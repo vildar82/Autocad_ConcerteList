@@ -68,18 +68,16 @@ namespace Autocad_ConcerteList
                         //result message                        
                         MessageBox.Show(this, $"Марка '{resultData.Mark}' успешно занесена в БД", "Информация",
                             MessageBoxButtons.OK, MessageBoxIcon.Information);
-#endif                        
+#endif
                         // Запуск лисп функции                        
-                        this.Hide();
-                        InvokeLisp.CreateBlock(resultData);
+                        Excecute(resultData);
                     }
                     else
                     {
                         if (MessageBox.Show(this, $"Марка '{resultData.Mark}' уже существует в БД. \nСоздать блок? ", "Информация",
                             MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
                         {
-                            this.Hide();
-                            InvokeLisp.CreateBlock(resultData);
+                            Excecute(resultData);
                         }
                     }
                 }
@@ -88,6 +86,16 @@ namespace Autocad_ConcerteList
             {
                 Logger.Log.Error(ex, "okButton_Click");
                 MessageBox.Show(ex.Message, "Ошибка",  MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void Excecute(ItemEntryData resultData)
+        {
+            //this.Hide();
+            var ed = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.Editor;
+            using (ed.StartUserInteraction(this.Handle))
+            {
+                InvokeLisp.CreateBlock(resultData);
             }
         }
 
