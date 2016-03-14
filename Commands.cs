@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AcadLib.Errors;
 using Autocad_ConcerteList.ConcreteDB;
-using Autocad_ConcerteList.SpecRegistration;
+using Autocad_ConcerteList.RegystryPanel;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
@@ -58,7 +58,7 @@ namespace Autocad_ConcerteList
         /// Из лиспа вызывается эта функция с передачей списка изделий спецификации для регистрации в базе ЖБИ.
         /// </summary>
         [LispFunction("PIK-NET-SB-RegistrationPanels")]
-        public ResultBuffer Lisp_SB_RegistrationsPanels(ResultBuffer arg)
+        public void Lisp_SB_RegistrationsPanels(ResultBuffer arg)
         {            
             Logger.Log.StartCommand(nameof(Lisp_SB_RegistrationsPanels));
             Document doc = Application.DocumentManager.MdiActiveDocument;            
@@ -70,31 +70,38 @@ namespace Autocad_ConcerteList
                 {
                     doc.Editor.WriteMessage("\nОтказано в доступе.");
                     // Прерывание создания групповой спецификации
-                    return RegystryPanels.ReturnCancel();
-                }                
+                    return;
+                }
+
+                Inspector.Clear();
 
                 // Парсинг переданного списка - превращение в список панелей
-                ParserRbGbi parserRb = new ParserRbGbi(arg);
+                ParserRb parserRb = new ParserRb(arg);
                 parserRb.Parse();
 
                 // Регистрация ЖБИ изделий в базе.
                 RegystryPanels registryPanels = new RegystryPanels(parserRb.Panels);
-                registryPanels.Registry();
+                int regPanelsCount = registryPanels.Registry();
 
-                return registryPanels.RbReturn();
+                doc.Editor.WriteMessage($"\nЗарегистрированно {regPanelsCount} ЖБИ.");
+
+                Inspector.Show();              
             }
             catch (System.Exception ex)
-            {
-                
+            {                
                 doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
                 if (!ex.Message.Contains("Отменено пользователем"))
                 { 
                     // Непредвиденная ошибка
                     Logger.Log.Fatal(ex, $"{nameof(Lisp_SB_RegistrationsPanels)}. {doc.Name}");
-                }
-                // Возврат - ошибка
-                return RegystryPanels.ReturnError();
+                }                
             }            
+        }
+
+        [CommandMethod("Test")]
+        public void Test ()
+        {
+            Lisp_SB_RegistrationsPanels(null);
         }
     }
 }

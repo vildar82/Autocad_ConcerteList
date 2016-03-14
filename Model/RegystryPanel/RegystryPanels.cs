@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 
-namespace Autocad_ConcerteList.SpecRegistration
+namespace Autocad_ConcerteList.RegystryPanel
 {
     public class RegystryPanels
     {
         private List<Panel> panels;
+        /// <summary>
+        /// Панели для регистрации в базе
+        /// </summary>
+        private List<Panel> panelsToReg;
+        /// <summary>
+        /// Панели с несоответствующей маркой - в блоке одна марка в базе другая.
+        /// </summary>
+        private List<Panel> panelsIncorrectMark;
 
         public RegystryPanels(List<Panel> panels)
         {
@@ -21,8 +29,12 @@ namespace Autocad_ConcerteList.SpecRegistration
         /// проверка существования панелей, и регистрация новых панелей в базе.
         /// Если отличается марка панелей в базе и в автокаде, то запись в список несоответствующих марок и показ пользователю.
         /// </summary>
-        public void Registry()
+        public int Registry()
         {
+            int regPanels = 0;
+            DbService.Init();
+            panelsToReg = new List<Panel>();
+            panelsIncorrectMark = new List<Panel>();
             // Поиск панели в базе по ее параметрам
 
             // Если панель с такими параметрами есть, то получение ее марки
@@ -35,8 +47,44 @@ namespace Autocad_ConcerteList.SpecRegistration
 
             // Если есть новые панели для регистрации, то показ их пользователю, с вопросом о регистрации этих панелей в базе.
 
-            throw new NotImplementedException();
-        }
+            foreach (var panel in panels)
+            {
+                // Определение марки панели из базы
+                panel.MarkDb = DbService.GetDbMark(panel);
+                if (string.IsNullOrEmpty(panel.MarkDb))
+                {
+                    continue;
+                }                
+
+                if (!DbService.ExistPanel(panel))
+                { 
+                    // Добавление панели в список для регистрации                    
+                    panelsToReg.Add(panel);
+                }
+                if (panel.Mark != panel.MarkDb)
+                {
+                    // Марка из атрибута блока отличается от марки полученой из базы
+                    panelsIncorrectMark.Add(panel);
+                }   
+            }
+
+            // Если есть некорректные марки, то показ их пользователю с запросом исправления блоков на чертеже.
+            if (IncorrectMarks.Show(panelsIncorrectMark))
+            {
+                // Исправить некорректные панели на чертеже
+                IncorrectMarks.Fix(panelsIncorrectMark);
+
+                // Регистрация новых панелей.
+                foreach (var item in panelsToReg)
+                {
+                    if (DbService.Register(item))
+                    {
+                        regPanels++;
+                    }
+                }
+            }
+            return regPanels;
+        }       
 
         /// <summary>
         /// Возращаемый список панелей с несоответствующими марками для исправления в автокаде,

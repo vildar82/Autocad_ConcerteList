@@ -85,6 +85,7 @@
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Model\ConcreteDB\Formula\Eval.cs" />
+    <Compile Include="Model\ConcreteDB\iItem.cs" />
     <Compile Include="Model\ConcreteDB\InvokeLisp.cs" />
     <Compile Include="Model\ConcreteDB\ItemEntryData.cs" />
     <Compile Include="Model\ConcreteDB\ItemForm.cs">
@@ -95,9 +96,17 @@
     </Compile>
     <Compile Include="Model\ConcreteDB\Formula\ParserFormula.cs" />
     <Compile Include="Model\Logger.cs" />
-    <Compile Include="Model\SpecRegistration\Panel.cs" />
-    <Compile Include="Model\SpecRegistration\ParserRbGbi.cs" />
-    <Compile Include="Model\SpecRegistration\RegystryPanels.cs" />
+    <Compile Include="Model\RegystryPanel\DbService.cs" />
+    <Compile Include="Model\RegystryPanel\IncorrectMark\IncorrectMarks.cs" />
+    <Compile Include="Model\RegystryPanel\IncorrectMark\FormIncorrectMarks.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Model\RegystryPanel\IncorrectMark\FormIncorrectMarks.Designer.cs">
+      <DependentUpon>FormIncorrectMarks.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RegystryPanel\Panel.cs" />
+    <Compile Include="Model\RegystryPanel\ParserRb.cs" />
+    <Compile Include="Model\RegystryPanel\RegystryPanels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -128,6 +137,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Model\ConcreteDB\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\RegystryPanel\IncorrectMark\FormIncorrectMarks.resx">
+      <DependentUpon>FormIncorrectMarks.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -13,12 +13,12 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
         public string EvalString { get; set; }
         public string ValueString { get; set; }
         public bool IsEvaluable { get; set; }
-        private ItemEntryData itemEntryData;
+        private iItem item;
         private static DataTable t = new DataTable();
         private static char[] charOperands = new char[] { '/', '*', '-', '+' };
 
         // Публичные свойства в классе ItemEntryData        
-        private static Dictionary<string, PropertyInfo> dictItemProperties = typeof(ItemEntryData)
+        private static Dictionary<string, PropertyInfo> dictItemProperties = typeof(iItem)
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                             .ToDictionary(f => f.Name);
 
@@ -35,21 +35,25 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
         //    { "dbo.I_R_Item.Electrics","Electrics" }            
         //};        
 
-        public Eval (string eval, ItemEntryData itemEntryData)
+        public Eval (string eval, iItem item)
         {   
             EvalString = eval;
-            this.itemEntryData = itemEntryData;
+            this.item = item;
+            IsEvaluable = eval.StartsWith("'");                  
+        }
 
-            IsEvaluable = eval.StartsWith("'");
+        public string Evaluate()
+        {
             if (IsEvaluable)
             {
-                ValueString = eval.Replace("'", "");
+                ValueString = EvalString.Replace("'", "");
             }
             else
             {
                 // Определение поля в объекте ItemEntryData и получение его значения
-                ValueString = getValue(eval);                
-            }            
+                ValueString = getValue(EvalString);
+            }
+            return ValueString;
         }
 
         private string getValue(string evalEnter)
@@ -88,7 +92,8 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
             // Вычисление
             if (evaluate.IndexOfAny(charOperands) !=-1)
             {
-                resVal = t.Compute(evaluate, null)?.ToString();
+                var objRes = t.Compute(evaluate, null);
+                resVal = getRoundValue(objRes);
             }
             else
             {
@@ -103,12 +108,17 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
             return resVal;
         }
 
+        private string getRoundValue(object objRes)
+        {
+            return Convert.ToInt32(objRes).ToString();
+        }
+
         private string getFieldValue(string fieldName)
         {   
             PropertyInfo property;            
             if (dictItemProperties.TryGetValue(fieldName, out property))
             {
-                return property.GetValue(itemEntryData)?.ToString();
+                return property.GetValue(item)?.ToString();
             }
             else
             {

@@ -10,7 +10,7 @@ using Autocad_ConcerteList.Model.ConcreteDB.DataSet.ConcerteDataSetTableAdapters
 
 namespace Autocad_ConcerteList.ConcreteDB
 {
-    public class ItemEntryData
+    public class ItemEntryData : iItem
     {
         public string Mark { get; set; }
         public List<string> SeriesList;
