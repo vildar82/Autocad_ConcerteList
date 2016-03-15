@@ -8927,8 +8927,8 @@ ORDER BY I_S_ItemGroup.ItemGroupUsage, I_C_ItemGroupLong.ItemGroupLong, I_S_Item
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT        ItemGroupId\r\nFROM            I_S_ItemGroup\r\nWHERE        (ItemGroup" +
-                " = @itemGroup)";
+            this._commandCollection[2].CommandText = "SELECT        I_S_ItemGroup.*\r\nFROM            I_S_ItemGroup\r\nWHERE        (ItemG" +
+                "roup = @itemGroup)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
@@ -8963,6 +8963,23 @@ ORDER BY I_S_ItemGroup.ItemGroupUsage, I_C_ItemGroupLong.ItemGroupLong, I_S_Item
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual ConcerteDataSet.I_S_ItemGroupDataTable GetDataByItemGroup() {
             this.Adapter.SelectCommand = this.CommandCollection[1];
+            ConcerteDataSet.I_S_ItemGroupDataTable dataTable = new ConcerteDataSet.I_S_ItemGroupDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual ConcerteDataSet.I_S_ItemGroupDataTable GetItemGroup(string itemGroup) {
+            this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((itemGroup == null)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(itemGroup));
+            }
             ConcerteDataSet.I_S_ItemGroupDataTable dataTable = new ConcerteDataSet.I_S_ItemGroupDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -9368,40 +9385,6 @@ ORDER BY I_S_ItemGroup.ItemGroupUsage, I_C_ItemGroupLong.ItemGroupLong, I_S_Item
                     string Original_ItemGroupCut, 
                     string Original_ItemGroupLayer) {
             return this.Update(ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO, BuildingPartId, ItemGroupISO, ItemDescription, ItemGroupStatic, ItemGroupCut, ItemGroupLayer, Original_ItemGroupId, Original_ItemGroupUsage, Original_ItemGroup, Original_ItemGroupLongId, Original_ItemGroupTextISO, Original_BuildingPartId, Original_ItemGroupISO, Original_ItemDescription, Original_ItemGroupStatic, Original_ItemGroupCut, Original_ItemGroupLayer, Original_ItemGroupId);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual global::System.Nullable<decimal> GetItemGroupId(string itemGroup) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
-            if ((itemGroup == null)) {
-                command.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[0].Value = ((string)(itemGroup));
-            }
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            object returnValue;
-            try {
-                returnValue = command.ExecuteScalar();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            if (((returnValue == null) 
-                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
-                return new global::System.Nullable<decimal>();
-            }
-            else {
-                return new global::System.Nullable<decimal>(((decimal)(returnValue)));
-            }
         }
     }
     

@@ -123,7 +123,7 @@
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>ConcerteDataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>ConcerteDataSet.Designer.cs</LastGenOutput>
     </None>
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xss">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>

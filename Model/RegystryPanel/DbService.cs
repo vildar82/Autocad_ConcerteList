@@ -53,6 +53,17 @@ namespace Autocad_ConcerteList.RegystryPanel
         public static string GetDbMark(Panel panel)
         {
             string markDb = null;
+
+            // Получение id группы
+            var itemGroupRow = itemGroupAdapter.GetItemGroup(panel.ItemGroup).FirstOrDefault();
+            if (itemGroupRow == null)
+            {
+                Inspector.AddError($"Не найдена группа {panel.ItemGroup}.", System.Drawing.SystemIcons.Error);
+                return null;
+            }
+            panel.ItemGroupId = itemGroupRow.ItemGroupId;
+            panel.ItemGroup = itemGroupRow.ItemGroup;
+
             // Формула для группы панели
             string formula = getFormula(panel.ItemGroup);
             if (string.IsNullOrEmpty(formula))
@@ -97,14 +108,7 @@ namespace Autocad_ConcerteList.RegystryPanel
 
         public static bool Register(Panel item)
         {
-            // Регистрация панели в базе.            
-            // Получение id группы
-            decimal? idItemGroup = itemGroupAdapter.GetItemGroupId(item.ItemGroup);
-            if (idItemGroup == null)
-            {
-                Inspector.AddError($"Не найдена группа {item.ItemGroup}.", System.Drawing.SystemIcons.Error);
-                return false;
-            }
+            // Регистрация панели в базе.                        
 
             // idBalconyDoor
             decimal? idBalDoor = null;
@@ -125,7 +129,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             }
 
 #if !NODB
-            itemConstrAdapter.InsertItem(idItemGroup, item.Lenght, item.Height, item.Thickness, item.Formwork,
+            itemConstrAdapter.InsertItem(item.ItemGroupId, item.Lenght, item.Height, item.Thickness, item.Formwork,
                 idBalDoor, idBalCut, item.FormworkMirror, item.Electrics, item.Weight, item.Volume, item.MarkDb);
 #endif
             return true;
