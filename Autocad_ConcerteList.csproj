@@ -98,11 +98,11 @@
     <Compile Include="Model\Logger.cs" />
     <Compile Include="Model\RegystryPanel\DbService.cs" />
     <Compile Include="Model\RegystryPanel\IncorrectMark\IncorrectMarks.cs" />
-    <Compile Include="Model\RegystryPanel\IncorrectMark\FormIncorrectMarks.cs">
+    <Compile Include="Model\RegystryPanel\IncorrectMark\FormPanels.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Model\RegystryPanel\IncorrectMark\FormIncorrectMarks.Designer.cs">
-      <DependentUpon>FormIncorrectMarks.cs</DependentUpon>
+    <Compile Include="Model\RegystryPanel\IncorrectMark\FormPanels.Designer.cs">
+      <DependentUpon>FormPanels.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\RegystryPanel\Panel.cs" />
     <Compile Include="Model\RegystryPanel\ParserRb.cs" />
@@ -123,7 +123,7 @@
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>ConcerteDataSet.Designer.cs</LastGenOutput>
+      <LastGenOutput>ConcerteDataSet1.Designer.cs</LastGenOutput>
     </None>
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xss">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
@@ -138,8 +138,8 @@
     <EmbeddedResource Include="Model\ConcreteDB\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Model\RegystryPanel\IncorrectMark\FormIncorrectMarks.resx">
-      <DependentUpon>FormIncorrectMarks.cs</DependentUpon>
+    <EmbeddedResource Include="Model\RegystryPanel\IncorrectMark\FormPanels.resx">
+      <DependentUpon>FormPanels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

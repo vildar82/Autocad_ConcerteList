@@ -57,10 +57,10 @@ namespace Autocad_ConcerteList
         /// Регистрация списка изделий при создании спецификации.
         /// Из лиспа вызывается эта функция с передачей списка изделий спецификации для регистрации в базе ЖБИ.
         /// </summary>
-        [LispFunction("PIK-NET-SB-RegistrationPanels")]
-        public void Lisp_SB_RegistrationsPanels(ResultBuffer arg)
+        [CommandMethod("PIK", "SB_RegistrationPanels", CommandFlags.Modal)]
+        public void SB_RegistrationPanels()
         {            
-            Logger.Log.StartCommand(nameof(Lisp_SB_RegistrationsPanels));
+            Logger.Log.StartCommand(nameof(SB_RegistrationPanels));
             Document doc = Application.DocumentManager.MdiActiveDocument;            
 
             try
@@ -72,12 +72,19 @@ namespace Autocad_ConcerteList
                     // Прерывание создания групповой спецификации
                     return;
                 }
-
                 Inspector.Clear();
 
+                // Вызов лисп функции - сбора блоков и их параметров.
+                var rb = InvokeLisp.CheckBlocks();
+
                 // Парсинг переданного списка - превращение в список панелей
-                ParserRb parserRb = new ParserRb(arg);
+                ParserRb parserRb = new ParserRb(rb);
                 parserRb.Parse();
+                if (parserRb.Panels == null || parserRb.Panels.Count ==0)
+                {
+                    doc.Editor.WriteMessage("\nПрерывание. Ошибки в блоках при обработки панелей.");
+                    return;                    
+                }
 
                 // Регистрация ЖБИ изделий в базе.
                 RegystryPanels registryPanels = new RegystryPanels(parserRb.Panels);
@@ -93,15 +100,9 @@ namespace Autocad_ConcerteList
                 if (!ex.Message.Contains("Отменено пользователем"))
                 { 
                     // Непредвиденная ошибка
-                    Logger.Log.Fatal(ex, $"{nameof(Lisp_SB_RegistrationsPanels)}. {doc.Name}");
+                    Logger.Log.Fatal(ex, $"{nameof(SB_RegistrationPanels)}. {doc.Name}");
                 }                
             }            
-        }
-
-        [CommandMethod("Test")]
-        public void Test ()
-        {
-            Lisp_SB_RegistrationsPanels(null);
-        }
+        }        
     }
 }

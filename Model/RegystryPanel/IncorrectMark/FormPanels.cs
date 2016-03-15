@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
 {
-    public partial class FormIncorrectMarks : Form
+    public partial class FormPanels : Form
     {
-        public FormIncorrectMarks(List<Autocad_ConcerteList.RegystryPanel.Panel> incorrectPanels)
+        public FormPanels(List<Panel> panels)
         {
             InitializeComponent();
 
             BindingSource binPanels = new BindingSource();
-            binPanels.DataSource = incorrectPanels;
+            binPanels.DataSource = panels;
 
             listBoxIncorrectPanels.DataSource = binPanels;
             listBoxIncorrectPanels.DisplayMember = "IncorrectMarkTitle";

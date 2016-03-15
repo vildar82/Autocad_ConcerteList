@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autocad_ConcerteList.RegystryPanel.IncorrectMark;
+using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 
@@ -72,19 +74,37 @@ namespace Autocad_ConcerteList.RegystryPanel
             if (IncorrectMarks.Show(panelsIncorrectMark))
             {
                 // Исправить некорректные панели на чертеже
-                IncorrectMarks.Fix(panelsIncorrectMark);
+                IncorrectMarks.Fix(panelsIncorrectMark);               
+            }
 
-                // Регистрация новых панелей.
+            // Регистрация новых панелей.
+            regPanels = RegPanels(panelsToReg);
+
+            return regPanels;
+        }
+
+        private int RegPanels(List<Panel> panelsToReg)
+        {
+            if (panelsToReg.Count == 0)
+            {
+                return 0;
+            }
+            int regCount = 0;
+            FormPanels formPanels = new FormPanels(panelsToReg);
+            formPanels.Text = "Регистрация новых панелей";
+            formPanels.buttonOk.Text = "Регистрация";
+            if (Application.ShowModalDialog(formPanels) == System.Windows.Forms.DialogResult.OK)
+            {
                 foreach (var item in panelsToReg)
                 {
                     if (DbService.Register(item))
                     {
-                        regPanels++;
+                        regCount++;
                     }
                 }
             }
-            return regPanels;
-        }       
+            return regCount;
+        }
 
         /// <summary>
         /// Возращаемый список панелей с несоответствующими марками для исправления в автокаде,

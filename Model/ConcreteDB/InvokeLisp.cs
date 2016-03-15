@@ -95,5 +95,28 @@ namespace Autocad_ConcerteList.ConcreteDB
                 doc.Editor.WriteMessage($"\nОшибочный результат вызова лисп функции - {intRes}.");
             }
         }
+
+        /// <summary>
+        /// Вызов лисп функции сбора блоков.
+        /// </summary>
+        /// <returns>Список блоков и их параметров</returns>
+        public static ResultBuffer CheckBlocks()
+        {
+            ResultBuffer rb = new ResultBuffer(
+               new TypedValue[]
+               {
+                   new TypedValue((int)LispDataType.Text, "test_check_blocks")
+               });
+
+            try
+            {
+                return Application.Invoke(rb);
+            }
+            catch (System.Exception ex)
+            {
+                string msg = $"Ошибка вызова функции (test_check_blocks) - {ex.Message}";                
+                throw new System.Exception(msg);                
+            }            
+        }
     }
 }

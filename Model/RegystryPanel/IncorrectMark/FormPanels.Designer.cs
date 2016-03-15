@@ -1,6 +1,6 @@
 ﻿namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
 {
-    partial class FormIncorrectMarks
+    partial class FormPanels
     {
         /// <summary>
         /// Required designer variable.
@@ -72,7 +72,7 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
-            this.buttonCancel.Text = "Отмена";
+            this.buttonCancel.Text = "Пропустить";
             this.toolTip1.SetToolTip(this.buttonCancel, "Прервать регистрацию панелей.");
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
@@ -108,7 +108,7 @@
             this.splitContainer1.SplitterDistance = 349;
             this.splitContainer1.TabIndex = 3;
             // 
-            // FormIncorrectMarks
+            // FormPanels
             // 
             this.AcceptButton = this.buttonOk;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -121,7 +121,7 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.MinimumSize = new System.Drawing.Size(100, 100);
-            this.Name = "FormIncorrectMarks";
+            this.Name = "FormPanels";
             this.Text = "Панели с несоответствующими марками";
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
@@ -133,12 +133,11 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.ListBox listBoxIncorrectPanels;
         private System.Windows.Forms.TextBox textBoxInfo;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Button buttonOk;
-        private System.Windows.Forms.ToolTip toolTip1;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        public System.Windows.Forms.Button buttonOk;
+        public System.Windows.Forms.ListBox listBoxIncorrectPanels;
+        public System.Windows.Forms.ToolTip toolTip1;
     }
 }
