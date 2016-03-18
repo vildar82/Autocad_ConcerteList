@@ -100,14 +100,13 @@ namespace Autocad_ConcerteList.ConcreteDB
         /// Вызов лисп функции сбора блоков.
         /// </summary>
         /// <returns>Список блоков и их параметров</returns>
-        public static ResultBuffer CheckBlocks()
+        public static ResultBuffer GetRbPanels()
         {
             ResultBuffer rb = new ResultBuffer(
                new TypedValue[]
                {
                    new TypedValue((int)LispDataType.Text, "test_check_blocks")
                });
-
             try
             {
                 return Application.Invoke(rb);

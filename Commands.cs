@@ -46,7 +46,7 @@ namespace Autocad_ConcerteList
             catch (System.Exception ex)
             {
                 doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
-                if (!ex.Message.Contains("Отменено пользователем"))
+                if (!ex.Message.Contains(AcadLib.General.CanceledByUser))
                 {
                     Logger.Log.Error(ex, $"{nameof(SB_RegistrationPanel)}. {doc.Name}");
                 }
@@ -66,23 +66,23 @@ namespace Autocad_ConcerteList
             try
             {
                 // Проверка доступа. Только Лукашовой?????
-                if (!Access.Success())
-                {
-                    doc.Editor.WriteMessage("\nОтказано в доступе.");
-                    // Прерывание создания групповой спецификации
-                    return;
-                }
+                //if (!Access.Success())
+                //{
+                //    doc.Editor.WriteMessage("\nОтказано в доступе.");
+                //    // Прерывание создания групповой спецификации
+                //    return;
+                //}
                 Inspector.Clear();
 
                 // Вызов лисп функции - сбора блоков и их параметров.
-                var rb = InvokeLisp.CheckBlocks();
+                var rb = InvokeLisp.GetRbPanels();
 
                 // Парсинг переданного списка - превращение в список панелей
                 ParserRb parserRb = new ParserRb(rb);
                 parserRb.Parse();
                 if (parserRb.Panels == null || parserRb.Panels.Count ==0)
                 {
-                    doc.Editor.WriteMessage("\nПрерывание. Ошибки в блоках при обработки панелей.");
+                    doc.Editor.WriteMessage("\nПрерывание. Ошибки в блоках при обработке панелей.");
                     return;                    
                 }
 
@@ -97,7 +97,7 @@ namespace Autocad_ConcerteList
             catch (System.Exception ex)
             {                
                 doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
-                if (!ex.Message.Contains("Отменено пользователем"))
+                if (!ex.Message.Contains(AcadLib.General.CanceledByUser))
                 { 
                     // Непредвиденная ошибка
                     Logger.Log.Fatal(ex, $"{nameof(SB_RegistrationPanels)}. {doc.Name}");

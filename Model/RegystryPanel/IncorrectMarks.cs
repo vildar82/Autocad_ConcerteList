@@ -13,23 +13,6 @@ namespace Autocad_ConcerteList.RegystryPanel
     public static class IncorrectMarks
     {
         /// <summary>
-        /// Показ несоответствующих марок панелей
-        /// </summary>        
-        public static bool Show(List<Panel> incorrectPanels)
-        {
-            if (incorrectPanels == null || incorrectPanels.Count == 0)
-            {
-                return true;
-            }
-
-            FormPanels formIncorrect = new FormPanels(incorrectPanels);
-            formIncorrect.Text = "Несоответствующие марки";
-            formIncorrect.toolTip1.SetToolTip(formIncorrect.listBoxIncorrectPanels, "Марка панели из атрбибута блока отличается от марки сформированной по формуле из базы ЖБИ.");
-            var dlgRes = formIncorrect.ShowDialog();            
-            return dlgRes == System.Windows.Forms.DialogResult.OK ? true : false;
-        }
-
-        /// <summary>
         /// Исправленние панелей с некорректными марками на чертеже
         /// </summary>        
         public static void Fix(List<Panel> panelsIncorrectMark)
@@ -56,6 +39,8 @@ namespace Autocad_ConcerteList.RegystryPanel
                             {
                                 atrRef.UpgradeOpen();
                                 atrRef.TextString = panel.MarkDb;
+                                panel.Mark = panel.MarkDb;
+                                panel.ErrorStatus = EnumErrorItem.None;
                             }
                             break;
                         }

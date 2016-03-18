@@ -45,8 +45,7 @@ namespace Autocad_ConcerteList.RegystryPanel
 
         public ParserRb(ResultBuffer rb)
         {
-            this.rb = rb;
-            printRb();
+            this.rb = rb;            
         }
 
         /// <summary>

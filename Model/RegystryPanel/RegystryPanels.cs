@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AcadLib.Errors;
 using Autocad_ConcerteList.RegystryPanel.IncorrectMark;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
@@ -20,7 +21,7 @@ namespace Autocad_ConcerteList.RegystryPanel
         /// <summary>
         /// Панели с несоответствующей маркой - в блоке одна марка в базе другая.
         /// </summary>
-        private List<Panel> panelsIncorrectMark;
+        private List<Panel> panelsErrors;
 
         public RegystryPanels(List<Panel> panels)
         {
@@ -36,7 +37,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             int regPanels = 0;
             DbService.Init();
             panelsToReg = new List<Panel>();
-            panelsIncorrectMark = new List<Panel>();
+            panelsErrors = new List<Panel>();
             // Поиск панели в базе по ее параметрам
 
             // Если панель с такими параметрами есть, то получение ее марки
@@ -49,38 +50,106 @@ namespace Autocad_ConcerteList.RegystryPanel
 
             // Если есть новые панели для регистрации, то показ их пользователю, с вопросом о регистрации этих панелей в базе.
 
-            foreach (var panel in panels)
-            {
-                // Определение марки панели из базы
-                panel.MarkDb = DbService.GetDbMark(panel);
-                if (string.IsNullOrEmpty(panel.MarkDb))
-                {
-                    continue;
-                }                
+            // Проверка списка панелей.
+            CheckPanels();
 
-                if (!DbService.ExistPanel(panel))
-                { 
-                    // Добавление панели в список для регистрации                    
-                    panelsToReg.Add(panel);
-                }
-                if (panel.Mark != panel.MarkDb)
-                {
-                    // Марка из атрибута блока отличается от марки полученой из базы
-                    panelsIncorrectMark.Add(panel);
-                }   
-            }
+            // Показать ошибки при проверке панелей, если они есть.
+            Inspector.ShowDialog();
+            Inspector.Clear();
 
-            // Если есть некорректные марки, то показ их пользователю с запросом исправления блоков на чертеже.
-            if (IncorrectMarks.Show(panelsIncorrectMark))
+            // Если есть панели с ошибками. показать форму исправления ошибок.
+            if (panelsErrors.Count > 0)
             {
-                // Исправить некорректные панели на чертеже
-                IncorrectMarks.Fix(panelsIncorrectMark);               
+                ShowErrorPanels();
             }
 
             // Регистрация новых панелей.
             regPanels = RegPanels(panelsToReg);
 
             return regPanels;
+        }
+
+        private void ShowErrorPanels()
+        {
+            // Если среди ошибок есть критические - то прерывание программы и показ немодальной формы для исправления.
+            if (panelsErrors.Any(p => p.ErrorStatus.HasFlag(EnumErrorItem.DifferentParams)))
+            {
+                // Показ немодальной формы с ошибками в панелях                    
+                FormPanels formFatalErrPanels = new FormPanels(panelsErrors);
+                formFatalErrPanels.BackColor = System.Drawing.Color.DarkRed;
+                formFatalErrPanels.Text = "Панели с ошибками";
+                formFatalErrPanels.buttonOk.Visible = false;
+                formFatalErrPanels.buttonCancel.Visible = false;
+                Application.ShowModelessDialog(formFatalErrPanels);
+
+                throw new System.Exception("Найдены критические ошибки в панелях. Необходимо их исправить и запустить регистрацию повторно.");
+            }
+
+            // Если есть некорректные марки, то показ их пользователю с запросом исправления блоков на чертеже.
+            FormPanels formErrPanels = new FormPanels(panelsErrors);            
+            formErrPanels.Text = "Панели с ошибками";
+            if (Application.ShowModalDialog(formErrPanels) != System.Windows.Forms.DialogResult.OK)
+            {
+                // Прерывание и открытие этого окна в немодальном виде
+                formErrPanels.buttonOk.Visible = false;
+                formErrPanels.buttonCancel.Visible = false;
+                Application.ShowModelessDialog(formErrPanels);
+                throw new System.Exception(AcadLib.General.CanceledByUser);
+            }
+
+            // Исправить некорректные марки панелей в чертеже
+            IncorrectMarks.Fix(panelsErrors);
+        }
+
+        private void CheckPanels()
+        {
+            // Проверка уникальности марок в списке. 
+            // Если есть несколько одинак марок, то это ошибка - прервать процесс регистрации и показать немодальную форму исправления ошибок.
+            var panelsGroupByMark = panels.GroupBy(p => p.Mark);
+
+            foreach (var panelGroupMark in panelsGroupByMark)
+            {
+                // Если в группе больше одной марки - ошибка - несколько панелей одной марки с различными параметрами.
+                if (panelGroupMark.Skip(1).Any())
+                {
+                    // Создать новую панель в которой отличающиеся параметры будут соответственно помечены.
+                    Panel panelErrParams = Panel.GetErrParams(panelGroupMark);
+                    panelsErrors.Add(panelErrParams);
+                }
+                else
+                {
+                    var panel = panelGroupMark.First();
+                    // Определение марки панели из базы
+                    try
+                    {
+                        panel.MarkDb = DbService.GetDbMark(panel);
+                        if (string.IsNullOrEmpty(panel.MarkDb))
+                        {
+                            throw new System.Exception("не определена");
+                        }
+                    }
+                    catch (System.Exception ex)
+                    {
+                        // Ошибка при определении марки панели. Нужно разобираться с параметрами панели и с формулой.
+                        string err = $"Ошибка определения марки панели - {ex.Message}. Параметры панели: {panel.getInfo()}.";
+                        Inspector.AddError(err, System.Drawing.SystemIcons.Error);
+                        Logger.Log.Fatal(ex, err);
+                        continue;
+                    }
+
+                    if (!DbService.ExistPanel(panel))
+                    {
+                        // Добавление панели в список для регистрации                    
+                        panelsToReg.Add(panel);
+                    }
+                    if (panel.Mark != panel.MarkDb)
+                    {
+                        // Марка из атрибута блока отличается от марки полученой из базы
+                        panel.ErrorStatus = EnumErrorItem.IncorrectMark;
+                        panelsErrors.Add(panel);
+                    }
+                }
+            }
         }
 
         private int RegPanels(List<Panel> panelsToReg)
@@ -91,6 +160,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             }
             int regCount = 0;
             FormPanels formPanels = new FormPanels(panelsToReg);
+            formPanels.BackColor = System.Drawing.Color.Green;
             formPanels.Text = "Регистрация новых панелей";
             formPanels.buttonOk.Text = "Регистрация";
             if (Application.ShowModalDialog(formPanels) == System.Windows.Forms.DialogResult.OK)
@@ -102,6 +172,14 @@ namespace Autocad_ConcerteList.RegystryPanel
                         regCount++;
                     }
                 }
+            }
+            else
+            {
+                // Прерывание и открытие этого окна в немодальном виде
+                formPanels.buttonOk.Visible = false;
+                formPanels.buttonCancel.Visible = false;
+                Application.ShowModelessDialog(formPanels);
+                throw new System.Exception(AcadLib.General.CanceledByUser);
             }
             return regCount;
         }

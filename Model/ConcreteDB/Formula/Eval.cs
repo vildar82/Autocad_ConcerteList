@@ -20,20 +20,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
         // Публичные свойства в классе ItemEntryData        
         private static Dictionary<string, PropertyInfo> dictItemProperties = typeof(iItem)
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                            .ToDictionary(f => f.Name);
-
-        //private static Dictionary<string, string> dictEvalProps = new Dictionary<string, string>()
-        //{
-        //    { "dbo.I_S_ItemGroup.ItemGroup", "ItemGroup" },
-        //    { "dbo.I_R_Item.Lenght","Length" },
-        //    { "dbo.I_R_Item.Height","Height" },
-        //    { "dbo.I_R_Item.Thickness","Thickness" },
-        //    { "dbo.I_R_Item.Formwork","Formwork" },
-        //    { "dbo.I_S_BalconyDoor.BalconyDoor","BalconyDoor" },
-        //    { "dbo.I_S_BalconyCut.BalconyCut","BalconyCut" },
-        //    { "dbo.I_R_Item.FormworkMirror","FormworkMirror" },
-        //    { "dbo.I_R_Item.Electrics","Electrics" }            
-        //};        
+                            .ToDictionary(f => f.Name);        
 
         public Eval (string eval, iItem item)
         {   
@@ -75,18 +62,17 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
             var splitByOperators = evaluate.Split(charOperands).Select(i=>i.Trim());
             foreach (var itemOperand in splitByOperators)
             {
-                if (itemOperand.StartsWith("dbo"))
+                if (itemOperand.Contains("dbo"))
                 {
-                    string fieldName = itemOperand.Split('.').Last();
+                    string fieldName = itemOperand.Split('.').Last().Trim();
                     string fieldValue = getFieldValue(fieldName);
+                    if (fieldValue == null)
+                    {
+                        evaluate = string.Empty;
+                        break;
+                    }
                     evaluate = evaluate.Replace(itemOperand, fieldValue);
-                }
-                //string fieldName;                
-                //if (dictEvalProps.TryGetValue(itemOperand, out fieldName))
-                //{
-                //    string fieldValue = getFieldValue(fieldName);
-                //    evaluate = evaluate.Replace(itemOperand, fieldValue);
-                //}                
+                }                      
             }                        
 
             // Вычисление
@@ -100,9 +86,19 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
                 resVal = evaluate;
             }      
 
-            if (string.IsNullOrEmpty(resVal) && evalEnter.StartsWith("*"))
+            if (string.IsNullOrEmpty(resVal))
             {
-                resVal = defaultEvalValue;
+                // @ - перед выражением, означает, что значение не может быть пустым.                
+                if (evalEnter.StartsWith("@"))
+                {
+                    // Если нет @ вначале, то значение может быть пустым, а если в конце выражения стоит =, то это дефолтное значение, которое нужно подставить
+                    resVal = defaultEvalValue;
+                }
+                else
+                {
+                    // Ошибка - должно быть значение.
+                    throw new Exception($"Пустое значение выражения - {evalEnter}");
+                }
             }
 
             return resVal;

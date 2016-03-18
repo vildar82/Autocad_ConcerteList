@@ -14,19 +14,19 @@ namespace Autocad_ConcerteList.RegystryPanel
     /// </summary>
     public static class DbService
     {
-        private static I_J_ItemConstructionTableAdapter itemConstrAdapter;
-        private static I_C_FormulaTableAdapter itemFormulaAdapter;
+        private static I_J_ItemConstructionTableAdapter itemConstrAdapter;        
         private static I_S_ItemGroupTableAdapter itemGroupAdapter;
-        private static Dictionary<string, string> dictFormules;
+        private static myTableFormulaTableAdapter myTableFormula;
+        private static Dictionary<string, Tuple<bool, string>> dictFormules;
         private static Dictionary<string, decimal> dictBalconyDoor;
         private static Dictionary<string, decimal> dictBalconyCut;
 
         public static void Init ()
         {
             itemConstrAdapter = new I_J_ItemConstructionTableAdapter();
-            itemFormulaAdapter = new I_C_FormulaTableAdapter();
+            myTableFormula = new myTableFormulaTableAdapter();
             itemGroupAdapter = new I_S_ItemGroupTableAdapter();
-            dictFormules = new Dictionary<string, string>();
+            dictFormules = new Dictionary<string, Tuple<bool, string>>();
 
             I_S_BalconyDoorTableAdapter balconyDoorAdapter = new I_S_BalconyDoorTableAdapter();
             var balconyDoorTable = balconyDoorAdapter.GetData();
@@ -65,45 +65,41 @@ namespace Autocad_ConcerteList.RegystryPanel
             panel.ItemGroup = itemGroupRow.ItemGroup;
 
             // Формула для группы панели
-            string formula = getFormula(panel.ItemGroup);
-            if (string.IsNullOrEmpty(formula))
+            Tuple<bool, string> formula = getFormula(panel.ItemGroup);
+            if (formula == null)
             {
                 // Добавление ошибки в панель.
                 Inspector.AddError($"Не найдена формула формирования марки для этой группы панелей {panel.ItemGroup}.",
                         System.Drawing.SystemIcons.Error);
             }
+            else if (!formula.Item1)
+            {
+                return panel.Mark;
+            }
             else
             {
                 // Получение марки панели по формуле
-                ParserFormula parserFormula = new ParserFormula(formula, panel);
-                try
-                {
-                    parserFormula.Parse();
-                    markDb = parserFormula.Result;
-                    if (string.IsNullOrEmpty(markDb))
-                    {
-                        throw new Exception();
-                    }
-                }
-                catch (Exception ex)
-                {
-                    Inspector.AddError($"Ошибка при определении марки панели. {ex.Message}",
-                        System.Drawing.SystemIcons.Error);
-                }                                
+                ParserFormula parserFormula = new ParserFormula(formula.Item2, panel);
+                parserFormula.Parse();
+                markDb = parserFormula.Result;
             }
             return markDb;
         }
 
-        private static string getFormula(string itemGroup)
+        private static Tuple<bool, string> getFormula(string itemGroup)
         {
-            string formula;
-            if (!dictFormules.TryGetValue(itemGroup, out formula))
+            Tuple<bool, string> resVal = null;
+            if (!dictFormules.TryGetValue(itemGroup, out resVal))
             {
                 // Поиск формулы в базе
-                formula = itemFormulaAdapter.GetFormula(itemGroup);
-                dictFormules.Add(itemGroup, formula);
+                var formulaRow = myTableFormula.GetFormula(itemGroup).FirstOrDefault();
+                if (formulaRow != null)
+                {
+                    resVal = new Tuple<bool, string>(formulaRow.HasFormula, formulaRow.FormulaValue);
+                }
+                dictFormules.Add(itemGroup, resVal);
             }
-            return formula;
+            return resVal;
         }
 
         public static bool Register(Panel item)
