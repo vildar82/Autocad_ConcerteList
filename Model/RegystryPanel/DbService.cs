@@ -16,17 +16,19 @@ namespace Autocad_ConcerteList.RegystryPanel
     {
         private static I_J_ItemConstructionTableAdapter itemConstrAdapter;        
         private static I_S_ItemGroupTableAdapter itemGroupAdapter;
-        private static myTableFormulaTableAdapter myTableFormula;
-        private static Dictionary<string, Tuple<bool, string>> dictFormules;
+        private static I_C_FormulaTableAdapter formulaAdapter;
+        //private static myFormulaTableAdapter myTableFormula;
+        private static Dictionary<decimal,string> dictFormules;
         private static Dictionary<string, decimal> dictBalconyDoor;
         private static Dictionary<string, decimal> dictBalconyCut;
 
         public static void Init ()
         {
             itemConstrAdapter = new I_J_ItemConstructionTableAdapter();
-            myTableFormula = new myTableFormulaTableAdapter();
+            //myTableFormula = new myFormulaTableAdapter();
             itemGroupAdapter = new I_S_ItemGroupTableAdapter();
-            dictFormules = new Dictionary<string, Tuple<bool, string>>();
+            formulaAdapter = new I_C_FormulaTableAdapter();
+            dictFormules = new Dictionary<decimal, string>();
 
             I_S_BalconyDoorTableAdapter balconyDoorAdapter = new I_S_BalconyDoorTableAdapter();
             var balconyDoorTable = balconyDoorAdapter.GetData();
@@ -58,46 +60,54 @@ namespace Autocad_ConcerteList.RegystryPanel
             var itemGroupRow = itemGroupAdapter.GetItemGroup(panel.ItemGroup).FirstOrDefault();
             if (itemGroupRow == null)
             {
-                Inspector.AddError($"Не найдена группа {panel.ItemGroup}.", System.Drawing.SystemIcons.Error);
-                return null;
+                throw new Exception($"Не найдена группа {panel.ItemGroup}.");                
             }
             panel.ItemGroupId = itemGroupRow.ItemGroupId;
             panel.ItemGroup = itemGroupRow.ItemGroup;
 
-            // Формула для группы панели
-            Tuple<bool, string> formula = getFormula(panel.ItemGroup);
-            if (formula == null)
+            bool hasFormula = false;
+            try
             {
-                // Добавление ошибки в панель.
-                Inspector.AddError($"Не найдена формула формирования марки для этой группы панелей {panel.ItemGroup}.",
-                        System.Drawing.SystemIcons.Error);
+                hasFormula = itemGroupRow.HasFormula;
             }
-            else if (!formula.Item1)
+            catch
             {
-                return panel.Mark;
+                // Не задано значение HasFormula - считается, что это ошибка определения формулы для группы.
+                throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}.");
+            }
+
+            if (hasFormula)
+            {
+                // Формула для группы панели
+                string formula = getFormula(itemGroupRow.FormulaId);
+                if (formula == null)
+                {
+                    // Добавление ошибки в панель.
+                    throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}.");
+                }
+                else
+                {
+                    // Получение марки панели по формуле                                        
+                    ParserFormula parserFormula = new ParserFormula(formula, panel);
+                    parserFormula.Parse();
+                    markDb = parserFormula.Result;
+                }
             }
             else
             {
-                // Получение марки панели по формуле
-                ParserFormula parserFormula = new ParserFormula(formula.Item2, panel);
-                parserFormula.Parse();
-                markDb = parserFormula.Result;
-            }
+                markDb = panel.Mark;
+            }     
             return markDb;
         }
 
-        private static Tuple<bool, string> getFormula(string itemGroup)
+        private static string getFormula(decimal idFormula)
         {
-            Tuple<bool, string> resVal = null;
-            if (!dictFormules.TryGetValue(itemGroup, out resVal))
+            string resVal = null;
+            if (!dictFormules.TryGetValue(idFormula, out resVal))
             {
-                // Поиск формулы в базе
-                var formulaRow = myTableFormula.GetFormula(itemGroup).FirstOrDefault();
-                if (formulaRow != null)
-                {
-                    resVal = new Tuple<bool, string>(formulaRow.HasFormula, formulaRow.FormulaValue);
-                }
-                dictFormules.Add(itemGroup, resVal);
+                // Поиск формулы в базе                
+                resVal = formulaAdapter.GetFormula(idFormula);                
+                dictFormules.Add(idFormula, resVal);
             }
             return resVal;
         }

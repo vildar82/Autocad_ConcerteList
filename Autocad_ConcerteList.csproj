@@ -58,6 +58,10 @@
       <HintPath>packages\AutoCAD.NET.20.0.1\lib\45\AcMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="AdvancedDataGridView, Version=0.1.0.10, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>packages\ADGV.0.1.0.10\lib\net40\AdvancedDataGridView.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="AutoCAD_PIK_Manager">
       <HintPath>..\..\AutoCAD_PIK_Manager\AutoCAD_PIK_Manager\bin\Release\AutoCAD_PIK_Manager.dll</HintPath>
       <Private>False</Private>

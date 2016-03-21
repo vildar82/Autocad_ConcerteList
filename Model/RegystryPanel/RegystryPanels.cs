@@ -74,8 +74,9 @@ namespace Autocad_ConcerteList.RegystryPanel
             // Если среди ошибок есть критические - то прерывание программы и показ немодальной формы для исправления.
             if (panelsErrors.Any(p => p.ErrorStatus.HasFlag(EnumErrorItem.DifferentParams)))
             {
+                var sortedPanelErrors = panelsErrors.OrderBy(p => p.ErrorStatus).ThenBy(p => p.Mark).ToList();
                 // Показ немодальной формы с ошибками в панелях                    
-                FormPanels formFatalErrPanels = new FormPanels(panelsErrors);
+                FormPanels formFatalErrPanels = new FormPanels(sortedPanelErrors);
                 formFatalErrPanels.BackColor = System.Drawing.Color.DarkRed;
                 formFatalErrPanels.Text = "Панели с ошибками";
                 formFatalErrPanels.buttonOk.Visible = false;
@@ -86,7 +87,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             }
 
             // Если есть некорректные марки, то показ их пользователю с запросом исправления блоков на чертеже.
-            FormPanels formErrPanels = new FormPanels(panelsErrors);            
+            FormPanels formErrPanels = new FormPanels(panelsErrors.OrderBy(p=>p.Mark).ToList());            
             formErrPanels.Text = "Панели с ошибками";
             if (Application.ShowModalDialog(formErrPanels) != System.Windows.Forms.DialogResult.OK)
             {
@@ -131,8 +132,8 @@ namespace Autocad_ConcerteList.RegystryPanel
                     catch (System.Exception ex)
                     {
                         // Ошибка при определении марки панели. Нужно разобираться с параметрами панели и с формулой.
-                        string err = $"Ошибка определения марки панели - {ex.Message}. Параметры панели: {panel.getInfo()}.";
-                        Inspector.AddError(err, System.Drawing.SystemIcons.Error);
+                        string err = $"Ошибка определения марки панели - {ex.Message}.\r\nПараметры панели: {panel.Info}";
+                        Inspector.AddError(err, panel.IdBlRef, System.Drawing.SystemIcons.Error);
                         Logger.Log.Fatal(ex, err);
                         continue;
                     }
@@ -167,9 +168,12 @@ namespace Autocad_ConcerteList.RegystryPanel
             {
                 foreach (var item in panelsToReg)
                 {
-                    if (DbService.Register(item))
+                    if (!DbService.ExistPanel(item))
                     {
-                        regCount++;
+                        if (DbService.Register(item))
+                        {
+                            regCount++;
+                        }
                     }
                 }
             }

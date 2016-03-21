@@ -56,7 +56,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         
         private DataTable1DataTable tableDataTable1;
         
-        private myTableFormulaDataTable tablemyTableFormula;
+        private myFormulaDataTable tablemyFormula;
         
         private global::System.Data.DataRelation relationFK_I_C_Formula_I_S_ItemGroup;
         
@@ -87,6 +87,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         private global::System.Data.DataRelation relationFK_I_S_BalconyDoor_I_S_Side;
         
         private global::System.Data.DataRelation relationFK_I_S_ItemGroup_I_C_Formula;
+        
+        private global::System.Data.DataRelation relationFK_I_S_ItemGroup_I_C_Formula1;
         
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
@@ -164,8 +166,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 if ((ds.Tables["DataTable1"] != null)) {
                     base.Tables.Add(new DataTable1DataTable(ds.Tables["DataTable1"]));
                 }
-                if ((ds.Tables["myTableFormula"] != null)) {
-                    base.Tables.Add(new myTableFormulaDataTable(ds.Tables["myTableFormula"]));
+                if ((ds.Tables["myFormula"] != null)) {
+                    base.Tables.Add(new myFormulaDataTable(ds.Tables["myFormula"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -349,9 +351,9 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public myTableFormulaDataTable myTableFormula {
+        public myFormulaDataTable myFormula {
             get {
-                return this.tablemyTableFormula;
+                return this.tablemyFormula;
             }
         }
         
@@ -470,8 +472,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 if ((ds.Tables["DataTable1"] != null)) {
                     base.Tables.Add(new DataTable1DataTable(ds.Tables["DataTable1"]));
                 }
-                if ((ds.Tables["myTableFormula"] != null)) {
-                    base.Tables.Add(new myTableFormulaDataTable(ds.Tables["myTableFormula"]));
+                if ((ds.Tables["myFormula"] != null)) {
+                    base.Tables.Add(new myFormulaDataTable(ds.Tables["myFormula"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -602,10 +604,10 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                     this.tableDataTable1.InitVars();
                 }
             }
-            this.tablemyTableFormula = ((myTableFormulaDataTable)(base.Tables["myTableFormula"]));
+            this.tablemyFormula = ((myFormulaDataTable)(base.Tables["myFormula"]));
             if ((initTable == true)) {
-                if ((this.tablemyTableFormula != null)) {
-                    this.tablemyTableFormula.InitVars();
+                if ((this.tablemyFormula != null)) {
+                    this.tablemyFormula.InitVars();
                 }
             }
             this.relationFK_I_C_Formula_I_S_ItemGroup = this.Relations["FK_I_C_Formula_I_S_ItemGroup"];
@@ -623,6 +625,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             this.relationFK_I_S_BalconyCut_I_S_Side = this.Relations["FK_I_S_BalconyCut_I_S_Side"];
             this.relationFK_I_S_BalconyDoor_I_S_Side = this.Relations["FK_I_S_BalconyDoor_I_S_Side"];
             this.relationFK_I_S_ItemGroup_I_C_Formula = this.Relations["FK_I_S_ItemGroup_I_C_Formula"];
+            this.relationFK_I_S_ItemGroup_I_C_Formula1 = this.Relations["FK_I_S_ItemGroup_I_C_Formula1"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -665,8 +668,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             base.Tables.Add(this.tableI_S_Side);
             this.tableDataTable1 = new DataTable1DataTable();
             base.Tables.Add(this.tableDataTable1);
-            this.tablemyTableFormula = new myTableFormulaDataTable();
-            base.Tables.Add(this.tablemyTableFormula);
+            this.tablemyFormula = new myFormulaDataTable();
+            base.Tables.Add(this.tablemyFormula);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_I_C_Formula_I_S_ItemGroup", new global::System.Data.DataColumn[] {
                         this.tableI_C_Formula.FormulaIdColumn}, new global::System.Data.DataColumn[] {
@@ -735,6 +738,10 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         this.tableDataTable1.FormulaIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableI_S_ItemGroup.FormulaIdColumn}, false);
             this.Relations.Add(this.relationFK_I_S_ItemGroup_I_C_Formula);
+            this.relationFK_I_S_ItemGroup_I_C_Formula1 = new global::System.Data.DataRelation("FK_I_S_ItemGroup_I_C_Formula1", new global::System.Data.DataColumn[] {
+                        this.tableI_C_Formula.FormulaIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableDataTable1.FormulaIdColumn}, false);
+            this.Relations.Add(this.relationFK_I_S_ItemGroup_I_C_Formula1);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -835,7 +842,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializemyTableFormula() {
+        private bool ShouldSerializemyFormula() {
             return false;
         }
         
@@ -943,7 +950,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         public delegate void DataTable1RowChangeEventHandler(object sender, DataTable1RowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void myTableFormulaRowChangeEventHandler(object sender, myTableFormulaRowChangeEvent e);
+        public delegate void myFormulaRowChangeEventHandler(object sender, myFormulaRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -5725,11 +5732,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             private global::System.Data.DataColumn columnItemGroup;
             
-            private global::System.Data.DataColumn columnDescription;
-            
             private global::System.Data.DataColumn columnFormulaId;
-            
-            private global::System.Data.DataColumn columnFormulaAuthor;
             
             private global::System.Data.DataColumn columnHasFormula;
             
@@ -5776,25 +5779,9 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn DescriptionColumn {
-                get {
-                    return this.columnDescription;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public global::System.Data.DataColumn FormulaIdColumn {
                 get {
                     return this.columnFormulaId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn FormulaAuthorColumn {
-                get {
-                    return this.columnFormulaAuthor;
                 }
             }
             
@@ -5843,14 +5830,15 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row AddDataTable1Row(string ItemGroup, string Description, decimal FormulaId, string FormulaAuthor, bool HasFormula) {
+            public DataTable1Row AddDataTable1Row(string ItemGroup, I_C_FormulaRow parentI_C_FormulaRowByFK_I_S_ItemGroup_I_C_Formula1, bool HasFormula) {
                 DataTable1Row rowDataTable1Row = ((DataTable1Row)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ItemGroup,
-                        Description,
-                        FormulaId,
-                        FormulaAuthor,
+                        null,
                         HasFormula};
+                if ((parentI_C_FormulaRowByFK_I_S_ItemGroup_I_C_Formula1 != null)) {
+                    columnValuesArray[1] = parentI_C_FormulaRowByFK_I_S_ItemGroup_I_C_Formula1[0];
+                }
                 rowDataTable1Row.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTable1Row);
                 return rowDataTable1Row;
@@ -5881,9 +5869,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
                 this.columnItemGroup = base.Columns["ItemGroup"];
-                this.columnDescription = base.Columns["Description"];
                 this.columnFormulaId = base.Columns["FormulaId"];
-                this.columnFormulaAuthor = base.Columns["FormulaAuthor"];
                 this.columnHasFormula = base.Columns["HasFormula"];
             }
             
@@ -5892,21 +5878,15 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             private void InitClass() {
                 this.columnItemGroup = new global::System.Data.DataColumn("ItemGroup", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnItemGroup);
-                this.columnDescription = new global::System.Data.DataColumn("Description", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnDescription);
                 this.columnFormulaId = new global::System.Data.DataColumn("FormulaId", typeof(decimal), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFormulaId);
-                this.columnFormulaAuthor = new global::System.Data.DataColumn("FormulaAuthor", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFormulaAuthor);
                 this.columnHasFormula = new global::System.Data.DataColumn("HasFormula", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHasFormula);
                 this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
                                 this.columnFormulaId}, true));
                 this.columnItemGroup.MaxLength = 255;
-                this.columnDescription.MaxLength = 50;
                 this.columnFormulaId.AllowDBNull = false;
                 this.columnFormulaId.Unique = true;
-                this.columnFormulaAuthor.MaxLength = 50;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6038,7 +6018,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class myTableFormulaDataTable : global::System.Data.TypedTableBase<myTableFormulaRow> {
+        public partial class myFormulaDataTable : global::System.Data.TypedTableBase<myFormulaRow> {
             
             private global::System.Data.DataColumn columnHasFormula;
             
@@ -6046,8 +6026,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myTableFormulaDataTable() {
-                this.TableName = "myTableFormula";
+            public myFormulaDataTable() {
+                this.TableName = "myFormula";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -6055,7 +6035,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal myTableFormulaDataTable(global::System.Data.DataTable table) {
+            internal myFormulaDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -6072,7 +6052,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected myTableFormulaDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected myFormulaDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
@@ -6104,46 +6084,46 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myTableFormulaRow this[int index] {
+            public myFormulaRow this[int index] {
                 get {
-                    return ((myTableFormulaRow)(this.Rows[index]));
+                    return ((myFormulaRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event myTableFormulaRowChangeEventHandler myTableFormulaRowChanging;
+            public event myFormulaRowChangeEventHandler myFormulaRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event myTableFormulaRowChangeEventHandler myTableFormulaRowChanged;
+            public event myFormulaRowChangeEventHandler myFormulaRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event myTableFormulaRowChangeEventHandler myTableFormulaRowDeleting;
+            public event myFormulaRowChangeEventHandler myFormulaRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event myTableFormulaRowChangeEventHandler myTableFormulaRowDeleted;
+            public event myFormulaRowChangeEventHandler myFormulaRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddmyTableFormulaRow(myTableFormulaRow row) {
+            public void AddmyFormulaRow(myFormulaRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myTableFormulaRow AddmyTableFormulaRow(bool HasFormula, string FormulaValue) {
-                myTableFormulaRow rowmyTableFormulaRow = ((myTableFormulaRow)(this.NewRow()));
+            public myFormulaRow AddmyFormulaRow(bool HasFormula, string FormulaValue) {
+                myFormulaRow rowmyFormulaRow = ((myFormulaRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         HasFormula,
                         FormulaValue};
-                rowmyTableFormulaRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowmyTableFormulaRow);
-                return rowmyTableFormulaRow;
+                rowmyFormulaRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowmyFormulaRow);
+                return rowmyFormulaRow;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                myTableFormulaDataTable cln = ((myTableFormulaDataTable)(base.Clone()));
+                myFormulaDataTable cln = ((myFormulaDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -6151,7 +6131,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new myTableFormulaDataTable();
+                return new myFormulaDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -6173,28 +6153,28 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myTableFormulaRow NewmyTableFormulaRow() {
-                return ((myTableFormulaRow)(this.NewRow()));
+            public myFormulaRow NewmyFormulaRow() {
+                return ((myFormulaRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new myTableFormulaRow(builder);
+                return new myFormulaRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(myTableFormulaRow);
+                return typeof(myFormulaRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.myTableFormulaRowChanged != null)) {
-                    this.myTableFormulaRowChanged(this, new myTableFormulaRowChangeEvent(((myTableFormulaRow)(e.Row)), e.Action));
+                if ((this.myFormulaRowChanged != null)) {
+                    this.myFormulaRowChanged(this, new myFormulaRowChangeEvent(((myFormulaRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6202,8 +6182,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.myTableFormulaRowChanging != null)) {
-                    this.myTableFormulaRowChanging(this, new myTableFormulaRowChangeEvent(((myTableFormulaRow)(e.Row)), e.Action));
+                if ((this.myFormulaRowChanging != null)) {
+                    this.myFormulaRowChanging(this, new myFormulaRowChangeEvent(((myFormulaRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6211,8 +6191,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.myTableFormulaRowDeleted != null)) {
-                    this.myTableFormulaRowDeleted(this, new myTableFormulaRowChangeEvent(((myTableFormulaRow)(e.Row)), e.Action));
+                if ((this.myFormulaRowDeleted != null)) {
+                    this.myFormulaRowDeleted(this, new myFormulaRowChangeEvent(((myFormulaRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6220,14 +6200,14 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.myTableFormulaRowDeleting != null)) {
-                    this.myTableFormulaRowDeleting(this, new myTableFormulaRowChangeEvent(((myTableFormulaRow)(e.Row)), e.Action));
+                if ((this.myFormulaRowDeleting != null)) {
+                    this.myFormulaRowDeleting(this, new myFormulaRowChangeEvent(((myFormulaRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovemyTableFormulaRow(myTableFormulaRow row) {
+            public void RemovemyFormulaRow(myFormulaRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -6254,7 +6234,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "myTableFormulaDataTable";
+                attribute2.FixedValue = "myFormulaDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -6963,6 +6943,17 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 }
                 else {
                     return ((I_S_ItemGroupRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_C_Formula_I_S_ItemGroup"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public DataTable1Row[] GetDataTable1Rows() {
+                if ((this.Table.ChildRelations["FK_I_S_ItemGroup_I_C_Formula1"] == null)) {
+                    return new DataTable1Row[0];
+                }
+                else {
+                    return ((DataTable1Row[])(base.GetChildRows(this.Table.ChildRelations["FK_I_S_ItemGroup_I_C_Formula1"])));
                 }
             }
         }
@@ -8552,44 +8543,12 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string Description {
-                get {
-                    try {
-                        return ((string)(this[this.tableDataTable1.DescriptionColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Description\' в таблице \'DataTable1\' равно DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableDataTable1.DescriptionColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public decimal FormulaId {
                 get {
                     return ((decimal)(this[this.tableDataTable1.FormulaIdColumn]));
                 }
                 set {
                     this[this.tableDataTable1.FormulaIdColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string FormulaAuthor {
-                get {
-                    try {
-                        return ((string)(this[this.tableDataTable1.FormulaAuthorColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'FormulaAuthor\' в таблице \'DataTable1\' равно DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tableDataTable1.FormulaAuthorColumn] = value;
                 }
             }
             
@@ -8611,6 +8570,17 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public I_C_FormulaRow I_C_FormulaRow {
+                get {
+                    return ((I_C_FormulaRow)(this.GetParentRow(this.Table.ParentRelations["FK_I_S_ItemGroup_I_C_Formula1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_I_S_ItemGroup_I_C_Formula1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsItemGroupNull() {
                 return this.IsNull(this.tableDataTable1.ItemGroupColumn);
             }
@@ -8619,30 +8589,6 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetItemGroupNull() {
                 this[this.tableDataTable1.ItemGroupColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsDescriptionNull() {
-                return this.IsNull(this.tableDataTable1.DescriptionColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetDescriptionNull() {
-                this[this.tableDataTable1.DescriptionColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsFormulaAuthorNull() {
-                return this.IsNull(this.tableDataTable1.FormulaAuthorColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetFormulaAuthorNull() {
-                this[this.tableDataTable1.FormulaAuthorColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8672,15 +8618,15 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class myTableFormulaRow : global::System.Data.DataRow {
+        public partial class myFormulaRow : global::System.Data.DataRow {
             
-            private myTableFormulaDataTable tablemyTableFormula;
+            private myFormulaDataTable tablemyFormula;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal myTableFormulaRow(global::System.Data.DataRowBuilder rb) : 
+            internal myFormulaRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tablemyTableFormula = ((myTableFormulaDataTable)(this.Table));
+                this.tablemyFormula = ((myFormulaDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8688,14 +8634,14 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             public bool HasFormula {
                 get {
                     try {
-                        return ((bool)(this[this.tablemyTableFormula.HasFormulaColumn]));
+                        return ((bool)(this[this.tablemyFormula.HasFormulaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'HasFormula\' в таблице \'myTableFormula\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'HasFormula\' в таблице \'myFormula\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemyTableFormula.HasFormulaColumn] = value;
+                    this[this.tablemyFormula.HasFormulaColumn] = value;
                 }
             }
             
@@ -8704,39 +8650,39 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             public string FormulaValue {
                 get {
                     try {
-                        return ((string)(this[this.tablemyTableFormula.FormulaValueColumn]));
+                        return ((string)(this[this.tablemyFormula.FormulaValueColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'FormulaValue\' в таблице \'myTableFormula\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'FormulaValue\' в таблице \'myFormula\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tablemyTableFormula.FormulaValueColumn] = value;
+                    this[this.tablemyFormula.FormulaValueColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsHasFormulaNull() {
-                return this.IsNull(this.tablemyTableFormula.HasFormulaColumn);
+                return this.IsNull(this.tablemyFormula.HasFormulaColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetHasFormulaNull() {
-                this[this.tablemyTableFormula.HasFormulaColumn] = global::System.Convert.DBNull;
+                this[this.tablemyFormula.HasFormulaColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsFormulaValueNull() {
-                return this.IsNull(this.tablemyTableFormula.FormulaValueColumn);
+                return this.IsNull(this.tablemyFormula.FormulaValueColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetFormulaValueNull() {
-                this[this.tablemyTableFormula.FormulaValueColumn] = global::System.Convert.DBNull;
+                this[this.tablemyFormula.FormulaValueColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -9288,22 +9234,22 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class myTableFormulaRowChangeEvent : global::System.EventArgs {
+        public class myFormulaRowChangeEvent : global::System.EventArgs {
             
-            private myTableFormulaRow eventRow;
+            private myFormulaRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myTableFormulaRowChangeEvent(myTableFormulaRow row, global::System.Data.DataRowAction action) {
+            public myFormulaRowChangeEvent(myFormulaRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myTableFormulaRow Row {
+            public myFormulaRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -9972,7 +9918,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = @"SELECT        ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO, BuildingPartId, ItemGroupISO, ItemDescription, ItemGroupStatic, ItemGroupCut, 
@@ -9991,12 +9937,20 @@ ORDER BY I_S_ItemGroup.ItemGroupUsage, I_C_ItemGroupLong.ItemGroupLong, I_S_Item
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = "SELECT BuildingPartId, FormulaId, HasFormula, ItemDescription, ItemGroup, ItemGro" +
+            this._commandCollection[2].CommandText = @"SELECT        ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO, BuildingPartId, ItemGroupISO, ItemDescription, ItemGroupStatic, ItemGroupCut, 
+                         ItemGroupLayer
+FROM            I_S_ItemGroup
+WHERE        (ItemGroupLongId = @idGroupLong)";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@idGroupLong", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupLongId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[3].Connection = this.Connection;
+            this._commandCollection[3].CommandText = "SELECT BuildingPartId, FormulaId, HasFormula, ItemDescription, ItemGroup, ItemGro" +
                 "upCut, ItemGroupISO, ItemGroupId, ItemGroupLayer, ItemGroupLongId, ItemGroupStat" +
                 "ic, ItemGroupTextISO, ItemGroupUsage FROM I_S_ItemGroup WHERE (ItemGroup = @item" +
                 "Group)";
-            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10038,8 +9992,25 @@ ORDER BY I_S_ItemGroup.ItemGroupUsage, I_C_ItemGroupLong.ItemGroupLong, I_S_Item
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ConcerteDataSet.I_S_ItemGroupDataTable GetItemGroup(string itemGroup) {
+        public virtual ConcerteDataSet.I_S_ItemGroupDataTable GetGroupByLongId(global::System.Nullable<decimal> idGroupLong) {
             this.Adapter.SelectCommand = this.CommandCollection[2];
+            if ((idGroupLong.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((decimal)(idGroupLong.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            ConcerteDataSet.I_S_ItemGroupDataTable dataTable = new ConcerteDataSet.I_S_ItemGroupDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual ConcerteDataSet.I_S_ItemGroupDataTable GetItemGroup(string itemGroup) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
             if ((itemGroup == null)) {
                 this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
@@ -10698,11 +10669,17 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description FR
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        I_C_Formula.*\r\nFROM            I_C_Formula";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT        FormulaValue\r\nFROM            I_C_Formula\r\nWHERE        (FormulaId " +
+                "= @id)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@id", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "FormulaId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -10942,6 +10919,35 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description FR
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(string FormulaValue, string FormulaAuthor, string FormulaCreateDate, string Description, decimal Original_FormulaId, string Original_FormulaValue, string Original_FormulaAuthor, string Original_FormulaCreateDate, string Original_Description) {
             return this.Update(FormulaValue, FormulaAuthor, FormulaCreateDate, Description, Original_FormulaId, Original_FormulaValue, Original_FormulaAuthor, Original_FormulaCreateDate, Original_Description, Original_FormulaId);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual string GetFormula(decimal id) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            command.Parameters[0].Value = ((decimal)(id));
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((string)(returnValue));
+            }
         }
     }
     
@@ -16086,9 +16092,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "DataTable1";
             tableMapping.ColumnMappings.Add("ItemGroup", "ItemGroup");
-            tableMapping.ColumnMappings.Add("Description", "Description");
             tableMapping.ColumnMappings.Add("FormulaId", "FormulaId");
-            tableMapping.ColumnMappings.Add("FormulaAuthor", "FormulaAuthor");
             tableMapping.ColumnMappings.Add("HasFormula", "HasFormula");
             this._adapter.TableMappings.Add(tableMapping);
         }
@@ -16106,10 +16110,8 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
             this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = @"SELECT        I_S_ItemGroup.ItemGroup, I_S_ItemGroup.HasFormula, I_C_Formula.Description, I_C_Formula.FormulaAuthor, I_C_Formula.FormulaId
-FROM            I_C_Formula INNER JOIN
-                         I_S_ItemGroup ON I_C_Formula.FormulaId = I_S_ItemGroup.FormulaId
-ORDER BY I_C_Formula.FormulaId";
+            this._commandCollection[0].CommandText = "SELECT        ItemGroup, HasFormula, FormulaId\r\nFROM            I_S_ItemGroup\r\nWH" +
+                "ERE        (NOT (HasFormula IS NULL))\r\nORDER BY ItemGroup";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         
@@ -16134,7 +16136,7 @@ ORDER BY I_C_Formula.FormulaId";
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class myTableFormulaTableAdapter : global::System.ComponentModel.Component {
+    public partial class myFormulaTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -16148,7 +16150,7 @@ ORDER BY I_C_Formula.FormulaId";
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public myTableFormulaTableAdapter() {
+        public myFormulaTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -16245,7 +16247,7 @@ ORDER BY I_C_Formula.FormulaId";
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "myTableFormula";
+            tableMapping.DataSetTable = "myFormula";
             tableMapping.ColumnMappings.Add("HasFormula", "HasFormula");
             tableMapping.ColumnMappings.Add("FormulaValue", "FormulaValue");
             this._adapter.TableMappings.Add(tableMapping);
@@ -16276,7 +16278,7 @@ ORDER BY I_C_Formula.FormulaId";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ConcerteDataSet.myTableFormulaDataTable GetFormula(string itemGroup) {
+        public virtual ConcerteDataSet.myFormulaDataTable GetFormula(string itemGroup) {
             this.Adapter.SelectCommand = this.CommandCollection[0];
             if ((itemGroup == null)) {
                 this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
@@ -16284,7 +16286,7 @@ ORDER BY I_C_Formula.FormulaId";
             else {
                 this.Adapter.SelectCommand.Parameters[0].Value = ((string)(itemGroup));
             }
-            ConcerteDataSet.myTableFormulaDataTable dataTable = new ConcerteDataSet.myTableFormulaDataTable();
+            ConcerteDataSet.myFormulaDataTable dataTable = new ConcerteDataSet.myFormulaDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -16723,6 +16725,15 @@ ORDER BY I_C_Formula.FormulaId";
                     allChangedRows.AddRange(updatedRows);
                 }
             }
+            if ((this._i_C_FormulaTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._i_C_FormulaTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
             if ((this._i_C_ItemGroupShortTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -16756,15 +16767,6 @@ ORDER BY I_C_Formula.FormulaId";
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._i_C_BuildingPartTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
-            if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._i_C_FormulaTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -16866,6 +16868,14 @@ ORDER BY I_C_Formula.FormulaId";
                     allAddedRows.AddRange(addedRows);
                 }
             }
+            if ((this._i_C_FormulaTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._i_C_FormulaTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
             if ((this._i_C_ItemGroupShortTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -16895,14 +16905,6 @@ ORDER BY I_C_Formula.FormulaId";
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_C_BuildingPartTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
-            if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._i_C_FormulaTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -17044,14 +17046,6 @@ ORDER BY I_C_Formula.FormulaId";
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._i_C_FormulaTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._i_C_BuildingPartTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.I_C_BuildingPart.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -17081,6 +17075,14 @@ ORDER BY I_C_Formula.FormulaId";
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_C_ItemGroupShortTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._i_C_FormulaTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._i_C_FormulaTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

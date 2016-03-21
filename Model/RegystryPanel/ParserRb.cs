@@ -55,6 +55,11 @@ namespace Autocad_ConcerteList.RegystryPanel
         /// </summary>
         public void Parse()
         {
+            if (rb.AsArray().Length < 4)
+            {
+                return;
+            }
+
             Panels = new List<Panel>();
             Panel panel = new Panel ();
             int countLB = 0;
