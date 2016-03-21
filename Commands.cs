@@ -86,6 +86,9 @@ namespace Autocad_ConcerteList
                     return;                    
                 }
 
+                // Поиск блока для кажждой панели
+                Panel.FindBlocks(parserRb.Panels);
+
                 // Регистрация ЖБИ изделий в базе.
                 RegystryPanels registryPanels = new RegystryPanels(parserRb.Panels);
                 int regPanelsCount = registryPanels.Registry();

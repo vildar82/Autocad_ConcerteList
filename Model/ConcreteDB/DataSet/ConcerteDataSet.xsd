@@ -1145,7 +1145,7 @@ SELECT SideId, Side FROM I_S_Side WHERE (SideId = @SideId)</CommandText>
                     <CommandText>SELECT        ItemGroup, HasFormula, FormulaId
 FROM            I_S_ItemGroup
 WHERE        (NOT (HasFormula IS NULL))
-ORDER BY ItemGroup</CommandText>
+ORDER BY FormulaId</CommandText>
                     <Parameters />
                   </DbCommand>
                 </SelectCommand>

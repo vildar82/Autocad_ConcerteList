@@ -57,7 +57,17 @@ namespace Autocad_ConcerteList.RegystryPanel
             {
                 if (!_alreadyCalcExtents)
                 {
-                    FindBlock();
+                    //FindBlock();
+                    using (var blRef = IdBlRef.Open( OpenMode.ForRead, false, true)as BlockReference)
+                    {
+                        try
+                        {
+                            _extents = blRef.GeometricExtents;
+                        }
+                        catch
+                        {                            
+                        }
+                    }
                 }
                 if (_isNullExtents)
                 {
@@ -127,6 +137,8 @@ namespace Autocad_ConcerteList.RegystryPanel
             return info;
         }
 
+        
+
         /// <summary>
         /// Создание новой панели с отличающимися паркметрами
         /// </summary>
@@ -136,6 +148,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             var firstP = panelGroupMark.First();
             Panel resPanel = new Panel()
             {
+                IdBlRef = firstP.IdBlRef,
                 Mark = panelGroupMark.Key,
                 BlockName = firstP.BlockName,
                 MarkDb = "неопределено",
@@ -244,6 +257,38 @@ namespace Autocad_ConcerteList.RegystryPanel
         public override string ToString()
         {
             return Mark;
+        }
+
+        public static void FindBlocks(List<Panel> panels)
+        {
+            // Найти блоки со старой маркой и исправить на марку из базы.
+            Document doc = Application.DocumentManager.MdiActiveDocument;
+            Database db = doc.Database;
+            var panelsList = panels.ToList();
+            using (var t = db.TransactionManager.StartTransaction())
+            {
+                var ms = SymbolUtilityServices.GetBlockModelSpaceId(db).GetObject(OpenMode.ForRead) as BlockTableRecord;
+                foreach (var idEnt in ms)
+                {
+                    var blRef = idEnt.GetObject(OpenMode.ForRead, false, true) as BlockReference;
+                    if (blRef == null || blRef.AttributeCollection == null) continue;
+
+                    foreach (ObjectId idAtr in blRef.AttributeCollection)
+                    {
+                        var atrRef = idAtr.GetObject(OpenMode.ForRead, false, true) as AttributeReference;
+                        if (atrRef.Tag.Equals("МАРКА", StringComparison.OrdinalIgnoreCase))
+                        {
+                            var panelsMark = panelsList.FindAll(p => p.Mark.Equals(atrRef.TextString, StringComparison.OrdinalIgnoreCase));                            
+                            foreach (var panel in panelsMark)
+                            {
+                                panel.IdBlRef = blRef.Id;
+                            }                            
+                            break;
+                        }
+                    }                    
+                }
+                t.Commit();
+            }
         }
 
         public void FindBlock()

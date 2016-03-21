@@ -16111,7 +16111,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT        ItemGroup, HasFormula, FormulaId\r\nFROM            I_S_ItemGroup\r\nWH" +
-                "ERE        (NOT (HasFormula IS NULL))\r\nORDER BY ItemGroup";
+                "ERE        (NOT (HasFormula IS NULL))\r\nORDER BY FormulaId";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
         }
         

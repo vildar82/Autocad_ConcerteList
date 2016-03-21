@@ -53,7 +53,7 @@
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ReadOnly = true;
             this.textBoxInfo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxInfo.Size = new System.Drawing.Size(644, 228);
+            this.textBoxInfo.Size = new System.Drawing.Size(575, 237);
             this.textBoxInfo.TabIndex = 1;
             this.textBoxInfo.WordWrap = false;
             // 
@@ -61,7 +61,7 @@
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(581, 630);
+            this.buttonCancel.Location = new System.Drawing.Point(512, 653);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
@@ -73,7 +73,7 @@
             // 
             this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(500, 630);
+            this.buttonOk.Location = new System.Drawing.Point(431, 653);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 2;
@@ -97,8 +97,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.textBoxInfo);
-            this.splitContainer1.Size = new System.Drawing.Size(644, 610);
-            this.splitContainer1.SplitterDistance = 378;
+            this.splitContainer1.Size = new System.Drawing.Size(575, 633);
+            this.splitContainer1.SplitterDistance = 392;
             this.splitContainer1.TabIndex = 3;
             // 
             // listView1
@@ -113,7 +113,7 @@
             this.listView1.MultiSelect = false;
             this.listView1.Name = "listView1";
             this.listView1.ShowGroups = false;
-            this.listView1.Size = new System.Drawing.Size(644, 378);
+            this.listView1.Size = new System.Drawing.Size(575, 392);
             this.listView1.TabIndex = 0;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.Details;
@@ -122,18 +122,18 @@
             // Mark
             // 
             this.Mark.Text = "Марка";
-            this.Mark.Width = 250;
+            this.Mark.Width = 280;
             // 
             // Status
             // 
             this.Status.Text = "Статус";
-            this.Status.Width = 200;
+            this.Status.Width = 307;
             // 
             // buttonShow
             // 
             this.buttonShow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonShow.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonShow.Location = new System.Drawing.Point(74, 630);
+            this.buttonShow.Location = new System.Drawing.Point(5, 653);
             this.buttonShow.Name = "buttonShow";
             this.buttonShow.Size = new System.Drawing.Size(75, 23);
             this.buttonShow.TabIndex = 2;
@@ -148,7 +148,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(668, 662);
+            this.ClientSize = new System.Drawing.Size(599, 685);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.buttonShow);

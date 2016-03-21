@@ -119,7 +119,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
             else
             {
                 // Ошибка. Параметр из формулы не найден в списке параметров объекта ItemEntryData
-                throw new Exception($"Ошибка формирования марки панели по формуле. Не определен параметр {fieldName}.");
+                throw new Exception($"Ошибка формирования марки панели по формуле. Не определен параметр {fieldName}");
             }
         }
 

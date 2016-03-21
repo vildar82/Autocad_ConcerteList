@@ -60,7 +60,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             var itemGroupRow = itemGroupAdapter.GetItemGroup(panel.ItemGroup).FirstOrDefault();
             if (itemGroupRow == null)
             {
-                throw new Exception($"Не найдена группа {panel.ItemGroup}.");                
+                throw new Exception($"Не найдена группа {panel.ItemGroup}");                
             }
             panel.ItemGroupId = itemGroupRow.ItemGroupId;
             panel.ItemGroup = itemGroupRow.ItemGroup;
@@ -73,7 +73,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             catch
             {
                 // Не задано значение HasFormula - считается, что это ошибка определения формулы для группы.
-                throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}.");
+                throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
             }
 
             if (hasFormula)
@@ -83,7 +83,7 @@ namespace Autocad_ConcerteList.RegystryPanel
                 if (formula == null)
                 {
                     // Добавление ошибки в панель.
-                    throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}.");
+                    throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
                 }
                 else
                 {
