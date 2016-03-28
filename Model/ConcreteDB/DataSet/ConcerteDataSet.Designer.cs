@@ -13689,7 +13689,7 @@ SELECT ItemConstructionSeriesId, ItemConstructionId, SeriesId FROM I_J_ItemSerie
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
-        public virtual int InsertNewSeries(global::System.Nullable<decimal> ItemConstructionId, global::System.Nullable<decimal> SeriesId) {
+        public virtual int InsertItem(global::System.Nullable<decimal> ItemConstructionId, global::System.Nullable<decimal> SeriesId) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
             if ((ItemConstructionId.HasValue == true)) {
                 command.Parameters[0].Value = ((decimal)(ItemConstructionId.Value));

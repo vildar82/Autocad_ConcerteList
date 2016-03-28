@@ -22,6 +22,10 @@ namespace Autocad_ConcerteList.RegystryPanel
         /// </summary>
         public string Mark { get; set; }
         /// <summary>
+        /// Покраска
+        /// </summary>
+        public string Color { get; set; }
+        /// <summary>
         /// Марка из базы
         /// </summary>
         public string MarkDb { get; set; }
@@ -133,7 +137,8 @@ namespace Autocad_ConcerteList.RegystryPanel
                           (FormworkMirror == null ? "" : "Зеркальность \t" + FormworkMirror + "\r\n") +
                           (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
                           (Weight == null ? "" : "Вес, кг \t\t" + Weight + "\r\n") +
-                          (Volume == null ? "" : "Объем, м3 \t" + Volume);
+                          (Volume == null ? "" : "Объем, м3 \t" + Volume + "\r\n") +
+                          (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color);
             return info;
         }
 
@@ -150,6 +155,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             {
                 IdBlRef = firstP.IdBlRef,
                 Mark = panelGroupMark.Key,
+                Color = firstP.Color,
                 BlockName = firstP.BlockName,
                 MarkDb = "неопределено",
                 ItemGroup = firstP.ItemGroup,
@@ -213,6 +219,9 @@ namespace Autocad_ConcerteList.RegystryPanel
                 case "Mark":
                     this.Mark = value?.ToString();
                     break;
+                case "Color":
+                    this.Color = value?.ToString();
+                    break;
                 case "ItemGroup":
                     this.ItemGroup = value?.ToString();
                     break;
@@ -238,6 +247,7 @@ namespace Autocad_ConcerteList.RegystryPanel
                     this.Electrics = value?.ToString().ToLower();
                     break;                
                 default:
+                    Logger.Log.Error($"Неопределенный параметр в панели - {param} = {value}, переданный из лиспа.");
                     break;
             }
         }

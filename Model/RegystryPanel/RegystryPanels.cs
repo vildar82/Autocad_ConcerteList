@@ -160,17 +160,23 @@ namespace Autocad_ConcerteList.RegystryPanel
                 return 0;
             }
             int regCount = 0;
+
+            // Форма регистрации панелей
             FormPanels formPanels = new FormPanels(panelsToReg);
             formPanels.BackColor = System.Drawing.Color.Green;
             formPanels.Text = "Регистрация новых панелей";
             formPanels.buttonOk.Text = "Регистрация";
+            var series = DbService.GetSeries();
+            var serPik1 = series.First(s => s.Series.Equals("ПИК-1.0"));
+            formPanels.SetSeries(series, serPik1);            
             if (Application.ShowModalDialog(formPanels) == System.Windows.Forms.DialogResult.OK)
             {
+                var ser = formPanels.comboBoxSer.SelectedItem as Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow;
                 foreach (var item in panelsToReg)
                 {
                     if (!DbService.ExistPanel(item))
                     {
-                        if (DbService.Register(item))
+                        if (DbService.Register(item, ser))
                         {
                             regCount++;
                         }
@@ -179,7 +185,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             }
             else
             {
-                // Прерывание и открытие этого окна в немодальном виде
+                // Прерывание и открытие этого окна в немодальном виде                
                 formPanels.buttonOk.Visible = false;
                 formPanels.buttonCancel.Visible = false;
                 Application.ShowModelessDialog(formPanels);

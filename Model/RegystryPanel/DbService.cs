@@ -17,6 +17,8 @@ namespace Autocad_ConcerteList.RegystryPanel
         private static I_J_ItemConstructionTableAdapter itemConstrAdapter;        
         private static I_S_ItemGroupTableAdapter itemGroupAdapter;
         private static I_C_FormulaTableAdapter formulaAdapter;
+        private static I_C_SeriesTableAdapter seriesAdapter;
+        private static I_J_ItemSeriesTableAdapter itemSeriesAdapter;
         //private static myFormulaTableAdapter myTableFormula;
         private static Dictionary<decimal,string> dictFormules;
         private static Dictionary<string, decimal> dictBalconyDoor;
@@ -28,6 +30,8 @@ namespace Autocad_ConcerteList.RegystryPanel
             //myTableFormula = new myFormulaTableAdapter();
             itemGroupAdapter = new I_S_ItemGroupTableAdapter();
             formulaAdapter = new I_C_FormulaTableAdapter();
+            seriesAdapter = new I_C_SeriesTableAdapter();
+            itemSeriesAdapter = new I_J_ItemSeriesTableAdapter();
             dictFormules = new Dictionary<decimal, string>();
 
             I_S_BalconyDoorTableAdapter balconyDoorAdapter = new I_S_BalconyDoorTableAdapter();
@@ -47,6 +51,12 @@ namespace Autocad_ConcerteList.RegystryPanel
             var count = itemConstrAdapter.IsMarkExecute(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness, panel.Formwork,
                 panel.BalconyDoor, panel.BalconyCut, panel.FormworkMirror, panel.Electrics);
             return count != null && count != 0;            
+        }
+
+        public static List<Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow> GetSeries()
+        {
+            var series = seriesAdapter.GetData();
+            return series.ToList();
         }
 
         /// <summary>
@@ -110,9 +120,9 @@ namespace Autocad_ConcerteList.RegystryPanel
                 dictFormules.Add(idFormula, resVal);
             }
             return resVal;
-        }
+        }        
 
-        public static bool Register(Panel item)
+        public static bool Register(Panel item, Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow ser)
         {
             // Регистрация панели в базе.                        
 
@@ -135,10 +145,12 @@ namespace Autocad_ConcerteList.RegystryPanel
             }
 
 #if !NODB
-            itemConstrAdapter.InsertItem(item.ItemGroupId, item.Lenght, item.Height, item.Thickness, item.Formwork,
+            var itemConstrId = itemConstrAdapter.InsertItem(item.ItemGroupId, item.Lenght, item.Height, item.Thickness, item.Formwork,
                 idBalDoor, idBalCut, item.FormworkMirror, item.Electrics, item.Weight, item.Volume, item.MarkDb);
+
+            itemSeriesAdapter.InsertItem(itemConstrId, ser.SeriesId);
 #endif
             return true;
-        }
+        }       
     }
 }

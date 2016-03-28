@@ -56,6 +56,16 @@ namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
             }
         }
 
+        public void SetSeries(List<Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow> series,
+            Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow selected)
+        {
+            labelSer.Visible = true;
+            comboBoxSer.Visible = true;
+            comboBoxSer.DataSource = series;
+            comboBoxSer.DisplayMember = "Series";
+            comboBoxSer.SelectedItem = selected;
+        }
+
         private void buttonShow_Click(object sender, EventArgs e)
         {
             if (listView1.SelectedItems.Count > 0)

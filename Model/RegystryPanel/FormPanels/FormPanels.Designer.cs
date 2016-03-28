@@ -38,6 +38,8 @@
             this.Mark = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.Status = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
             this.buttonShow = new System.Windows.Forms.Button();
+            this.comboBoxSer = new System.Windows.Forms.ComboBox();
+            this.labelSer = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -132,7 +134,6 @@
             // buttonShow
             // 
             this.buttonShow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonShow.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonShow.Location = new System.Drawing.Point(5, 653);
             this.buttonShow.Name = "buttonShow";
             this.buttonShow.Size = new System.Drawing.Size(75, 23);
@@ -140,6 +141,28 @@
             this.buttonShow.Text = "Показать";
             this.buttonShow.UseVisualStyleBackColor = true;
             this.buttonShow.Click += new System.EventHandler(this.buttonShow_Click);
+            // 
+            // comboBoxSer
+            // 
+            this.comboBoxSer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.comboBoxSer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSer.FormattingEnabled = true;
+            this.comboBoxSer.Location = new System.Drawing.Point(210, 655);
+            this.comboBoxSer.Name = "comboBoxSer";
+            this.comboBoxSer.Size = new System.Drawing.Size(137, 21);
+            this.comboBoxSer.TabIndex = 4;
+            this.comboBoxSer.Visible = false;
+            // 
+            // labelSer
+            // 
+            this.labelSer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.labelSer.AutoSize = true;
+            this.labelSer.Location = new System.Drawing.Point(166, 658);
+            this.labelSer.Name = "labelSer";
+            this.labelSer.Size = new System.Drawing.Size(38, 13);
+            this.labelSer.TabIndex = 5;
+            this.labelSer.Text = "Серия";
+            this.labelSer.Visible = false;
             // 
             // FormPanels
             // 
@@ -149,6 +172,8 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(599, 685);
+            this.Controls.Add(this.labelSer);
+            this.Controls.Add(this.comboBoxSer);
             this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.buttonOk);
             this.Controls.Add(this.buttonShow);
@@ -164,6 +189,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -177,5 +203,7 @@
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.Button buttonShow;
         public System.Windows.Forms.Button buttonCancel;
+        private System.Windows.Forms.Label labelSer;
+        public System.Windows.Forms.ComboBox comboBoxSer;
     }
 }
