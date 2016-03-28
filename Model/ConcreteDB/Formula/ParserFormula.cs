@@ -13,12 +13,12 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
         public string Formula { get; private set; }
         public string Result { get; private set; }
         public List<Eval> Evals { get; private set; }
-        private ItemEntryData itemEntryData;        
+        private iItem item;        
 
-        public ParserFormula(string formula, ItemEntryData itemEntryData)
+        public ParserFormula(string formula, iItem item)
         {
             Formula = formula;
-            this.itemEntryData = itemEntryData;
+            this.item = item;
         }
 
         public void Parse()
@@ -27,7 +27,8 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
             var evalsSplit = Formula.Split(';');
             foreach (var evalItem in evalsSplit)
             {
-                Eval eval = new Eval(evalItem, itemEntryData);                
+                Eval eval = new Eval(evalItem, item);
+                eval.Evaluate();           
                 Evals.Add(eval);
             }
 

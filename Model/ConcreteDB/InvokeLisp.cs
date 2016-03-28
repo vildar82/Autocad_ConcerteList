@@ -32,7 +32,7 @@ namespace Autocad_ConcerteList.ConcreteDB
                    new TypedValue((int)LispDataType.ListBegin),
                    new TypedValue((int)LispDataType.Text,"\"Length\""),
                    new TypedValue((int)LispDataType.DottedPair),
-                   new TypedValue((int)LispDataType.Int16, itemEntryData.Length),
+                   new TypedValue((int)LispDataType.Int16, itemEntryData.Lenght),
                    new TypedValue((int)LispDataType.ListEnd),
                    new TypedValue((int)LispDataType.ListBegin),
                    new TypedValue((int)LispDataType.Text,"\"Height\""),
@@ -83,16 +83,39 @@ namespace Autocad_ConcerteList.ConcreteDB
                }
             );
 
-            // Выполнение лисп-функции
+            // Выполнение лисп-функции            
             var res = Application.Invoke(rb);
 
             // Проверить результат выполнения функции res = 1 - Ok, !=1 Ошибка.                 
-            int intRes = int.TryParse(res.AsArray().FirstOrDefault().Value.ToString(), out intRes) ? intRes : 0;            
-            if (intRes !=1)
+
+            int intRes = int.TryParse(res.AsArray().FirstOrDefault().Value?.ToString(), out intRes) ? intRes : 0;
+            if (intRes != 1)
             {
                 var doc = Application.DocumentManager.MdiActiveDocument;
                 doc.Editor.WriteMessage($"\nОшибочный результат вызова лисп функции - {intRes}.");
-            }         
+            }
+        }
+
+        /// <summary>
+        /// Вызов лисп функции сбора блоков.
+        /// </summary>
+        /// <returns>Список блоков и их параметров</returns>
+        public static ResultBuffer GetRbPanels()
+        {
+            ResultBuffer rb = new ResultBuffer(
+               new TypedValue[]
+               {
+                   new TypedValue((int)LispDataType.Text, "test_check_blocks")
+               });
+            try
+            {
+                return Application.Invoke(rb);
+            }
+            catch (System.Exception ex)
+            {
+                string msg = $"Ошибка вызова функции (test_check_blocks) - {ex.Message}";                
+                throw new System.Exception(msg);                
+            }            
         }
     }
 }

@@ -13,43 +13,34 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
         public string EvalString { get; set; }
         public string ValueString { get; set; }
         public bool IsEvaluable { get; set; }
-        private ItemEntryData itemEntryData;
+        private iItem item;
         private static DataTable t = new DataTable();
         private static char[] charOperands = new char[] { '/', '*', '-', '+' };
 
         // Публичные свойства в классе ItemEntryData        
-        private static Dictionary<string, PropertyInfo> dictItemProperties = typeof(ItemEntryData)
+        private static Dictionary<string, PropertyInfo> dictItemProperties = typeof(iItem)
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
-                            .ToDictionary(f => f.Name);
+                            .ToDictionary(f => f.Name);        
 
-        //private static Dictionary<string, string> dictEvalProps = new Dictionary<string, string>()
-        //{
-        //    { "dbo.I_S_ItemGroup.ItemGroup", "ItemGroup" },
-        //    { "dbo.I_R_Item.Lenght","Length" },
-        //    { "dbo.I_R_Item.Height","Height" },
-        //    { "dbo.I_R_Item.Thickness","Thickness" },
-        //    { "dbo.I_R_Item.Formwork","Formwork" },
-        //    { "dbo.I_S_BalconyDoor.BalconyDoor","BalconyDoor" },
-        //    { "dbo.I_S_BalconyCut.BalconyCut","BalconyCut" },
-        //    { "dbo.I_R_Item.FormworkMirror","FormworkMirror" },
-        //    { "dbo.I_R_Item.Electrics","Electrics" }            
-        //};        
-
-        public Eval (string eval, ItemEntryData itemEntryData)
+        public Eval (string eval, iItem item)
         {   
             EvalString = eval;
-            this.itemEntryData = itemEntryData;
+            this.item = item;
+            IsEvaluable = eval.StartsWith("'");                  
+        }
 
-            IsEvaluable = eval.StartsWith("'");
+        public string Evaluate()
+        {
             if (IsEvaluable)
             {
-                ValueString = eval.Replace("'", "");
+                ValueString = EvalString.Replace("'", "");
             }
             else
             {
                 // Определение поля в объекте ItemEntryData и получение его значения
-                ValueString = getValue(eval);                
-            }            
+                ValueString = getValue(EvalString);
+            }
+            return ValueString;
         }
 
         private string getValue(string evalEnter)
@@ -71,36 +62,51 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
             var splitByOperators = evaluate.Split(charOperands).Select(i=>i.Trim());
             foreach (var itemOperand in splitByOperators)
             {
-                if (itemOperand.StartsWith("dbo"))
+                if (itemOperand.Contains("dbo"))
                 {
-                    string fieldName = itemOperand.Split('.').Last();
+                    string fieldName = itemOperand.Split('.').Last().Trim();
                     string fieldValue = getFieldValue(fieldName);
+                    if (fieldValue == null)
+                    {
+                        evaluate = string.Empty;
+                        break;
+                    }
                     evaluate = evaluate.Replace(itemOperand, fieldValue);
-                }
-                //string fieldName;                
-                //if (dictEvalProps.TryGetValue(itemOperand, out fieldName))
-                //{
-                //    string fieldValue = getFieldValue(fieldName);
-                //    evaluate = evaluate.Replace(itemOperand, fieldValue);
-                //}                
+                }                      
             }                        
 
             // Вычисление
             if (evaluate.IndexOfAny(charOperands) !=-1)
             {
-                resVal = t.Compute(evaluate, null)?.ToString();
+                var objRes = t.Compute(evaluate, null);
+                resVal = getRoundValue(objRes);
             }
             else
             {
                 resVal = evaluate;
             }      
 
-            if (string.IsNullOrEmpty(resVal) && evalEnter.StartsWith("*"))
+            if (string.IsNullOrEmpty(resVal))
             {
-                resVal = defaultEvalValue;
+                // @ - перед выражением, означает, что значение не может быть пустым.                
+                if (evalEnter.StartsWith("@"))
+                {
+                    // Если нет @ вначале, то значение может быть пустым, а если в конце выражения стоит =, то это дефолтное значение, которое нужно подставить
+                    resVal = defaultEvalValue;
+                }
+                else
+                {
+                    // Ошибка - должно быть значение.
+                    throw new Exception($"Пустое значение выражения - {evalEnter}");
+                }
             }
 
             return resVal;
+        }
+
+        private string getRoundValue(object objRes)
+        {
+            return Convert.ToInt32(objRes).ToString();
         }
 
         private string getFieldValue(string fieldName)
@@ -108,12 +114,12 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
             PropertyInfo property;            
             if (dictItemProperties.TryGetValue(fieldName, out property))
             {
-                return property.GetValue(itemEntryData)?.ToString();
+                return property.GetValue(item)?.ToString();
             }
             else
             {
                 // Ошибка. Параметр из формулы не найден в списке параметров объекта ItemEntryData
-                throw new Exception($"Ошибка формирования марки панели по формуле. Не определен параметр {fieldName}.");
+                throw new Exception($"Ошибка формирования марки панели по формуле. Не определен параметр {fieldName}");
             }
         }
 

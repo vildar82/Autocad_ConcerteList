@@ -62,6 +62,7 @@
       <HintPath>..\..\AutoCAD_PIK_Manager\AutoCAD_PIK_Manager\bin\Release\AutoCAD_PIK_Manager.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -78,12 +79,13 @@
     <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet.cs">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
     </Compile>
-    <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet1.Designer.cs">
+    <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
     </Compile>
     <Compile Include="Model\ConcreteDB\Formula\Eval.cs" />
+    <Compile Include="Model\ConcreteDB\iItem.cs" />
     <Compile Include="Model\ConcreteDB\InvokeLisp.cs" />
     <Compile Include="Model\ConcreteDB\ItemEntryData.cs" />
     <Compile Include="Model\ConcreteDB\ItemForm.cs">
@@ -94,7 +96,24 @@
     </Compile>
     <Compile Include="Model\ConcreteDB\Formula\ParserFormula.cs" />
     <Compile Include="Model\Logger.cs" />
+    <Compile Include="Model\RegystryPanel\DbService.cs" />
+    <Compile Include="Model\RegystryPanel\EnumErrorItem.cs" />
+    <Compile Include="Model\RegystryPanel\IncorrectMarks.cs" />
+    <Compile Include="Model\RegystryPanel\FormPanels\FormPanels.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Model\RegystryPanel\FormPanels\FormPanels.Designer.cs">
+      <DependentUpon>FormPanels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\RegystryPanel\Panel.cs" />
+    <Compile Include="Model\RegystryPanel\ParserRb.cs" />
+    <Compile Include="Model\RegystryPanel\RegystryPanels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
@@ -110,7 +129,7 @@
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xsd">
       <Generator>MSDataSetGenerator</Generator>
       <SubType>Designer</SubType>
-      <LastGenOutput>ConcerteDataSet1.Designer.cs</LastGenOutput>
+      <LastGenOutput>ConcerteDataSet.Designer.cs</LastGenOutput>
     </None>
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xss">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
@@ -124,6 +143,13 @@
   <ItemGroup>
     <EmbeddedResource Include="Model\ConcreteDB\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\RegystryPanel\FormPanels\FormPanels.resx">
+      <DependentUpon>FormPanels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
