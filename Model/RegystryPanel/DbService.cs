@@ -19,6 +19,8 @@ namespace Autocad_ConcerteList.RegystryPanel
         private static I_C_FormulaTableAdapter formulaAdapter;
         private static I_C_SeriesTableAdapter seriesAdapter;
         private static I_J_ItemSeriesTableAdapter itemSeriesAdapter;
+        private static I_R_ItemColourTableAdapter colorAdapter;
+        private static I_R_ItemTableAdapter colorConstructAdapter;
         //private static myFormulaTableAdapter myTableFormula;
         private static Dictionary<decimal,string> dictFormules;
         private static Dictionary<string, decimal> dictBalconyDoor;
@@ -32,6 +34,8 @@ namespace Autocad_ConcerteList.RegystryPanel
             formulaAdapter = new I_C_FormulaTableAdapter();
             seriesAdapter = new I_C_SeriesTableAdapter();
             itemSeriesAdapter = new I_J_ItemSeriesTableAdapter();
+            colorAdapter = new I_R_ItemColourTableAdapter();
+            colorConstructAdapter = new I_R_ItemTableAdapter();
             dictFormules = new Dictionary<decimal, string>();
 
             I_S_BalconyDoorTableAdapter balconyDoorAdapter = new I_S_BalconyDoorTableAdapter();
@@ -144,13 +148,38 @@ namespace Autocad_ConcerteList.RegystryPanel
                 idBalCut = id;
             }
 
-#if !NODB
-            var itemConstrId = itemConstrAdapter.InsertItem(item.ItemGroupId, item.Lenght, item.Height, item.Thickness, item.Formwork,
-                idBalDoor, idBalCut, item.FormworkMirror, item.Electrics, item.Weight, item.Volume, item.MarkDb);
+#if NODB
+            decimal itemConstrId = (itemConstrAdapter.InsertItem(item.ItemGroupId, item.Lenght, item.Height, item.Thickness, item.Formwork,
+                idBalDoor, idBalCut, item.FormworkMirror, item.Electrics, item.Weight, item.Volume, item.MarkDb) as decimal?).Value;
 
             itemSeriesAdapter.InsertItem(itemConstrId, ser.SeriesId);
+
+            RegColor(item, itemConstrId);
 #endif
             return true;
         }       
+
+        /// <summary>
+        /// Регистрация покраски
+        /// </summary>
+        /// <param name="panel"></param>
+        /// <param name="itemConstructId"></param>
+        public static void RegColor(Panel panel, decimal itemConstructId)
+        {
+            if (!string.IsNullOrEmpty(panel.Color))
+            {
+                decimal idColor;
+                var colorRow = colorAdapter.FindColorId(panel.Color).FirstOrDefault();
+                if (colorRow == null)
+                {
+                    idColor = (colorAdapter.InsertColor(panel.Color) as decimal?).Value;
+                }
+                else
+                {
+                    idColor = colorRow.ItemColourId;
+                }
+                colorConstructAdapter.InsertItem(panel.MarkDb, itemConstructId, idColor);
+            }
+        }
     }
 }
