@@ -88,8 +88,6 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         
         private global::System.Data.DataRelation relationFK_I_S_ItemGroup_I_C_Formula;
         
-        private global::System.Data.DataRelation relationFK_I_S_ItemGroup_I_C_Formula1;
-        
         private global::System.Data.SchemaSerializationMode _schemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -625,7 +623,6 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             this.relationFK_I_S_BalconyCut_I_S_Side = this.Relations["FK_I_S_BalconyCut_I_S_Side"];
             this.relationFK_I_S_BalconyDoor_I_S_Side = this.Relations["FK_I_S_BalconyDoor_I_S_Side"];
             this.relationFK_I_S_ItemGroup_I_C_Formula = this.Relations["FK_I_S_ItemGroup_I_C_Formula"];
-            this.relationFK_I_S_ItemGroup_I_C_Formula1 = this.Relations["FK_I_S_ItemGroup_I_C_Formula1"];
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -738,10 +735,6 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         this.tableDataTable1.FormulaIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableI_S_ItemGroup.FormulaIdColumn}, false);
             this.Relations.Add(this.relationFK_I_S_ItemGroup_I_C_Formula);
-            this.relationFK_I_S_ItemGroup_I_C_Formula1 = new global::System.Data.DataRelation("FK_I_S_ItemGroup_I_C_Formula1", new global::System.Data.DataColumn[] {
-                        this.tableI_C_Formula.FormulaIdColumn}, new global::System.Data.DataColumn[] {
-                        this.tableDataTable1.FormulaIdColumn}, false);
-            this.Relations.Add(this.relationFK_I_S_ItemGroup_I_C_Formula1);
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -5830,15 +5823,12 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row AddDataTable1Row(string ItemGroup, I_C_FormulaRow parentI_C_FormulaRowByFK_I_S_ItemGroup_I_C_Formula1, bool HasFormula) {
+            public DataTable1Row AddDataTable1Row(string ItemGroup, decimal FormulaId, bool HasFormula) {
                 DataTable1Row rowDataTable1Row = ((DataTable1Row)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
                         ItemGroup,
-                        null,
+                        FormulaId,
                         HasFormula};
-                if ((parentI_C_FormulaRowByFK_I_S_ItemGroup_I_C_Formula1 != null)) {
-                    columnValuesArray[1] = parentI_C_FormulaRowByFK_I_S_ItemGroup_I_C_Formula1[0];
-                }
                 rowDataTable1Row.ItemArray = columnValuesArray;
                 this.Rows.Add(rowDataTable1Row);
                 return rowDataTable1Row;
@@ -6943,17 +6933,6 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 }
                 else {
                     return ((I_S_ItemGroupRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_C_Formula_I_S_ItemGroup"])));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row[] GetDataTable1Rows() {
-                if ((this.Table.ChildRelations["FK_I_S_ItemGroup_I_C_Formula1"] == null)) {
-                    return new DataTable1Row[0];
-                }
-                else {
-                    return ((DataTable1Row[])(base.GetChildRows(this.Table.ChildRelations["FK_I_S_ItemGroup_I_C_Formula1"])));
                 }
             }
         }
@@ -8565,17 +8544,6 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 }
                 set {
                     this[this.tableDataTable1.HasFormulaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public I_C_FormulaRow I_C_FormulaRow {
-                get {
-                    return ((I_C_FormulaRow)(this.GetParentRow(this.Table.ParentRelations["FK_I_S_ItemGroup_I_C_Formula1"])));
-                }
-                set {
-                    this.SetParentRow(value, this.Table.ParentRelations["FK_I_S_ItemGroup_I_C_Formula1"]);
                 }
             }
             
@@ -13143,7 +13111,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Le
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
-        public virtual int InsertItem(global::System.Nullable<decimal> ItemGroupId, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, global::System.Nullable<decimal> BalconyDoorId, global::System.Nullable<decimal> BalconyCutId, global::System.Nullable<short> FormworkMirror, string Electrics, global::System.Nullable<float> Weight, global::System.Nullable<float> Volume, string Mark) {
+        public virtual object InsertItem(global::System.Nullable<decimal> ItemGroupId, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, global::System.Nullable<decimal> BalconyDoorId, global::System.Nullable<decimal> BalconyCutId, global::System.Nullable<short> FormworkMirror, string Electrics, global::System.Nullable<float> Weight, global::System.Nullable<float> Volume, string Mark) {
             global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
             if ((ItemGroupId.HasValue == true)) {
                 command.Parameters[0].Value = ((decimal)(ItemGroupId.Value));
@@ -13222,16 +13190,22 @@ WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Le
                         != global::System.Data.ConnectionState.Open)) {
                 command.Connection.Open();
             }
-            int returnValue;
+            object returnValue;
             try {
-                returnValue = command.ExecuteNonQuery();
+                returnValue = command.ExecuteScalar();
             }
             finally {
                 if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
                     command.Connection.Close();
                 }
             }
-            return returnValue;
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((object)(returnValue));
+            }
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13493,10 +13467,8 @@ SELECT ItemConstructionSeriesId, ItemConstructionId, SeriesId FROM I_J_ItemSerie
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"INSERT INTO I_J_ItemSeries
-                         (ItemConstructionId, SeriesId)
-VALUES        (@ItemConstructionId,@SeriesId); 
-SELECT ItemConstructionSeriesId, ItemConstructionId, SeriesId FROM I_J_ItemSeries WHERE (ItemConstructionSeriesId = SCOPE_IDENTITY())";
+            this._commandCollection[1].CommandText = "INSERT INTO I_J_ItemSeries\r\n                         (ItemConstructionId, SeriesI" +
+                "d)\r\nVALUES        (@ItemConstructionId,@SeriesId); ";
             this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemConstructionId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemConstructionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@SeriesId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "SeriesId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
@@ -14277,12 +14249,20 @@ SELECT ItemId, Code1C, Article1C, HandMark, ItemConstructionId, ItemColourId, Do
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ItemId, Code1C, Article1C, HandMark, ItemConstructionId, ItemColourId, Doc" +
                 "umentLink, Additional FROM dbo.I_R_Item";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "INSERT INTO I_R_Item\r\n                         (HandMark, ItemConstructionId, Ite" +
+                "mColourId)\r\nVALUES        (@HandMark,@ItemConstructionId,@ItemColourId); ";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@HandMark", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "HandMark", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemConstructionId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemConstructionId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemColourId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemColourId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14567,6 +14547,47 @@ SELECT ItemId, Code1C, Article1C, HandMark, ItemConstructionId, ItemColourId, Do
         public virtual int Update(int Code1C, string Article1C, string HandMark, global::System.Nullable<decimal> ItemConstructionId, global::System.Nullable<decimal> ItemColourId, string DocumentLink, string Additional, decimal Original_ItemId, int Original_Code1C, string Original_Article1C, string Original_HandMark, global::System.Nullable<decimal> Original_ItemConstructionId, global::System.Nullable<decimal> Original_ItemColourId, string Original_Additional) {
             return this.Update(Code1C, Article1C, HandMark, ItemConstructionId, ItemColourId, DocumentLink, Additional, Original_ItemId, Original_Code1C, Original_Article1C, Original_HandMark, Original_ItemConstructionId, Original_ItemColourId, Original_Additional, Original_ItemId);
         }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
+        public virtual int InsertItem(string HandMark, global::System.Nullable<decimal> ItemConstructionId, global::System.Nullable<decimal> ItemColourId) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            if ((HandMark == null)) {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[0].Value = ((string)(HandMark));
+            }
+            if ((ItemConstructionId.HasValue == true)) {
+                command.Parameters[1].Value = ((decimal)(ItemConstructionId.Value));
+            }
+            else {
+                command.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((ItemColourId.HasValue == true)) {
+                command.Parameters[2].Value = ((decimal)(ItemColourId.Value));
+            }
+            else {
+                command.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            int returnValue;
+            try {
+                returnValue = command.ExecuteNonQuery();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            return returnValue;
+        }
     }
     
     /// <summary>
@@ -14731,11 +14752,23 @@ SELECT ItemColourId, ItemColour FROM I_R_ItemColour WHERE (ItemColourId = @ItemC
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[3];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ItemColourId, ItemColour FROM dbo.I_R_ItemColour";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = "SELECT        ItemColourId, ItemColour\r\nFROM            I_R_ItemColour\r\nWHERE    " +
+                "    (ItemColour = @color)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@color", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "ItemColour", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = "INSERT INTO I_R_ItemColour\r\n                         (ItemColour)\r\nVALUES        " +
+                "(@colour); \r\nSELECT IDENT_CURRENT(\'I_R_ItemColour\')";
+            this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@colour", global::System.Data.SqlDbType.NVarChar, 50, global::System.Data.ParameterDirection.Input, 0, 0, "ItemColour", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -14757,6 +14790,23 @@ SELECT ItemColourId, ItemColour FROM I_R_ItemColour WHERE (ItemColourId = @ItemC
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual ConcerteDataSet.I_R_ItemColourDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            ConcerteDataSet.I_R_ItemColourDataTable dataTable = new ConcerteDataSet.I_R_ItemColourDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual ConcerteDataSet.I_R_ItemColourDataTable FindColorId(string color) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((color == null)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(color));
+            }
             ConcerteDataSet.I_R_ItemColourDataTable dataTable = new ConcerteDataSet.I_R_ItemColourDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -14891,6 +14941,41 @@ SELECT ItemColourId, ItemColour FROM I_R_ItemColour WHERE (ItemColourId = @ItemC
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Update, true)]
         public virtual int Update(string ItemColour, decimal Original_ItemColourId, string Original_ItemColour) {
             return this.Update(ItemColour, Original_ItemColourId, Original_ItemColour, Original_ItemColourId);
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
+        public virtual object InsertColor(string colour) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
+            if ((colour == null)) {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[0].Value = ((string)(colour));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((object)(returnValue));
+            }
         }
     }
     
@@ -16725,15 +16810,6 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._i_C_FormulaTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._i_C_ItemGroupShortTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
@@ -16767,6 +16843,15 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._i_C_BuildingPartTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._i_C_FormulaTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._i_C_FormulaTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -16868,14 +16953,6 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._i_C_FormulaTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._i_C_ItemGroupShortTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
@@ -16905,6 +16982,14 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_C_BuildingPartTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._i_C_FormulaTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._i_C_FormulaTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -17046,6 +17131,14 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                     allChangedRows.AddRange(deletedRows);
                 }
             }
+            if ((this._i_C_FormulaTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._i_C_FormulaTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
             if ((this._i_C_BuildingPartTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.I_C_BuildingPart.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
@@ -17075,14 +17168,6 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_C_ItemGroupShortTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
-            if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._i_C_FormulaTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

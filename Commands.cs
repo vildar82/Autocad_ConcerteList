@@ -86,11 +86,13 @@ namespace Autocad_ConcerteList
                     return;                    
                 }
 
+                var panels = parserRb.Panels.OrderBy(p => p.Mark).ToList();
+
                 // Поиск блока для кажждой панели
-                Panel.FindBlocks(parserRb.Panels);
+                Panel.FindBlocks(panels);
 
                 // Регистрация ЖБИ изделий в базе.
-                RegystryPanels registryPanels = new RegystryPanels(parserRb.Panels);
+                RegystryPanels registryPanels = new RegystryPanels(panels);
                 int regPanelsCount = registryPanels.Registry();
 
                 doc.Editor.WriteMessage($"\nЗарегистрированно {regPanelsCount} ЖБИ.");

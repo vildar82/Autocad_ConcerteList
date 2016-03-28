@@ -12,15 +12,17 @@ namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
 {
     public partial class FormPanels : Form
     {
+        List<Panel> panels;
         public FormPanels(List<Panel> panels)
         {
             InitializeComponent();
 
+            this.panels = panels;
             //panels.Sort((p1, p2) => p1.Mark.CompareTo(p2.Mark));
 
             FillListView(panels);
 
-            listView1.SelectedIndexChanged += ListView1_SelectedIndexChanged;
+            listViewPanels.SelectedIndexChanged += ListView1_SelectedIndexChanged;
 
             //BindingSource bindSourcePanels = new BindingSource();
             //bindSourcePanels.DataSource = panels;
@@ -33,9 +35,9 @@ namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
 
         private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count>0)
+            if (listViewPanels.SelectedItems.Count>0)
             {
-                Panel p = listView1.SelectedItems[0].Tag as Panel;
+                Panel p = listViewPanels.SelectedItems[0].Tag as Panel;
                 textBoxInfo.Text = p.Info;
             }
             else
@@ -46,13 +48,13 @@ namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
 
         private void FillListView(List<Panel> panels)
         {
-            listView1.Items.Clear();
+            listViewPanels.Items.Clear();
             foreach (var p in panels)
             {
                 var lwi = new ListViewItem(p.Mark);                
                 lwi.Tag = p;
                 lwi.SubItems.Add(p.ErrorName);
-                listView1.Items.Add(lwi);
+                listViewPanels.Items.Add(lwi);
             }
         }
 
@@ -68,10 +70,23 @@ namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
 
         private void buttonShow_Click(object sender, EventArgs e)
         {
-            if (listView1.SelectedItems.Count > 0)
+            if (listViewPanels.SelectedItems.Count > 0)
             {
-                Panel p = listView1.SelectedItems[0].Tag as Panel;
+                Panel p = listViewPanels.SelectedItems[0].Tag as Panel;
                 p.Show();                
+            }
+        }
+
+        private void listViewPanels_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Delete)
+            {
+                foreach (ListViewItem item in listViewPanels.SelectedItems)
+                {
+                    listViewPanels.Items.Remove(item);
+                    Panel p = item.Tag as Panel;
+                    panels.Remove(p);
+                }
             }
         }
     }

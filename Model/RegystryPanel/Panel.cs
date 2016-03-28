@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using AcadLib.Errors;
 using Autocad_ConcerteList.ConcreteDB;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
+using AcadLib;
+using AcadLib.Errors;
 
 namespace Autocad_ConcerteList.RegystryPanel
 {
@@ -106,6 +107,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             {
                 Editor ed = doc.Editor;
                 ed.Zoom(Extents);
+                IdBlRef.FlickObjectHighlight(2, 100, 100);
             }
         }
 
@@ -136,6 +138,7 @@ namespace Autocad_ConcerteList.RegystryPanel
                           (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка под балкон " + BalconyCut + "\r\n") +
                           (FormworkMirror == null ? "" : "Зеркальность \t" + FormworkMirror + "\r\n") +
                           (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
+                          (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color + "\r\n") +
                           (Weight == null ? "" : "Вес, кг \t\t" + Weight + "\r\n") +
                           (Volume == null ? "" : "Объем, м3 \t" + Volume + "\r\n") +
                           (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color);
