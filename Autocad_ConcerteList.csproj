@@ -96,6 +96,7 @@
     </Compile>
     <Compile Include="Model\ConcreteDB\Formula\ParserFormula.cs" />
     <Compile Include="Model\Logger.cs" />
+    <Compile Include="Model\Panels\ParserMark.cs" />
     <Compile Include="Model\RegystryPanel\DbService.cs" />
     <Compile Include="Model\RegystryPanel\EnumErrorItem.cs" />
     <Compile Include="Model\RegystryPanel\IncorrectMarks.cs" />
