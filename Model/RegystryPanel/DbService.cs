@@ -148,7 +148,7 @@ namespace Autocad_ConcerteList.RegystryPanel
                 idBalCut = id;
             }
 
-#if NODB
+#if !NODB
             decimal itemConstrId = (itemConstrAdapter.InsertItem(item.ItemGroupId, item.Lenght, item.Height, item.Thickness, item.Formwork,
                 idBalDoor, idBalCut, item.FormworkMirror, item.Electrics, item.Weight, item.Volume, item.MarkDb) as decimal?).Value;
 

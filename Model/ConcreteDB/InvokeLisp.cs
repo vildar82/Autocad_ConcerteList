@@ -105,7 +105,7 @@ namespace Autocad_ConcerteList.ConcreteDB
             ResultBuffer rb = new ResultBuffer(
                new TypedValue[]
                {
-                   new TypedValue((int)LispDataType.Text, "test_check_blocks")
+                   new TypedValue((int)LispDataType.Text, "fb_check_blocks")
                });
             try
             {
@@ -113,7 +113,7 @@ namespace Autocad_ConcerteList.ConcreteDB
             }
             catch (System.Exception ex)
             {
-                string msg = $"Ошибка вызова функции (test_check_blocks) - {ex.Message}";                
+                string msg = $"Ошибка вызова функции (fb_check_blocks) - {ex.Message}";                
                 throw new System.Exception(msg);                
             }            
         }
