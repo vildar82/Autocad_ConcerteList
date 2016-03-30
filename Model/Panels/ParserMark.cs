@@ -31,6 +31,7 @@ namespace Autocad_ConcerteList.Model.Panels
         public int Thickness { get; private set; }
         // Опалубка. Например 1, 2.
         public int Formwork { get; private set; }
+        public int FormworkMirror { get; private set; }
         // Балкон. Б, Б1.
         public string BalconyDoor { get; private set; }
         // Подрезка. П, П1.
@@ -47,24 +48,13 @@ namespace Autocad_ConcerteList.Model.Panels
         {
             // на входе марка="2П 544.363-1-2э", получить параметры этой панели
             defineParts();
+            parsePartGroup();
+            parsePartGab();
+            parsePartDop();
         }
 
         private void defineParts()
-        {
-            // определение трех частей в марке панели - Группы, Габаритов, Доп параметров
-            //// группа отделена пробелом
-            //var splitFirstSpace = MarkInput.Split(new[] { ' ' }, 2, StringSplitOptions.RemoveEmptyEntries);
-            //if (splitFirstSpace.Length>1)
-            //{                
-            //    partGroup = splitFirstSpace[0];
-            //    // Проверить строку группы - в ней не должно быть точек и тире.
-            //    defineGabAndDop(splitFirstSpace[1]);
-            //}
-            //else
-            //{
-            // Нет пробела. Пока ошибка.
-            // Группа панели может быть не разделена с габаритом длины панели или через тире сразу параметрами панели (ЭБ-25)
-            // Проверить есть ли точка в строке марки.            
+        {            
             int indexFirstDot = MarkInput.IndexOf('.');
             if (indexFirstDot != -1)
             {
@@ -94,11 +84,7 @@ namespace Autocad_ConcerteList.Model.Panels
                     partGroup = MarkInput.Substring(0, indexDash);
                     partDop = MarkInput.Substring(indexDash + 1);
                 }
-            }
-            //}
-            parsePartGroup();
-            parsePartGab();
-            parsePartDop();
+            }            
         }
 
         private string separateGroupFromLen(string markInput, int indexFirstDot)
@@ -127,7 +113,7 @@ namespace Autocad_ConcerteList.Model.Panels
             else
             {
                 // Нет тире - нет доп параметров. Только габариты.
-                partGab = input;
+                partGab = input;                
             }
         }
 
@@ -160,24 +146,68 @@ namespace Autocad_ConcerteList.Model.Panels
 
         private void parsePartDop()
         {
+            // partDop - например "5-1-1э"
             if (string.IsNullOrEmpty(partDop)) return;
             var splitDash = partDop.Split('-');
-            if (splitDash.Length>2)
+            if (splitDash.Length>3)
             {
                 // Ошибка. Может быть только опалубка и электрика. От Зеркальности отказались.
-                addErrorMsg("Определено больше двух возможных дополнительных параметра панели - опалубки и электрики.");
+                addErrorMsg("Определено больше трех возможных дополнительных параметра панели - опалубки, зеркальности и электрики.");
             }
             definePartFormwork(splitDash[0]);
-            if (splitDash.Length>1)
+            if (splitDash.Length>2)
             {
-                Electrics = splitDash[1];                
+                FormworkMirror = int.Parse(splitDash[1]);                
+                Electrics = splitDash[2];                
+            }
+            if (splitDash.Length > 1)
+            {
+                string val = splitDash[1];
+                if (val.IndexOf("э", StringComparison.OrdinalIgnoreCase) == -1)
+                {
+                    FormworkMirror = int.Parse(val);
+                }
+                else
+                {
+                    Electrics = val;
+                }                
             }
         }
 
         private void definePartFormwork(string input)
         {
             // Разбор части опалубки. Могут быть Подрезки и Балконы, типа 2П1Б1, где 2 - опалубка, П1-подреза, Б1-балкон
-            Formwork = int.Parse(input);
+            int indexP = input.IndexOf("П");
+            int indexB = input.IndexOf("Б");
+            if (indexP == -1 && indexB == -1)
+            {
+                Formwork = int.Parse(input);
+            }
+            else if (indexB ==-1)
+            {
+                Formwork = int.Parse(input.Substring(0, indexP));
+                BalconyCut = input.Substring(indexP);
+            }
+            else if (indexP == -1)
+            {
+                Formwork = int.Parse(input.Substring(0, indexB));
+                BalconyDoor = input.Substring(indexB);
+            }
+            else
+            {
+                if (indexP<indexB)
+                {
+                    Formwork = int.Parse(input.Substring(0, indexP));
+                    BalconyCut = input.Substring(indexP, indexB- indexP);
+                    BalconyDoor = input.Substring(indexB);
+                }
+                else
+                {
+                    Formwork = int.Parse(input.Substring(0, indexB));
+                    BalconyDoor = input.Substring(indexB, indexP- indexB);
+                    BalconyCut = input.Substring(indexP);
+                }
+            }
         }
 
         private void addErrorMsg(string msg)
