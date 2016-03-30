@@ -54,9 +54,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         
         private I_S_SideDataTable tableI_S_Side;
         
-        private DataTable1DataTable tableDataTable1;
-        
-        private myFormulaDataTable tablemyFormula;
+        private myItemDataTable tablemyItem;
         
         private global::System.Data.DataRelation relationFK_I_C_Formula_I_S_ItemGroup;
         
@@ -85,6 +83,16 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         private global::System.Data.DataRelation relationFK_I_S_BalconyCut_I_S_Side;
         
         private global::System.Data.DataRelation relationFK_I_S_BalconyDoor_I_S_Side;
+        
+        private global::System.Data.DataRelation relationFK_I_J_ItemSeries_I_J_ItemConstruction1;
+        
+        private global::System.Data.DataRelation relationFK_I_R_Item_I_J_ItemConstruction1;
+        
+        private global::System.Data.DataRelation relationFK_I_J_ItemConstruction_I_S_BalconyCut1;
+        
+        private global::System.Data.DataRelation relationFK_I_J_ItemConstruction_I_S_BalconyDoor1;
+        
+        private global::System.Data.DataRelation relationFK_I_J_ItemConstruction_I_S_ItemGroup1;
         
         private global::System.Data.DataRelation relationFK_I_S_ItemGroup_I_C_Formula;
         
@@ -161,11 +169,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 if ((ds.Tables["I_S_Side"] != null)) {
                     base.Tables.Add(new I_S_SideDataTable(ds.Tables["I_S_Side"]));
                 }
-                if ((ds.Tables["DataTable1"] != null)) {
-                    base.Tables.Add(new DataTable1DataTable(ds.Tables["DataTable1"]));
-                }
-                if ((ds.Tables["myFormula"] != null)) {
-                    base.Tables.Add(new myFormulaDataTable(ds.Tables["myFormula"]));
+                if ((ds.Tables["myItem"] != null)) {
+                    base.Tables.Add(new myItemDataTable(ds.Tables["myItem"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -339,19 +344,9 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Browsable(false)]
         [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public DataTable1DataTable DataTable1 {
+        public myItemDataTable myItem {
             get {
-                return this.tableDataTable1;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Browsable(false)]
-        [global::System.ComponentModel.DesignerSerializationVisibility(global::System.ComponentModel.DesignerSerializationVisibility.Content)]
-        public myFormulaDataTable myFormula {
-            get {
-                return this.tablemyFormula;
+                return this.tablemyItem;
             }
         }
         
@@ -467,11 +462,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 if ((ds.Tables["I_S_Side"] != null)) {
                     base.Tables.Add(new I_S_SideDataTable(ds.Tables["I_S_Side"]));
                 }
-                if ((ds.Tables["DataTable1"] != null)) {
-                    base.Tables.Add(new DataTable1DataTable(ds.Tables["DataTable1"]));
-                }
-                if ((ds.Tables["myFormula"] != null)) {
-                    base.Tables.Add(new myFormulaDataTable(ds.Tables["myFormula"]));
+                if ((ds.Tables["myItem"] != null)) {
+                    base.Tables.Add(new myItemDataTable(ds.Tables["myItem"]));
                 }
                 this.DataSetName = ds.DataSetName;
                 this.Prefix = ds.Prefix;
@@ -596,16 +588,10 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                     this.tableI_S_Side.InitVars();
                 }
             }
-            this.tableDataTable1 = ((DataTable1DataTable)(base.Tables["DataTable1"]));
+            this.tablemyItem = ((myItemDataTable)(base.Tables["myItem"]));
             if ((initTable == true)) {
-                if ((this.tableDataTable1 != null)) {
-                    this.tableDataTable1.InitVars();
-                }
-            }
-            this.tablemyFormula = ((myFormulaDataTable)(base.Tables["myFormula"]));
-            if ((initTable == true)) {
-                if ((this.tablemyFormula != null)) {
-                    this.tablemyFormula.InitVars();
+                if ((this.tablemyItem != null)) {
+                    this.tablemyItem.InitVars();
                 }
             }
             this.relationFK_I_C_Formula_I_S_ItemGroup = this.Relations["FK_I_C_Formula_I_S_ItemGroup"];
@@ -622,6 +608,11 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             this.relationFK_I_R_Item_I_R_ItemColour = this.Relations["FK_I_R_Item_I_R_ItemColour"];
             this.relationFK_I_S_BalconyCut_I_S_Side = this.Relations["FK_I_S_BalconyCut_I_S_Side"];
             this.relationFK_I_S_BalconyDoor_I_S_Side = this.Relations["FK_I_S_BalconyDoor_I_S_Side"];
+            this.relationFK_I_J_ItemSeries_I_J_ItemConstruction1 = this.Relations["FK_I_J_ItemSeries_I_J_ItemConstruction1"];
+            this.relationFK_I_R_Item_I_J_ItemConstruction1 = this.Relations["FK_I_R_Item_I_J_ItemConstruction1"];
+            this.relationFK_I_J_ItemConstruction_I_S_BalconyCut1 = this.Relations["FK_I_J_ItemConstruction_I_S_BalconyCut1"];
+            this.relationFK_I_J_ItemConstruction_I_S_BalconyDoor1 = this.Relations["FK_I_J_ItemConstruction_I_S_BalconyDoor1"];
+            this.relationFK_I_J_ItemConstruction_I_S_ItemGroup1 = this.Relations["FK_I_J_ItemConstruction_I_S_ItemGroup1"];
             this.relationFK_I_S_ItemGroup_I_C_Formula = this.Relations["FK_I_S_ItemGroup_I_C_Formula"];
         }
         
@@ -663,10 +654,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             base.Tables.Add(this.tableI_S_BalconyDoor);
             this.tableI_S_Side = new I_S_SideDataTable();
             base.Tables.Add(this.tableI_S_Side);
-            this.tableDataTable1 = new DataTable1DataTable();
-            base.Tables.Add(this.tableDataTable1);
-            this.tablemyFormula = new myFormulaDataTable();
-            base.Tables.Add(this.tablemyFormula);
+            this.tablemyItem = new myItemDataTable();
+            base.Tables.Add(this.tablemyItem);
             global::System.Data.ForeignKeyConstraint fkc;
             fkc = new global::System.Data.ForeignKeyConstraint("FK_I_C_Formula_I_S_ItemGroup", new global::System.Data.DataColumn[] {
                         this.tableI_C_Formula.FormulaIdColumn}, new global::System.Data.DataColumn[] {
@@ -731,8 +720,28 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         this.tableI_S_Side.SideIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableI_S_BalconyDoor.SideIdColumn}, false);
             this.Relations.Add(this.relationFK_I_S_BalconyDoor_I_S_Side);
+            this.relationFK_I_J_ItemSeries_I_J_ItemConstruction1 = new global::System.Data.DataRelation("FK_I_J_ItemSeries_I_J_ItemConstruction1", new global::System.Data.DataColumn[] {
+                        this.tablemyItem.ItemConstructionIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableI_J_ItemSeries.ItemConstructionIdColumn}, false);
+            this.Relations.Add(this.relationFK_I_J_ItemSeries_I_J_ItemConstruction1);
+            this.relationFK_I_R_Item_I_J_ItemConstruction1 = new global::System.Data.DataRelation("FK_I_R_Item_I_J_ItemConstruction1", new global::System.Data.DataColumn[] {
+                        this.tablemyItem.ItemConstructionIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tableI_R_Item.ItemConstructionIdColumn}, false);
+            this.Relations.Add(this.relationFK_I_R_Item_I_J_ItemConstruction1);
+            this.relationFK_I_J_ItemConstruction_I_S_BalconyCut1 = new global::System.Data.DataRelation("FK_I_J_ItemConstruction_I_S_BalconyCut1", new global::System.Data.DataColumn[] {
+                        this.tableI_S_BalconyCut.BalconyCutIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tablemyItem.BalconyCutIdColumn}, false);
+            this.Relations.Add(this.relationFK_I_J_ItemConstruction_I_S_BalconyCut1);
+            this.relationFK_I_J_ItemConstruction_I_S_BalconyDoor1 = new global::System.Data.DataRelation("FK_I_J_ItemConstruction_I_S_BalconyDoor1", new global::System.Data.DataColumn[] {
+                        this.tableI_S_BalconyDoor.BalconyDoorIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tablemyItem.BalconyDoorIdColumn}, false);
+            this.Relations.Add(this.relationFK_I_J_ItemConstruction_I_S_BalconyDoor1);
+            this.relationFK_I_J_ItemConstruction_I_S_ItemGroup1 = new global::System.Data.DataRelation("FK_I_J_ItemConstruction_I_S_ItemGroup1", new global::System.Data.DataColumn[] {
+                        this.tableI_S_ItemGroup.ItemGroupIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tablemyItem.ItemGroupIdColumn}, false);
+            this.Relations.Add(this.relationFK_I_J_ItemConstruction_I_S_ItemGroup1);
             this.relationFK_I_S_ItemGroup_I_C_Formula = new global::System.Data.DataRelation("FK_I_S_ItemGroup_I_C_Formula", new global::System.Data.DataColumn[] {
-                        this.tableDataTable1.FormulaIdColumn}, new global::System.Data.DataColumn[] {
+                        this.tablemyItem.FormulaIdColumn}, new global::System.Data.DataColumn[] {
                         this.tableI_S_ItemGroup.FormulaIdColumn}, false);
             this.Relations.Add(this.relationFK_I_S_ItemGroup_I_C_Formula);
         }
@@ -829,13 +838,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializeDataTable1() {
-            return false;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private bool ShouldSerializemyFormula() {
+        private bool ShouldSerializemyItem() {
             return false;
         }
         
@@ -940,10 +943,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         public delegate void I_S_SideRowChangeEventHandler(object sender, I_S_SideRowChangeEvent e);
         
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void DataTable1RowChangeEventHandler(object sender, DataTable1RowChangeEvent e);
-        
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public delegate void myFormulaRowChangeEventHandler(object sender, myFormulaRowChangeEvent e);
+        public delegate void myItemRowChangeEventHandler(object sender, myItemRowChangeEvent e);
         
         /// <summary>
         ///Represents the strongly named DataTable class.
@@ -5721,18 +5721,50 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         ///</summary>
         [global::System.Serializable()]
         [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class DataTable1DataTable : global::System.Data.TypedTableBase<DataTable1Row> {
+        public partial class myItemDataTable : global::System.Data.TypedTableBase<myItemRow> {
             
-            private global::System.Data.DataColumn columnItemGroup;
+            private global::System.Data.DataColumn columnBalconyCut;
             
-            private global::System.Data.DataColumn columnFormulaId;
+            private global::System.Data.DataColumn columnBalconyDoor;
+            
+            private global::System.Data.DataColumn columnBalconyCutSize;
+            
+            private global::System.Data.DataColumn columnItemConstructionId;
+            
+            private global::System.Data.DataColumn columnHandMarkNoColour;
+            
+            private global::System.Data.DataColumn columnItemGroupId;
+            
+            private global::System.Data.DataColumn columnLenght;
+            
+            private global::System.Data.DataColumn columnHeight;
+            
+            private global::System.Data.DataColumn columnThickness;
+            
+            private global::System.Data.DataColumn columnFormwork;
+            
+            private global::System.Data.DataColumn columnBalconyDoorId;
+            
+            private global::System.Data.DataColumn columnBalconyCutId;
+            
+            private global::System.Data.DataColumn columnFormworkMirror;
+            
+            private global::System.Data.DataColumn columnElectrics;
+            
+            private global::System.Data.DataColumn columnVolume;
+            
+            private global::System.Data.DataColumn columnWeight;
             
             private global::System.Data.DataColumn columnHasFormula;
             
+            private global::System.Data.DataColumn columnFormulaId;
+            
+            private global::System.Data.DataColumn columnFormulaValue;
+            
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1DataTable() {
-                this.TableName = "DataTable1";
+            public myItemDataTable() {
+                this.TableName = "myItem";
                 this.BeginInit();
                 this.InitClass();
                 this.EndInit();
@@ -5740,7 +5772,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal DataTable1DataTable(global::System.Data.DataTable table) {
+            internal myItemDataTable(global::System.Data.DataTable table) {
                 this.TableName = table.TableName;
                 if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
                     this.CaseSensitive = table.CaseSensitive;
@@ -5757,16 +5789,144 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected DataTable1DataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
+            protected myItemDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
                     base(info, context) {
                 this.InitVars();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn ItemGroupColumn {
+            public global::System.Data.DataColumn BalconyCutColumn {
                 get {
-                    return this.columnItemGroup;
+                    return this.columnBalconyCut;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BalconyDoorColumn {
+                get {
+                    return this.columnBalconyDoor;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BalconyCutSizeColumn {
+                get {
+                    return this.columnBalconyCutSize;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItemConstructionIdColumn {
+                get {
+                    return this.columnItemConstructionId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HandMarkNoColourColumn {
+                get {
+                    return this.columnHandMarkNoColour;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ItemGroupIdColumn {
+                get {
+                    return this.columnItemGroupId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn LenghtColumn {
+                get {
+                    return this.columnLenght;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HeightColumn {
+                get {
+                    return this.columnHeight;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ThicknessColumn {
+                get {
+                    return this.columnThickness;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FormworkColumn {
+                get {
+                    return this.columnFormwork;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BalconyDoorIdColumn {
+                get {
+                    return this.columnBalconyDoorId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn BalconyCutIdColumn {
+                get {
+                    return this.columnBalconyCutId;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn FormworkMirrorColumn {
+                get {
+                    return this.columnFormworkMirror;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn ElectricsColumn {
+                get {
+                    return this.columnElectrics;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn VolumeColumn {
+                get {
+                    return this.columnVolume;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn WeightColumn {
+                get {
+                    return this.columnWeight;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public global::System.Data.DataColumn HasFormulaColumn {
+                get {
+                    return this.columnHasFormula;
                 }
             }
             
@@ -5775,283 +5935,6 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             public global::System.Data.DataColumn FormulaIdColumn {
                 get {
                     return this.columnFormulaId;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn HasFormulaColumn {
-                get {
-                    return this.columnHasFormula;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            [global::System.ComponentModel.Browsable(false)]
-            public int Count {
-                get {
-                    return this.Rows.Count;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row this[int index] {
-                get {
-                    return ((DataTable1Row)(this.Rows[index]));
-                }
-            }
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DataTable1RowChangeEventHandler DataTable1RowChanging;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DataTable1RowChangeEventHandler DataTable1RowChanged;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DataTable1RowChangeEventHandler DataTable1RowDeleting;
-            
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event DataTable1RowChangeEventHandler DataTable1RowDeleted;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddDataTable1Row(DataTable1Row row) {
-                this.Rows.Add(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row AddDataTable1Row(string ItemGroup, decimal FormulaId, bool HasFormula) {
-                DataTable1Row rowDataTable1Row = ((DataTable1Row)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
-                        ItemGroup,
-                        FormulaId,
-                        HasFormula};
-                rowDataTable1Row.ItemArray = columnValuesArray;
-                this.Rows.Add(rowDataTable1Row);
-                return rowDataTable1Row;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row FindByFormulaId(decimal FormulaId) {
-                return ((DataTable1Row)(this.Rows.Find(new object[] {
-                            FormulaId})));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public override global::System.Data.DataTable Clone() {
-                DataTable1DataTable cln = ((DataTable1DataTable)(base.Clone()));
-                cln.InitVars();
-                return cln;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataTable CreateInstance() {
-                return new DataTable1DataTable();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal void InitVars() {
-                this.columnItemGroup = base.Columns["ItemGroup"];
-                this.columnFormulaId = base.Columns["FormulaId"];
-                this.columnHasFormula = base.Columns["HasFormula"];
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            private void InitClass() {
-                this.columnItemGroup = new global::System.Data.DataColumn("ItemGroup", typeof(string), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnItemGroup);
-                this.columnFormulaId = new global::System.Data.DataColumn("FormulaId", typeof(decimal), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnFormulaId);
-                this.columnHasFormula = new global::System.Data.DataColumn("HasFormula", typeof(bool), null, global::System.Data.MappingType.Element);
-                base.Columns.Add(this.columnHasFormula);
-                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
-                                this.columnFormulaId}, true));
-                this.columnItemGroup.MaxLength = 255;
-                this.columnFormulaId.AllowDBNull = false;
-                this.columnFormulaId.Unique = true;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row NewDataTable1Row() {
-                return ((DataTable1Row)(this.NewRow()));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new DataTable1Row(builder);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override global::System.Type GetRowType() {
-                return typeof(DataTable1Row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanged(e);
-                if ((this.DataTable1RowChanged != null)) {
-                    this.DataTable1RowChanged(this, new DataTable1RowChangeEvent(((DataTable1Row)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowChanging(e);
-                if ((this.DataTable1RowChanging != null)) {
-                    this.DataTable1RowChanging(this, new DataTable1RowChangeEvent(((DataTable1Row)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleted(e);
-                if ((this.DataTable1RowDeleted != null)) {
-                    this.DataTable1RowDeleted(this, new DataTable1RowChangeEvent(((DataTable1Row)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
-                base.OnRowDeleting(e);
-                if ((this.DataTable1RowDeleting != null)) {
-                    this.DataTable1RowDeleting(this, new DataTable1RowChangeEvent(((DataTable1Row)(e.Row)), e.Action));
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemoveDataTable1Row(DataTable1Row row) {
-                this.Rows.Remove(row);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                ConcerteDataSet ds = new ConcerteDataSet();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
-                any1.Namespace = "http://www.w3.org/2001/XMLSchema";
-                any1.MinOccurs = new decimal(0);
-                any1.MaxOccurs = decimal.MaxValue;
-                any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
-                any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
-                any2.MinOccurs = new decimal(1);
-                any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
-                sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute1.Name = "namespace";
-                attribute1.FixedValue = ds.Namespace;
-                type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
-                attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "DataTable1DataTable";
-                type.Attributes.Add(attribute2);
-                type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
-                if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
-                    try {
-                        global::System.Xml.Schema.XmlSchema schema = null;
-                        dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
-                            schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
-                            s2.SetLength(0);
-                            schema.Write(s2);
-                            if ((s1.Length == s2.Length)) {
-                                s1.Position = 0;
-                                s2.Position = 0;
-                                for (; ((s1.Position != s1.Length) 
-                                            && (s1.ReadByte() == s2.ReadByte())); ) {
-                                    ;
-                                }
-                                if ((s1.Position == s1.Length)) {
-                                    return type;
-                                }
-                            }
-                        }
-                    }
-                    finally {
-                        if ((s1 != null)) {
-                            s1.Close();
-                        }
-                        if ((s2 != null)) {
-                            s2.Close();
-                        }
-                    }
-                }
-                xs.Add(dsSchema);
-                return type;
-            }
-        }
-        
-        /// <summary>
-        ///Represents the strongly named DataTable class.
-        ///</summary>
-        [global::System.Serializable()]
-        [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedTableSchema")]
-        public partial class myFormulaDataTable : global::System.Data.TypedTableBase<myFormulaRow> {
-            
-            private global::System.Data.DataColumn columnHasFormula;
-            
-            private global::System.Data.DataColumn columnFormulaValue;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myFormulaDataTable() {
-                this.TableName = "myFormula";
-                this.BeginInit();
-                this.InitClass();
-                this.EndInit();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal myFormulaDataTable(global::System.Data.DataTable table) {
-                this.TableName = table.TableName;
-                if ((table.CaseSensitive != table.DataSet.CaseSensitive)) {
-                    this.CaseSensitive = table.CaseSensitive;
-                }
-                if ((table.Locale.ToString() != table.DataSet.Locale.ToString())) {
-                    this.Locale = table.Locale;
-                }
-                if ((table.Namespace != table.DataSet.Namespace)) {
-                    this.Namespace = table.Namespace;
-                }
-                this.Prefix = table.Prefix;
-                this.MinimumCapacity = table.MinimumCapacity;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            protected myFormulaDataTable(global::System.Runtime.Serialization.SerializationInfo info, global::System.Runtime.Serialization.StreamingContext context) : 
-                    base(info, context) {
-                this.InitVars();
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataColumn HasFormulaColumn {
-                get {
-                    return this.columnHasFormula;
                 }
             }
             
@@ -6074,46 +5957,97 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myFormulaRow this[int index] {
+            public myItemRow this[int index] {
                 get {
-                    return ((myFormulaRow)(this.Rows[index]));
+                    return ((myItemRow)(this.Rows[index]));
                 }
             }
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event myFormulaRowChangeEventHandler myFormulaRowChanging;
+            public event myItemRowChangeEventHandler myItemRowChanging;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event myFormulaRowChangeEventHandler myFormulaRowChanged;
+            public event myItemRowChangeEventHandler myItemRowChanged;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event myFormulaRowChangeEventHandler myFormulaRowDeleting;
+            public event myItemRowChangeEventHandler myItemRowDeleting;
             
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public event myFormulaRowChangeEventHandler myFormulaRowDeleted;
+            public event myItemRowChangeEventHandler myItemRowDeleted;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void AddmyFormulaRow(myFormulaRow row) {
+            public void AddmyItemRow(myItemRow row) {
                 this.Rows.Add(row);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myFormulaRow AddmyFormulaRow(bool HasFormula, string FormulaValue) {
-                myFormulaRow rowmyFormulaRow = ((myFormulaRow)(this.NewRow()));
+            public myItemRow AddmyItemRow(
+                        string BalconyCut, 
+                        string BalconyDoor, 
+                        int BalconyCutSize, 
+                        string HandMarkNoColour, 
+                        I_S_ItemGroupRow parentI_S_ItemGroupRowByFK_I_J_ItemConstruction_I_S_ItemGroup1, 
+                        short Lenght, 
+                        short Height, 
+                        short Thickness, 
+                        short Formwork, 
+                        I_S_BalconyDoorRow parentI_S_BalconyDoorRowByFK_I_J_ItemConstruction_I_S_BalconyDoor1, 
+                        I_S_BalconyCutRow parentI_S_BalconyCutRowByFK_I_J_ItemConstruction_I_S_BalconyCut1, 
+                        short FormworkMirror, 
+                        string Electrics, 
+                        float Volume, 
+                        float Weight, 
+                        bool HasFormula, 
+                        decimal FormulaId, 
+                        string FormulaValue) {
+                myItemRow rowmyItemRow = ((myItemRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
+                        BalconyCut,
+                        BalconyDoor,
+                        BalconyCutSize,
+                        null,
+                        HandMarkNoColour,
+                        null,
+                        Lenght,
+                        Height,
+                        Thickness,
+                        Formwork,
+                        null,
+                        null,
+                        FormworkMirror,
+                        Electrics,
+                        Volume,
+                        Weight,
                         HasFormula,
+                        FormulaId,
                         FormulaValue};
-                rowmyFormulaRow.ItemArray = columnValuesArray;
-                this.Rows.Add(rowmyFormulaRow);
-                return rowmyFormulaRow;
+                if ((parentI_S_ItemGroupRowByFK_I_J_ItemConstruction_I_S_ItemGroup1 != null)) {
+                    columnValuesArray[5] = parentI_S_ItemGroupRowByFK_I_J_ItemConstruction_I_S_ItemGroup1[0];
+                }
+                if ((parentI_S_BalconyDoorRowByFK_I_J_ItemConstruction_I_S_BalconyDoor1 != null)) {
+                    columnValuesArray[10] = parentI_S_BalconyDoorRowByFK_I_J_ItemConstruction_I_S_BalconyDoor1[0];
+                }
+                if ((parentI_S_BalconyCutRowByFK_I_J_ItemConstruction_I_S_BalconyCut1 != null)) {
+                    columnValuesArray[11] = parentI_S_BalconyCutRowByFK_I_J_ItemConstruction_I_S_BalconyCut1[0];
+                }
+                rowmyItemRow.ItemArray = columnValuesArray;
+                this.Rows.Add(rowmyItemRow);
+                return rowmyItemRow;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public myItemRow FindByItemConstructionId(decimal ItemConstructionId) {
+                return ((myItemRow)(this.Rows.Find(new object[] {
+                            ItemConstructionId})));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                myFormulaDataTable cln = ((myFormulaDataTable)(base.Clone()));
+                myItemDataTable cln = ((myItemDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -6121,50 +6055,113 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataTable CreateInstance() {
-                return new myFormulaDataTable();
+                return new myItemDataTable();
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             internal void InitVars() {
+                this.columnBalconyCut = base.Columns["BalconyCut"];
+                this.columnBalconyDoor = base.Columns["BalconyDoor"];
+                this.columnBalconyCutSize = base.Columns["BalconyCutSize"];
+                this.columnItemConstructionId = base.Columns["ItemConstructionId"];
+                this.columnHandMarkNoColour = base.Columns["HandMarkNoColour"];
+                this.columnItemGroupId = base.Columns["ItemGroupId"];
+                this.columnLenght = base.Columns["Lenght"];
+                this.columnHeight = base.Columns["Height"];
+                this.columnThickness = base.Columns["Thickness"];
+                this.columnFormwork = base.Columns["Formwork"];
+                this.columnBalconyDoorId = base.Columns["BalconyDoorId"];
+                this.columnBalconyCutId = base.Columns["BalconyCutId"];
+                this.columnFormworkMirror = base.Columns["FormworkMirror"];
+                this.columnElectrics = base.Columns["Electrics"];
+                this.columnVolume = base.Columns["Volume"];
+                this.columnWeight = base.Columns["Weight"];
                 this.columnHasFormula = base.Columns["HasFormula"];
+                this.columnFormulaId = base.Columns["FormulaId"];
                 this.columnFormulaValue = base.Columns["FormulaValue"];
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private void InitClass() {
+                this.columnBalconyCut = new global::System.Data.DataColumn("BalconyCut", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBalconyCut);
+                this.columnBalconyDoor = new global::System.Data.DataColumn("BalconyDoor", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBalconyDoor);
+                this.columnBalconyCutSize = new global::System.Data.DataColumn("BalconyCutSize", typeof(int), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBalconyCutSize);
+                this.columnItemConstructionId = new global::System.Data.DataColumn("ItemConstructionId", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItemConstructionId);
+                this.columnHandMarkNoColour = new global::System.Data.DataColumn("HandMarkNoColour", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHandMarkNoColour);
+                this.columnItemGroupId = new global::System.Data.DataColumn("ItemGroupId", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnItemGroupId);
+                this.columnLenght = new global::System.Data.DataColumn("Lenght", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnLenght);
+                this.columnHeight = new global::System.Data.DataColumn("Height", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnHeight);
+                this.columnThickness = new global::System.Data.DataColumn("Thickness", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnThickness);
+                this.columnFormwork = new global::System.Data.DataColumn("Formwork", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFormwork);
+                this.columnBalconyDoorId = new global::System.Data.DataColumn("BalconyDoorId", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBalconyDoorId);
+                this.columnBalconyCutId = new global::System.Data.DataColumn("BalconyCutId", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnBalconyCutId);
+                this.columnFormworkMirror = new global::System.Data.DataColumn("FormworkMirror", typeof(short), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFormworkMirror);
+                this.columnElectrics = new global::System.Data.DataColumn("Electrics", typeof(string), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnElectrics);
+                this.columnVolume = new global::System.Data.DataColumn("Volume", typeof(float), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnVolume);
+                this.columnWeight = new global::System.Data.DataColumn("Weight", typeof(float), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnWeight);
                 this.columnHasFormula = new global::System.Data.DataColumn("HasFormula", typeof(bool), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnHasFormula);
+                this.columnFormulaId = new global::System.Data.DataColumn("FormulaId", typeof(decimal), null, global::System.Data.MappingType.Element);
+                base.Columns.Add(this.columnFormulaId);
                 this.columnFormulaValue = new global::System.Data.DataColumn("FormulaValue", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnFormulaValue);
+                this.Constraints.Add(new global::System.Data.UniqueConstraint("Constraint1", new global::System.Data.DataColumn[] {
+                                this.columnItemConstructionId}, true));
+                this.columnBalconyCut.MaxLength = 5;
+                this.columnBalconyDoor.MaxLength = 5;
+                this.columnItemConstructionId.AutoIncrement = true;
+                this.columnItemConstructionId.AutoIncrementSeed = -1;
+                this.columnItemConstructionId.AutoIncrementStep = -1;
+                this.columnItemConstructionId.AllowDBNull = false;
+                this.columnItemConstructionId.ReadOnly = true;
+                this.columnItemConstructionId.Unique = true;
+                this.columnHandMarkNoColour.MaxLength = 255;
+                this.columnElectrics.MaxLength = 10;
                 this.columnFormulaValue.MaxLength = 1000;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myFormulaRow NewmyFormulaRow() {
-                return ((myFormulaRow)(this.NewRow()));
+            public myItemRow NewmyItemRow() {
+                return ((myItemRow)(this.NewRow()));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Data.DataRow NewRowFromBuilder(global::System.Data.DataRowBuilder builder) {
-                return new myFormulaRow(builder);
+                return new myItemRow(builder);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override global::System.Type GetRowType() {
-                return typeof(myFormulaRow);
+                return typeof(myItemRow);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanged(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanged(e);
-                if ((this.myFormulaRowChanged != null)) {
-                    this.myFormulaRowChanged(this, new myFormulaRowChangeEvent(((myFormulaRow)(e.Row)), e.Action));
+                if ((this.myItemRowChanged != null)) {
+                    this.myItemRowChanged(this, new myItemRowChangeEvent(((myItemRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6172,8 +6169,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowChanging(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowChanging(e);
-                if ((this.myFormulaRowChanging != null)) {
-                    this.myFormulaRowChanging(this, new myFormulaRowChangeEvent(((myFormulaRow)(e.Row)), e.Action));
+                if ((this.myItemRowChanging != null)) {
+                    this.myItemRowChanging(this, new myItemRowChangeEvent(((myItemRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6181,8 +6178,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleted(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleted(e);
-                if ((this.myFormulaRowDeleted != null)) {
-                    this.myFormulaRowDeleted(this, new myFormulaRowChangeEvent(((myFormulaRow)(e.Row)), e.Action));
+                if ((this.myItemRowDeleted != null)) {
+                    this.myItemRowDeleted(this, new myItemRowChangeEvent(((myItemRow)(e.Row)), e.Action));
                 }
             }
             
@@ -6190,14 +6187,14 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             protected override void OnRowDeleting(global::System.Data.DataRowChangeEventArgs e) {
                 base.OnRowDeleting(e);
-                if ((this.myFormulaRowDeleting != null)) {
-                    this.myFormulaRowDeleting(this, new myFormulaRowChangeEvent(((myFormulaRow)(e.Row)), e.Action));
+                if ((this.myItemRowDeleting != null)) {
+                    this.myItemRowDeleting(this, new myItemRowChangeEvent(((myItemRow)(e.Row)), e.Action));
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void RemovemyFormulaRow(myFormulaRow row) {
+            public void RemovemyItemRow(myItemRow row) {
                 this.Rows.Remove(row);
             }
             
@@ -6224,7 +6221,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 type.Attributes.Add(attribute1);
                 global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
-                attribute2.FixedValue = "myFormulaDataTable";
+                attribute2.FixedValue = "myItemDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
                 global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
@@ -6635,9 +6632,9 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row DataTable1Row {
+            public myItemRow myItemRow {
                 get {
-                    return ((DataTable1Row)(this.GetParentRow(this.Table.ParentRelations["FK_I_S_ItemGroup_I_C_Formula"])));
+                    return ((myItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_I_S_ItemGroup_I_C_Formula"])));
                 }
                 set {
                     this.SetParentRow(value, this.Table.ParentRelations["FK_I_S_ItemGroup_I_C_Formula"]);
@@ -6784,6 +6781,17 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 }
                 else {
                     return ((I_J_ItemConstructionRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_ItemGroup"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public myItemRow[] GetmyItemRows() {
+                if ((this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_ItemGroup1"] == null)) {
+                    return new myItemRow[0];
+                }
+                else {
+                    return ((myItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_ItemGroup1"])));
                 }
             }
         }
@@ -7770,6 +7778,17 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public myItemRow myItemRow {
+                get {
+                    return ((myItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_I_J_ItemSeries_I_J_ItemConstruction1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_I_J_ItemSeries_I_J_ItemConstruction1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsItemConstructionIdNull() {
                 return this.IsNull(this.tableI_J_ItemSeries.ItemConstructionIdColumn);
             }
@@ -8042,6 +8061,17 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public myItemRow myItemRow {
+                get {
+                    return ((myItemRow)(this.GetParentRow(this.Table.ParentRelations["FK_I_R_Item_I_J_ItemConstruction1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_I_R_Item_I_J_ItemConstruction1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsArticle1CNull() {
                 return this.IsNull(this.tableI_R_Item.Article1CColumn);
             }
@@ -8308,6 +8338,17 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                     return ((I_J_ItemConstructionRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_BalconyCut"])));
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public myItemRow[] GetmyItemRows() {
+                if ((this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_BalconyCut1"] == null)) {
+                    return new myItemRow[0];
+                }
+                else {
+                    return ((myItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_BalconyCut1"])));
+                }
+            }
         }
         
         /// <summary>
@@ -8412,6 +8453,17 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                     return ((I_J_ItemConstructionRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_BalconyDoor"])));
                 }
             }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public myItemRow[] GetmyItemRows() {
+                if ((this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_BalconyDoor1"] == null)) {
+                    return new myItemRow[0];
+                }
+                else {
+                    return ((myItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_J_ItemConstruction_I_S_BalconyDoor1"])));
+                }
+            }
         }
         
         /// <summary>
@@ -8493,41 +8545,265 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         /// <summary>
         ///Represents strongly named DataRow class.
         ///</summary>
-        public partial class DataTable1Row : global::System.Data.DataRow {
+        public partial class myItemRow : global::System.Data.DataRow {
             
-            private DataTable1DataTable tableDataTable1;
+            private myItemDataTable tablemyItem;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal DataTable1Row(global::System.Data.DataRowBuilder rb) : 
+            internal myItemRow(global::System.Data.DataRowBuilder rb) : 
                     base(rb) {
-                this.tableDataTable1 = ((DataTable1DataTable)(this.Table));
+                this.tablemyItem = ((myItemDataTable)(this.Table));
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string ItemGroup {
+            public string BalconyCut {
+                get {
+                    if (this.IsBalconyCutNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tablemyItem.BalconyCutColumn]));
+                    }
+                }
+                set {
+                    this[this.tablemyItem.BalconyCutColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string BalconyDoor {
+                get {
+                    if (this.IsBalconyDoorNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tablemyItem.BalconyDoorColumn]));
+                    }
+                }
+                set {
+                    this[this.tablemyItem.BalconyDoorColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public int BalconyCutSize {
                 get {
                     try {
-                        return ((string)(this[this.tableDataTable1.ItemGroupColumn]));
+                        return ((int)(this[this.tablemyItem.BalconyCutSizeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'ItemGroup\' в таблице \'DataTable1\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'BalconyCutSize\' в таблице \'myItem\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDataTable1.ItemGroupColumn] = value;
+                    this[this.tablemyItem.BalconyCutSizeColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public decimal FormulaId {
+            public decimal ItemConstructionId {
                 get {
-                    return ((decimal)(this[this.tableDataTable1.FormulaIdColumn]));
+                    return ((decimal)(this[this.tablemyItem.ItemConstructionIdColumn]));
                 }
                 set {
-                    this[this.tableDataTable1.FormulaIdColumn] = value;
+                    this[this.tablemyItem.ItemConstructionIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string HandMarkNoColour {
+                get {
+                    try {
+                        return ((string)(this[this.tablemyItem.HandMarkNoColourColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'HandMarkNoColour\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.HandMarkNoColourColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal ItemGroupId {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablemyItem.ItemGroupIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'ItemGroupId\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.ItemGroupIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public short Lenght {
+                get {
+                    try {
+                        return ((short)(this[this.tablemyItem.LenghtColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Lenght\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.LenghtColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public short Height {
+                get {
+                    try {
+                        return ((short)(this[this.tablemyItem.HeightColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Height\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.HeightColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public short Thickness {
+                get {
+                    try {
+                        return ((short)(this[this.tablemyItem.ThicknessColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Thickness\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.ThicknessColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public short Formwork {
+                get {
+                    try {
+                        return ((short)(this[this.tablemyItem.FormworkColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Formwork\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.FormworkColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal BalconyDoorId {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablemyItem.BalconyDoorIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'BalconyDoorId\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.BalconyDoorIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public decimal BalconyCutId {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablemyItem.BalconyCutIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'BalconyCutId\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.BalconyCutIdColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public short FormworkMirror {
+                get {
+                    try {
+                        return ((short)(this[this.tablemyItem.FormworkMirrorColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'FormworkMirror\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.FormworkMirrorColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public string Electrics {
+                get {
+                    if (this.IsElectricsNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tablemyItem.ElectricsColumn]));
+                    }
+                }
+                set {
+                    this[this.tablemyItem.ElectricsColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public float Volume {
+                get {
+                    try {
+                        return ((float)(this[this.tablemyItem.VolumeColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Volume\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.VolumeColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public float Weight {
+                get {
+                    try {
+                        return ((float)(this[this.tablemyItem.WeightColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Weight\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.WeightColumn] = value;
                 }
             }
             
@@ -8536,39 +8812,318 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             public bool HasFormula {
                 get {
                     try {
-                        return ((bool)(this[this.tableDataTable1.HasFormulaColumn]));
+                        return ((bool)(this[this.tablemyItem.HasFormulaColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'HasFormula\' в таблице \'DataTable1\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'HasFormula\' в таблице \'myItem\' равно DBNull.", e);
                     }
                 }
                 set {
-                    this[this.tableDataTable1.HasFormulaColumn] = value;
+                    this[this.tablemyItem.HasFormulaColumn] = value;
                 }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsItemGroupNull() {
-                return this.IsNull(this.tableDataTable1.ItemGroupColumn);
+            public decimal FormulaId {
+                get {
+                    try {
+                        return ((decimal)(this[this.tablemyItem.FormulaIdColumn]));
+                    }
+                    catch (global::System.InvalidCastException e) {
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'FormulaId\' в таблице \'myItem\' равно DBNull.", e);
+                    }
+                }
+                set {
+                    this[this.tablemyItem.FormulaIdColumn] = value;
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetItemGroupNull() {
-                this[this.tableDataTable1.ItemGroupColumn] = global::System.Convert.DBNull;
+            public string FormulaValue {
+                get {
+                    if (this.IsFormulaValueNull()) {
+                        return null;
+                    }
+                    else {
+                        return ((string)(this[this.tablemyItem.FormulaValueColumn]));
+                    }
+                }
+                set {
+                    this[this.tablemyItem.FormulaValueColumn] = value;
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public I_S_BalconyCutRow I_S_BalconyCutRow {
+                get {
+                    return ((I_S_BalconyCutRow)(this.GetParentRow(this.Table.ParentRelations["FK_I_J_ItemConstruction_I_S_BalconyCut1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_I_J_ItemConstruction_I_S_BalconyCut1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public I_S_BalconyDoorRow I_S_BalconyDoorRow {
+                get {
+                    return ((I_S_BalconyDoorRow)(this.GetParentRow(this.Table.ParentRelations["FK_I_J_ItemConstruction_I_S_BalconyDoor1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_I_J_ItemConstruction_I_S_BalconyDoor1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public I_S_ItemGroupRow I_S_ItemGroupRow {
+                get {
+                    return ((I_S_ItemGroupRow)(this.GetParentRow(this.Table.ParentRelations["FK_I_J_ItemConstruction_I_S_ItemGroup1"])));
+                }
+                set {
+                    this.SetParentRow(value, this.Table.ParentRelations["FK_I_J_ItemConstruction_I_S_ItemGroup1"]);
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBalconyCutNull() {
+                return this.IsNull(this.tablemyItem.BalconyCutColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBalconyCutNull() {
+                this[this.tablemyItem.BalconyCutColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBalconyDoorNull() {
+                return this.IsNull(this.tablemyItem.BalconyDoorColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBalconyDoorNull() {
+                this[this.tablemyItem.BalconyDoorColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBalconyCutSizeNull() {
+                return this.IsNull(this.tablemyItem.BalconyCutSizeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBalconyCutSizeNull() {
+                this[this.tablemyItem.BalconyCutSizeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHandMarkNoColourNull() {
+                return this.IsNull(this.tablemyItem.HandMarkNoColourColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHandMarkNoColourNull() {
+                this[this.tablemyItem.HandMarkNoColourColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsItemGroupIdNull() {
+                return this.IsNull(this.tablemyItem.ItemGroupIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetItemGroupIdNull() {
+                this[this.tablemyItem.ItemGroupIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsLenghtNull() {
+                return this.IsNull(this.tablemyItem.LenghtColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetLenghtNull() {
+                this[this.tablemyItem.LenghtColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsHeightNull() {
+                return this.IsNull(this.tablemyItem.HeightColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetHeightNull() {
+                this[this.tablemyItem.HeightColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsThicknessNull() {
+                return this.IsNull(this.tablemyItem.ThicknessColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetThicknessNull() {
+                this[this.tablemyItem.ThicknessColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFormworkNull() {
+                return this.IsNull(this.tablemyItem.FormworkColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFormworkNull() {
+                this[this.tablemyItem.FormworkColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBalconyDoorIdNull() {
+                return this.IsNull(this.tablemyItem.BalconyDoorIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBalconyDoorIdNull() {
+                this[this.tablemyItem.BalconyDoorIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsBalconyCutIdNull() {
+                return this.IsNull(this.tablemyItem.BalconyCutIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetBalconyCutIdNull() {
+                this[this.tablemyItem.BalconyCutIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFormworkMirrorNull() {
+                return this.IsNull(this.tablemyItem.FormworkMirrorColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFormworkMirrorNull() {
+                this[this.tablemyItem.FormworkMirrorColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsElectricsNull() {
+                return this.IsNull(this.tablemyItem.ElectricsColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetElectricsNull() {
+                this[this.tablemyItem.ElectricsColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsVolumeNull() {
+                return this.IsNull(this.tablemyItem.VolumeColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetVolumeNull() {
+                this[this.tablemyItem.VolumeColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsWeightNull() {
+                return this.IsNull(this.tablemyItem.WeightColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetWeightNull() {
+                this[this.tablemyItem.WeightColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public bool IsHasFormulaNull() {
-                return this.IsNull(this.tableDataTable1.HasFormulaColumn);
+                return this.IsNull(this.tablemyItem.HasFormulaColumn);
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public void SetHasFormulaNull() {
-                this[this.tableDataTable1.HasFormulaColumn] = global::System.Convert.DBNull;
+                this[this.tablemyItem.HasFormulaColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFormulaIdNull() {
+                return this.IsNull(this.tablemyItem.FormulaIdColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFormulaIdNull() {
+                this[this.tablemyItem.FormulaIdColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public bool IsFormulaValueNull() {
+                return this.IsNull(this.tablemyItem.FormulaValueColumn);
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public void SetFormulaValueNull() {
+                this[this.tablemyItem.FormulaValueColumn] = global::System.Convert.DBNull;
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public I_J_ItemSeriesRow[] GetI_J_ItemSeriesRows() {
+                if ((this.Table.ChildRelations["FK_I_J_ItemSeries_I_J_ItemConstruction1"] == null)) {
+                    return new I_J_ItemSeriesRow[0];
+                }
+                else {
+                    return ((I_J_ItemSeriesRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_J_ItemSeries_I_J_ItemConstruction1"])));
+                }
+            }
+            
+            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+            public I_R_ItemRow[] GetI_R_ItemRows() {
+                if ((this.Table.ChildRelations["FK_I_R_Item_I_J_ItemConstruction1"] == null)) {
+                    return new I_R_ItemRow[0];
+                }
+                else {
+                    return ((I_R_ItemRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_R_Item_I_J_ItemConstruction1"])));
+                }
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -8580,77 +9135,6 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                 else {
                     return ((I_S_ItemGroupRow[])(base.GetChildRows(this.Table.ChildRelations["FK_I_S_ItemGroup_I_C_Formula"])));
                 }
-            }
-        }
-        
-        /// <summary>
-        ///Represents strongly named DataRow class.
-        ///</summary>
-        public partial class myFormulaRow : global::System.Data.DataRow {
-            
-            private myFormulaDataTable tablemyFormula;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            internal myFormulaRow(global::System.Data.DataRowBuilder rb) : 
-                    base(rb) {
-                this.tablemyFormula = ((myFormulaDataTable)(this.Table));
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool HasFormula {
-                get {
-                    try {
-                        return ((bool)(this[this.tablemyFormula.HasFormulaColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'HasFormula\' в таблице \'myFormula\' равно DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablemyFormula.HasFormulaColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public string FormulaValue {
-                get {
-                    try {
-                        return ((string)(this[this.tablemyFormula.FormulaValueColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'FormulaValue\' в таблице \'myFormula\' равно DBNull.", e);
-                    }
-                }
-                set {
-                    this[this.tablemyFormula.FormulaValueColumn] = value;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsHasFormulaNull() {
-                return this.IsNull(this.tablemyFormula.HasFormulaColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetHasFormulaNull() {
-                this[this.tablemyFormula.HasFormulaColumn] = global::System.Convert.DBNull;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public bool IsFormulaValueNull() {
-                return this.IsNull(this.tablemyFormula.FormulaValueColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public void SetFormulaValueNull() {
-                this[this.tablemyFormula.FormulaValueColumn] = global::System.Convert.DBNull;
             }
         }
         
@@ -9168,56 +9652,22 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
         ///Row event argument class
         ///</summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class DataTable1RowChangeEvent : global::System.EventArgs {
+        public class myItemRowChangeEvent : global::System.EventArgs {
             
-            private DataTable1Row eventRow;
+            private myItemRow eventRow;
             
             private global::System.Data.DataRowAction eventAction;
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1RowChangeEvent(DataTable1Row row, global::System.Data.DataRowAction action) {
+            public myItemRowChangeEvent(myItemRow row, global::System.Data.DataRowAction action) {
                 this.eventRow = row;
                 this.eventAction = action;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public DataTable1Row Row {
-                get {
-                    return this.eventRow;
-                }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public global::System.Data.DataRowAction Action {
-                get {
-                    return this.eventAction;
-                }
-            }
-        }
-        
-        /// <summary>
-        ///Row event argument class
-        ///</summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public class myFormulaRowChangeEvent : global::System.EventArgs {
-            
-            private myFormulaRow eventRow;
-            
-            private global::System.Data.DataRowAction eventAction;
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myFormulaRowChangeEvent(myFormulaRow row, global::System.Data.DataRowAction action) {
-                this.eventRow = row;
-                this.eventAction = action;
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-            public myFormulaRow Row {
+            public myItemRow Row {
                 get {
                     return this.eventRow;
                 }
@@ -12550,30 +13000,11 @@ SELECT ItemConstructionId, HandMarkNoColour, ItemGroupId, Lenght, Height, Thickn
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[1].Connection = this.Connection;
-            this._commandCollection[1].CommandText = @"INSERT INTO I_J_ItemConstruction
-                         (ItemGroupId, Lenght, Height, Thickness, Formwork, BalconyDoorId, BalconyCutId, FormworkMirror, Electrics, Weight, Volume, HandMarkNoColour)
-VALUES        (@ItemGroupId,@Lenght,@Height,@Thickness,@Formwork,@BalconyDoorId,@BalconyCutId,@FormworkMirror,@Electrics,@Weight,@Volume,@Mark); 
-SELECT IDENT_CURRENT('I_J_ItemConstruction')";
-            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoorId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyDoorId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCutId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyCutId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Volume", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Volume", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Mark", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "HandMarkNoColour", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT        COUNT(*) AS count
+            this._commandCollection[1].CommandText = @"SELECT        COUNT(*) AS count
 FROM            I_J_ItemConstruction INNER JOIN
-                         I_S_BalconyCut ON I_J_ItemConstruction.BalconyCutId = I_S_BalconyCut.BalconyCutId INNER JOIN
-                         I_S_BalconyDoor ON I_J_ItemConstruction.BalconyDoorId = I_S_BalconyDoor.BalconyDoorId INNER JOIN
-                         I_S_ItemGroup ON I_J_ItemConstruction.ItemGroupId = I_S_ItemGroup.ItemGroupId
+                         I_S_ItemGroup ON I_J_ItemConstruction.ItemGroupId = I_S_ItemGroup.ItemGroupId LEFT OUTER JOIN
+                         I_S_BalconyCut ON I_J_ItemConstruction.BalconyCutId = I_S_BalconyCut.BalconyCutId LEFT OUTER JOIN
+                         I_S_BalconyDoor ON I_J_ItemConstruction.BalconyDoorId = I_S_BalconyDoor.BalconyDoorId
 WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Lenght = @Lenght) AND (I_J_ItemConstruction.Height = @Height) AND 
                          (I_J_ItemConstruction.Thickness = @Thickness) AND (I_J_ItemConstruction.Formwork = @Formwork OR
                          I_J_ItemConstruction.Formwork IS NULL) AND (I_S_BalconyDoor.BalconyDoor = @BalconyDoor OR
@@ -12581,16 +13012,35 @@ WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Le
                          I_S_BalconyCut.BalconyCut IS NULL) AND (I_J_ItemConstruction.FormworkMirror = @FormworkMirror OR
                          I_J_ItemConstruction.FormworkMirror IS NULL) AND (I_J_ItemConstruction.Electrics = @Electrics OR
                          I_J_ItemConstruction.Electrics IS NULL)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoor", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyDoor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCut", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyCut", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[2].Connection = this.Connection;
+            this._commandCollection[2].CommandText = @"INSERT INTO I_J_ItemConstruction
+                         (ItemGroupId, Lenght, Height, Thickness, Formwork, BalconyDoorId, BalconyCutId, FormworkMirror, Electrics, Weight, Volume, HandMarkNoColour)
+VALUES        (@ItemGroupId,@Lenght,@Height,@Thickness,@Formwork,@BalconyDoorId,@BalconyCutId,@FormworkMirror,@Electrics,@Weight,@Volume,@Mark); 
+SELECT IDENT_CURRENT('I_J_ItemConstruction')";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoor", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyDoor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCut", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyCut", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoorId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyDoorId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCutId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyCutId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Volume", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Volume", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Mark", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "HandMarkNoColour", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13110,9 +13560,91 @@ WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Le
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        public virtual object FindByParameters(string itemGroup, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, string BalconyDoor, string BalconyCut, global::System.Nullable<short> FormworkMirror, string Electrics) {
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            if ((itemGroup == null)) {
+                command.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[0].Value = ((string)(itemGroup));
+            }
+            if ((Lenght.HasValue == true)) {
+                command.Parameters[1].Value = ((short)(Lenght.Value));
+            }
+            else {
+                command.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((Height.HasValue == true)) {
+                command.Parameters[2].Value = ((short)(Height.Value));
+            }
+            else {
+                command.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((Thickness.HasValue == true)) {
+                command.Parameters[3].Value = ((short)(Thickness.Value));
+            }
+            else {
+                command.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            if ((Formwork.HasValue == true)) {
+                command.Parameters[4].Value = ((short)(Formwork.Value));
+            }
+            else {
+                command.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((BalconyDoor == null)) {
+                command.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[5].Value = ((string)(BalconyDoor));
+            }
+            if ((BalconyCut == null)) {
+                command.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[6].Value = ((string)(BalconyCut));
+            }
+            if ((FormworkMirror.HasValue == true)) {
+                command.Parameters[7].Value = ((short)(FormworkMirror.Value));
+            }
+            else {
+                command.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            if ((Electrics == null)) {
+                command.Parameters[8].Value = global::System.DBNull.Value;
+            }
+            else {
+                command.Parameters[8].Value = ((string)(Electrics));
+            }
+            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
+            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
+                        != global::System.Data.ConnectionState.Open)) {
+                command.Connection.Open();
+            }
+            object returnValue;
+            try {
+                returnValue = command.ExecuteScalar();
+            }
+            finally {
+                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
+                    command.Connection.Close();
+                }
+            }
+            if (((returnValue == null) 
+                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
+                return null;
+            }
+            else {
+                return ((object)(returnValue));
+            }
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
         public virtual object InsertItem(global::System.Nullable<decimal> ItemGroupId, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, global::System.Nullable<decimal> BalconyDoorId, global::System.Nullable<decimal> BalconyCutId, global::System.Nullable<short> FormworkMirror, string Electrics, global::System.Nullable<float> Weight, global::System.Nullable<float> Volume, string Mark) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[1];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
             if ((ItemGroupId.HasValue == true)) {
                 command.Parameters[0].Value = ((decimal)(ItemGroupId.Value));
             }
@@ -13205,88 +13737,6 @@ WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Le
             }
             else {
                 return ((object)(returnValue));
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        public virtual global::System.Nullable<int> IsMarkExecute(string itemGroup, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, string BalconyDoor, string BalconyCut, global::System.Nullable<short> FormworkMirror, string Electrics) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[2];
-            if ((itemGroup == null)) {
-                command.Parameters[0].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[0].Value = ((string)(itemGroup));
-            }
-            if ((Lenght.HasValue == true)) {
-                command.Parameters[1].Value = ((short)(Lenght.Value));
-            }
-            else {
-                command.Parameters[1].Value = global::System.DBNull.Value;
-            }
-            if ((Height.HasValue == true)) {
-                command.Parameters[2].Value = ((short)(Height.Value));
-            }
-            else {
-                command.Parameters[2].Value = global::System.DBNull.Value;
-            }
-            if ((Thickness.HasValue == true)) {
-                command.Parameters[3].Value = ((short)(Thickness.Value));
-            }
-            else {
-                command.Parameters[3].Value = global::System.DBNull.Value;
-            }
-            if ((Formwork.HasValue == true)) {
-                command.Parameters[4].Value = ((short)(Formwork.Value));
-            }
-            else {
-                command.Parameters[4].Value = global::System.DBNull.Value;
-            }
-            if ((BalconyDoor == null)) {
-                command.Parameters[5].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[5].Value = ((string)(BalconyDoor));
-            }
-            if ((BalconyCut == null)) {
-                command.Parameters[6].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[6].Value = ((string)(BalconyCut));
-            }
-            if ((FormworkMirror.HasValue == true)) {
-                command.Parameters[7].Value = ((short)(FormworkMirror.Value));
-            }
-            else {
-                command.Parameters[7].Value = global::System.DBNull.Value;
-            }
-            if ((Electrics == null)) {
-                command.Parameters[8].Value = global::System.DBNull.Value;
-            }
-            else {
-                command.Parameters[8].Value = ((string)(Electrics));
-            }
-            global::System.Data.ConnectionState previousConnectionState = command.Connection.State;
-            if (((command.Connection.State & global::System.Data.ConnectionState.Open) 
-                        != global::System.Data.ConnectionState.Open)) {
-                command.Connection.Open();
-            }
-            object returnValue;
-            try {
-                returnValue = command.ExecuteScalar();
-            }
-            finally {
-                if ((previousConnectionState == global::System.Data.ConnectionState.Closed)) {
-                    command.Connection.Close();
-                }
-            }
-            if (((returnValue == null) 
-                        || (returnValue.GetType() == typeof(global::System.DBNull)))) {
-                return new global::System.Nullable<int>();
-            }
-            else {
-                return new global::System.Nullable<int>(((int)(returnValue)));
             }
         }
     }
@@ -16064,7 +16514,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
     [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
         ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class DataTable1TableAdapter : global::System.ComponentModel.Component {
+    public partial class myItemTableAdapter : global::System.ComponentModel.Component {
         
         private global::System.Data.SqlClient.SqlDataAdapter _adapter;
         
@@ -16078,7 +16528,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public DataTable1TableAdapter() {
+        public myItemTableAdapter() {
             this.ClearBeforeFill = true;
         }
         
@@ -16175,165 +16625,25 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
             global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "DataTable1";
-            tableMapping.ColumnMappings.Add("ItemGroup", "ItemGroup");
+            tableMapping.DataSetTable = "myItem";
+            tableMapping.ColumnMappings.Add("BalconyCut", "BalconyCut");
+            tableMapping.ColumnMappings.Add("BalconyDoor", "BalconyDoor");
+            tableMapping.ColumnMappings.Add("BalconyCutSize", "BalconyCutSize");
+            tableMapping.ColumnMappings.Add("ItemConstructionId", "ItemConstructionId");
+            tableMapping.ColumnMappings.Add("HandMarkNoColour", "HandMarkNoColour");
+            tableMapping.ColumnMappings.Add("ItemGroupId", "ItemGroupId");
+            tableMapping.ColumnMappings.Add("Lenght", "Lenght");
+            tableMapping.ColumnMappings.Add("Height", "Height");
+            tableMapping.ColumnMappings.Add("Thickness", "Thickness");
+            tableMapping.ColumnMappings.Add("Formwork", "Formwork");
+            tableMapping.ColumnMappings.Add("BalconyDoorId", "BalconyDoorId");
+            tableMapping.ColumnMappings.Add("BalconyCutId", "BalconyCutId");
+            tableMapping.ColumnMappings.Add("FormworkMirror", "FormworkMirror");
+            tableMapping.ColumnMappings.Add("Electrics", "Electrics");
+            tableMapping.ColumnMappings.Add("Volume", "Volume");
+            tableMapping.ColumnMappings.Add("Weight", "Weight");
+            tableMapping.ColumnMappings.Add("HasFormula", "HasFormula");
             tableMapping.ColumnMappings.Add("FormulaId", "FormulaId");
-            tableMapping.ColumnMappings.Add("HasFormula", "HasFormula");
-            this._adapter.TableMappings.Add(tableMapping);
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitConnection() {
-            this._connection = new global::System.Data.SqlClient.SqlConnection();
-            this._connection.ConnectionString = global::Autocad_ConcerteList.Properties.Settings.Default.SAPRConnectionString;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
-            this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
-            this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        ItemGroup, HasFormula, FormulaId\r\nFROM            I_S_ItemGroup\r\nWH" +
-                "ERE        (NOT (HasFormula IS NULL))\r\nORDER BY FormulaId";
-            this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ConcerteDataSet.DataTable1DataTable GetData() {
-            this.Adapter.SelectCommand = this.CommandCollection[0];
-            ConcerteDataSet.DataTable1DataTable dataTable = new ConcerteDataSet.DataTable1DataTable();
-            this.Adapter.Fill(dataTable);
-            return dataTable;
-        }
-    }
-    
-    /// <summary>
-    ///Represents the connection and commands used to retrieve and save data.
-    ///</summary>
-    [global::System.ComponentModel.DesignerCategoryAttribute("code")]
-    [global::System.ComponentModel.ToolboxItem(true)]
-    [global::System.ComponentModel.DataObjectAttribute(true)]
-    [global::System.ComponentModel.DesignerAttribute("Microsoft.VSDesigner.DataSource.Design.TableAdapterDesigner, Microsoft.VSDesigner" +
-        ", Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")]
-    [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
-    public partial class myFormulaTableAdapter : global::System.ComponentModel.Component {
-        
-        private global::System.Data.SqlClient.SqlDataAdapter _adapter;
-        
-        private global::System.Data.SqlClient.SqlConnection _connection;
-        
-        private global::System.Data.SqlClient.SqlTransaction _transaction;
-        
-        private global::System.Data.SqlClient.SqlCommand[] _commandCollection;
-        
-        private bool _clearBeforeFill;
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public myFormulaTableAdapter() {
-            this.ClearBeforeFill = true;
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected internal global::System.Data.SqlClient.SqlDataAdapter Adapter {
-            get {
-                if ((this._adapter == null)) {
-                    this.InitAdapter();
-                }
-                return this._adapter;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::System.Data.SqlClient.SqlConnection Connection {
-            get {
-                if ((this._connection == null)) {
-                    this.InitConnection();
-                }
-                return this._connection;
-            }
-            set {
-                this._connection = value;
-                if ((this.Adapter.InsertCommand != null)) {
-                    this.Adapter.InsertCommand.Connection = value;
-                }
-                if ((this.Adapter.DeleteCommand != null)) {
-                    this.Adapter.DeleteCommand.Connection = value;
-                }
-                if ((this.Adapter.UpdateCommand != null)) {
-                    this.Adapter.UpdateCommand.Connection = value;
-                }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    if ((this.CommandCollection[i] != null)) {
-                        ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
-                    }
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        internal global::System.Data.SqlClient.SqlTransaction Transaction {
-            get {
-                return this._transaction;
-            }
-            set {
-                this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
-                    this.CommandCollection[i].Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.DeleteCommand != null))) {
-                    this.Adapter.DeleteCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.InsertCommand != null))) {
-                    this.Adapter.InsertCommand.Transaction = this._transaction;
-                }
-                if (((this.Adapter != null) 
-                            && (this.Adapter.UpdateCommand != null))) {
-                    this.Adapter.UpdateCommand.Transaction = this._transaction;
-                }
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        protected global::System.Data.SqlClient.SqlCommand[] CommandCollection {
-            get {
-                if ((this._commandCollection == null)) {
-                    this.InitCommandCollection();
-                }
-                return this._commandCollection;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        public bool ClearBeforeFill {
-            get {
-                return this._clearBeforeFill;
-            }
-            set {
-                this._clearBeforeFill = value;
-            }
-        }
-        
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
-        private void InitAdapter() {
-            this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
-            tableMapping.SourceTable = "Table";
-            tableMapping.DataSetTable = "myFormula";
-            tableMapping.ColumnMappings.Add("HasFormula", "HasFormula");
             tableMapping.ColumnMappings.Add("FormulaValue", "FormulaValue");
             this._adapter.TableMappings.Add(tableMapping);
         }
@@ -16348,30 +16658,74 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[1];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[2];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
-            this._commandCollection[0].CommandText = "SELECT        I_S_ItemGroup.HasFormula, I_C_Formula.FormulaValue\r\nFROM           " +
-                " I_C_Formula INNER JOIN\r\n                         I_S_ItemGroup ON I_C_Formula.F" +
-                "ormulaId = I_S_ItemGroup.FormulaId\r\nWHERE        (I_S_ItemGroup.ItemGroup = @ite" +
-                "mGroup)";
+            this._commandCollection[0].CommandText = @"SELECT        I_S_BalconyCut.BalconyCut, I_S_BalconyDoor.BalconyDoor, I_S_BalconyCut.BalconyCutSize, I_J_ItemConstruction.ItemConstructionId, 
+                         I_J_ItemConstruction.HandMarkNoColour, I_J_ItemConstruction.ItemGroupId, I_J_ItemConstruction.Lenght, I_J_ItemConstruction.Height, 
+                         I_J_ItemConstruction.Thickness, I_J_ItemConstruction.Formwork, I_J_ItemConstruction.BalconyDoorId, I_J_ItemConstruction.BalconyCutId, 
+                         I_J_ItemConstruction.FormworkMirror, I_J_ItemConstruction.Electrics, I_J_ItemConstruction.Volume, I_J_ItemConstruction.Weight, I_S_ItemGroup.HasFormula, 
+                         I_S_ItemGroup.FormulaId, I_C_Formula.FormulaValue
+FROM            I_J_ItemConstruction INNER JOIN
+                         I_S_ItemGroup ON I_J_ItemConstruction.ItemGroupId = I_S_ItemGroup.ItemGroupId LEFT OUTER JOIN
+                         I_C_Formula ON I_S_ItemGroup.FormulaId = I_C_Formula.FormulaId LEFT OUTER JOIN
+                         I_S_BalconyDoor ON I_J_ItemConstruction.BalconyDoorId = I_S_BalconyDoor.BalconyDoorId LEFT OUTER JOIN
+                         I_S_BalconyCut ON I_J_ItemConstruction.BalconyCutId = I_S_BalconyCut.BalconyCutId";
             this._commandCollection[0].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[0].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[1] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[1].Connection = this.Connection;
+            this._commandCollection[1].CommandText = @"SELECT        I_S_BalconyCut.BalconyCut, I_S_BalconyDoor.BalconyDoor, I_S_BalconyCut.BalconyCutSize, I_J_ItemConstruction.ItemConstructionId, 
+                         I_J_ItemConstruction.HandMarkNoColour, I_J_ItemConstruction.ItemGroupId, I_J_ItemConstruction.Lenght, I_J_ItemConstruction.Height, 
+                         I_J_ItemConstruction.Thickness, I_J_ItemConstruction.Formwork, I_J_ItemConstruction.BalconyDoorId, I_J_ItemConstruction.BalconyCutId, 
+                         I_J_ItemConstruction.FormworkMirror, I_J_ItemConstruction.Electrics, I_J_ItemConstruction.Volume, I_J_ItemConstruction.Weight, I_C_Formula.FormulaValue, 
+                         I_S_ItemGroup.HasFormula
+FROM            I_J_ItemConstruction INNER JOIN
+                         I_S_ItemGroup ON I_J_ItemConstruction.ItemGroupId = I_S_ItemGroup.ItemGroupId LEFT OUTER JOIN
+                         I_C_Formula ON I_S_ItemGroup.FormulaId = I_C_Formula.FormulaId LEFT OUTER JOIN
+                         I_S_BalconyDoor ON I_J_ItemConstruction.BalconyDoorId = I_S_BalconyDoor.BalconyDoorId LEFT OUTER JOIN
+                         I_S_BalconyCut ON I_J_ItemConstruction.BalconyCutId = I_S_BalconyCut.BalconyCutId
+WHERE        (I_J_ItemConstruction.HandMarkNoColour = @mark)";
+            this._commandCollection[1].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@mark", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "HandMarkNoColour", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Fill, true)]
+        public virtual int Fill(ConcerteDataSet.myItemDataTable dataTable) {
+            this.Adapter.SelectCommand = this.CommandCollection[0];
+            if ((this.ClearBeforeFill == true)) {
+                dataTable.Clear();
+            }
+            int returnValue = this.Adapter.Fill(dataTable);
+            return returnValue;
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
-        public virtual ConcerteDataSet.myFormulaDataTable GetFormula(string itemGroup) {
+        public virtual ConcerteDataSet.myItemDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            if ((itemGroup == null)) {
+            ConcerteDataSet.myItemDataTable dataTable = new ConcerteDataSet.myItemDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual ConcerteDataSet.myItemDataTable FindByMark(string mark) {
+            this.Adapter.SelectCommand = this.CommandCollection[1];
+            if ((mark == null)) {
                 this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(itemGroup));
+                this.Adapter.SelectCommand.Parameters[0].Value = ((string)(mark));
             }
-            ConcerteDataSet.myFormulaDataTable dataTable = new ConcerteDataSet.myFormulaDataTable();
+            ConcerteDataSet.myItemDataTable dataTable = new ConcerteDataSet.myItemDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -16819,21 +17173,21 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                     allChangedRows.AddRange(updatedRows);
                 }
             }
-            if ((this._i_S_BalconyDoorTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
-                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
-                if (((updatedRows != null) 
-                            && (0 < updatedRows.Length))) {
-                    result = (result + this._i_S_BalconyDoorTableAdapter.Update(updatedRows));
-                    allChangedRows.AddRange(updatedRows);
-                }
-            }
             if ((this._i_S_BalconyCutTableAdapter != null)) {
                 global::System.Data.DataRow[] updatedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
                     result = (result + this._i_S_BalconyCutTableAdapter.Update(updatedRows));
+                    allChangedRows.AddRange(updatedRows);
+                }
+            }
+            if ((this._i_S_BalconyDoorTableAdapter != null)) {
+                global::System.Data.DataRow[] updatedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
+                if (((updatedRows != null) 
+                            && (0 < updatedRows.Length))) {
+                    result = (result + this._i_S_BalconyDoorTableAdapter.Update(updatedRows));
                     allChangedRows.AddRange(updatedRows);
                 }
             }
@@ -16961,19 +17315,19 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                     allAddedRows.AddRange(addedRows);
                 }
             }
-            if ((this._i_S_BalconyDoorTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.Added);
-                if (((addedRows != null) 
-                            && (0 < addedRows.Length))) {
-                    result = (result + this._i_S_BalconyDoorTableAdapter.Update(addedRows));
-                    allAddedRows.AddRange(addedRows);
-                }
-            }
             if ((this._i_S_BalconyCutTableAdapter != null)) {
                 global::System.Data.DataRow[] addedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_S_BalconyCutTableAdapter.Update(addedRows));
+                    allAddedRows.AddRange(addedRows);
+                }
+            }
+            if ((this._i_S_BalconyDoorTableAdapter != null)) {
+                global::System.Data.DataRow[] addedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.Added);
+                if (((addedRows != null) 
+                            && (0 < addedRows.Length))) {
+                    result = (result + this._i_S_BalconyDoorTableAdapter.Update(addedRows));
                     allAddedRows.AddRange(addedRows);
                 }
             }
@@ -17147,19 +17501,19 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                     allChangedRows.AddRange(deletedRows);
                 }
             }
-            if ((this._i_S_BalconyCutTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.Deleted);
-                if (((deletedRows != null) 
-                            && (0 < deletedRows.Length))) {
-                    result = (result + this._i_S_BalconyCutTableAdapter.Update(deletedRows));
-                    allChangedRows.AddRange(deletedRows);
-                }
-            }
             if ((this._i_S_BalconyDoorTableAdapter != null)) {
                 global::System.Data.DataRow[] deletedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_S_BalconyDoorTableAdapter.Update(deletedRows));
+                    allChangedRows.AddRange(deletedRows);
+                }
+            }
+            if ((this._i_S_BalconyCutTableAdapter != null)) {
+                global::System.Data.DataRow[] deletedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                if (((deletedRows != null) 
+                            && (0 < deletedRows.Length))) {
+                    result = (result + this._i_S_BalconyCutTableAdapter.Update(deletedRows));
                     allChangedRows.AddRange(deletedRows);
                 }
             }

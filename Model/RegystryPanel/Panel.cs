@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autocad_ConcerteList.ConcreteDB;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using AcadLib;
 using AcadLib.Errors;
+using AcadLib.Blocks;
+using Autocad_ConcerteList.Model.Panels;
+using Autocad_ConcerteList.Model.ConcreteDB;
 
-namespace Autocad_ConcerteList.RegystryPanel
+namespace Autocad_ConcerteList.Model.RegystryPanel
 {
     /// <summary>
     /// ЖБИ изделие полученное из автокада
@@ -22,6 +24,7 @@ namespace Autocad_ConcerteList.RegystryPanel
         /// Марка от конструкторов
         /// </summary>
         public string Mark { get; set; }
+        public string MarkWoSpace { get; set; }
         /// <summary>
         /// Покраска
         /// </summary>
@@ -30,6 +33,7 @@ namespace Autocad_ConcerteList.RegystryPanel
         /// Марка из базы
         /// </summary>
         public string MarkDb { get; set; }
+        public string MarkDbWoSpace { get; set; }
         /// <summary>
         /// 3НСг
         /// </summary>
@@ -45,13 +49,21 @@ namespace Autocad_ConcerteList.RegystryPanel
         public string BalconyDoor { get; set; }
         public string BalconyCut { get; set; }
         public short? FormworkMirror { get; set; }
-        public string Electrics { get; set; }        
+        public string Electrics { get; set; }
+        public string Aperture { get; set; }
+        public string Album { get; set; }
         public float? Weight { get; set; }
         public float? Volume { get; set; }      
 
         public EnumErrorItem ErrorStatus { get; set; }
+
+        public string Warning { get; set; }
         
         public ObjectId IdBlRef { get; set; }
+        public List<AttributeInfo> AtrsInfo { get; set; }
+        public ParserMark ParseMark { get; set; }
+        public ConcreteDB.DataSet.ConcerteDataSet.myItemRow DbItem { get; set; }
+        public ConcreteDB.DataSet.ConcerteDataSet.I_S_ItemGroupRow DbGroup { get; set; }
 
         private bool _alreadyCalcExtents;
         private bool _isNullExtents;
@@ -89,45 +101,33 @@ namespace Autocad_ConcerteList.RegystryPanel
                 switch (ErrorStatus)
                 {                    
                     case EnumErrorItem.IncorrectMark:
-                        return "Несоответствуящая марка";                        
+                        return "Несоответствующая марка";                        
                     case EnumErrorItem.DifferentParams:
                         return "Разные параметры";
                     default:
                         return "";
                 }
             }
-        }        
-
-        private string _info;
-
-        public void Show()
-        {
-            var doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc != null)
-            {
-                Editor ed = doc.Editor;
-                ed.Zoom(Extents);
-                IdBlRef.FlickObjectHighlight(2, 100, 100);
-            }
         }
 
+        private string _info;
         public string Info
         {
             get
             {
                 if (_info == null)
                 {
-                    _info = getInfo();
+                    _info = GetInfo();
                 }
                 return _info;
             }
             set { _info = value; }
         }        
 
-        public string getInfo()
+        public string GetInfo()
         {
             string info = "Марка \t\t" + Mark + "\r\n" +
-                          "Марка по базе \t" + MarkDb + "\r\n" +
+                          "Марка по формуле \t" + MarkDb + "\r\n" +
                           "Параметры панели из блока:\r\n" +
                           "Группа \t\t" + ItemGroup + "\r\n" +
                           (Lenght == null ? "" : "Длина \t\t" + Lenght + "\r\n") +
@@ -140,12 +140,116 @@ namespace Autocad_ConcerteList.RegystryPanel
                           (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
                           (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color + "\r\n") +
                           (Weight == null ? "" : "Вес, кг \t\t" + Weight + "\r\n") +
-                          (Volume == null ? "" : "Объем, м3 \t" + Volume + "\r\n") +
-                          (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color);
+                          (Volume == null ? "" : "Объем, м3 \t" + Volume + "\r\n") +                          
+                          "Наличие в базе: \t" + (DbItem == null ? "Нет" : "Есть") + "\r\n" +
+                          (string.IsNullOrEmpty(Warning) ? "" : "Предупреждения: \t" + Warning);
             return info;
         }
+       
+        public Result Define(ObjectId idBlRef)
+        {
+            // определить параметры панели из блока
+            using (var blRef = idBlRef.Open( OpenMode.ForRead, false, true) as BlockReference)
+            {
+                if (blRef == null) return Result.Fail("Блок панели не определен.");
+                IdBlRef = idBlRef;
+                BlockName = blRef.GetEffectiveName();
+                AtrsInfo = AttributeInfo.GetAttrRefs(blRef);
+                foreach (var atr in AtrsInfo)
+                {
+                    if (atr.Tag.Equals("МАРКА", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Mark = atr.Text.Trim();
+                        MarkWoSpace = Mark.Replace(" ", "");
+                    }
+                    else if (atr.Tag.Equals("ДЛИНА", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Lenght = GetShortNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals("ВЫСОТА", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Height = GetShortNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals("ТОЛЩИНА", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Thickness = GetShortNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals("ТОЛЩИНА", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Thickness = GetShortNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals("МАССА", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Weight = GetShortNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals("ПОКРАСКА", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Color = atr.Text.Trim();
+                    }
+                    else if (atr.Tag.Equals("ПРОЕМ", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Aperture = atr.Text.Trim();
+                    }
+                    else if (atr.Tag.Equals("ДОК", StringComparison.OrdinalIgnoreCase))
+                    {
+                        Album = atr.Text.Trim();
+                    }
+                }
+            }
 
-        
+            if (string.IsNullOrEmpty(Mark))
+            {
+                return Result.Fail("Нет атрибута марки.");
+            }
+
+            ParseMark = new ParserMark(Mark);
+            ParseMark.Parse();
+
+            // Перенос распарсеных параметров в панель
+            FillParseParams();
+
+            // Проверка есть ли такая группа ЖБИ в базе
+            DbGroup = DbService.FindGroup(ItemGroup);
+            if (DbGroup == null)
+            {
+                return Result.Fail($"Неопределенная группа {ItemGroup}.");
+            }
+
+            DbItem = DbService.FindPanelByMark(Mark);
+            if (DbItem == null)
+            {
+                DbItem = DbService.FindPanelByMark(MarkWoSpace);
+            }
+
+            try
+            {
+                MarkDb = DbService.GetDbMark(this);
+                MarkDbWoSpace = MarkDb.Replace(" ", "");
+            }
+            catch (Exception ex)
+            {
+                Warning += "Ошибка формирования марки панели по параметрам - " + ex.Message;
+            }
+
+            return Result.Ok();
+        }        
+
+        public void Check()
+        {
+            // Проверки.
+            // 1. Проверка марки в атрибуте и в панели
+            if (Mark != MarkDb)
+            {
+                if (MarkWoSpace != MarkDbWoSpace)
+                {
+                    ErrorStatus |= EnumErrorItem.IncorrectMark;
+                }
+                else
+                {
+                    Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkDb + "'";
+                }
+            }                        
+        }
 
         /// <summary>
         /// Создание новой панели с отличающимися паркметрами
@@ -272,6 +376,17 @@ namespace Autocad_ConcerteList.RegystryPanel
             return Mark;
         }
 
+        public void Show()
+        {
+            var doc = Application.DocumentManager.MdiActiveDocument;
+            if (doc != null)
+            {
+                Editor ed = doc.Editor;
+                ed.Zoom(Extents);
+                IdBlRef.FlickObjectHighlight(2, 100, 100);
+            }
+        }
+
         public static void FindBlocks(List<Panel> panels)
         {
             // Найти блоки со старой маркой и исправить на марку из базы.
@@ -347,6 +462,16 @@ namespace Autocad_ConcerteList.RegystryPanel
                 }
                 t.Commit();
             }
+        }
+
+        private void FillParseParams()
+        {
+            ItemGroup = ParseMark.ItemGroup;            
+            Formwork = ParseMark.Formwork;
+            FormworkMirror = ParseMark.FormworkMirror;
+            BalconyCut = ParseMark.BalconyCut;
+            BalconyDoor = ParseMark.BalconyDoor;
+            Electrics = ParseMark.Electrics;            
         }
     }
 }

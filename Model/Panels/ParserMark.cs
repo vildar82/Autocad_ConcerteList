@@ -20,18 +20,18 @@ namespace Autocad_ConcerteList.Model.Panels
         /// <summary>
         /// Длина - первое число в габаритах марки. Для группы вентблоков это может быть высота.
         /// </summary>        
-        public int Length { get; private set; }
+        public short? Length { get; private set; }
         /// <summary>
         /// Высота - второе число в габаритах марки.
         /// </summary>
-        public int Height { get; private set; }
+        public short? Height { get; private set; }
         /// <summary>
         /// Толщина - третий параметр в габаритах марки
         /// </summary>
-        public int Thickness { get; private set; }
+        public short? Thickness { get; private set; }
         // Опалубка. Например 1, 2.
-        public int Formwork { get; private set; }
-        public int FormworkMirror { get; private set; }
+        public short? Formwork { get; private set; }
+        public short? FormworkMirror { get; private set; }
         // Балкон. Б, Б1.
         public string BalconyDoor { get; private set; }
         // Подрезка. П, П1.
@@ -133,13 +133,13 @@ namespace Autocad_ConcerteList.Model.Panels
                 // Ошибка. максимум, только 3 габарита - Длина, Высота, Толщина
                 addErrorMsg ("Определено больше трех габаритов разделенных точкой.");                
             }
-            Length = int.Parse(splitDot[0]);
+            Length = short.Parse(splitDot[0]);
             if (splitDot.Length>1)
             {
-                Height = int.Parse(splitDot[1]);
+                Height = short.Parse(splitDot[1]);
                 if(splitDot.Length>2)
                 {
-                    Thickness = int.Parse(splitDot[2]);
+                    Thickness = short.Parse(splitDot[2]);
                 }
             }
         }
@@ -154,18 +154,31 @@ namespace Autocad_ConcerteList.Model.Panels
                 // Ошибка. Может быть только опалубка и электрика. От Зеркальности отказались.
                 addErrorMsg("Определено больше трех возможных дополнительных параметра панели - опалубки, зеркальности и электрики.");
             }
-            definePartFormwork(splitDash[0]);
-            if (splitDash.Length>2)
+            string val;
+            if (splitDash.Length == 1)
             {
-                FormworkMirror = int.Parse(splitDash[1]);                
+                if (partDop.IndexOf("э", StringComparison.OrdinalIgnoreCase) == -1)
+                {
+                    definePartFormwork(partDop);
+                }
+                else
+                {
+                    Electrics = partDop;
+                }
+            }
+            else if (splitDash.Length>2)
+            {
+                definePartFormwork(splitDash[0]);
+                FormworkMirror = short.Parse(splitDash[1]);                
                 Electrics = splitDash[2];                
             }
-            if (splitDash.Length > 1)
+            else if (splitDash.Length > 1)
             {
-                string val = splitDash[1];
+                definePartFormwork(splitDash[0]);
+                val = splitDash[1];
                 if (val.IndexOf("э", StringComparison.OrdinalIgnoreCase) == -1)
                 {
-                    FormworkMirror = int.Parse(val);
+                    FormworkMirror = short.Parse(val);
                 }
                 else
                 {
@@ -181,29 +194,29 @@ namespace Autocad_ConcerteList.Model.Panels
             int indexB = input.IndexOf("Б");
             if (indexP == -1 && indexB == -1)
             {
-                Formwork = int.Parse(input);
+                Formwork = short.Parse(input);
             }
             else if (indexB ==-1)
             {
-                Formwork = int.Parse(input.Substring(0, indexP));
+                Formwork = short.Parse(input.Substring(0, indexP));
                 BalconyCut = input.Substring(indexP);
             }
             else if (indexP == -1)
             {
-                Formwork = int.Parse(input.Substring(0, indexB));
+                Formwork = short.Parse(input.Substring(0, indexB));
                 BalconyDoor = input.Substring(indexB);
             }
             else
             {
                 if (indexP<indexB)
                 {
-                    Formwork = int.Parse(input.Substring(0, indexP));
+                    Formwork = short.Parse(input.Substring(0, indexP));
                     BalconyCut = input.Substring(indexP, indexB- indexP);
                     BalconyDoor = input.Substring(indexB);
                 }
                 else
                 {
-                    Formwork = int.Parse(input.Substring(0, indexB));
+                    Formwork = short.Parse(input.Substring(0, indexB));
                     BalconyDoor = input.Substring(indexB, indexP- indexB);
                     BalconyCut = input.Substring(indexP);
                 }

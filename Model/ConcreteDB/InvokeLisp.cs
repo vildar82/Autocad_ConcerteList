@@ -7,7 +7,7 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 
-namespace Autocad_ConcerteList.ConcreteDB
+namespace Autocad_ConcerteList.Model.ConcreteDB
 {
     public static class InvokeLisp
     {

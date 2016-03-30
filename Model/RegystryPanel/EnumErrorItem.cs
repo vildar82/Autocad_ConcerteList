@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autocad_ConcerteList.RegystryPanel
+namespace Autocad_ConcerteList.Model.RegystryPanel
 {
     [Flags]
     public enum EnumErrorItem

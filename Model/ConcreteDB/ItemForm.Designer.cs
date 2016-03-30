@@ -1,4 +1,4 @@
-﻿namespace Autocad_ConcerteList
+﻿namespace Autocad_ConcerteList.Model.ConcreteDB
 {
     partial class ItemForm
     {

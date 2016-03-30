@@ -4,9 +4,8 @@ using System.Data;
 using System.Windows.Forms;
 using System.Linq;
 using Autocad_ConcerteList.Model.ConcreteDB.DataSet.ConcerteDataSetTableAdapters;
-using Autocad_ConcerteList.ConcreteDB;
 
-namespace Autocad_ConcerteList
+namespace Autocad_ConcerteList.Model.ConcreteDB
 {
     public partial class ItemForm : Form
     {        
@@ -27,7 +26,7 @@ namespace Autocad_ConcerteList
                 {
                     //check exsist
                     var itemConstructTableList = new I_J_ItemConstructionTableAdapter();
-                    var oCount = itemConstructTableList.IsMarkExecute(resultData.ItemGroup,
+                    var oCount = itemConstructTableList.FindByParameters(resultData.ItemGroup,
                                                                     resultData.Lenght,
                                                                     resultData.Height,
                                                                     resultData.Thickness,

@@ -6,7 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autocad_ConcerteList.ConcreteDB.Formula
+namespace Autocad_ConcerteList.Model.ConcreteDB.Formula
 {
     public class Eval
     {

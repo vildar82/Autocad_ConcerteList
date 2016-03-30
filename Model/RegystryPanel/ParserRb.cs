@@ -35,7 +35,7 @@ using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 
-namespace Autocad_ConcerteList.RegystryPanel
+namespace Autocad_ConcerteList.Model.RegystryPanel
 {
     public class ParserRb
     {

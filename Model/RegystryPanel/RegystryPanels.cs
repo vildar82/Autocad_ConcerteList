@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AcadLib.Errors;
-using Autocad_ConcerteList.RegystryPanel.IncorrectMark;
+using Autocad_ConcerteList.Model.RegystryPanel.IncorrectMark;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Runtime;
 
-namespace Autocad_ConcerteList.RegystryPanel
+namespace Autocad_ConcerteList.Model.RegystryPanel
 {
     public class RegystryPanels
     {
@@ -138,7 +138,7 @@ namespace Autocad_ConcerteList.RegystryPanel
                         continue;
                     }
 
-                    if (!DbService.ExistPanel(panel))
+                    if (!DbService.ExistPanelByParameters(panel))
                     {
                         // Добавление панели в список для регистрации                    
                         panelsToReg.Add(panel);
@@ -174,7 +174,7 @@ namespace Autocad_ConcerteList.RegystryPanel
                 var ser = formPanels.comboBoxSer.SelectedItem as Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow;
                 foreach (var item in panelsToReg)
                 {
-                    if (!DbService.ExistPanel(item))
+                    if (!DbService.ExistPanelByParameters(item))
                     {
                         if (DbService.Register(item, ser))
                         {

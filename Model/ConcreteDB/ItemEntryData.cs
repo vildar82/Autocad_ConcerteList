@@ -4,11 +4,11 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autocad_ConcerteList.ConcreteDB.Formula;
 using Autocad_ConcerteList.Model.ConcreteDB.DataSet;
 using Autocad_ConcerteList.Model.ConcreteDB.DataSet.ConcerteDataSetTableAdapters;
+using Autocad_ConcerteList.Model.ConcreteDB.Formula;
 
-namespace Autocad_ConcerteList.ConcreteDB
+namespace Autocad_ConcerteList.Model.ConcreteDB
 {
     public class ItemEntryData : iItem
     {

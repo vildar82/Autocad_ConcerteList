@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AcadLib.Errors;
-using Autocad_ConcerteList.ConcreteDB.Formula;
 using Autocad_ConcerteList.Model.ConcreteDB.DataSet.ConcerteDataSetTableAdapters;
+using Autocad_ConcerteList.Model.ConcreteDB.Formula;
 
-namespace Autocad_ConcerteList.RegystryPanel
+namespace Autocad_ConcerteList.Model.RegystryPanel
 {
     /// <summary>
     /// Сервисные функции работы с базой ЖБИ
@@ -21,6 +21,7 @@ namespace Autocad_ConcerteList.RegystryPanel
         private static I_J_ItemSeriesTableAdapter itemSeriesAdapter;
         private static I_R_ItemColourTableAdapter colorAdapter;
         private static I_R_ItemTableAdapter colorConstructAdapter;
+        private static myItemTableAdapter myItemAdapter;
         //private static myFormulaTableAdapter myTableFormula;
         private static Dictionary<decimal,string> dictFormules;
         private static Dictionary<string, decimal> dictBalconyDoor;
@@ -30,6 +31,7 @@ namespace Autocad_ConcerteList.RegystryPanel
         {
             itemConstrAdapter = new I_J_ItemConstructionTableAdapter();
             //myTableFormula = new myFormulaTableAdapter();
+            myItemAdapter = new myItemTableAdapter();
             itemGroupAdapter = new I_S_ItemGroupTableAdapter();
             formulaAdapter = new I_C_FormulaTableAdapter();
             seriesAdapter = new I_C_SeriesTableAdapter();
@@ -50,11 +52,17 @@ namespace Autocad_ConcerteList.RegystryPanel
         /// <summary>
         /// Поиск панели в базе по параметрам
         /// </summary>        
-        public static bool ExistPanel(Panel panel)
+        public static bool ExistPanelByParameters(Panel panel)
         {
-            var count = itemConstrAdapter.IsMarkExecute(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness, panel.Formwork,
+            object value = itemConstrAdapter.FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness, panel.Formwork,
                 panel.BalconyDoor, panel.BalconyCut, panel.FormworkMirror, panel.Electrics);
-            return count != null && count != 0;            
+            int count = (int)value;
+            return count != 0;            
+        }
+
+        public static Model.ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
+        {
+            return myItemAdapter.FindByMark(mark).FirstOrDefault();
         }
 
         public static List<Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow> GetSeries()
@@ -70,19 +78,22 @@ namespace Autocad_ConcerteList.RegystryPanel
         {
             string markDb = null;
 
-            // Получение id группы
-            var itemGroupRow = itemGroupAdapter.GetItemGroup(panel.ItemGroup).FirstOrDefault();
-            if (itemGroupRow == null)
+            // Получение id группы     
+            if (panel.DbGroup == null)
             {
-                throw new Exception($"Не найдена группа {panel.ItemGroup}");                
+                panel.DbGroup = FindGroup(panel.ItemGroup);
+                if (panel.DbGroup == null)
+                {
+                    throw new Exception($"Не найдена группа {panel.ItemGroup}");
+                }
             }
-            panel.ItemGroupId = itemGroupRow.ItemGroupId;
-            panel.ItemGroup = itemGroupRow.ItemGroup;
+            panel.ItemGroupId = panel.DbGroup.ItemGroupId;
+            panel.ItemGroup = panel.DbGroup.ItemGroup;
 
             bool hasFormula = false;
             try
             {
-                hasFormula = itemGroupRow.HasFormula;
+                hasFormula = panel.DbGroup.HasFormula;
             }
             catch
             {
@@ -93,7 +104,7 @@ namespace Autocad_ConcerteList.RegystryPanel
             if (hasFormula)
             {
                 // Формула для группы панели
-                string formula = getFormula(itemGroupRow.FormulaId);
+                string formula = getFormula(panel.DbGroup.FormulaId);
                 if (formula == null)
                 {
                     // Добавление ошибки в панель.
@@ -150,7 +161,7 @@ namespace Autocad_ConcerteList.RegystryPanel
 
 #if !NODB
             decimal itemConstrId = (itemConstrAdapter.InsertItem(item.ItemGroupId, item.Lenght, item.Height, item.Thickness, item.Formwork,
-                idBalDoor, idBalCut, item.FormworkMirror, item.Electrics, item.Weight, item.Volume, item.MarkDb) as decimal?).Value;
+                idBalDoor, idBalCut, item.FormworkMirror, item.Electrics, item.Weight, item.Volume, item.Mark) as decimal?).Value;
 
             itemSeriesAdapter.InsertItem(itemConstrId, ser.SeriesId);
 
@@ -180,6 +191,11 @@ namespace Autocad_ConcerteList.RegystryPanel
                 }
                 colorConstructAdapter.InsertItem(panel.MarkDb, itemConstructId, idColor);
             }
+        }
+
+        public static ConcreteDB.DataSet.ConcerteDataSet.I_S_ItemGroupRow FindGroup(string itemGroup)
+        {            
+            return itemGroupAdapter.GetItemGroup(itemGroup).FirstOrDefault();            
         }
     }
 }

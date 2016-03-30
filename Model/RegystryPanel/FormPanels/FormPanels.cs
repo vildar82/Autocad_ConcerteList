@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
+namespace Autocad_ConcerteList.Model.RegystryPanel.IncorrectMark
 {
     public partial class FormPanels : Form
     {

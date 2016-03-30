@@ -1,4 +1,4 @@
-﻿namespace Autocad_ConcerteList.RegystryPanel.IncorrectMark
+﻿namespace Autocad_ConcerteList.Model.RegystryPanel.IncorrectMark
 {
     partial class FormPanels
     {
@@ -55,15 +55,14 @@
             this.textBoxInfo.Name = "textBoxInfo";
             this.textBoxInfo.ReadOnly = true;
             this.textBoxInfo.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBoxInfo.Size = new System.Drawing.Size(575, 237);
+            this.textBoxInfo.Size = new System.Drawing.Size(537, 231);
             this.textBoxInfo.TabIndex = 1;
-            this.textBoxInfo.WordWrap = false;
             // 
             // buttonCancel
             // 
             this.buttonCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this.buttonCancel.Location = new System.Drawing.Point(512, 653);
+            this.buttonCancel.Location = new System.Drawing.Point(474, 637);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
@@ -75,7 +74,7 @@
             // 
             this.buttonOk.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.buttonOk.DialogResult = System.Windows.Forms.DialogResult.OK;
-            this.buttonOk.Location = new System.Drawing.Point(431, 653);
+            this.buttonOk.Location = new System.Drawing.Point(393, 637);
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 2;
@@ -99,8 +98,8 @@
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.textBoxInfo);
-            this.splitContainer1.Size = new System.Drawing.Size(575, 633);
-            this.splitContainer1.SplitterDistance = 392;
+            this.splitContainer1.Size = new System.Drawing.Size(537, 617);
+            this.splitContainer1.SplitterDistance = 382;
             this.splitContainer1.TabIndex = 3;
             // 
             // listViewPanels
@@ -114,7 +113,7 @@
             this.listViewPanels.Location = new System.Drawing.Point(0, 0);
             this.listViewPanels.Name = "listViewPanels";
             this.listViewPanels.ShowGroups = false;
-            this.listViewPanels.Size = new System.Drawing.Size(575, 392);
+            this.listViewPanels.Size = new System.Drawing.Size(537, 382);
             this.listViewPanels.TabIndex = 0;
             this.listViewPanels.UseCompatibleStateImageBehavior = false;
             this.listViewPanels.View = System.Windows.Forms.View.Details;
@@ -133,8 +132,8 @@
             // 
             // buttonShow
             // 
-            this.buttonShow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.buttonShow.Location = new System.Drawing.Point(5, 653);
+            this.buttonShow.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.buttonShow.Location = new System.Drawing.Point(5, 637);
             this.buttonShow.Name = "buttonShow";
             this.buttonShow.Size = new System.Drawing.Size(75, 23);
             this.buttonShow.TabIndex = 2;
@@ -147,7 +146,7 @@
             this.comboBoxSer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.comboBoxSer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxSer.FormattingEnabled = true;
-            this.comboBoxSer.Location = new System.Drawing.Point(210, 655);
+            this.comboBoxSer.Location = new System.Drawing.Point(210, 639);
             this.comboBoxSer.Name = "comboBoxSer";
             this.comboBoxSer.Size = new System.Drawing.Size(137, 21);
             this.comboBoxSer.TabIndex = 4;
@@ -157,7 +156,7 @@
             // 
             this.labelSer.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.labelSer.AutoSize = true;
-            this.labelSer.Location = new System.Drawing.Point(166, 658);
+            this.labelSer.Location = new System.Drawing.Point(166, 642);
             this.labelSer.Name = "labelSer";
             this.labelSer.Size = new System.Drawing.Size(38, 13);
             this.labelSer.TabIndex = 5;
@@ -171,7 +170,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
-            this.ClientSize = new System.Drawing.Size(599, 685);
+            this.ClientSize = new System.Drawing.Size(561, 669);
             this.Controls.Add(this.labelSer);
             this.Controls.Add(this.comboBoxSer);
             this.Controls.Add(this.splitContainer1);
@@ -198,12 +197,12 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         public System.Windows.Forms.Button buttonOk;
         public System.Windows.Forms.ToolTip toolTip1;
-        private System.Windows.Forms.ListView listViewPanels;
         private System.Windows.Forms.ColumnHeader Mark;
         private System.Windows.Forms.ColumnHeader Status;
         private System.Windows.Forms.Button buttonShow;
         public System.Windows.Forms.Button buttonCancel;
         private System.Windows.Forms.Label labelSer;
         public System.Windows.Forms.ComboBox comboBoxSer;
+        public System.Windows.Forms.ListView listViewPanels;
     }
 }

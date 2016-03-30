@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AcadLib.Errors;
-using Autocad_ConcerteList.ConcreteDB;
-using Autocad_ConcerteList.RegystryPanel;
+using Autocad_ConcerteList.Model.ConcreteDB;
+using Autocad_ConcerteList.Model.RegystryPanel;
+using Autocad_ConcerteList.Model.RegystryPanel.IncorrectMark;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Runtime;
 
 [assembly: CommandClass(typeof(Autocad_ConcerteList.Commands))]
@@ -19,7 +21,7 @@ namespace Autocad_ConcerteList
         /// <summary>
         /// Создание марки панели ЖБИ - в базе и передача параметров панели в лисп функцию для создания блока в чертеже
         /// </summary>
-        [CommandMethod("PIK", "SB_RegistrationPanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
+        [CommandMethod("PIK", "SB-RegistrationPanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
         public void SB_RegistrationPanel()
         {
             Logger.Log.StartCommand(nameof(SB_RegistrationPanel));
@@ -57,11 +59,11 @@ namespace Autocad_ConcerteList
         /// Регистрация списка изделий при создании спецификации.
         /// Из лиспа вызывается эта функция с передачей списка изделий спецификации для регистрации в базе ЖБИ.
         /// </summary>
-        [CommandMethod("PIK", "SB_RegistrationPanels", CommandFlags.Modal)]
+        [CommandMethod("PIK", "SB-RegistrationPanels", CommandFlags.Modal)]
         public void SB_RegistrationPanels()
-        {            
+        {
             Logger.Log.StartCommand(nameof(SB_RegistrationPanels));
-            Document doc = Application.DocumentManager.MdiActiveDocument;            
+            Document doc = Application.DocumentManager.MdiActiveDocument;
 
             try
             {
@@ -80,10 +82,10 @@ namespace Autocad_ConcerteList
                 // Парсинг переданного списка - превращение в список панелей
                 ParserRb parserRb = new ParserRb(rb);
                 parserRb.Parse();
-                if (parserRb.Panels == null || parserRb.Panels.Count ==0)
+                if (parserRb.Panels == null || parserRb.Panels.Count == 0)
                 {
                     doc.Editor.WriteMessage("\nПрерывание. Ошибки в блоках при обработке панелей.");
-                    return;                    
+                    return;
                 }
 
                 var panels = parserRb.Panels.OrderBy(p => p.Mark).ToList();
@@ -97,17 +99,85 @@ namespace Autocad_ConcerteList
 
                 doc.Editor.WriteMessage($"\nЗарегистрированно {regPanelsCount} ЖБИ.");
 
-                Inspector.Show();              
+                Inspector.Show();
             }
             catch (System.Exception ex)
-            {                
+            {
                 doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
                 if (!ex.Message.Contains(AcadLib.General.CanceledByUser))
-                { 
+                {
                     // Непредвиденная ошибка
                     Logger.Log.Fatal(ex, $"{nameof(SB_RegistrationPanels)}. {doc.Name}");
-                }                
-            }            
-        }        
+                }
+            }
+        }
+
+
+        /// <summary>
+        /// Проверка одного блока - соответствия марки и параметров.
+        /// </summary>
+        [CommandMethod("PIK", "SB-CheckPanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
+        public void SB_CheckPanel()
+        {
+            Logger.Log.StartCommand(nameof(SB_CheckPanel));
+            Document doc = Application.DocumentManager.MdiActiveDocument;
+            if (doc == null) return;
+            Editor ed = doc.Editor;
+
+            try
+            {                
+                Inspector.Clear();
+
+                // Запрос выбора блока
+                var selOpt =new PromptEntityOptions("Выберите один блок панели для проверки");
+                selOpt.SetRejectMessage("Это не блок");
+                selOpt.AddAllowedClass(typeof(BlockReference), true);                
+                var sel = ed.GetEntity(selOpt);
+                if (sel.Status == PromptStatus.OK)
+                {
+                    DbService.Init();
+                    Panel panel = new Panel();
+                    var resDefine = panel.Define(sel.ObjectId);      
+                    if (resDefine.Failure)
+                    {
+                        ed.WriteMessage("\nНе определен блок панели - " + resDefine.Error);
+                        return;
+                    }
+                    // Проверка соответствия марки и параметров в блоке панели
+                    panel.Check();
+
+                    if(panel.ErrorStatus != EnumErrorItem.None)
+                    {
+                        FormPanels panelForm = new FormPanels(new List<Panel> { panel });
+                        panelForm.Text = "Панели с ошибками";
+                        panelForm.BackColor = System.Drawing.Color.Red;
+                        panelForm.buttonCancel.Visible = false;
+                        panelForm.buttonOk.Visible = false;
+                        Application.ShowModelessDialog(panelForm);
+                        panelForm.listViewPanels.Items[0].Selected = true;
+                    }
+                    else
+                    {
+                        string msg = "\nОшибок в панели не обнаружено. " + (panel.DbItem==null ? "В базе НЕТ." : "В базе ЕСТЬ.");
+                        if (!string.IsNullOrEmpty(panel.Warning))
+                        {
+                            msg += " Предупреждения: " + panel.Warning;
+                        }                                                
+                        ed.WriteMessage(msg);
+                    }                    
+                }                                
+
+                // Показ ошибок если они есть.
+                Inspector.Show();
+            }
+            catch (System.Exception ex)
+            {
+                doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
+                if (!ex.Message.Contains(AcadLib.General.CanceledByUser))
+                {
+                    Logger.Log.Error(ex, $"{nameof(SB_RegistrationPanel)}. {doc.Name}");
+                }
+            }
+        }
     }
 }
