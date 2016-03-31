@@ -179,5 +179,72 @@ namespace Autocad_ConcerteList
                 }
             }
         }
+
+        /// <summary>
+        /// Проверка блоков
+        /// </summary>
+        [CommandMethod("PIK", "SB-CheckPanels", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
+        public void SB_CheckPanels()
+        {
+            Logger.Log.StartCommand(nameof(SB_CheckPanel));
+            Document doc = Application.DocumentManager.MdiActiveDocument;
+            if (doc == null) return;
+            Editor ed = doc.Editor;
+
+            try
+            {
+                Inspector.Clear();
+
+                // Запрос выбора блока
+                var selOpt = new PromptEntityOptions("Выберите один блок панели для проверки");
+                selOpt.SetRejectMessage("Это не блок");
+                selOpt.AddAllowedClass(typeof(BlockReference), true);
+                var sel = ed.GetEntity(selOpt);
+                if (sel.Status == PromptStatus.OK)
+                {
+                    DbService.Init();
+                    Panel panel = new Panel();
+                    var resDefine = panel.Define(sel.ObjectId);
+                    if (resDefine.Failure)
+                    {
+                        ed.WriteMessage("\nНе определен блок панели - " + resDefine.Error);
+                        return;
+                    }
+                    // Проверка соответствия марки и параметров в блоке панели
+                    panel.Check();
+
+                    if (panel.ErrorStatus != EnumErrorItem.None)
+                    {
+                        FormPanels panelForm = new FormPanels(new List<Panel> { panel });
+                        panelForm.Text = "Панели с ошибками";
+                        panelForm.BackColor = System.Drawing.Color.Red;
+                        panelForm.buttonCancel.Visible = false;
+                        panelForm.buttonOk.Visible = false;
+                        Application.ShowModelessDialog(panelForm);
+                        panelForm.listViewPanels.Items[0].Selected = true;
+                    }
+                    else
+                    {
+                        string msg = "\nОшибок в панели не обнаружено. " + (panel.DbItem == null ? "В базе НЕТ." : "В базе ЕСТЬ.");
+                        if (!string.IsNullOrEmpty(panel.Warning))
+                        {
+                            msg += " Предупреждения: " + panel.Warning;
+                        }
+                        ed.WriteMessage(msg);
+                    }
+                }
+
+                // Показ ошибок если они есть.
+                Inspector.Show();
+            }
+            catch (System.Exception ex)
+            {
+                doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
+                if (!ex.Message.Contains(AcadLib.General.CanceledByUser))
+                {
+                    Logger.Log.Error(ex, $"{nameof(SB_RegistrationPanel)}. {doc.Name}");
+                }
+            }
+        }
     }
 }

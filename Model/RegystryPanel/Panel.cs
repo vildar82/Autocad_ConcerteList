@@ -98,15 +98,15 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         {
             get
             {
-                switch (ErrorStatus)
-                {                    
-                    case EnumErrorItem.IncorrectMark:
-                        return "Несоответствующая марка";                        
-                    case EnumErrorItem.DifferentParams:
-                        return "Разные параметры";
-                    default:
-                        return "";
+                if (ErrorStatus.HasFlag(EnumErrorItem.IncorrectMark))
+                {
+                    return "Несоответствующая марка";
                 }
+                if (ErrorStatus.HasFlag(EnumErrorItem.DifferentParams))
+                {
+                    return "Разные параметры";
+                }
+                return "";                    
             }
         }
 
@@ -130,17 +130,17 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                           "Марка по формуле \t" + MarkDb + "\r\n" +
                           "Параметры панели из блока:\r\n" +
                           "Группа \t\t" + ItemGroup + "\r\n" +
-                          (Lenght == null ? "" : "Длина \t\t" + Lenght + "\r\n") +
-                          (Height == null ? "" : "Высота \t\t" + Height + "\r\n") +
-                          (Thickness == null ? "" : "Ширина \t\t" + Thickness + "\r\n") +
+                          "Длина \t\t" + Lenght + ((DbItem != null && DbItem.Lenght != Lenght) ? ", в базе " + DbItem.Lenght : "") + "\r\n" +
+                          "Высота \t\t" + Height  + ((DbItem != null && DbItem.Height != Height) ? ", в базе " + DbItem.Height : "") + "\r\n" +
+                          "Ширина \t\t" + Thickness + ((DbItem != null && DbItem.Thickness!= Thickness) ? ", в базе " + DbItem.Thickness : "") + "\r\n" +
                           (Formwork == null ? "" : "Опалубка \t" + Formwork + "\r\n") +
-                          (string.IsNullOrEmpty(BalconyDoor) ? "" : "Балконный проем " + BalconyDoor + "\r\n") +
-                          (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка под балкон " + BalconyCut + "\r\n") +
+                          (string.IsNullOrEmpty(BalconyDoor) ? "" : "Балконный проем\t " + BalconyDoor + "\r\n") +
+                          (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка\t" + BalconyCut + (DbItem == null ? "" : ", ширина в базе " + DbItem.BalconyCutSize) + "\r\n") +
                           (FormworkMirror == null ? "" : "Зеркальность \t" + FormworkMirror + "\r\n") +
                           (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
                           (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color + "\r\n") +
-                          (Weight == null ? "" : "Вес, кг \t\t" + Weight + "\r\n") +
-                          (Volume == null ? "" : "Объем, м3 \t" + Volume + "\r\n") +                          
+                          "Вес, кг \t\t" + Weight + ((DbItem != null && DbItem.Weight != Weight) ? ", в базе " + DbItem.Weight : "") + "\r\n" +
+                          "Объем, м3 \t" + Volume + ((DbItem != null && DbItem.Volume != Volume) ? ", в базе " + DbItem.Volume : "") + "\r\n" +                          
                           "Наличие в базе: \t" + (DbItem == null ? "Нет" : "Есть") + "\r\n" +
                           (string.IsNullOrEmpty(Warning) ? "" : "Предупреждения: \t" + Warning);
             return info;
@@ -243,12 +243,25 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 if (MarkWoSpace != MarkDbWoSpace)
                 {
                     ErrorStatus |= EnumErrorItem.IncorrectMark;
+                    Warning += "Марка в блоке отличается от марки полученной по формуле. ";
                 }
                 else
                 {
                     Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkDb + "'";
                 }
-            }                        
+            }     
+            if (DbItem != null)
+            {
+                // проверка параметров в базе и в блоке
+                if (this.Lenght != DbItem.Lenght ||
+                    this.Height != DbItem.Height ||
+                    this.Thickness != DbItem.Thickness ||
+                    this.Weight != DbItem.Weight)
+                {
+                    ErrorStatus |= EnumErrorItem.DifferentParams;
+                    Warning += "Параметры из атрибутов блока отличаются от параметров из базы. ";
+                }
+            }
         }
 
         /// <summary>
@@ -296,11 +309,11 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 (panelGroupMark.GroupBy(g => g.Formwork).Skip(1).Any() ? "Опалубка\t*\r\n" :
                     ((resPanel.Formwork == null ? "" : "Опалубка\t" + resPanel.Formwork + "\r\n"))) +
                 // BalconyDoor              
-                (panelGroupMark.GroupBy(g => g.BalconyDoor).Skip(1).Any() ? "Балконный проем *\r\n" :
-                    ((resPanel.BalconyDoor == null ? "" : "Балконный проем " + resPanel.BalconyDoor + "\r\n"))) +
+                (panelGroupMark.GroupBy(g => g.BalconyDoor).Skip(1).Any() ? "Балконный проем\t *\r\n" :
+                    ((resPanel.BalconyDoor == null ? "" : "Балконный проем\t" + resPanel.BalconyDoor + "\r\n"))) +
                 // BalconyCut              
-                (panelGroupMark.GroupBy(g => g.BalconyCut).Skip(1).Any() ? "Подрезка под балкон *\r\n" :
-                    ((resPanel.BalconyCut == null ? "" : "Подрезка под балкон " + resPanel.BalconyCut + "\r\n"))) +
+                (panelGroupMark.GroupBy(g => g.BalconyCut).Skip(1).Any() ? "Подрезка\t *\r\n" :
+                    ((resPanel.BalconyCut == null ? "" : "Подрезка\t" + resPanel.BalconyCut + "\r\n"))) +
                 // FormworkMirror
                 (panelGroupMark.GroupBy(g => g.FormworkMirror).Skip(1).Any() ? "Зеркальность\t*\r\n" :
                     ((resPanel.FormworkMirror == null ? "" : "Зеркальность\t" + resPanel.FormworkMirror + "\r\n"))) +

@@ -7,13 +7,13 @@
 <DiagramLayout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ex:showrelationlabel="False" ViewPortX="-56" ViewPortY="-55" xmlns:ex="urn:schemas-microsoft-com:xml-msdatasource-layout-extended" xmlns="urn:schemas-microsoft-com:xml-msdatasource-layout">
   <Shapes>
     <Shape ID="DesignTable:I_C_BuildingPart" ZOrder="26" X="-38" Y="264" Height="153" Width="150" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="102" />
-    <Shape ID="DesignTable:I_S_ItemGroup" ZOrder="3" X="181" Y="243" Height="343" Width="198" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
+    <Shape ID="DesignTable:I_S_ItemGroup" ZOrder="4" X="181" Y="243" Height="343" Width="198" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
     <Shape ID="DesignTable:I_C_Formula" ZOrder="12" X="191" Y="633" Height="191" Width="159" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="121" />
     <Shape ID="DesignTable:I_C_ItemGroupLong" ZOrder="14" X="-30" Y="456" Height="134" Width="163" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_C_ItemGroupShort" ZOrder="25" X="-46" Y="644" Height="115" Width="175" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
     <Shape ID="DesignTable:I_C_Series" ZOrder="28" X="1045" Y="-35" Height="134" Width="121" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_C_Tier" ZOrder="16" X="516" Y="680" Height="115" Width="120" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
-    <Shape ID="DesignTable:I_J_ItemConstruction" ZOrder="5" X="481" Y="134" Height="362" Width="157" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="273" />
+    <Shape ID="DesignTable:I_J_ItemConstruction" ZOrder="1" X="481" Y="134" Height="362" Width="157" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="273" />
     <Shape ID="DesignTable:I_J_ItemSeries" ZOrder="27" X="821" Y="-42" Height="153" Width="174" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_nn_Item_Tier" ZOrder="15" X="695" Y="679" Height="134" Width="134" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_R_Item" ZOrder="11" X="232" Y="-26" Height="248" Width="160" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
@@ -21,7 +21,7 @@
     <Shape ID="DesignTable:I_S_BalconyCut" ZOrder="24" X="719" Y="306" Height="153" Width="139" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="102" />
     <Shape ID="DesignTable:I_S_BalconyDoor" ZOrder="23" X="715" Y="154" Height="134" Width="151" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_S_Side" ZOrder="19" X="898" Y="226" Height="134" Width="121" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
-    <Shape ID="DesignTable:myItem" ZOrder="1" X="1064" Y="383" Height="324" Width="189" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="254" />
+    <Shape ID="DesignTable:myItem" ZOrder="2" X="1064" Y="383" Height="402" Width="189" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="315" />
   </Shapes>
   <Connectors>
     <Connector ID="DesignRelation:FK_I_C_Formula_I_S_ItemGroup" ZOrder="13" LineWidth="11">
@@ -224,7 +224,7 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_I_R_Item_I_J_ItemConstruction1" ZOrder="4" LineWidth="11">
+    <Connector ID="DesignRelation:FK_I_R_Item_I_J_ItemConstruction1" ZOrder="5" LineWidth="11">
       <RoutePoints>
         <Point>
           <X>1064</X>
@@ -280,7 +280,7 @@
         </Point>
       </RoutePoints>
     </Connector>
-    <Connector ID="DesignRelation:FK_I_S_ItemGroup_I_C_Formula" ZOrder="2" LineWidth="11">
+    <Connector ID="DesignRelation:FK_I_S_ItemGroup_I_C_Formula" ZOrder="3" LineWidth="11">
       <RoutePoints>
         <Point>
           <X>1064</X>
