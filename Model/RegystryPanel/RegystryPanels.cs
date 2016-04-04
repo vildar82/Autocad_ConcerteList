@@ -64,7 +64,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             }
 
             // Регистрация новых панелей.
-            regPanels = RegPanels(panelsToReg);
+            // regPanels = RegPanels(panelsToReg);
 
             return regPanels;
         }

@@ -96,7 +96,27 @@
     </Compile>
     <Compile Include="Model\ConcreteDB\Formula\ParserFormula.cs" />
     <Compile Include="Model\Logger.cs" />
+    <Compile Include="Model\Options\FormOptions.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Model\Options\FormOptions.designer.cs">
+      <DependentUpon>FormOptions.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Options\Options.cs" />
+    <Compile Include="Model\Panels\BaseParams\BalconyDoorRow.cs" />
+    <Compile Include="Model\Panels\BaseParams\BalconyCutRow.cs" />
+    <Compile Include="Model\Panels\BaseParams\CheckBaseParams.cs" />
+    <Compile Include="Model\Panels\BaseParams\FormBaseParams.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Model\Panels\BaseParams\FormBaseParams.Designer.cs">
+      <DependentUpon>FormBaseParams.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Panels\CheckPanels.cs" />
+    <Compile Include="Model\Panels\FilterPanel.cs" />
     <Compile Include="Model\Panels\ParserMark.cs" />
+    <Compile Include="Model\Panels\RegPanels.cs" />
+    <Compile Include="Model\Panels\Workspace.cs" />
     <Compile Include="Model\RegystryPanel\DbService.cs" />
     <Compile Include="Model\RegystryPanel\EnumErrorItem.cs" />
     <Compile Include="Model\RegystryPanel\IncorrectMarks.cs" />
@@ -145,6 +165,12 @@
     <EmbeddedResource Include="Model\ConcreteDB\ItemForm.resx">
       <DependentUpon>ItemForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Model\Options\FormOptions.resx">
+      <DependentUpon>FormOptions.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Model\Panels\BaseParams\FormBaseParams.resx">
+      <DependentUpon>FormBaseParams.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Model\RegystryPanel\FormPanels\FormPanels.resx">
       <DependentUpon>FormPanels.cs</DependentUpon>
     </EmbeddedResource>
@@ -152,6 +178,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\group.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

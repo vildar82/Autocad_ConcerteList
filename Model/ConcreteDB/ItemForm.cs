@@ -40,36 +40,36 @@ namespace Autocad_ConcerteList.Model.ConcreteDB
                     if (int.TryParse(oCount.ToString(), out iCount) && iCount == 0)
                     {
                         // Пока тестирование передачи параметров, без записи в базу
-#if !NODB
-                        //item                    
-                        decimal? itemGroupId = (decimal?)itemGroupComboBox.SelectedValue == -1 ? null : (decimal?)itemGroupComboBox.SelectedValue;
-                        var balconyDoorId = (decimal?)balconyDoorComboBox.SelectedValue == -1 ? null : (decimal?)balconyDoorComboBox.SelectedValue;
-                        var balconyCutId = (decimal?)balconycutComboBox.SelectedValue == -1 ? null : (decimal?)balconycutComboBox.SelectedValue;
-                        var sCreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+//#if !NODB
+//                        //item                    
+//                        decimal? itemGroupId = (decimal?)itemGroupComboBox.SelectedValue == -1 ? null : (decimal?)itemGroupComboBox.SelectedValue;
+//                        var balconyDoorId = (decimal?)balconyDoorComboBox.SelectedValue == -1 ? null : (decimal?)balconyDoorComboBox.SelectedValue;
+//                        var balconyCutId = (decimal?)balconycutComboBox.SelectedValue == -1 ? null : (decimal?)balconycutComboBox.SelectedValue;
+//                        var sCreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-                        var itemId = itemConstructTableList.InsertItem(itemGroupId, resultData.Lenght, resultData.Height,
-                            resultData.Thickness, resultData.Formwork, balconyDoorId, balconyCutId, resultData.FormworkMirror,
-                            resultData.Electrics, resultData.Weight, resultData.Volume);
+//                        var itemId = itemConstructTableList.InsertItem(itemGroupId, resultData.Lenght, resultData.Height,
+//                            resultData.Thickness, resultData.Formwork, balconyDoorId, balconyCutId, resultData.FormworkMirror,
+//                            resultData.Electrics, resultData.Weight, resultData.Volume);
 
-                        //series
-                        if (itemId != null && seriesCheckedListBox.SelectedItems.Count > 0)
-                        {
-                            var itemSeriesTableList = new I_J_ItemSeriesTableAdapter();
-                            foreach (DataRowView item in seriesCheckedListBox.SelectedItems)
-                            {
-                                var seriesId = (decimal?)item.Row["SeriesId"];
-                                itemSeriesTableList.InsertNewSeries((int)itemId, seriesId);
-                            }
-                        }
+//                        //series
+//                        if (itemId != null && seriesCheckedListBox.SelectedItems.Count > 0)
+//                        {
+//                            var itemSeriesTableList = new I_J_ItemSeriesTableAdapter();
+//                            foreach (DataRowView item in seriesCheckedListBox.SelectedItems)
+//                            {
+//                                var seriesId = (decimal?)item.Row["SeriesId"];
+//                                itemSeriesTableList.InsertNewSeries((int)itemId, seriesId);
+//                            }
+//                        }
 
-                        //tier???
+//                        //tier???
 
-                        //result message                        
-                        MessageBox.Show(this, $"Марка '{resultData.Mark}' успешно занесена в БД", "Информация",
-                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-#endif
-                        // Запуск лисп функции                        
-                        Excecute(resultData);
+//                        //result message                        
+//                        MessageBox.Show(this, $"Марка '{resultData.Mark}' успешно занесена в БД", "Информация",
+//                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+//#endif
+//                        // Запуск лисп функции                        
+//                        Excecute(resultData);
                     }
                     else
                     {

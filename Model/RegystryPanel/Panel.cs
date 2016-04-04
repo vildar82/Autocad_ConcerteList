@@ -11,13 +11,14 @@ using AcadLib.Errors;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Model.Panels;
 using Autocad_ConcerteList.Model.ConcreteDB;
+using Autodesk.AutoCAD.Geometry;
 
 namespace Autocad_ConcerteList.Model.RegystryPanel
 {
     /// <summary>
     /// ЖБИ изделие полученное из автокада
     /// </summary>
-    public class Panel  : iItem
+    public class Panel : iItem
     {
         public string BlockName { get; set; }
         /// <summary>
@@ -36,8 +37,8 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public string MarkDbWoSpace { get; set; }
         /// <summary>
         /// 3НСг
-        /// </summary>
-        public string ItemGroup { get; set; }
+        /// </summary>        
+        public string ItemGroup { get; set; }        
         public decimal ItemGroupId { get; set; }
         public short? Lenght { get; set; }
         public short? Height { get; set; }
@@ -47,24 +48,27 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// </summary>
         public short? Formwork { get; set; }
         public string BalconyDoor { get; set; }
+        public decimal? BalconyDoorId { get; set; }
         public string BalconyCut { get; set; }
+        public decimal? BalconyCutId { get; set; }
         public short? FormworkMirror { get; set; }
         public string Electrics { get; set; }
         public string Aperture { get; set; }
         public string Album { get; set; }
         public float? Weight { get; set; }
-        public float? Volume { get; set; }      
+        public float? Volume { get; set; }
 
         public EnumErrorItem ErrorStatus { get; set; }
 
         public string Warning { get; set; }
-        
+
         public ObjectId IdBlRef { get; set; }
+        public Point3d Position { get; set; }
         public List<AttributeInfo> AtrsInfo { get; set; }
         public ParserMark ParseMark { get; set; }
         public ConcreteDB.DataSet.ConcerteDataSet.myItemRow DbItem { get; set; }
         public ConcreteDB.DataSet.ConcerteDataSet.I_S_ItemGroupRow DbGroup { get; set; }
-
+        public Workspace WS { get; set; }
         private bool _alreadyCalcExtents;
         private bool _isNullExtents;
         private Extents3d _extents;
@@ -75,14 +79,14 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 if (!_alreadyCalcExtents)
                 {
                     //FindBlock();
-                    using (var blRef = IdBlRef.Open( OpenMode.ForRead, false, true)as BlockReference)
+                    using (var blRef = IdBlRef.Open(OpenMode.ForRead, false, true) as BlockReference)
                     {
                         try
                         {
                             _extents = blRef.GeometricExtents;
                         }
                         catch
-                        {                            
+                        {
                         }
                     }
                 }
@@ -106,7 +110,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 {
                     return "Разные параметры";
                 }
-                return "";                    
+                return "OK";
             }
         }
 
@@ -122,7 +126,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 return _info;
             }
             set { _info = value; }
-        }        
+        }
 
         public string GetInfo()
         {
@@ -131,8 +135,8 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                           "Параметры панели из блока:\r\n" +
                           "Группа \t\t" + ItemGroup + "\r\n" +
                           "Длина \t\t" + Lenght + ((DbItem != null && DbItem.Lenght != Lenght) ? ", в базе " + DbItem.Lenght : "") + "\r\n" +
-                          "Высота \t\t" + Height  + ((DbItem != null && DbItem.Height != Height) ? ", в базе " + DbItem.Height : "") + "\r\n" +
-                          "Ширина \t\t" + Thickness + ((DbItem != null && DbItem.Thickness!= Thickness) ? ", в базе " + DbItem.Thickness : "") + "\r\n" +
+                          "Высота \t\t" + Height + ((DbItem != null && DbItem.Height != Height) ? ", в базе " + DbItem.Height : "") + "\r\n" +
+                          "Ширина \t\t" + Thickness + ((DbItem != null && DbItem.Thickness != Thickness) ? ", в базе " + DbItem.Thickness : "") + "\r\n" +
                           (Formwork == null ? "" : "Опалубка \t" + Formwork + "\r\n") +
                           (string.IsNullOrEmpty(BalconyDoor) ? "" : "Балконный проем\t " + BalconyDoor + "\r\n") +
                           (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка\t" + BalconyCut + (DbItem == null ? "" : ", ширина в базе " + DbItem.BalconyCutSize) + "\r\n") +
@@ -140,19 +144,20 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                           (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
                           (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color + "\r\n") +
                           "Вес, кг \t\t" + Weight + ((DbItem != null && DbItem.Weight != Weight) ? ", в базе " + DbItem.Weight : "") + "\r\n" +
-                          "Объем, м3 \t" + Volume + ((DbItem != null && DbItem.Volume != Volume) ? ", в базе " + DbItem.Volume : "") + "\r\n" +                          
+                          "Объем, м3 \t" + Volume + ((DbItem != null && DbItem.Volume != Volume) ? ", в базе " + DbItem.Volume : "") + "\r\n" +
                           "Наличие в базе: \t" + (DbItem == null ? "Нет" : "Есть") + "\r\n" +
                           (string.IsNullOrEmpty(Warning) ? "" : "Предупреждения: \t" + Warning);
             return info;
         }
-       
+
         public Result Define(ObjectId idBlRef)
         {
             // определить параметры панели из блока
-            using (var blRef = idBlRef.Open( OpenMode.ForRead, false, true) as BlockReference)
+            using (var blRef = idBlRef.Open(OpenMode.ForRead, false, true) as BlockReference)
             {
-                if (blRef == null) return Result.Fail("Блок панели не определен.");
+                if (blRef == null) return Result.Fail("");
                 IdBlRef = idBlRef;
+                Position = blRef.Position;
                 BlockName = blRef.GetEffectiveName();
                 AtrsInfo = AttributeInfo.GetAttrRefs(blRef);
                 foreach (var atr in AtrsInfo)
@@ -180,7 +185,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     }
                     else if (atr.Tag.Equals("МАССА", StringComparison.OrdinalIgnoreCase))
                     {
-                        Weight = GetShortNullable(atr.Text);
+                        Weight = GetFloatNullable(atr.Text);
                     }
                     else if (atr.Tag.Equals("ПОКРАСКА", StringComparison.OrdinalIgnoreCase))
                     {
@@ -199,7 +204,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
 
             if (string.IsNullOrEmpty(Mark))
             {
-                return Result.Fail("Нет атрибута марки.");
+                return Result.Fail("");
             }
 
             ParseMark = new ParserMark(Mark);
@@ -232,7 +237,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             }
 
             return Result.Ok();
-        }        
+        }
 
         public void Check()
         {
@@ -249,7 +254,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 {
                     Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkDb + "'";
                 }
-            }     
+            }
             if (DbItem != null)
             {
                 // проверка параметров в базе и в блоке
@@ -288,8 +293,8 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 BalconyCut = firstP.BalconyCut,
                 Electrics = firstP.Electrics,
                 Volume = firstP.Volume,
-                Weight = firstP.Weight, 
-                ErrorStatus = EnumErrorItem.DifferentParams             
+                Weight = firstP.Weight,
+                ErrorStatus = EnumErrorItem.DifferentParams
             };
 
             resPanel.Info = "Марка\t\t" + resPanel.Mark + "\r\n" +
@@ -365,24 +370,12 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     break;
                 case "Electrics":
                     this.Electrics = value?.ToString().ToLower();
-                    break;                
+                    break;
                 default:
                     Logger.Log.Error($"Неопределенный параметр в панели - {param} = {value}, переданный из лиспа.");
                     break;
             }
-        }
-
-        public static short? GetShortNullable(object obj)
-        {
-            try
-            {
-                return Convert.ToInt16(obj);
-            }
-            catch
-            {
-                return null;
-            }
-        }
+        }        
 
         public override string ToString()
         {
@@ -419,14 +412,14 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                         var atrRef = idAtr.GetObject(OpenMode.ForRead, false, true) as AttributeReference;
                         if (atrRef.Tag.Equals("МАРКА", StringComparison.OrdinalIgnoreCase))
                         {
-                            var panelsMark = panelsList.FindAll(p => p.Mark.Equals(atrRef.TextString, StringComparison.OrdinalIgnoreCase));                            
+                            var panelsMark = panelsList.FindAll(p => p.Mark.Equals(atrRef.TextString, StringComparison.OrdinalIgnoreCase));
                             foreach (var panel in panelsMark)
                             {
                                 panel.IdBlRef = blRef.Id;
-                            }                            
+                            }
                             break;
                         }
-                    }                    
+                    }
                 }
                 t.Commit();
             }
@@ -451,20 +444,20 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     {
                         var atrRef = idAtr.GetObject(OpenMode.ForRead, false, true) as AttributeReference;
                         if (atrRef.Tag.Equals("МАРКА", StringComparison.OrdinalIgnoreCase))
-                        {           
+                        {
                             if (Mark.Equals(atrRef.TextString, StringComparison.OrdinalIgnoreCase))
                             {
                                 isFind = true;
                                 IdBlRef = blRef.Id;
                                 try
                                 {
-                                    _extents = blRef.GeometricExtents;                                    
+                                    _extents = blRef.GeometricExtents;
                                 }
                                 catch
                                 {
                                     _isNullExtents = true;
-                                }                                
-                            }                            
+                                }
+                            }
                             break;
                         }
                     }
@@ -479,12 +472,41 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
 
         private void FillParseParams()
         {
-            ItemGroup = ParseMark.ItemGroup;            
+            ItemGroup = ParseMark.ItemGroup;
             Formwork = ParseMark.Formwork;
             FormworkMirror = ParseMark.FormworkMirror;
             BalconyCut = ParseMark.BalconyCut;
+            BalconyCutId = DbService.GetBalconyCutId(BalconyCut);
             BalconyDoor = ParseMark.BalconyDoor;
-            Electrics = ParseMark.Electrics;            
+            BalconyDoorId = DbService.GetBalconyCutId(BalconyCut);
+            Electrics = ParseMark.Electrics;
+        }
+
+        public static short? GetShortNullable(object obj)
+        {
+            try
+            {
+                var value = obj.ToString();
+                if (value == "") return null;
+                return short.Parse(value);
+            }
+            catch
+            {
+                return null;
+            }
+        }
+        public static float? GetFloatNullable(object obj)
+        {
+            try
+            {
+                var value = obj.ToString();
+                if (value == "") return null;
+                return float.Parse(value);
+            }
+            catch
+            {
+                return null;
+            }
         }
     }
 }

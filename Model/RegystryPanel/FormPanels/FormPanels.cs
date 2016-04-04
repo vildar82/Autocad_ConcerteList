@@ -12,17 +12,17 @@ namespace Autocad_ConcerteList.Model.RegystryPanel.IncorrectMark
 {
     public partial class FormPanels : Form
     {
+        bool groupedPanels;
         List<Panel> panels;
+
         public FormPanels(List<Panel> panels)
         {
             InitializeComponent();
 
             this.panels = panels;
-            //panels.Sort((p1, p2) => p1.Mark.CompareTo(p2.Mark));
+            //panels.Sort((p1, p2) => p1.Mark.CompareTo(p2.Mark));            
 
-            FillListView(panels);
-
-            listViewPanels.SelectedIndexChanged += ListView1_SelectedIndexChanged;
+            
 
             //BindingSource bindSourcePanels = new BindingSource();
             //bindSourcePanels.DataSource = panels;
@@ -31,6 +31,26 @@ namespace Autocad_ConcerteList.Model.RegystryPanel.IncorrectMark
             //listBoxIncorrectPanels.DisplayMember = "Mark";
 
             //textBoxInfo.DataBindings.Add("Text", bindSourcePanels, "Info");
+        }
+
+        private void FormPanels_Load(object sender, EventArgs e)
+        {
+            if (checkBoxGroup.Checked == groupedPanels)
+            {
+                checkBoxGroup_CheckedChanged(null, null);
+            }
+            else
+            {
+                checkBoxGroup.Checked = groupedPanels;
+            }            
+            
+            listViewPanels.SelectedIndexChanged += ListView1_SelectedIndexChanged;
+        }
+
+        public void SetGroupedPanels(bool grouped)
+        {
+            groupedPanels = grouped;
+            checkBoxGroup.Visible = groupedPanels;
         }
 
         private void ListView1_SelectedIndexChanged(object sender, EventArgs e)
@@ -88,6 +108,19 @@ namespace Autocad_ConcerteList.Model.RegystryPanel.IncorrectMark
                     panels.Remove(p);
                 }
             }
+        }
+
+        private void checkBoxGroup_CheckedChanged(object sender, EventArgs e)
+        {
+            if (groupedPanels && checkBoxGroup.Checked)
+            {
+                var gPanels = panels.GroupBy(p => p.Mark).Select(g => g.First()).ToList();
+                FillListView(gPanels);
+            }
+            else
+            {
+                FillListView(panels);
+            }            
         }
     }
 }

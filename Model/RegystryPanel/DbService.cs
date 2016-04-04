@@ -197,5 +197,31 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         {            
             return itemGroupAdapter.GetItemGroup(itemGroup).FirstOrDefault();            
         }
+
+        public static decimal? GetBalconyCutId(string balconyCut)
+        {
+            decimal id;
+            if (balconyCut!=null && dictBalconyCut.TryGetValue(balconyCut, out id))
+            {
+                return id;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public static decimal? GetBalconyDoorId(string balconyDoor)
+        {
+            decimal id;
+            if (balconyDoor!=null && dictBalconyDoor.TryGetValue(balconyDoor, out id))
+            {
+                return id;
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 }

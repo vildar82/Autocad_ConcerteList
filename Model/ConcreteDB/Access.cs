@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Model.ConcreteDB
 {
-   public static class Access
-   {
-      private static List<string> _accessUsers = new List<string>() { "LukashovaTS", "khisyametdinovvt", "kuznetsov_av" };
+    public static class Access
+    {
+        //"kuznetsov_av"
+        private static List<string> _accessUsers = new List<string>() { "LukashovaTS", "khisyametdinovvt" };
 
-      public static bool Success()
-      {
-         return _accessUsers.Contains(Environment.UserName, StringComparer.OrdinalIgnoreCase);
-      }
-   }
+        public static bool Success()
+        {
+            return _accessUsers.Contains(Environment.UserName, StringComparer.OrdinalIgnoreCase);
+        }
+    }
 }

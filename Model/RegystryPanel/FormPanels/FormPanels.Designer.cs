@@ -40,6 +40,7 @@
             this.buttonShow = new System.Windows.Forms.Button();
             this.comboBoxSer = new System.Windows.Forms.ComboBox();
             this.labelSer = new System.Windows.Forms.Label();
+            this.checkBoxGroup = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -163,6 +164,21 @@
             this.labelSer.Text = "Серия";
             this.labelSer.Visible = false;
             // 
+            // checkBoxGroup
+            // 
+            this.checkBoxGroup.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.checkBoxGroup.Appearance = System.Windows.Forms.Appearance.Button;
+            this.checkBoxGroup.BackgroundImage = global::Autocad_ConcerteList.Properties.Resources.group;
+            this.checkBoxGroup.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.checkBoxGroup.Location = new System.Drawing.Point(113, 637);
+            this.checkBoxGroup.Name = "checkBoxGroup";
+            this.checkBoxGroup.Size = new System.Drawing.Size(24, 23);
+            this.checkBoxGroup.TabIndex = 7;
+            this.toolTip1.SetToolTip(this.checkBoxGroup, "Группировка панелей с одной маркой");
+            this.checkBoxGroup.UseVisualStyleBackColor = true;
+            this.checkBoxGroup.Visible = false;
+            this.checkBoxGroup.CheckedChanged += new System.EventHandler(this.checkBoxGroup_CheckedChanged);
+            // 
             // FormPanels
             // 
             this.AcceptButton = this.buttonOk;
@@ -171,6 +187,7 @@
             this.BackColor = System.Drawing.SystemColors.Control;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(561, 669);
+            this.Controls.Add(this.checkBoxGroup);
             this.Controls.Add(this.labelSer);
             this.Controls.Add(this.comboBoxSer);
             this.Controls.Add(this.splitContainer1);
@@ -182,6 +199,7 @@
             this.MinimumSize = new System.Drawing.Size(100, 100);
             this.Name = "FormPanels";
             this.Text = "Панели с несоответствующими марками";
+            this.Load += new System.EventHandler(this.FormPanels_Load);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.Panel2.PerformLayout();
@@ -204,5 +222,6 @@
         private System.Windows.Forms.Label labelSer;
         public System.Windows.Forms.ComboBox comboBoxSer;
         public System.Windows.Forms.ListView listViewPanels;
+        private System.Windows.Forms.CheckBox checkBoxGroup;
     }
 }
