@@ -12,6 +12,7 @@ using AcadLib.Blocks;
 using Autocad_ConcerteList.Model.Panels;
 using Autocad_ConcerteList.Model.ConcreteDB;
 using Autodesk.AutoCAD.Geometry;
+using System.IO;
 
 namespace Autocad_ConcerteList.Model.RegystryPanel
 {
@@ -387,7 +388,12 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             var doc = Application.DocumentManager.MdiActiveDocument;
             if (doc != null)
             {
-                Editor ed = doc.Editor;
+                if (doc.Database != IdBlRef.Database)
+                {
+                    Application.ShowAlertDialog($"Переключитесь на чертеж {Path.GetFileNameWithoutExtension(IdBlRef.Database.Filename)}");
+                    return;
+                }
+                Editor ed = doc.Editor;                
                 ed.Zoom(Extents);
                 IdBlRef.FlickObjectHighlight(2, 100, 100);
             }
@@ -478,7 +484,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             BalconyCut = ParseMark.BalconyCut;
             BalconyCutId = DbService.GetBalconyCutId(BalconyCut);
             BalconyDoor = ParseMark.BalconyDoor;
-            BalconyDoorId = DbService.GetBalconyCutId(BalconyCut);
+            BalconyDoorId = DbService.GetBalconyCutId(BalconyDoor);
             Electrics = ParseMark.Electrics;
         }
 

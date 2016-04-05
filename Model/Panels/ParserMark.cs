@@ -128,20 +128,30 @@ namespace Autocad_ConcerteList.Model.Panels
             // Разбор части строки относящейся к габаритам панели. Они разделены точками. Например partGab = "544.363"
             if (string.IsNullOrEmpty(partGab)) return;
             var splitDot = partGab.Split('.');
-            if (splitDot.Length>3)
+            if (splitDot.Length > 3)
             {
                 // Ошибка. максимум, только 3 габарита - Длина, Высота, Толщина
-                addErrorMsg ("Определено больше трех габаритов разделенных точкой.");                
+                addErrorMsg("Определено больше трех габаритов разделенных точкой.");
             }
-            Length = short.Parse(splitDot[0]);
-            if (splitDot.Length>1)
+            Length = GetShort(splitDot[0], "Длина");
+            if (splitDot.Length > 1)
             {
-                Height = short.Parse(splitDot[1]);
-                if(splitDot.Length>2)
+                Height = GetShort(splitDot[1], "Высота");
+                if (splitDot.Length > 2)
                 {
-                    Thickness = short.Parse(splitDot[2]);
+                    Thickness = GetShort(splitDot[2], "Толщина");
                 }
             }
+        }
+
+        private short GetShort(string input, string nameParam)
+        {
+            short res;
+            if (!short.TryParse(input, out res))
+            {
+                throw new Exception($"Не определено '{nameParam}={input}'");
+            }
+            return res;
         }
 
         private void parsePartDop()
@@ -169,7 +179,7 @@ namespace Autocad_ConcerteList.Model.Panels
             else if (splitDash.Length>2)
             {
                 definePartFormwork(splitDash[0]);
-                FormworkMirror = short.Parse(splitDash[1]);                
+                FormworkMirror = GetShort(splitDash[1], "Опалубка");                
                 Electrics = splitDash[2];                
             }
             else if (splitDash.Length > 1)
@@ -178,7 +188,7 @@ namespace Autocad_ConcerteList.Model.Panels
                 val = splitDash[1];
                 if (val.IndexOf("э", StringComparison.OrdinalIgnoreCase) == -1)
                 {
-                    FormworkMirror = short.Parse(val);
+                    FormworkMirror = GetShort(val, "Зеркальность");
                 }
                 else
                 {
@@ -194,29 +204,29 @@ namespace Autocad_ConcerteList.Model.Panels
             int indexB = input.IndexOf("Б");
             if (indexP == -1 && indexB == -1)
             {
-                Formwork = short.Parse(input);
+                Formwork = GetShort(input, "Опалубка");
             }
             else if (indexB ==-1)
             {
-                Formwork = short.Parse(input.Substring(0, indexP));
+                Formwork = GetShort(input.Substring(0, indexP), "Опалубка");
                 BalconyCut = input.Substring(indexP);
             }
             else if (indexP == -1)
             {
-                Formwork = short.Parse(input.Substring(0, indexB));
+                Formwork = GetShort(input.Substring(0, indexB), "Опалубка");
                 BalconyDoor = input.Substring(indexB);
             }
             else
             {
                 if (indexP<indexB)
                 {
-                    Formwork = short.Parse(input.Substring(0, indexP));
+                    Formwork = GetShort(input.Substring(0, indexP), "Опалубка");
                     BalconyCut = input.Substring(indexP, indexB- indexP);
                     BalconyDoor = input.Substring(indexB);
                 }
                 else
                 {
-                    Formwork = short.Parse(input.Substring(0, indexB));
+                    Formwork = GetShort(input.Substring(0, indexB), "Опалубка");
                     BalconyDoor = input.Substring(indexB, indexP- indexB);
                     BalconyCut = input.Substring(indexP);
                 }

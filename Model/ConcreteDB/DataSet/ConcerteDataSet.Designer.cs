@@ -8596,7 +8596,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         return ((int)(this[this.tablemyItem.BalconyCutSizeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'BalconyCutSize\' в таблице \'myItem\' равно DBNull.", e);
+                        //throw new global::System.Data.StrongTypingException("Значение для столбца \'BalconyCutSize\' в таблице \'myItem\' равно DBNull.", e);
+                        return 0;
                     }
                 }
                 set {
@@ -8623,7 +8624,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         return ((string)(this[this.tablemyItem.HandMarkNoColourColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'HandMarkNoColour\' в таблице \'myItem\' равно DBNull.", e);
+                        //throw new global::System.Data.StrongTypingException("Значение для столбца \'HandMarkNoColour\' в таблице \'myItem\' равно DBNull.", e);
+                        return null;
                     }
                 }
                 set {
@@ -8639,7 +8641,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         return ((decimal)(this[this.tablemyItem.ItemGroupIdColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'ItemGroupId\' в таблице \'myItem\' равно DBNull.", e);
+                        throw new global::System.Data.StrongTypingException("Значение для столбца \'ItemGroupId\' в таблице \'myItem\' равно DBNull.", e);                        
                     }
                 }
                 set {
@@ -8655,7 +8657,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         return ((short)(this[this.tablemyItem.LenghtColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Lenght\' в таблице \'myItem\' равно DBNull.", e);
+                        //throw new global::System.Data.StrongTypingException("Значение для столбца \'Lenght\' в таблице \'myItem\' равно DBNull.", e);
+                        return 0;
                     }
                 }
                 set {
@@ -8671,7 +8674,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         return ((short)(this[this.tablemyItem.HeightColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Height\' в таблице \'myItem\' равно DBNull.", e);
+                        //throw new global::System.Data.StrongTypingException("Значение для столбца \'Height\' в таблице \'myItem\' равно DBNull.", e);
+                        return 0;
                     }
                 }
                 set {
@@ -8687,7 +8691,8 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
                         return ((short)(this[this.tablemyItem.ThicknessColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Thickness\' в таблице \'myItem\' равно DBNull.", e);
+                        //throw new global::System.Data.StrongTypingException("Значение для столбца \'Thickness\' в таблице \'myItem\' равно DBNull.", e);
+                        return 0;
                     }
                 }
                 set {
@@ -8779,11 +8784,12 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public float Volume {
                 get {
-                    try {
+                    try {                        
                         return ((float)(this[this.tablemyItem.VolumeColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Volume\' в таблице \'myItem\' равно DBNull.", e);
+                        //throw new global::System.Data.StrongTypingException("Значение для столбца \'Volume\' в таблице \'myItem\' равно DBNull.", e);
+                        return 0;
                     }
                 }
                 set {
@@ -8795,11 +8801,12 @@ namespace Autocad_ConcerteList.Model.ConcreteDB.DataSet {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public float Weight {
                 get {
-                    try {
+                    try {                        
                         return ((float)(this[this.tablemyItem.WeightColumn]));
                     }
                     catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("Значение для столбца \'Weight\' в таблице \'myItem\' равно DBNull.", e);
+                        //throw new global::System.Data.StrongTypingException("Значение для столбца \'Weight\' в таблице \'myItem\' равно DBNull.", e);
+                        return 0;
                     }
                 }
                 set {

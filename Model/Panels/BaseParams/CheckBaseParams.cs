@@ -15,7 +15,7 @@ namespace Autocad_ConcerteList.Model.Panels.BaseParams
         {
             bool showForm = false;
             DataTable dtBDoor = getDataTableBDoor();
-            var unknownBDoor = panels.Where(p => (!string.IsNullOrEmpty(p.BalconyDoor) && p.BalconyDoorId != null)).GroupBy(g=>g.BalconyDoor);
+            var unknownBDoor = panels.Where(p => (!string.IsNullOrEmpty(p.BalconyDoor) && p.BalconyDoorId == null)).GroupBy(g=>g.BalconyDoor);
             if (unknownBDoor.Any())
             {
                 showForm = true;
@@ -30,7 +30,7 @@ namespace Autocad_ConcerteList.Model.Panels.BaseParams
             }
 
             DataTable dtBCut = getDataTableBCut();
-            var unknownBCut = panels.Where(p => (!string.IsNullOrEmpty(p.BalconyCut) && p.BalconyCutId != null)).GroupBy(g => g.BalconyCut);
+            var unknownBCut = panels.Where(p => (!string.IsNullOrEmpty(p.BalconyCut) && p.BalconyCutId == null)).GroupBy(g => g.BalconyCut);
             if (unknownBCut.Any())
             {
                 showForm = true;
@@ -58,7 +58,7 @@ namespace Autocad_ConcerteList.Model.Panels.BaseParams
         private static DataTable getDataTableBDoor()
         {
             DataTable dtBDoor = new DataTable("Балколны");
-            dtBDoor.Columns.Add("Имя");
+            dtBDoor.Columns.Add("Имя").ReadOnly = true;
             dtBDoor.Columns.Add("Сторона");
             //dtBDoor.Columns.Add("Object").ColumnMapping = MappingType.Hidden;
             return dtBDoor;
@@ -67,7 +67,7 @@ namespace Autocad_ConcerteList.Model.Panels.BaseParams
         private static DataTable getDataTableBCut()
         {
             DataTable dtBCut = new DataTable("Подрезки");
-            dtBCut.Columns.Add("Имя");
+            dtBCut.Columns.Add("Имя").ReadOnly=true;
             dtBCut.Columns.Add("Сторона");
             dtBCut.Columns.Add("Ширина");
             //dtBCut.Columns.Add("Object").ColumnMapping = MappingType.Hidden;
