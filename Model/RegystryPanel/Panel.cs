@@ -227,8 +227,18 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 DbItem = DbService.FindPanelByMark(MarkWoSpace);
             }
 
+            DefineMarkByFormulaInDb();
+
+            return Result.Ok();
+        }
+
+        /// <summary>
+        /// Определение марки по формуле из DB
+        /// </summary>
+        public void DefineMarkByFormulaInDb()
+        {
             try
-            {
+            {                
                 MarkDb = DbService.GetDbMark(this);
                 MarkDbWoSpace = MarkDb.Replace(" ", "");
             }
@@ -236,8 +246,6 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             {
                 Warning += "Ошибка формирования марки панели по параметрам - " + ex.Message;
             }
-
-            return Result.Ok();
         }
 
         public void Check()
@@ -373,10 +381,13 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     this.Electrics = value?.ToString().ToLower();
                     break;
                 default:
-                    Logger.Log.Error($"Неопределенный параметр в панели - {param} = {value}, переданный из лиспа.");
-                    break;
+                    {
+                        string errMsg = $"Неопределенный параметр в панели - {param} = {value}";
+                        Logger.Log.Error(errMsg);
+                        throw new ArgumentException(errMsg);
+                    }
             }
-        }        
+        }    
 
         public override string ToString()
         {

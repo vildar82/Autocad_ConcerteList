@@ -55,6 +55,8 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// </summary>
         public void Parse()
         {
+            if (rb == null)
+                throw new ArgumentNullException();
             if (rb.AsArray().Length < 4)
             {
                 return;
@@ -81,7 +83,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     if (countLB == 0)
                     {
                         // Начало списка параметров для одной панели
-                        if (!string.IsNullOrEmpty(panel.BlockName))
+                        if (!string.IsNullOrEmpty(panel.Mark))
                         {
                             Panels.Add(panel);
                             panel = new Panel();

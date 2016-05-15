@@ -63,7 +63,7 @@ namespace Autocad_ConcerteList.Model.Panels
                         var ser = formPanels.comboBoxSer.SelectedItem as Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow;
                         foreach (var item in RegsPanels)
                         {
-                            if (!DbService.ExistPanelByParameters(item))
+                            if (DbService.FindByParameters(item).Count==0)
                             {
                                 if (DbService.Register(item, ser))
                                 {

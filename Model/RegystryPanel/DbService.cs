@@ -52,12 +52,10 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// <summary>
         /// Поиск панели в базе по параметрам
         /// </summary>        
-        public static bool ExistPanelByParameters(Panel panel)
+        public static ConcreteDB.DataSet.ConcerteDataSet.myItemDataTable FindByParameters(Panel panel)
         {
-            object value = itemConstrAdapter.FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness, panel.Formwork,
-                panel.BalconyDoor, panel.BalconyCut, panel.FormworkMirror, panel.Electrics);
-            int count = (int)value;
-            return count != 0;            
+            return myItemAdapter.FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness,
+                panel.Formwork,panel.BalconyDoor, panel.BalconyCut, panel.FormworkMirror, panel.Electrics);                   
         }
 
         public static Model.ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
@@ -125,6 +123,15 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             return markDb;
         }
 
+        /// <summary>
+        /// Удаление панели
+        /// </summary>
+        /// <param name="panel"></param>
+        internal static void RemovePanel(Panel panel)
+        {
+            throw new NotImplementedException();
+        }
+
         private static string getFormula(decimal idFormula)
         {
             string resVal = null;
@@ -137,7 +144,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             return resVal;
         }        
 
-        public static bool Register(Panel item, Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow ser)
+        public static bool Register(Panel item, ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow ser)
         {
             // Регистрация панели в базе.                        
 

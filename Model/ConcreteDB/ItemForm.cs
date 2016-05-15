@@ -12,80 +12,80 @@ namespace Autocad_ConcerteList.Model.ConcreteDB
         public ItemForm()
         {
             InitializeComponent();
-        }        
-                
+        }
+
         /// <summary>
         /// Создать марку
         /// </summary>        
         private void okButton_Click(object sender, EventArgs e)
         {
-            try
-            {
-                var resultData = new ItemEntryData(this);
-                if (resultData.IsCheck)
-                {
-                    //check exsist
-                    var itemConstructTableList = new I_J_ItemConstructionTableAdapter();
-                    var oCount = itemConstructTableList.FindByParameters(resultData.ItemGroup,
-                                                                    resultData.Lenght,
-                                                                    resultData.Height,
-                                                                    resultData.Thickness,
-                                                                    resultData.Formwork,
-                                                                    resultData.BalconyDoor,
-                                                                    resultData.BalconyCut,
-                                                                    resultData.FormworkMirror,
-                                                                    resultData.Electrics);
-                    //insert item
-                    int iCount;
-                    if (int.TryParse(oCount.ToString(), out iCount) && iCount == 0)
-                    {
-                        // Пока тестирование передачи параметров, без записи в базу
-//#if !NODB
-//                        //item                    
-//                        decimal? itemGroupId = (decimal?)itemGroupComboBox.SelectedValue == -1 ? null : (decimal?)itemGroupComboBox.SelectedValue;
-//                        var balconyDoorId = (decimal?)balconyDoorComboBox.SelectedValue == -1 ? null : (decimal?)balconyDoorComboBox.SelectedValue;
-//                        var balconyCutId = (decimal?)balconycutComboBox.SelectedValue == -1 ? null : (decimal?)balconycutComboBox.SelectedValue;
-//                        var sCreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            //            try
+            //            {
+            //                var resultData = new ItemEntryData(this);
+            //                if (resultData.IsCheck)
+            //                {
+            //                    //check exsist
+            //                    var itemConstructTableList = new I_J_ItemConstructionTableAdapter();
+            //                    var oCount = itemConstructTableList.FindByParameters(resultData.ItemGroup,
+            //                                                                    resultData.Lenght,
+            //                                                                    resultData.Height,
+            //                                                                    resultData.Thickness,
+            //                                                                    resultData.Formwork,
+            //                                                                    resultData.BalconyDoor,
+            //                                                                    resultData.BalconyCut,
+            //                                                                    resultData.FormworkMirror,
+            //                                                                    resultData.Electrics);
+            //                    //insert item
+            //                    int iCount;
+            //                    if (int.TryParse(oCount.ToString(), out iCount) && iCount == 0)
+            //                    {
+            //                        // Пока тестирование передачи параметров, без записи в базу
+            ////#if !NODB
+            ////                        //item                    
+            ////                        decimal? itemGroupId = (decimal?)itemGroupComboBox.SelectedValue == -1 ? null : (decimal?)itemGroupComboBox.SelectedValue;
+            ////                        var balconyDoorId = (decimal?)balconyDoorComboBox.SelectedValue == -1 ? null : (decimal?)balconyDoorComboBox.SelectedValue;
+            ////                        var balconyCutId = (decimal?)balconycutComboBox.SelectedValue == -1 ? null : (decimal?)balconycutComboBox.SelectedValue;
+            ////                        var sCreateDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-//                        var itemId = itemConstructTableList.InsertItem(itemGroupId, resultData.Lenght, resultData.Height,
-//                            resultData.Thickness, resultData.Formwork, balconyDoorId, balconyCutId, resultData.FormworkMirror,
-//                            resultData.Electrics, resultData.Weight, resultData.Volume);
+            ////                        var itemId = itemConstructTableList.InsertItem(itemGroupId, resultData.Lenght, resultData.Height,
+            ////                            resultData.Thickness, resultData.Formwork, balconyDoorId, balconyCutId, resultData.FormworkMirror,
+            ////                            resultData.Electrics, resultData.Weight, resultData.Volume);
 
-//                        //series
-//                        if (itemId != null && seriesCheckedListBox.SelectedItems.Count > 0)
-//                        {
-//                            var itemSeriesTableList = new I_J_ItemSeriesTableAdapter();
-//                            foreach (DataRowView item in seriesCheckedListBox.SelectedItems)
-//                            {
-//                                var seriesId = (decimal?)item.Row["SeriesId"];
-//                                itemSeriesTableList.InsertNewSeries((int)itemId, seriesId);
-//                            }
-//                        }
+            ////                        //series
+            ////                        if (itemId != null && seriesCheckedListBox.SelectedItems.Count > 0)
+            ////                        {
+            ////                            var itemSeriesTableList = new I_J_ItemSeriesTableAdapter();
+            ////                            foreach (DataRowView item in seriesCheckedListBox.SelectedItems)
+            ////                            {
+            ////                                var seriesId = (decimal?)item.Row["SeriesId"];
+            ////                                itemSeriesTableList.InsertNewSeries((int)itemId, seriesId);
+            ////                            }
+            ////                        }
 
-//                        //tier???
+            ////                        //tier???
 
-//                        //result message                        
-//                        MessageBox.Show(this, $"Марка '{resultData.Mark}' успешно занесена в БД", "Информация",
-//                            MessageBoxButtons.OK, MessageBoxIcon.Information);
-//#endif
-//                        // Запуск лисп функции                        
-//                        Excecute(resultData);
-                    }
-                    else
-                    {
-                        if (MessageBox.Show(this, $"Марка '{resultData.Mark}' уже существует в БД. \nСоздать блок? ", "Информация",
-                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
-                        {
-                            Excecute(resultData);
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log.Error(ex, "okButton_Click");
-                MessageBox.Show(ex.Message, "Ошибка",  MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            ////                        //result message                        
+            ////                        MessageBox.Show(this, $"Марка '{resultData.Mark}' успешно занесена в БД", "Информация",
+            ////                            MessageBoxButtons.OK, MessageBoxIcon.Information);
+            ////#endif
+            ////                        // Запуск лисп функции                        
+            ////                        Excecute(resultData);
+            //                    }
+            //                    else
+            //                    {
+            //                        if (MessageBox.Show(this, $"Марка '{resultData.Mark}' уже существует в БД. \nСоздать блок? ", "Информация",
+            //                            MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            //                        {
+            //                            Excecute(resultData);
+            //                        }
+            //                    }
+            //                }
+            //            }
+            //            catch (Exception ex)
+            //            {
+            //                Logger.Log.Error(ex, "okButton_Click");
+            //                MessageBox.Show(ex.Message, "Ошибка",  MessageBoxButtons.OK, MessageBoxIcon.Error);
+            //            }
         }
 
         private void Excecute(ItemEntryData resultData)

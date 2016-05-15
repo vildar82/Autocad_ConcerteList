@@ -138,7 +138,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                         continue;
                     }
 
-                    if (!DbService.ExistPanelByParameters(panel))
+                    if (DbService.FindByParameters(panel).Count==0)
                     {
                         // Добавление панели в список для регистрации                    
                         panelsToReg.Add(panel);
@@ -174,7 +174,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 var ser = formPanels.comboBoxSer.SelectedItem as Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow;
                 foreach (var item in panelsToReg)
                 {
-                    if (!DbService.ExistPanelByParameters(item))
+                    if (DbService.FindByParameters(item).Count==0)
                     {
                         if (DbService.Register(item, ser))
                         {
