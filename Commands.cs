@@ -26,18 +26,16 @@ namespace Autocad_ConcerteList
         [LispFunction("KR_NR_CheckPanelInDb")]
         public ResultBuffer KR_NR_CheckPanelInDb(ResultBuffer args)
         {
+            DbService.Init();
             ParserRb parserRb = ParseArgs(args);
             var panel = parserRb.Panels.First();
-            // Проверка наличия панели в базе по набору параметров
-            DbService.Init();
+            // Проверка наличия панели в базе по набору параметров            
             var dtItems = DbService.FindByParameters(panel);
             if (dtItems.Count == 0)
             {
                 // Такой панели нет - return nil
                 return null;
-            }
-            // Определение марки по формуле
-            panel.DefineMarkByFormulaInDb();
+            }            
             // Формирование возвращаемого списка - найденных панелей (HandMark + марка по формуле)            
             ResultBuffer resVal = new ResultBuffer();
             resVal.Add(new TypedValue((int)LispDataType.ListBegin));
@@ -66,9 +64,9 @@ namespace Autocad_ConcerteList
         [LispFunction("KR_NR_RegisterPanelInDb")]
         public void KR_NR_RegisterPanelInDb(ResultBuffer args)
         {
-            ParserRb parserRb = ParseArgs(args);
-            var panel = parserRb.Panels.First();
             DbService.Init();
+            ParserRb parserRb = ParseArgs(args);
+            var panel = parserRb.Panels.First();            
             // Определение серии ПИК1
             var series = DbService.GetSeries();
             var serPik1 = series.First(s => s.Series.Equals("ПИК-1.0"));
@@ -82,9 +80,9 @@ namespace Autocad_ConcerteList
         [LispFunction("KR_NR_RemovePanelFromDb")]
         public void KR_NR_RemovePanelFromDb(ResultBuffer args)
         {
-            ParserRb parserRb = ParseArgs(args);
-            var panel = parserRb.Panels.First();
             DbService.Init();
+            ParserRb parserRb = ParseArgs(args);
+            var panel = parserRb.Panels.First();            
             DbService.RemovePanel(panel);
         }
 

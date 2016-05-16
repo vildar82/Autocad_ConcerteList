@@ -85,6 +85,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                         // Начало списка параметров для одной панели
                         if (!string.IsNullOrEmpty(panel.Mark))
                         {
+                            panel.DefineDbParams();
                             Panels.Add(panel);
                             panel = new Panel();
                         }

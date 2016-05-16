@@ -70,6 +70,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public ConcreteDB.DataSet.ConcerteDataSet.myItemRow DbItem { get; set; }
         public ConcreteDB.DataSet.ConcerteDataSet.I_S_ItemGroupRow DbGroup { get; set; }
         public Workspace WS { get; set; }
+
         private bool _alreadyCalcExtents;
         private bool _isNullExtents;
         private Extents3d _extents;
@@ -235,7 +236,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// <summary>
         /// Определение марки по формуле из DB
         /// </summary>
-        public void DefineMarkByFormulaInDb()
+        private void DefineMarkByFormulaInDb()
         {
             try
             {                
@@ -246,6 +247,13 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             {
                 Warning += "Ошибка формирования марки панели по параметрам - " + ex.Message;
             }
+        }
+
+        internal void DefineDbParams()
+        {
+            BalconyCutId = DbService.GetBalconyCutId(BalconyCut);
+            BalconyDoorId = DbService.GetBalconyCutId(BalconyDoor);
+            DefineMarkByFormulaInDb();
         }
 
         public void Check()

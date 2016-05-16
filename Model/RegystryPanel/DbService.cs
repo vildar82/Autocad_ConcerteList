@@ -129,7 +129,8 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// <param name="panel"></param>
         internal static void RemovePanel(Panel panel)
         {
-            throw new NotImplementedException();
+            itemConstrAdapter.DeleteByParameters(panel.Electrics, panel.FormworkMirror, panel.BalconyCutId,
+                panel.BalconyDoorId, panel.Formwork, panel.Thickness, panel.Height, panel.Lenght, panel.ItemGroupId);
         }
 
         private static string getFormula(decimal idFormula)
