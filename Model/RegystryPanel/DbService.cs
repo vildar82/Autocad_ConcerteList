@@ -76,21 +76,19 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             string markDb = null;
 
             // Получение id группы     
-            if (panel.DbGroup == null)
+            var dbGroup = FindGroup(panel.ItemGroup);
+            if (dbGroup == null)
             {
-                panel.DbGroup = FindGroup(panel.ItemGroup);
-                if (panel.DbGroup == null)
-                {
-                    throw new Exception($"Не найдена группа {panel.ItemGroup}");
-                }
+                throw new Exception($"Не найдена группа {panel.ItemGroup}");
             }
-            panel.ItemGroupId = panel.DbGroup.ItemGroupId;
-            panel.ItemGroup = panel.DbGroup.ItemGroup;
+            
+            panel.ItemGroupId = dbGroup.ItemGroupId;
+            panel.ItemGroup = dbGroup.ItemGroup;
 
             bool hasFormula = false;
             try
             {
-                hasFormula = panel.DbGroup.HasFormula;
+                hasFormula = dbGroup.HasFormula;
             }
             catch
             {
@@ -101,15 +99,15 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             if (hasFormula)
             {
                 // Формула для группы панели
-                string formula = getFormula(panel.DbGroup.FormulaId);
+                string formula = getFormula(dbGroup.FormulaId);
                 if (formula == null)
                 {
-                    // Добавление ошибки в панель.
+                    // Добавление ошибки в панель.                     
                     throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
                 }
                 else
                 {
-                    // Получение марки панели по формуле                                        
+                    // Попытка получения марки панели по формуле                     
                     ParserFormula parserFormula = new ParserFormula(formula, panel);
                     parserFormula.Parse();
                     markDb = parserFormula.Result;
@@ -117,6 +115,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             }
             else
             {
+                // Если для группы панелей задано что нет формулы, то марка панели = марке без вычислений
                 markDb = panel.Mark;
             }     
             return markDb;
@@ -128,8 +127,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// <param name="panel"></param>
         internal static void RemovePanel(Panel panel)
         {
-            itemConstrAdapter.DeleteByParameters(panel.Electrics, panel.FormworkMirror, panel.BalconyCutId,
-                panel.BalconyDoorId, panel.Formwork, panel.Thickness, panel.Height, panel.Lenght, panel.ItemGroupId);
+            itemConstrAdapter.DeleteByHandMark(panel.Mark);
         }
 
         private static string getFormula(decimal idFormula)

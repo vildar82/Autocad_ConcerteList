@@ -13,7 +13,7 @@
     <Shape ID="DesignTable:I_C_ItemGroupShort" ZOrder="25" X="-46" Y="644" Height="115" Width="175" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
     <Shape ID="DesignTable:I_C_Series" ZOrder="28" X="1045" Y="-35" Height="134" Width="121" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_C_Tier" ZOrder="16" X="516" Y="680" Height="115" Width="120" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
-    <Shape ID="DesignTable:I_J_ItemConstruction" ZOrder="1" X="481" Y="134" Height="419" Width="226" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="273" />
+    <Shape ID="DesignTable:I_J_ItemConstruction" ZOrder="1" X="481" Y="134" Height="419" Width="207" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="273" />
     <Shape ID="DesignTable:I_J_ItemSeries" ZOrder="27" X="821" Y="-42" Height="153" Width="174" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_nn_Item_Tier" ZOrder="15" X="695" Y="679" Height="134" Width="134" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_R_Item" ZOrder="11" X="232" Y="-26" Height="248" Width="160" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
@@ -21,7 +21,7 @@
     <Shape ID="DesignTable:I_S_BalconyCut" ZOrder="24" X="719" Y="306" Height="153" Width="139" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="102" />
     <Shape ID="DesignTable:I_S_BalconyDoor" ZOrder="23" X="715" Y="154" Height="134" Width="151" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_S_Side" ZOrder="19" X="898" Y="226" Height="134" Width="121" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
-    <Shape ID="DesignTable:myItem" ZOrder="2" X="1064" Y="383" Height="402" Width="189" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="315" />
+    <Shape ID="DesignTable:myItem" ZOrder="2" X="1064" Y="383" Height="423" Width="189" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="317" />
   </Shapes>
   <Connectors>
     <Connector ID="DesignRelation:FK_I_C_Formula_I_S_ItemGroup" ZOrder="13" LineWidth="11">
@@ -83,7 +83,7 @@
           <Y>491</Y>
         </Point>
         <Point>
-          <X>707</X>
+          <X>688</X>
           <Y>491</Y>
         </Point>
       </RoutePoints>
@@ -99,7 +99,7 @@
           <Y>310</Y>
         </Point>
         <Point>
-          <X>707</X>
+          <X>688</X>
           <Y>310</Y>
         </Point>
       </RoutePoints>

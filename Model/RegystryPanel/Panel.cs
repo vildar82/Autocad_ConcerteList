@@ -53,27 +53,15 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public string Aperture { get; set; }
         public string Album { get; set; }
         public float? Weight { get; set; }
-        public float? Volume { get; set; }
-
-        public ConcreteDB.DataSet.ConcerteDataSet.myItemRow DbItem { get; set; }
-        public ConcreteDB.DataSet.ConcerteDataSet.I_S_ItemGroupRow DbGroup { get; set; }
-
-        public string Warning { get; set; }              
+        public float? Volume { get; set; }        
 
         /// <summary>
         /// Определение марки по формуле из DB
         /// </summary>
         private void DefineMarkByFormulaInDb()
         {
-            try
-            {                
-                MarkDb = DbService.GetDbMark(this);
-                MarkDbWoSpace = MarkDb.Replace(" ", "");
-            }
-            catch (Exception ex)
-            {
-                Warning += "Ошибка формирования марки панели по параметрам - " + ex.Message;
-            }
+            MarkDb = DbService.GetDbMark(this);
+            MarkDbWoSpace = MarkDb.Replace(" ", "");
         }
 
         internal void DefineDbParams()

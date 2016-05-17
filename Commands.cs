@@ -119,8 +119,8 @@ namespace Autocad_ConcerteList
         }
 
         private ResultBuffer ReturnError()
-        {
-            return new ResultBuffer(new TypedValue((int)LispDataType.Nil));
+        {            
+            return null;
         }
 
         private ResultBuffer ReturnCheckPanels(Panel panel, ConcerteDataSet.myItemDataTable dtItems)

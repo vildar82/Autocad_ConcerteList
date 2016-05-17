@@ -70,7 +70,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
-    <Compile Include="Model\ConcreteDB\Access.cs" />
     <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet.cs">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
     </Compile>
