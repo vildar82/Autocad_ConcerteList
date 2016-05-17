@@ -153,7 +153,10 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             if (!string.IsNullOrEmpty(item.BalconyDoor))
             {
                 decimal id;
-                dictBalconyDoor.TryGetValue(item.BalconyDoor, out id);
+                if (!dictBalconyDoor.TryGetValue(item.BalconyDoor, out id))
+                {
+                    throw new Exception($"В базе не определена марка Балкона - {item.BalconyDoor}");
+                }
                 idBalDoor = id;
             }
 
@@ -162,7 +165,10 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             if (!string.IsNullOrEmpty(item.BalconyCut))
             {
                 decimal id;
-                dictBalconyCut.TryGetValue(item.BalconyCut, out id);
+                if (!dictBalconyCut.TryGetValue(item.BalconyCut, out id))
+                {
+                    throw new Exception($"В базе не определена марка Подрезки - {item.BalconyCut}");
+                }                    
                 idBalCut = id;
             }
 

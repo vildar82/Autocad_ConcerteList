@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Autocad_ConcerteList.Model.ConcreteDB;
+using Autocad_ConcerteList.Model.ConcreteDB.DataSet;
 using Autocad_ConcerteList.Model.RegystryPanel;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
@@ -24,64 +25,79 @@ namespace Autocad_ConcerteList
         [LispFunction("KR_NR_CheckPanelInDb")]
         public ResultBuffer KR_NR_CheckPanelInDb(ResultBuffer args)
         {
-            DbService.Init();
-            ParserRb parserRb = ParseArgs(args);
-            var panel = parserRb.Panels.First();
-            // Проверка наличия панели в базе по набору параметров            
-            var dtItems = DbService.FindByParameters(panel);
-            if (dtItems.Count == 0)
+            try
             {
-                // Такой панели нет - return nil
-                return null;
-            }            
-            // Формирование возвращаемого списка - найденных панелей (HandMark + марка по формуле)            
-            ResultBuffer resVal = new ResultBuffer();
-            resVal.Add(new TypedValue((int)LispDataType.ListBegin));
-            foreach (var item in dtItems)
-            {
-                // HandMark - точечная пара                
-                resVal.Add(new TypedValue((int)LispDataType.ListBegin));
-                resVal.Add(new TypedValue((int)LispDataType.Text, "HandMark"));
-                resVal.Add(new TypedValue((int)LispDataType.DottedPair));
-                resVal.Add(new TypedValue((int)LispDataType.Text, item.HandMarkNoColour));
-                resVal.Add(new TypedValue((int)LispDataType.ListEnd));
-                // Марка по формуле - точечная пара
-                resVal.Add(new TypedValue((int)LispDataType.ListBegin));
-                resVal.Add(new TypedValue((int)LispDataType.Text, "ByFormula"));
-                resVal.Add(new TypedValue((int)LispDataType.DottedPair));
-                resVal.Add(new TypedValue((int)LispDataType.Text, panel.MarkDbWoSpace));
-                resVal.Add(new TypedValue((int)LispDataType.ListEnd));
+                DbService.Init();
+                ParserRb parserRb = ParseArgs(args);
+                var panel = parserRb.Panels.First();
+
+                // Проверка наличия панели в базе по набору параметров            
+                var dtItems = DbService.FindByParameters(panel);
+
+                if (dtItems.Count == 0)
+                {
+                    // Такой панели нет - возвращение списка из ((Mark . nil)(ByFormula ""))
+                    return RetutnCheckFail(panel);
+                }
+
+                // возвращение списка найденных панелей ((HandMark . "")(ByFormula . ""))
+                return ReturnCheckPanels(panel, dtItems);                
             }
-            resVal.Add(new TypedValue((int)LispDataType.ListEnd));
-            return resVal;
+            catch (System.Exception)
+            {
+                // При любой ошибке - возвращение nil
+                return ReturnError();
+            }
         }        
 
         /// <summary>
         /// Регистрация панели в базе
         /// </summary>
         [LispFunction("KR_NR_RegisterPanelInDb")]
-        public void KR_NR_RegisterPanelInDb(ResultBuffer args)
+        public ResultBuffer KR_NR_RegisterPanelInDb(ResultBuffer args)
         {
-            DbService.Init();
-            ParserRb parserRb = ParseArgs(args);
-            var panel = parserRb.Panels.First();            
-            // Определение серии ПИК1
-            var series = DbService.GetSeries();
-            var serPik1 = series.First(s => s.Series.Equals("ПИК-1.0"));
-            // Регистрация панели в базе
-            DbService.Register(panel, serPik1);
-        }
+            try
+            {
+                DbService.Init();
+                ParserRb parserRb = ParseArgs(args);
+                var panel = parserRb.Panels.First();
+
+                // Определение серии ПИК1
+                var series = DbService.GetSeries();
+                var serPik1 = series.First(s => s.Series.Equals("ПИК-1.0"));
+
+                // Регистрация панели в базе
+                DbService.Register(panel, serPik1);
+
+                // Все Ок. Возвращение t
+                return ReturnOk();
+            }
+            catch (System.Exception)
+            {
+                return ReturnError();
+            }
+        }        
 
         /// <summary>
         /// Удаление панели из базы
         /// </summary>
         [LispFunction("KR_NR_RemovePanelFromDb")]
-        public void KR_NR_RemovePanelFromDb(ResultBuffer args)
+        public ResultBuffer KR_NR_RemovePanelFromDb(ResultBuffer args)
         {
-            DbService.Init();
-            ParserRb parserRb = ParseArgs(args);
-            var panel = parserRb.Panels.First();            
-            DbService.RemovePanel(panel);
+            try
+            {
+                DbService.Init();
+                ParserRb parserRb = ParseArgs(args);
+                var panel = parserRb.Panels.First();
+
+                DbService.RemovePanel(panel);
+
+                return ReturnOk();
+            }
+            catch (System.Exception)
+            {
+                return ReturnError();
+            }
         }
 
         private static ParserRb ParseArgs(ResultBuffer args)
@@ -95,6 +111,61 @@ namespace Autocad_ConcerteList
             if (parserRb.Panels.Count > 1)
                 throw new ArgumentException("Передано больше одной панели.");
             return parserRb;
-        }        
+        }
+                
+        private ResultBuffer ReturnOk()
+        {
+            return new ResultBuffer(new TypedValue((int)LispDataType.T_atom));
+        }
+
+        private ResultBuffer ReturnError()
+        {
+            return new ResultBuffer(new TypedValue((int)LispDataType.Nil));
+        }
+
+        private ResultBuffer ReturnCheckPanels(Panel panel, ConcerteDataSet.myItemDataTable dtItems)
+        {
+            ResultBuffer resVal = new ResultBuffer();
+            resVal.Add(new TypedValue((int)LispDataType.ListBegin));
+            foreach (var item in dtItems)
+            {
+                // HandMark              
+                resVal.Add(new TypedValue((int)LispDataType.ListBegin));
+                resVal.Add(new TypedValue((int)LispDataType.Text, "HandMark"));
+                resVal.Add(new TypedValue((int)LispDataType.DottedPair));
+                resVal.Add(new TypedValue((int)LispDataType.Text, item.HandMarkNoColour));
+                resVal.Add(new TypedValue((int)LispDataType.ListEnd));
+                // Марка по формуле
+                resVal.Add(new TypedValue((int)LispDataType.ListBegin));
+                resVal.Add(new TypedValue((int)LispDataType.Text, "ByFormula"));
+                resVal.Add(new TypedValue((int)LispDataType.DottedPair));
+                resVal.Add(new TypedValue((int)LispDataType.Text, panel.MarkDbWoSpace));
+                resVal.Add(new TypedValue((int)LispDataType.ListEnd));
+            }
+            resVal.Add(new TypedValue((int)LispDataType.ListEnd));
+            return resVal;
+        }
+
+        private ResultBuffer RetutnCheckFail(Panel panel)
+        {
+            //((Mark . nil)(ByFormula ""))
+            return new ResultBuffer(new[]
+            {
+                new TypedValue((int)LispDataType.ListBegin),
+                    // HandMark              
+                    new TypedValue((int)LispDataType.ListBegin),
+                    new TypedValue((int)LispDataType.Text, "Mark"),
+                    new TypedValue((int)LispDataType.DottedPair),
+                    new TypedValue((int)LispDataType.Nil),
+                    new TypedValue((int)LispDataType.ListEnd),
+                    // Марка по формуле
+                    new TypedValue((int)LispDataType.ListBegin),
+                    new TypedValue((int)LispDataType.Text, "ByFormula"),
+                    new TypedValue((int)LispDataType.DottedPair),
+                    new TypedValue((int)LispDataType.Text, panel.MarkDbWoSpace),
+                    new TypedValue((int)LispDataType.ListEnd),
+                new TypedValue((int)LispDataType.ListEnd)
+            });
+        }
     }
 }
