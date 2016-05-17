@@ -1,32 +1,4 @@
-﻿//Panels = new List<Panel>();
-
-//Panels.Add(new Panel()
-//{
-//    ItemGroup = "3НСг",
-//    Lenght = 7489,
-//    Height = 2890,
-//    Thickness = 320,
-//    Formwork = 12,
-//    BalconyCut = "П1",
-//    BalconyDoor = "Б1",
-//    Electrics = "1э",
-//    Weight = 1,
-//    Volume = 1,
-//    Mark = "3НСг 75.29.32-12Б1П1-1э"
-//});
-
-//Panels.Add(new Panel()
-//{
-//    ItemGroup = "В",
-//    Lenght = 2660,
-//    Height = 2620,
-//    Thickness = 160,                
-//    Weight = 10,
-//    Volume = 10,
-//    Mark = "В266.26.16"
-//});
-
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -114,16 +86,6 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     }                                                                                       
                 }
             }
-        }
-
-        private void printRb()
-        {
-            var doc = Application.DocumentManager.MdiActiveDocument;
-            var ed = doc.Editor;
-            foreach (var item in rb)
-            {
-                ed.WriteMessage("\n" + Enum.GetName(typeof(LispDataType),item.TypeCode) + " - " + item.Value);
-            }                
-        }
+        }        
     }
 }

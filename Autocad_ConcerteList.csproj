@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Autodesk\AutoCAD\Pik\Settings_debug\Script\NET\КР-СБ-ГК\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,24 +42,19 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcadLib">
-      <HintPath>..\..\AcadLib\AcadLib\bin\Release\AcadLib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="AcCoreMgd, Version=20.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\AutoCAD.NET.Core.20.0.1\lib\45\AcCoreMgd.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="AcDbMgd, Version=20.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\AutoCAD.NET.Model.20.0.1\lib\45\AcDbMgd.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="AcMgd, Version=20.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\AutoCAD.NET.20.0.1\lib\45\AcMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AutoCAD_PIK_Manager">
-      <HintPath>..\..\AutoCAD_PIK_Manager\AutoCAD_PIK_Manager\bin\Release\AutoCAD_PIK_Manager.dll</HintPath>
+      <SpecificVersion>False</SpecificVersion>
       <Private>False</Private>
     </Reference>
     <Reference Include="PresentationFramework" />
@@ -86,64 +81,20 @@
     </Compile>
     <Compile Include="Model\ConcreteDB\Formula\Eval.cs" />
     <Compile Include="Model\ConcreteDB\iItem.cs" />
-    <Compile Include="Model\ConcreteDB\InvokeLisp.cs" />
     <Compile Include="Model\ConcreteDB\ItemEntryData.cs" />
-    <Compile Include="Model\ConcreteDB\ItemForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Model\ConcreteDB\ItemForm.Designer.cs">
-      <DependentUpon>ItemForm.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\ConcreteDB\Formula\ParserFormula.cs" />
-    <Compile Include="Model\Logger.cs" />
-    <Compile Include="Model\Options\FormOptions.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Model\Options\FormOptions.designer.cs">
-      <DependentUpon>FormOptions.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Options\Options.cs" />
-    <Compile Include="Model\Panels\BaseParams\BalconyDoorRow.cs" />
-    <Compile Include="Model\Panels\BaseParams\BalconyCutRow.cs" />
-    <Compile Include="Model\Panels\BaseParams\CheckBaseParams.cs" />
-    <Compile Include="Model\Panels\BaseParams\FormBaseParams.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Model\Panels\BaseParams\FormBaseParams.Designer.cs">
-      <DependentUpon>FormBaseParams.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Model\Panels\CheckPanels.cs" />
-    <Compile Include="Model\Panels\FilterPanel.cs" />
-    <Compile Include="Model\Panels\ParserMark.cs" />
-    <Compile Include="Model\Panels\RegPanels.cs" />
-    <Compile Include="Model\Panels\Workspace.cs" />
     <Compile Include="Model\RegystryPanel\DbService.cs" />
     <Compile Include="Model\RegystryPanel\EnumErrorItem.cs" />
-    <Compile Include="Model\RegystryPanel\IncorrectMarks.cs" />
-    <Compile Include="Model\RegystryPanel\FormPanels\FormPanels.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Model\RegystryPanel\FormPanels\FormPanels.Designer.cs">
-      <DependentUpon>FormPanels.cs</DependentUpon>
-    </Compile>
     <Compile Include="Model\RegystryPanel\Panel.cs" />
     <Compile Include="Model\RegystryPanel\ParserRb.cs" />
-    <Compile Include="Model\RegystryPanel\RegystryPanels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="AutoCADNetLoad.scr" />
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xsc">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
@@ -161,27 +112,6 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Model\ConcreteDB\ItemForm.resx">
-      <DependentUpon>ItemForm.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Model\Options\FormOptions.resx">
-      <DependentUpon>FormOptions.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Model\Panels\BaseParams\FormBaseParams.resx">
-      <DependentUpon>FormBaseParams.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Model\RegystryPanel\FormPanels\FormPanels.resx">
-      <DependentUpon>FormPanels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\group.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
