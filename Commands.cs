@@ -41,7 +41,7 @@ namespace Autocad_ConcerteList
             resVal.Add(new TypedValue((int)LispDataType.ListBegin));
             foreach (var item in dtItems)
             {
-                // HandMark - точечная пара
+                // HandMark - точечная пара                
                 resVal.Add(new TypedValue((int)LispDataType.ListBegin));
                 resVal.Add(new TypedValue((int)LispDataType.Text, "HandMark"));
                 resVal.Add(new TypedValue((int)LispDataType.DottedPair));
