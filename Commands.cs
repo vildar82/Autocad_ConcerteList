@@ -143,18 +143,18 @@ namespace Autocad_ConcerteList
             //((Mark . nil)(ByFormula ""))
             return new ResultBuffer(new[]
             {                
-                    // HandMark              
-                    new TypedValue((int)LispDataType.ListBegin),
-                    new TypedValue((int)LispDataType.Text, "Mark"),
-                    new TypedValue((int)LispDataType.DottedPair),
-                    new TypedValue((int)LispDataType.Nil),
-                    new TypedValue((int)LispDataType.ListEnd),
-                    // Марка по формуле
-                    new TypedValue((int)LispDataType.ListBegin),
-                    new TypedValue((int)LispDataType.Text, "ByFormula"),
-                    new TypedValue((int)LispDataType.DottedPair),
-                    new TypedValue((int)LispDataType.Text, panel.MarkDbWoSpace),
-                    new TypedValue((int)LispDataType.ListEnd)                
+                // HandMark              
+                new TypedValue((int)LispDataType.ListBegin),
+                new TypedValue((int)LispDataType.Text, "Mark"),
+                new TypedValue((int)LispDataType.DottedPair),
+                new TypedValue((int)LispDataType.Nil),
+                new TypedValue((int)LispDataType.ListEnd),
+                // Марка по формуле
+                new TypedValue((int)LispDataType.ListBegin),
+                new TypedValue((int)LispDataType.Text, "ByFormula"),
+                new TypedValue((int)LispDataType.DottedPair),
+                new TypedValue((int)LispDataType.Text, panel.MarkDbWoSpace),
+                new TypedValue((int)LispDataType.ListEnd)                
             });
         }
     }
