@@ -63,8 +63,8 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 ExeConfigurationFileMap map = new ExeConfigurationFileMap();
                 map.ExeConfigFilename = configFile;
                 var cfg = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);                
-                Properties.Settings.Default.SAPRConnectionString = cfg.ConnectionStrings.ConnectionStrings
-                    ["Autocad_ConcerteList.Properties.Settings.SAPRConnectionString"].ConnectionString;
+                Properties.Settings.Default.SAPRConnectionString = 
+                    cfg.ConnectionStrings.ConnectionStrings["SAPRConnectionString"].ConnectionString;
             }
             catch { }
         }
