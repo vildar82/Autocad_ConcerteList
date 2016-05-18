@@ -43,7 +43,7 @@ namespace Autocad_ConcerteList
                 // возвращение списка найденных панелей ((HandMark . "")(ByFormula . ""))
                 return ReturnCheckPanels(panel, dtItems);                
             }
-            catch (System.Exception)
+            catch
             {
                 // При любой ошибке - возвращение nil
                 return ReturnError();
@@ -72,7 +72,7 @@ namespace Autocad_ConcerteList
                 // Все Ок. Возвращение t
                 return ReturnOk();
             }
-            catch (System.Exception)
+            catch
             {
                 return ReturnError();
             }
@@ -94,7 +94,7 @@ namespace Autocad_ConcerteList
 
                 return ReturnOk();
             }
-            catch (System.Exception)
+            catch
             {
                 return ReturnError();
             }

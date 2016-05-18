@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Autocad_ConcerteList.Model.ConcreteDB.DataSet.ConcerteDataSetTableAdapters;
@@ -28,6 +31,9 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
 
         public static void Init ()
         {
+            //  Считывание конфига
+            ReadConfigFile();
+
             itemConstrAdapter = new I_J_ItemConstructionTableAdapter();
             //myTableFormula = new myFormulaTableAdapter();
             myItemAdapter = new myItemTableAdapter();
@@ -46,6 +52,21 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             I_S_BalconyCutTableAdapter balconyCutAdapter = new I_S_BalconyCutTableAdapter();
             var balconyCutTable = balconyCutAdapter.GetData();
             dictBalconyCut = balconyCutTable.ToDictionary(b => b.BalconyCut, b => b.BalconyCutId);
+        }
+
+        private static void ReadConfigFile()
+        {
+            // Чтение конфигурационного файла и строки подключения
+            try
+            {
+                string configFile = Assembly.GetExecutingAssembly().Location + ".config";
+                ExeConfigurationFileMap map = new ExeConfigurationFileMap();
+                map.ExeConfigFilename = configFile;
+                var cfg = ConfigurationManager.OpenMappedExeConfiguration(map, ConfigurationUserLevel.None);                
+                Properties.Settings.Default.SAPRConnectionString = cfg.ConnectionStrings.ConnectionStrings
+                    ["Autocad_ConcerteList.Properties.Settings.SAPRConnectionString"].ConnectionString;
+            }
+            catch { }
         }
 
         /// <summary>
