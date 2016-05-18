@@ -94,10 +94,8 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Compile>
-    <Compile Include="Settings.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="app.config" />
     <None Include="AutoCADNetLoad.scr" />
     <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xsc">
       <DependentUpon>ConcerteDataSet.xsd</DependentUpon>

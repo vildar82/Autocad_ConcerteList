@@ -13,7 +13,7 @@
     <Shape ID="DesignTable:I_C_ItemGroupShort" ZOrder="25" X="-46" Y="644" Height="115" Width="175" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
     <Shape ID="DesignTable:I_C_Series" ZOrder="28" X="1045" Y="-35" Height="134" Width="121" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_C_Tier" ZOrder="16" X="516" Y="680" Height="115" Width="120" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="64" />
-    <Shape ID="DesignTable:I_J_ItemConstruction" ZOrder="1" X="481" Y="134" Height="419" Width="207" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="273" />
+    <Shape ID="DesignTable:I_J_ItemConstruction" ZOrder="1" X="467" Y="134" Height="419" Width="207" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="273" />
     <Shape ID="DesignTable:I_J_ItemSeries" ZOrder="27" X="821" Y="-42" Height="153" Width="174" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_nn_Item_Tier" ZOrder="15" X="695" Y="679" Height="134" Width="134" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="83" />
     <Shape ID="DesignTable:I_R_Item" ZOrder="11" X="232" Y="-26" Height="248" Width="160" AdapterExpanded="true" DataTableExpanded="true" OldAdapterHeight="0" OldDataTableHeight="0" SplitterPosition="178" />
@@ -83,7 +83,7 @@
           <Y>491</Y>
         </Point>
         <Point>
-          <X>688</X>
+          <X>674</X>
           <Y>491</Y>
         </Point>
       </RoutePoints>
@@ -99,7 +99,7 @@
           <Y>310</Y>
         </Point>
         <Point>
-          <X>688</X>
+          <X>674</X>
           <Y>310</Y>
         </Point>
       </RoutePoints>
@@ -111,7 +111,7 @@
           <Y>285</Y>
         </Point>
         <Point>
-          <X>481</X>
+          <X>467</X>
           <Y>285</Y>
         </Point>
       </RoutePoints>
@@ -131,11 +131,11 @@
     <Connector ID="DesignRelation:FK_I_J_ItemSeries_I_J_ItemConstruction" ZOrder="20" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>617</X>
+          <X>603</X>
           <Y>134</Y>
         </Point>
         <Point>
-          <X>617</X>
+          <X>603</X>
           <Y>54</Y>
         </Point>
         <Point>
@@ -159,7 +159,7 @@
     <Connector ID="DesignRelation:FK_I_R_Item_I_J_ItemConstruction" ZOrder="30" LineWidth="11">
       <RoutePoints>
         <Point>
-          <X>481</X>
+          <X>467</X>
           <Y>239</Y>
         </Point>
         <Point>
