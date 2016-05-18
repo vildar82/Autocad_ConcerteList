@@ -47,7 +47,7 @@ namespace Autocad_ConcerteList
             catch
             {
                 // При любой ошибке - возвращение nil
-                return ReturnError();
+                return null;
             }
         }        
 
@@ -72,11 +72,12 @@ namespace Autocad_ConcerteList
                 DbService.Register(panel, serPik1);
 
                 // Все Ок. Возвращение t
-                return ReturnOk();
+                return true;
             }
             catch
             {
-                return ReturnError();
+                // Возвращение ошибки - nil
+                return null;
             }
         }        
 
@@ -96,7 +97,8 @@ namespace Autocad_ConcerteList
             }
             catch
             {
-                return ReturnError();
+                // Возвращение ошибки - nil
+                return null;
             }
         }
 
@@ -111,18 +113,7 @@ namespace Autocad_ConcerteList
             if (parserRb.Panels.Count > 1)
                 throw new ArgumentException("Передано больше одной панели.");
             return parserRb;
-        }
-                
-        private object ReturnOk()
-        {
-            //return new ResultBuffer(new TypedValue((int)LispDataType.T_atom));
-            return true;
-        }
-
-        private ResultBuffer ReturnError()
-        {            
-            return null;
-        }
+        } 
 
         private ResultBuffer ReturnCheckPanels(Panel panel, ConcerteDataSet.myItemDataTable dtItems)
         {
