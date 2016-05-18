@@ -83,8 +83,8 @@ namespace Autocad_ConcerteList
         /// <summary>
         /// Удаление панели из базы
         /// </summary>
-        [LispFunction("KR_NR_RemovePanelFromDb")]
-        public object KR_NR_RemovePanelFromDb(ResultBuffer args)
+        [LispFunction("KR_NR_DeletePanelFromDb")]
+        public object KR_NR_DeletePanelFromDb(ResultBuffer args)
         {
             try
             {
@@ -92,9 +92,7 @@ namespace Autocad_ConcerteList
                 ParserRb parserRb = ParseArgs(args);
                 var panel = parserRb.Panels.First();
 
-                DbService.RemovePanel(panel);
-
-                return ReturnOk();
+                return DbService.RemovePanel(panel);                
             }
             catch
             {

@@ -146,9 +146,9 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// Удаление панели
         /// </summary>
         /// <param name="panel"></param>
-        internal static void RemovePanel(Panel panel)
+        internal static int RemovePanel(Panel panel)
         {
-            itemConstrAdapter.DeleteByHandMark(panel.Mark);
+            return itemConstrAdapter.DeleteByHandMark(panel.Mark);
         }
 
         private static string getFormula(decimal idFormula)
