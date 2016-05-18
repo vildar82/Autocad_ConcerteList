@@ -23,13 +23,14 @@ namespace Autocad_ConcerteList
         /// Возвращает nil или список панелей (handMark и марку по формуле)
         /// </summary>
         [LispFunction("KR_NR_CheckPanelInDb")]
-        public ResultBuffer KR_NR_CheckPanelInDb(ResultBuffer args)
+        public object KR_NR_CheckPanelInDb(ResultBuffer args)
         {
             try
             {
                 DbService.Init();
                 ParserRb parserRb = ParseArgs(args);
                 var panel = parserRb.Panels.First();
+                panel.DefineDbParams();
 
                 // Проверка наличия панели в базе по набору параметров            
                 var dtItems = DbService.FindByParameters(panel);
@@ -54,13 +55,14 @@ namespace Autocad_ConcerteList
         /// Регистрация панели в базе
         /// </summary>
         [LispFunction("KR_NR_RegisterPanelInDb")]
-        public ResultBuffer KR_NR_RegisterPanelInDb(ResultBuffer args)
+        public object KR_NR_RegisterPanelInDb(ResultBuffer args)
         {
             try
             {
                 DbService.Init();
                 ParserRb parserRb = ParseArgs(args);
                 var panel = parserRb.Panels.First();
+                panel.DefineDbParams();
 
                 // Определение серии ПИК1
                 var series = DbService.GetSeries();
@@ -82,7 +84,7 @@ namespace Autocad_ConcerteList
         /// Удаление панели из базы
         /// </summary>
         [LispFunction("KR_NR_RemovePanelFromDb")]
-        public ResultBuffer KR_NR_RemovePanelFromDb(ResultBuffer args)
+        public object KR_NR_RemovePanelFromDb(ResultBuffer args)
         {
             try
             {
@@ -113,9 +115,10 @@ namespace Autocad_ConcerteList
             return parserRb;
         }
                 
-        private ResultBuffer ReturnOk()
+        private object ReturnOk()
         {
-            return new ResultBuffer(new TypedValue((int)LispDataType.T_atom));
+            //return new ResultBuffer(new TypedValue((int)LispDataType.T_atom));
+            return true;
         }
 
         private ResultBuffer ReturnError()
@@ -150,8 +153,7 @@ namespace Autocad_ConcerteList
         {
             //((Mark . nil)(ByFormula ""))
             return new ResultBuffer(new[]
-            {
-                new TypedValue((int)LispDataType.ListBegin),
+            {                
                     // HandMark              
                     new TypedValue((int)LispDataType.ListBegin),
                     new TypedValue((int)LispDataType.Text, "Mark"),
@@ -163,8 +165,7 @@ namespace Autocad_ConcerteList
                     new TypedValue((int)LispDataType.Text, "ByFormula"),
                     new TypedValue((int)LispDataType.DottedPair),
                     new TypedValue((int)LispDataType.Text, panel.MarkDbWoSpace),
-                    new TypedValue((int)LispDataType.ListEnd),
-                new TypedValue((int)LispDataType.ListEnd)
+                    new TypedValue((int)LispDataType.ListEnd)                
             });
         }
     }
