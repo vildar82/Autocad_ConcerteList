@@ -39,7 +39,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// 3НСг
         /// </summary>        
         public string ItemGroup { get; set; }        
-        public decimal ItemGroupId { get; set; }
+        public decimal? ItemGroupId { get; set; }
         public short? Lenght { get; set; }
         public short? Height { get; set; }
         public short? Thickness { get; set; }        

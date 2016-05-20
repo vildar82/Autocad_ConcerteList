@@ -115,7 +115,7 @@ namespace Autocad_ConcerteList
             return parserRb;
         } 
 
-        private ResultBuffer ReturnCheckPanels(Panel panel, ConcerteDataSet.myItemDataTable dtItems)
+        private ResultBuffer ReturnCheckPanels(Panel panel, ConcerteDataSet.I_J_ItemConstructionDataTable dtItems)
         {
             ResultBuffer resVal = new ResultBuffer();
             resVal.Add(new TypedValue((int)LispDataType.ListBegin));

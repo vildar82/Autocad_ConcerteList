@@ -12991,7 +12991,7 @@ SELECT ItemConstructionId, HandMarkNoColour, ItemGroupId, Lenght, Height, Thickn
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitCommandCollection() {
-            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[4];
+            this._commandCollection = new global::System.Data.SqlClient.SqlCommand[5];
             this._commandCollection[0] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[0].Connection = this.Connection;
             this._commandCollection[0].CommandText = "SELECT ItemConstructionId, HandMarkNoColour, ItemGroupId, Lenght, Height, Thickne" +
@@ -13021,23 +13021,49 @@ WHERE        (Electrics = @Electrics) AND (FormworkMirror = @FormworkMirror) AND
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Original, false, null, "", "", ""));
             this._commandCollection[3] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[3].Connection = this.Connection;
-            this._commandCollection[3].CommandText = @"INSERT INTO I_J_ItemConstruction
-                         (ItemGroupId, Lenght, Height, Thickness, Formwork, BalconyDoorId, BalconyCutId, FormworkMirror, Electrics, Weight, Volume, HandMarkNoColour)
-VALUES        (@ItemGroupId,@Lenght,@Height,@Thickness,@Formwork,@BalconyDoorId,@BalconyCutId,@FormworkMirror,@Electrics,@Weight,@Volume,@Mark); 
-SELECT IDENT_CURRENT('I_J_ItemConstruction')";
+            this._commandCollection[3].CommandText = @"SELECT        I_J_ItemConstruction.HandMarkNoColour
+FROM            I_J_ItemConstruction INNER JOIN
+                         I_S_ItemGroup ON I_J_ItemConstruction.ItemGroupId = I_S_ItemGroup.ItemGroupId LEFT OUTER JOIN
+                         I_S_BalconyCut ON I_J_ItemConstruction.BalconyCutId = I_S_BalconyCut.BalconyCutId LEFT OUTER JOIN
+                         I_S_BalconyDoor ON I_J_ItemConstruction.BalconyDoorId = I_S_BalconyDoor.BalconyDoorId
+WHERE        (I_J_ItemConstruction.Lenght = @Lenght OR
+                         I_J_ItemConstruction.Lenght IS NULL) AND (I_J_ItemConstruction.Height = @Height OR
+                         I_J_ItemConstruction.Height IS NULL) AND (I_J_ItemConstruction.Thickness = @Thickness OR
+                         I_J_ItemConstruction.Thickness IS NULL) AND (I_J_ItemConstruction.Formwork = @Formwork OR
+                         I_J_ItemConstruction.Formwork IS NULL) AND (I_J_ItemConstruction.FormworkMirror = @FormworkMirror OR
+                         I_J_ItemConstruction.FormworkMirror IS NULL) AND (I_J_ItemConstruction.Electrics = @Electrics OR
+                         I_J_ItemConstruction.Electrics IS NULL) AND (I_S_ItemGroup.ItemGroupId = @itemGroupId) AND (I_S_BalconyDoor.BalconyDoorId = @BalconyDoorId OR
+                         I_S_BalconyDoor.BalconyDoorId IS NULL) AND (I_S_BalconyCut.BalconyCutId = @BalconyCutId OR
+                         I_S_BalconyCut.BalconyCutId IS NULL)";
             this._commandCollection[3].CommandType = global::System.Data.CommandType.Text;
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoorId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyDoorId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCutId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyCutId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Volume", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Volume", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Mark", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "HandMarkNoColour", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoorId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyDoorId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[3].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCutId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyCutId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4] = new global::System.Data.SqlClient.SqlCommand();
+            this._commandCollection[4].Connection = this.Connection;
+            this._commandCollection[4].CommandText = @"INSERT INTO I_J_ItemConstruction
+                         (ItemGroupId, Lenght, Height, Thickness, Formwork, BalconyDoorId, BalconyCutId, FormworkMirror, Electrics, Weight, Volume, HandMarkNoColour)
+VALUES        (@ItemGroupId,@Lenght,@Height,@Thickness,@Formwork,@BalconyDoorId,@BalconyCutId,@FormworkMirror,@Electrics,@Weight,@Volume,@Mark); 
+SELECT IDENT_CURRENT('I_J_ItemConstruction')";
+            this._commandCollection[4].CommandType = global::System.Data.CommandType.Text;
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@ItemGroupId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "ItemGroupId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoorId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyDoorId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCutId", global::System.Data.SqlDbType.Decimal, 9, global::System.Data.ParameterDirection.Input, 18, 0, "BalconyCutId", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Weight", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Weight", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Volume", global::System.Data.SqlDbType.Real, 4, global::System.Data.ParameterDirection.Input, 0, 0, "Volume", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[4].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Mark", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "HandMarkNoColour", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -13059,6 +13085,71 @@ SELECT IDENT_CURRENT('I_J_ItemConstruction')";
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual ConcerteDataSet.I_J_ItemConstructionDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
+            ConcerteDataSet.I_J_ItemConstructionDataTable dataTable = new ConcerteDataSet.I_J_ItemConstructionDataTable();
+            this.Adapter.Fill(dataTable);
+            return dataTable;
+        }
+        
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
+        [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
+        [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
+        public virtual ConcerteDataSet.I_J_ItemConstructionDataTable FinfByParameters(global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, global::System.Nullable<short> FormworkMirror, string Electrics, global::System.Nullable<decimal> itemGroupId, global::System.Nullable<decimal> BalconyDoorId, global::System.Nullable<decimal> BalconyCutId) {
+            this.Adapter.SelectCommand = this.CommandCollection[3];
+            if ((Lenght.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[0].Value = ((short)(Lenght.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
+            }
+            if ((Height.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[1].Value = ((short)(Height.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[1].Value = global::System.DBNull.Value;
+            }
+            if ((Thickness.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[2].Value = ((short)(Thickness.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[2].Value = global::System.DBNull.Value;
+            }
+            if ((Formwork.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[3].Value = ((short)(Formwork.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[3].Value = global::System.DBNull.Value;
+            }
+            if ((FormworkMirror.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[4].Value = ((short)(FormworkMirror.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
+            }
+            if ((Electrics == null)) {
+                this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[5].Value = ((string)(Electrics));
+            }
+            if ((itemGroupId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[6].Value = ((decimal)(itemGroupId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[6].Value = global::System.DBNull.Value;
+            }
+            if ((BalconyDoorId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[7].Value = ((decimal)(BalconyDoorId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[7].Value = global::System.DBNull.Value;
+            }
+            if ((BalconyCutId.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[8].Value = ((decimal)(BalconyCutId.Value));
+            }
+            else {
+                this.Adapter.SelectCommand.Parameters[8].Value = global::System.DBNull.Value;
+            }
             ConcerteDataSet.I_J_ItemConstructionDataTable dataTable = new ConcerteDataSet.I_J_ItemConstructionDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
@@ -13665,7 +13756,7 @@ SELECT IDENT_CURRENT('I_J_ItemConstruction')";
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Insert, false)]
         public virtual object InsertItem(global::System.Nullable<decimal> ItemGroupId, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, global::System.Nullable<decimal> BalconyDoorId, global::System.Nullable<decimal> BalconyCutId, global::System.Nullable<short> FormworkMirror, string Electrics, global::System.Nullable<float> Weight, global::System.Nullable<float> Volume, string Mark) {
-            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[3];
+            global::System.Data.SqlClient.SqlCommand command = this.CommandCollection[4];
             if ((ItemGroupId.HasValue == true)) {
                 command.Parameters[0].Value = ((decimal)(ItemGroupId.Value));
             }

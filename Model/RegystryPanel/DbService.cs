@@ -23,7 +23,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         private static I_J_ItemSeriesTableAdapter itemSeriesAdapter;
         private static I_R_ItemColourTableAdapter colorAdapter;
         private static I_R_ItemTableAdapter colorConstructAdapter;
-        private static myItemTableAdapter myItemAdapter;
+        //private static myItemTableAdapter myItemAdapter;
         //private static myFormulaTableAdapter myTableFormula;
         private static Dictionary<decimal,string> dictFormules;
         private static Dictionary<string, decimal> dictBalconyDoor;
@@ -36,7 +36,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
 
             itemConstrAdapter = new I_J_ItemConstructionTableAdapter();
             //myTableFormula = new myFormulaTableAdapter();
-            myItemAdapter = new myItemTableAdapter();
+            //myItemAdapter = new myItemTableAdapter();
             itemGroupAdapter = new I_S_ItemGroupTableAdapter();
             formulaAdapter = new I_C_FormulaTableAdapter();
             seriesAdapter = new I_C_SeriesTableAdapter();
@@ -72,16 +72,16 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// <summary>
         /// Поиск панели в базе по параметрам
         /// </summary>        
-        public static ConcreteDB.DataSet.ConcerteDataSet.myItemDataTable FindByParameters(Panel panel)
+        public static ConcreteDB.DataSet.ConcerteDataSet.I_J_ItemConstructionDataTable FindByParameters(Panel panel)
         {
-            return myItemAdapter.FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness,
-                panel.Formwork,panel.BalconyDoor, panel.BalconyCut, panel.FormworkMirror, panel.Electrics);                   
+            return itemConstrAdapter.FinfByParameters(panel.Lenght, panel.Height, panel.Thickness,
+                panel.Formwork, panel.FormworkMirror, panel.Electrics, panel.ItemGroupId, panel.BalconyDoorId, panel.BalconyCutId);                   
         }
 
-        public static Model.ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
-        {
-            return myItemAdapter.FindByMark(mark).FirstOrDefault();
-        }
+        //public static Model.ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
+        //{
+        //    return myItemAdapter.FindByMark(mark).FirstOrDefault();
+        //}
 
         public static List<Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow> GetSeries()
         {
