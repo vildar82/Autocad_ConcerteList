@@ -32,9 +32,18 @@ namespace Autocad_ConcerteList
                 var panel = parserRb.Panels.First();
                 panel.DefineDbParams();
 
-                // Проверка наличия панели в базе по набору параметров            
-                var dtItems = DbService.FindByParameters(panel);
-
+                // Проверка наличия панели в базе по набору параметров    
+                ConcerteDataSet.I_J_ItemConstructionDataTable dtItems;
+                // Если панель без параметров то поиск по марке
+                if (panel.NoParameters())
+                {
+                    dtItems = DbService.FindByMark(panel.Mark);
+                }
+                else
+                {
+                    dtItems = DbService.FindByParameters(panel);
+                }                
+                
                 if (dtItems.Count == 0)
                 {
                     // Такой панели нет - возвращение списка из ((Mark . nil)(ByFormula ""))

@@ -78,10 +78,10 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 panel.Formwork, panel.FormworkMirror, panel.Electrics, panel.ItemGroupId, panel.BalconyDoorId, panel.BalconyCutId);                   
         }
 
-        //public static Model.ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
-        //{
-        //    return myItemAdapter.FindByMark(mark).FirstOrDefault();
-        //}
+        public static ConcreteDB.DataSet.ConcerteDataSet.I_J_ItemConstructionDataTable FindByMark(string mark)
+        {
+            return itemConstrAdapter.FindByMark(mark);
+        }
 
         public static List<Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow> GetSeries()
         {

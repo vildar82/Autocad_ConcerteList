@@ -42,7 +42,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public decimal? ItemGroupId { get; set; }
         public short? Lenght { get; set; }
         public short? Height { get; set; }
-        public short? Thickness { get; set; }        
+        public short? Thickness { get; set; }
         public short? Formwork { get; set; }
         public string BalconyDoor { get; set; }
         public decimal? BalconyDoorId { get; set; }
@@ -69,7 +69,22 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             BalconyCutId = DbService.GetBalconyCutId(BalconyCut);
             BalconyDoorId = DbService.GetBalconyCutId(BalconyDoor);
             DefineMarkByFormulaInDb();
-        } 
+        }
+
+        /// <summary>
+        /// Проверка - есть ли параметры в панели, кроме Марки и Группы
+        /// </summary>        
+        internal bool NoParameters()
+        {
+            return Lenght == null &&
+                   Height == null &&
+                   Thickness == null &&
+                   Formwork == null &&
+                   BalconyDoorId == null &&
+                   BalconyCutId == null &&
+                   FormworkMirror == null &&
+                   Electrics == null;
+        }
 
         public void SetParameter(string param, object value)
         {
