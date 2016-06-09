@@ -58,12 +58,12 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 panel.Formwork,panel.BalconyDoor, panel.BalconyCut, panel.FormworkMirror, panel.Electrics);                   
         }
 
-        public static Model.ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
+        public static ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
         {
             return myItemAdapter.FindByMark(mark).FirstOrDefault();
         }
 
-        public static List<Model.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow> GetSeries()
+        public static List<ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow> GetSeries()
         {
             var series = seriesAdapter.GetData();
             return series.ToList();

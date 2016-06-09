@@ -133,7 +133,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public string GetInfo()
         {
             string info = "Марка \t\t" + Mark + "\r\n" +
-                          "Марка по формуле \t" + MarkDb + "\r\n" +
+                          "Марка по формуле \t" + MarkDb + "\r\n\r\n" +
                           "Параметры панели из блока:\r\n" +
                           "Группа \t\t" + ItemGroup + "\r\n" +
                           "Длина \t\t" + Lenght + ((DbItem != null && DbItem.Lenght != Lenght) ? ", в базе " + DbItem.Lenght : "") + "\r\n" +
