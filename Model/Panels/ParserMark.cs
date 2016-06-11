@@ -13,10 +13,25 @@ namespace Autocad_ConcerteList.Model.Panels
         private string partGab;
         private string partDop;
 
+        /// <summary>
+        /// Входная марка - из атрибута блока
+        /// </summary>
         public string MarkInput { get; private set; }
-        public Error Error { get; private set; }
-        // Группа изделия. Например "3НСг".
+        /// <summary>
+        /// Марка без индекса "Класса бетона" GroupIndexClass
+        /// Нужна для проверки имени блока, имя блока должно быть без индекса
+        /// Т.к. индекс не влияет на геометрию блока изделия.
+        /// </summary>
+        public string MarkWoGroupClassIndex { get; private set; }
+        public Error Error { get; private set; }        
+        /// <summary>
+        /// Группа изделия. Например "3НСг". 
+        /// </summary>
         public string ItemGroup { get; private set; }
+        /// <summary>
+        /// Индекс "Класса Бетона" - Например 2,3 - 2П, 2В, 3В, 3НСг2 (2).
+        /// </summary>
+        public int GroupIndexClass { get; private set; }             
         /// <summary>
         /// Длина - первое число в габаритах марки. Для группы вентблоков это может быть высота.
         /// </summary>        
@@ -28,15 +43,23 @@ namespace Autocad_ConcerteList.Model.Panels
         /// <summary>
         /// Толщина - третий параметр в габаритах марки
         /// </summary>
-        public short? Thickness { get; private set; }
-        // Опалубка. Например 1, 2.
+        public short? Thickness { get; private set; }        
+        /// <summary>
+        /// Опалубка. Например 1, 2. 
+        /// </summary>
         public short? Formwork { get; private set; }
-        public short? FormworkMirror { get; private set; }
-        // Балкон. Б, Б1.
-        public string BalconyDoor { get; private set; }
-        // Подрезка. П, П1.
-        public string BalconyCut { get; private set; }
-        // Электрика. 1э, 2э.
+        //public short? FormworkMirror { get; private set; }        
+        /// <summary>
+        /// Балкон. Б, Б1. 
+        /// </summary>
+        public string BalconyDoor { get; private set; }        
+        /// <summary>
+        /// Подрезка. П, П1. 
+        /// </summary>
+        public string BalconyCut { get; private set; }        
+        /// <summary>
+        /// Электрика. 1э, 2э. 
+        /// </summary>
         public string Electrics { get; private set; }
 
         public ParserMark(string mark)
@@ -51,7 +74,11 @@ namespace Autocad_ConcerteList.Model.Panels
             parsePartGroup();
             parsePartGab();
             parsePartDop();
+            // определение индекса класса бетона по группе
+            defineIndexClass();
         }
+
+        
 
         private void defineParts()
         {            
@@ -62,7 +89,8 @@ namespace Autocad_ConcerteList.Model.Panels
                 string group = separateGroupFromLen(MarkInput, indexFirstDot - 1);
                 if (string.IsNullOrEmpty(group))
                 {
-                    addErrorMsg("Не определена группа панели.");
+                    throw new Exception("Не определена группа панели.");
+                    //addErrorMsg("Не определена группа панели.");
                 }
                 else
                 {
@@ -156,13 +184,13 @@ namespace Autocad_ConcerteList.Model.Panels
 
         private void parsePartDop()
         {
-            // partDop - например "5-1-1э"
+            // partDop - например "5-1-1э" - теперь без зеркальности "5-1э"
             if (string.IsNullOrEmpty(partDop)) return;
             var splitDash = partDop.Split('-');
-            if (splitDash.Length>3)
+            if (splitDash.Length>2)
             {
                 // Ошибка. Может быть только опалубка и электрика. От Зеркальности отказались.
-                addErrorMsg("Определено больше трех возможных дополнительных параметра панели - опалубки, зеркальности и электрики.");
+                addErrorMsg("Определено больше двух возможных дополнительных параметра панели - опалубки и электрики.");
             }
             string val;
             if (splitDash.Length == 1)
@@ -176,25 +204,25 @@ namespace Autocad_ConcerteList.Model.Panels
                     Electrics = partDop;
                 }
             }
-            else if (splitDash.Length>2)
+            else if (splitDash.Length>1)
             {
                 definePartFormwork(splitDash[0]);
-                FormworkMirror = GetShort(splitDash[1], "Опалубка");                
-                Electrics = splitDash[2];                
+                //Formwork = GetShort(splitDash[1], "Опалубка");                
+                Electrics = splitDash[1];                
             }
-            else if (splitDash.Length > 1)
-            {
-                definePartFormwork(splitDash[0]);
-                val = splitDash[1];
-                if (val.IndexOf("э", StringComparison.OrdinalIgnoreCase) == -1)
-                {
-                    FormworkMirror = GetShort(val, "Зеркальность");
-                }
-                else
-                {
-                    Electrics = val;
-                }                
-            }
+            //else if (splitDash.Length > 1)
+            //{
+            //    definePartFormwork(splitDash[0]);
+            //    val = splitDash[1];
+            //    if (val.IndexOf("э", StringComparison.OrdinalIgnoreCase) == -1)
+            //    {
+            //        FormworkMirror = GetShort(val, "Зеркальность");
+            //    }
+            //    else
+            //    {
+            //        Electrics = val;
+            //    }                
+            //}
         }
 
         private void definePartFormwork(string input)
@@ -230,6 +258,40 @@ namespace Autocad_ConcerteList.Model.Panels
                     BalconyDoor = input.Substring(indexB, indexP- indexB);
                     BalconyCut = input.Substring(indexP);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Определение индекса класса бетона по группе 
+        /// 2П, 2В - индекс 2
+        /// 3В - индекс 2
+        /// 3НСНг2 - индекс 2
+        /// Других вариантов НЕТ!
+        /// </summary>
+        private void defineIndexClass()
+        {
+            switch (ItemGroup.ToUpper())
+            {
+                case "2П":
+                    GroupIndexClass = 2;
+                    MarkWoGroupClassIndex = MarkInput.Substring(1);
+                    break;
+                case "2В":
+                    GroupIndexClass = 2;
+                    MarkWoGroupClassIndex = MarkInput.Substring(1);
+                    break;
+                case "3В":
+                    GroupIndexClass = 3;
+                    MarkWoGroupClassIndex = MarkInput.Substring(1);
+                    break;
+                case "3НСНГ2":
+                    GroupIndexClass = 2;
+                    MarkWoGroupClassIndex = MarkInput.Remove(5, 1);
+                    break;
+                default:
+                    GroupIndexClass = 0;
+                    MarkWoGroupClassIndex = MarkInput;
+                    break;
             }
         }
 

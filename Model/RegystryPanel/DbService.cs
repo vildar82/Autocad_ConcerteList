@@ -55,7 +55,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public static ConcreteDB.DataSet.ConcerteDataSet.myItemDataTable FindByParameters(Panel panel)
         {
             return myItemAdapter.FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness,
-                panel.Formwork,panel.BalconyDoor, panel.BalconyCut, panel.FormworkMirror, panel.Electrics);                   
+                panel.Formwork,panel.BalconyDoor, panel.BalconyCut, null, panel.Electrics);                   
         }
 
         public static ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
@@ -129,7 +129,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// <param name="panel"></param>
         internal static void RemovePanel(Panel panel)
         {
-            itemConstrAdapter.DeleteByParameters(panel.Electrics, panel.FormworkMirror, panel.BalconyCutId,
+            itemConstrAdapter.DeleteByParameters(panel.Electrics, null, panel.BalconyCutId,
                 panel.BalconyDoorId, panel.Formwork, panel.Thickness, panel.Height, panel.Lenght, panel.ItemGroupId);
         }
 

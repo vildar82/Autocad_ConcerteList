@@ -52,7 +52,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public decimal? BalconyDoorId { get; set; }
         public string BalconyCut { get; set; }
         public decimal? BalconyCutId { get; set; }
-        public short? FormworkMirror { get; set; }
+        //public short? FormworkMirror { get; set; }
         public string Electrics { get; set; }
         public string Aperture { get; set; }
         public string Album { get; set; }
@@ -142,7 +142,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                           (Formwork == null ? "" : "Опалубка \t" + Formwork + "\r\n") +
                           (string.IsNullOrEmpty(BalconyDoor) ? "" : "Балконный проем\t " + BalconyDoor + "\r\n") +
                           (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка\t" + BalconyCut + (DbItem == null ? "" : ", ширина в базе " + DbItem.BalconyCutSize) + "\r\n") +
-                          (FormworkMirror == null ? "" : "Зеркальность \t" + FormworkMirror + "\r\n") +
+                          //(FormworkMirror == null ? "" : "Зеркальность \t" + FormworkMirror + "\r\n") +
                           (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
                           (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color + "\r\n") +
                           "Вес, кг \t\t" + Weight + ((DbItem != null && DbItem.Weight != Weight) ? ", в базе " + DbItem.Weight : "") + "\r\n" +
@@ -157,7 +157,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             // определить параметры панели из блока
             using (var blRef = idBlRef.Open(OpenMode.ForRead, false, true) as BlockReference)
             {
-                if (blRef == null) return Result.Fail("");
+                if (blRef == null) return Result.Fail("Это не блок.");
                 IdBlRef = idBlRef;
                 Position = blRef.Position;
                 BlockName = blRef.GetEffectiveName();
@@ -206,7 +206,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
 
             if (string.IsNullOrEmpty(Mark))
             {
-                return Result.Fail("");
+                return Result.Fail("Марка не определена.");
             }
 
             ParseMark = new ParserMark(Mark);
@@ -305,7 +305,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 Height = firstP.Height,
                 Thickness = firstP.Thickness,
                 Formwork = firstP.Formwork,
-                FormworkMirror = firstP.FormworkMirror,
+                //FormworkMirror = firstP.FormworkMirror,
                 BalconyDoor = firstP.BalconyDoor,
                 BalconyCut = firstP.BalconyCut,
                 Electrics = firstP.Electrics,
@@ -336,9 +336,9 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 // BalconyCut              
                 (panelGroupMark.GroupBy(g => g.BalconyCut).Skip(1).Any() ? "Подрезка\t *\r\n" :
                     ((resPanel.BalconyCut == null ? "" : "Подрезка\t" + resPanel.BalconyCut + "\r\n"))) +
-                // FormworkMirror
-                (panelGroupMark.GroupBy(g => g.FormworkMirror).Skip(1).Any() ? "Зеркальность\t*\r\n" :
-                    ((resPanel.FormworkMirror == null ? "" : "Зеркальность\t" + resPanel.FormworkMirror + "\r\n"))) +
+                //// FormworkMirror
+                //(panelGroupMark.GroupBy(g => g.FormworkMirror).Skip(1).Any() ? "Зеркальность\t*\r\n" :
+                //    ((resPanel.FormworkMirror == null ? "" : "Зеркальность\t" + resPanel.FormworkMirror + "\r\n"))) +
                 // Electrics
                 (panelGroupMark.GroupBy(g => g.Electrics).Skip(1).Any() ? "Электрика\t*\r\n" :
                     ((resPanel.Electrics == null ? "" : "Электрика\t" + resPanel.Electrics + "\r\n"))) +
@@ -499,7 +499,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         {
             ItemGroup = ParseMark.ItemGroup;
             Formwork = ParseMark.Formwork;
-            FormworkMirror = ParseMark.FormworkMirror;
+            //FormworkMirror = ParseMark.FormworkMirror;
             BalconyCut = ParseMark.BalconyCut;
             BalconyCutId = DbService.GetBalconyCutId(BalconyCut);
             BalconyDoor = ParseMark.BalconyDoor;

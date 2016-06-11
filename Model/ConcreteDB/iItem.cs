@@ -16,7 +16,7 @@ namespace Autocad_ConcerteList.Model.ConcreteDB
         short? Formwork { get; }
         string BalconyDoor { get; }
         string BalconyCut { get; }
-        short? FormworkMirror { get; }
+        //short? FormworkMirror { get; }
         string Electrics { get; }
         float? Weight { get; }
         float? Volume { get; }
