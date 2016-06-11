@@ -95,6 +95,7 @@
       <DependentUpon>ItemForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Model\ConcreteDB\Formula\ParserFormula.cs" />
+    <Compile Include="Model\IgnoreBlockException.cs" />
     <Compile Include="Model\Logger.cs" />
     <Compile Include="Model\Options\FormOptions.cs">
       <SubType>Form</SubType>

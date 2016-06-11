@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Model.ConcreteDB
 {
+    /// <summary>
+    /// Изделие
+    /// </summary>
     public interface iItem
     {        
         string Mark { get; }               
