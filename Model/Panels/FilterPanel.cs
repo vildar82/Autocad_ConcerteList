@@ -11,25 +11,16 @@ namespace Autocad_ConcerteList.Model.Panels
 {
     public class FilterPanel
     {
-        public List<Panel> Panels { get; private set; }
-
-        public static List<Panel> Filter(List<ObjectId> sel)
-        {
-            List<Panel> panels = new List<Panel>();
-            foreach (var item in sel)
-            {
-                DefinePanel(item,ref panels);
-            }
-            return panels;
-        }
+        public List<Panel> Panels { get; private set; }        
 
         public void Filter()
         {
             var panels = new List<Panel>();
             var ws = new List<Workspace>();
             Database db = HostApplicationServices.WorkingDatabase;
-            using (var ms = db.CurrentSpaceId.Open(OpenMode.ForRead) as BlockTableRecord)
+            using (var t = db.TransactionManager.StartTransaction())
             {
+                var ms = db.CurrentSpaceId.GetObject(OpenMode.ForRead) as BlockTableRecord;
                 foreach (var idEnt in ms)
                 {
                     var p = DefinePanel(idEnt, ref panels);
@@ -38,10 +29,9 @@ namespace Autocad_ConcerteList.Model.Panels
                         Workspace w = new Workspace(idEnt);
                         ws.Add(w);
                     }
-                }
-            }
-            // Определение рабочих областей для панелей.
-            //definePanelsWS(panels, ws);
+                }                
+                t.Commit();
+            }            
             Panels = panels.OrderBy(p=>p.Mark).ToList();
         }
 

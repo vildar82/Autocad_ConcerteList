@@ -109,10 +109,11 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public short? Formwork { get; set; }
         public short? Height { get; set; }
         public ObjectId IdBlRef { get; set; }
+        public ObjectId IdBtr { get; set; }
         /// <summary>
-        /// Наличие в базе - DbItem != null
+        /// Это новая панель - нет в базе (DbItem == null)
         /// </summary>
-        public bool InBase { get { return DbItem != null; } }
+        public bool IsNew { get { return DbItem == null; } }
         public string Info
         {
             get
@@ -164,39 +165,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// <summary>
         /// Рабочая область
         /// </summary>
-        public Workspace WS { get; set; }
-
-        //public static void FindBlocks(List<Panel> panels)
-        //{
-        //    // Найти блоки со старой маркой и исправить на марку из базы.
-        //    Document doc = Application.DocumentManager.MdiActiveDocument;
-        //    Database db = doc.Database;
-        //    var panelsList = panels.ToList();
-        //    using (var t = db.TransactionManager.StartTransaction())
-        //    {
-        //        var ms = SymbolUtilityServices.GetBlockModelSpaceId(db).GetObject(OpenMode.ForRead) as BlockTableRecord;
-        //        foreach (var idEnt in ms)
-        //        {
-        //            var blRef = idEnt.GetObject(OpenMode.ForRead, false, true) as BlockReference;
-        //            if (blRef == null || blRef.AttributeCollection == null) continue;
-
-        //            foreach (ObjectId idAtr in blRef.AttributeCollection)
-        //            {
-        //                var atrRef = idAtr.GetObject(OpenMode.ForRead, false, true) as AttributeReference;
-        //                if (atrRef.Tag.Equals("МАРКА", StringComparison.OrdinalIgnoreCase))
-        //                {
-        //                    var panelsMark = panelsList.FindAll(p => p.Mark.Equals(atrRef.TextString, StringComparison.OrdinalIgnoreCase));
-        //                    foreach (var panel in panelsMark)
-        //                    {
-        //                        panel.IdBlRef = blRef.Id;
-        //                    }
-        //                    break;
-        //                }
-        //            }
-        //        }
-        //        t.Commit();
-        //    }
-        //}
+        public Workspace WS { get; set; }        
 
         /// <summary>
         /// Создание новой панели с отличающимися паркметрами
@@ -306,10 +275,13 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             return false;
         }
 
+        /// <summary>
+        /// Проверки панели
+        /// </summary>
         public void Check()
         {
             // Проверки.
-            // 1. Проверка марки в атрибуте и в панели
+            // 1. Проверка марки в атрибуте и по формуле
             if (Mark != MarkDb)
             {
                 if (MarkWoSpace != MarkDbWoSpace)
@@ -322,9 +294,9 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkDb + "'";
                 }
             }
+            // 2. Проверка параметров в базе и в блоке
             if (DbItem != null)
-            {
-                // проверка параметров в базе и в блоке
+            {                
                 if (this.Lenght != DbItem.Lenght ||
                     this.Height != DbItem.Height ||
                     this.Thickness != DbItem.Thickness ||
@@ -334,15 +306,22 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     Warning += "Параметры из атрибутов блока отличаются от параметров из базы. ";
                 }
             }
+
+            // 3. Проверка имени блока
+            IsCorrectBlockName = BlockName.Equals(ParseMark.MarkWoGroupClassIndex, StringComparison.OrdinalIgnoreCase);
         }
 
+        /// <summary>
+        /// Опеределение блока ЖБИ изделия.
+        /// </summary>        
         public Result Define(ObjectId idBlRef)
         {
             // определить параметры панели из блока
-            using (var blRef = idBlRef.Open(OpenMode.ForRead, false, true) as BlockReference)
+            var blRef = idBlRef.GetObject(OpenMode.ForRead, false, true) as BlockReference;
             {
                 if (blRef == null) return Result.Fail("Это не блок.");
                 IdBlRef = idBlRef;
+                IdBtr = blRef.BlockTableRecord;
                 Position = blRef.Position;
                 BlockName = blRef.GetEffectiveName();
                 if (IsIgnoredBlockName(BlockName))
@@ -369,11 +348,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                     else if (atr.Tag.Equals("ТОЛЩИНА", StringComparison.OrdinalIgnoreCase))
                     {
                         Thickness = GetShortNullable(atr.Text);
-                    }
-                    else if (atr.Tag.Equals("ТОЛЩИНА", StringComparison.OrdinalIgnoreCase))
-                    {
-                        Thickness = GetShortNullable(atr.Text);
-                    }
+                    }                    
                     else if (atr.Tag.Equals("МАССА", StringComparison.OrdinalIgnoreCase))
                     {
                         Weight = GetFloatNullable(atr.Text);
@@ -410,60 +385,44 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 return Result.Fail($"Неопределенная группа {ItemGroup}.");
             }
 
-            DbItem = DbService.FindPanelByMark(Mark);
-            if (DbItem == null)
-            {
-                DbItem = DbService.FindPanelByMark(MarkWoSpace);
-            }
+            // Поиск панели в базе по параметрам
+            FindPanelInBase();            
 
+            // Определение марки по формуле по параметрам
             DefineMarkByFormulaInDb();
 
             return Result.Ok();
         }
 
-        public void FindBlock()
+        /// <summary>
+        /// Поиск панели в базе по параметрам
+        /// Результат занести в DbItem
+        /// </summary>
+        private void FindPanelInBase()
         {
-            _alreadyCalcExtents = true;
-            bool isFind = false;
-            // Найти блоки со старой маркой и исправить на марку из базы.
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            Database db = doc.Database;
-            using (var t = db.TransactionManager.StartTransaction())
+            var dbItems = DbService.FindByParameters(this);   
+            if (dbItems.Count == 0)
             {
-                var ms = SymbolUtilityServices.GetBlockModelSpaceId(db).GetObject(OpenMode.ForRead) as BlockTableRecord;
-                foreach (var idEnt in ms)
-                {
-                    var blRef = idEnt.GetObject(OpenMode.ForRead, false, true) as BlockReference;
-                    if (blRef == null || blRef.AttributeCollection == null) continue;
-
-                    foreach (ObjectId idAtr in blRef.AttributeCollection)
-                    {
-                        var atrRef = idAtr.GetObject(OpenMode.ForRead, false, true) as AttributeReference;
-                        if (atrRef.Tag.Equals("МАРКА", StringComparison.OrdinalIgnoreCase))
-                        {
-                            if (Mark.Equals(atrRef.TextString, StringComparison.OrdinalIgnoreCase))
-                            {
-                                isFind = true;
-                                IdBlRef = blRef.Id;
-                                try
-                                {
-                                    _extents = blRef.GeometricExtents;
-                                }
-                                catch
-                                {
-                                    _isNullExtents = true;
-                                }
-                            }
-                            break;
-                        }
-                    }
-                    if (isFind)
-                    {
-                        break;
-                    }
-                }
-                t.Commit();
+                // Панель не найдена в базе
+                DbItem = null;
             }
+            else
+            {
+                // Найдена в базе
+                DbItem = dbItems.First();
+                if (dbItems.Count>1)
+                {
+                    string err = "Ошибка в базе. Найдено несколько записей по параметрам панели - " + ParamsToString();
+                    err += " IdItemConstructionId: ";
+                    // Ошибка в базе - несколько записей с одинаковыми параметрами 
+                    // Могут быть отличия в доп столбцач - Зеркальность, Масса, Объекм - которые в поиск по параметрам не включены
+                    foreach (var item in dbItems)
+                    {
+                        err += item.ItemConstructionId;
+                    }
+                    Logger.Log.Error(err);
+                }
+            }                        
         }
 
         public string GetInfo()
@@ -486,64 +445,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                           "Наличие в базе: \t" + (DbItem == null ? "Нет" : "Есть") + "\r\n" +
                           (string.IsNullOrEmpty(Warning) ? "" : "Предупреждения: \t" + Warning);
             return info;
-        }
-
-        //public void SetParameter(string param, object value)
-        //{
-        //    switch (param)
-        //    {
-        //        case "block_name":
-        //            this.BlockName = value?.ToString();
-        //            break;
-
-        //        case "Mark":
-        //            this.Mark = value?.ToString();
-        //            break;
-
-        //        case "Color":
-        //            this.Color = value?.ToString();
-        //            break;
-
-        //        case "ItemGroup":
-        //            this.ItemGroup = value?.ToString();
-        //            break;
-
-        //        case "Length":
-        //            this.Lenght = GetShortNullable(value);
-        //            break;
-
-        //        case "Height":
-        //            this.Height = GetShortNullable(value);
-        //            break;
-
-        //        case "Thickness":
-        //            this.Thickness = GetShortNullable(value);
-        //            break;
-
-        //        case "Formwork":
-        //            this.Formwork = GetShortNullable(value);
-        //            break;
-
-        //        case "BalconyDoor":
-        //            this.BalconyDoor = value?.ToString();
-        //            break;
-
-        //        case "BalconyCut":
-        //            this.BalconyCut = value?.ToString();
-        //            break;
-
-        //        case "Electrics":
-        //            this.Electrics = value?.ToString().ToLower();
-        //            break;
-
-        //        default:
-        //            {
-        //                string errMsg = $"Неопределенный параметр в панели - {param} = {value}";
-        //                Logger.Log.Error(errMsg);
-        //                throw new ArgumentException(errMsg);
-        //            }
-        //    }
-        //}
+        }        
 
         public void Show()
         {
@@ -600,5 +502,15 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             BalconyDoorId = DbService.GetBalconyCutId(BalconyDoor);
             Electrics = ParseMark.Electrics;
         }
+        
+        /// <summary>
+        /// Инфо - Строка основных параметров панели
+        /// </summary>
+        /// <returns></returns>
+        public string ParamsToString ()
+        {
+            return $"Группа={ItemGroup},Lenght={Lenght},Height={Height},Thickness={Thickness},Formwork={Formwork}" +
+                $"BalconyDoor={BalconyDoor},BalconyCut={BalconyCut},Electrics={Electrics}.";            
+        }    
     }
 }

@@ -11,10 +11,15 @@ using Autodesk.AutoCAD.EditorInput;
 
 namespace Autocad_ConcerteList.Model.Panels
 {
+    /// <summary>
+    /// Показ формы результата проверки панелей
+    /// </summary>
     public class CheckPanels
     {
-        public List<Panel> Panels { get; private set; }
-        public List<Panel> New { get; private set; }        
+        /// <summary>
+        /// Все найденные панели в чертеже
+        /// </summary>
+        public List<Panel> Panels { get; private set; }         
 
         public CheckPanels(List<Panel> panels)
         {
@@ -24,18 +29,19 @@ namespace Autocad_ConcerteList.Model.Panels
         public void Check()
         {
             Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
-            New = Panels.Where(p => p.DbItem == null).ToList();
-            if (New.Count ==0)
+            // Панели для показа в форме проверки - новые и с ошибками
+            var chackPanels = Panels.Where(p => p.IsNew || p.ErrorStatus != EnumErrorItem.None || !p.IsCorrectBlockName).ToList();
+            if (chackPanels.Count ==0)
             {                
-                ed.WriteMessage($"\nНет новых панелей.");                
+                ed.WriteMessage($"\nНет новых панелей и нет панелей с ошибками.");                
             }
             else
             {
-                FormPanels panelForm = new FormPanels(New);
+                FormPanels panelForm = new FormPanels(chackPanels);
                 panelForm.Text = "Новые панели";
                 panelForm.SetGroupedPanels(true);
 
-                var errPanels = New.Where(p => p.ErrorStatus != EnumErrorItem.None);
+                var errPanels = chackPanels.Where(p => p.ErrorStatus != EnumErrorItem.None || !p.IsCorrectBlockName);
                 if (errPanels.Any())
                 {
                     panelForm.BackColor = System.Drawing.Color.Red;

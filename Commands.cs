@@ -100,9 +100,10 @@ namespace Autocad_ConcerteList
             try
             {
                 Inspector.Clear();
+
                 DbService.Init();
-                //var sel = ed.SelectBlRefs("Выбор блоков");
-                //var panels = Model.Panels.FilterPanel.Filter(sel);
+                
+                // Поиск изделей в чертеже
                 Model.Panels.FilterPanel filter = new Model.Panels.FilterPanel();
                 filter.Filter();
                 var panels = filter.Panels;
@@ -115,7 +116,7 @@ namespace Autocad_ConcerteList
             catch (System.Exception ex)
             {
                 doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
-                if (!ex.Message.Contains(AcadLib.General.CanceledByUser))
+                if (!ex.Message.Contains(General.CanceledByUser))
                 {
                     Logger.Log.Error(ex, $"{nameof(SB_CheckPanels)}. {doc.Name}");
                 }
