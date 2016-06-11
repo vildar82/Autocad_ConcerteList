@@ -21,7 +21,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\Autodesk\AutoCAD\Pik\Settings\Script\NET\КР-СБ-ГК\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;NODB</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -63,11 +63,22 @@
       <HintPath>..\..\AutoCAD_PIK_Manager\AutoCAD_PIK_Manager\bin\Release\AutoCAD_PIK_Manager.dll</HintPath>
       <Private>False</Private>
     </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
@@ -79,53 +90,81 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands.cs" />
-    <Compile Include="Model\ConcreteDB\Access.cs" />
-    <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet.cs">
-      <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
+    <Compile Include="Src\ConcreteDB\Access.cs" />
+    <Compile Include="Src\ConcreteDB\DataBase\I_C_Formula.cs">
+      <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ConcreteDB\DataSet\ConcerteDataSet.Designer.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\I_C_Series.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\I_J_ItemConstruction.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\I_J_ItemSeries.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\I_S_BalconyCut.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\I_S_BalconyDoor.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\I_S_ItemGroup.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\Model.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
+      <DependentUpon>Model.Context.tt</DependentUpon>
     </Compile>
-    <Compile Include="Model\ConcreteDB\Formula\Eval.cs" />
-    <Compile Include="Model\ConcreteDB\iItem.cs" />
-    <Compile Include="Model\ConcreteDB\Formula\ParserFormula.cs" />
-    <Compile Include="Model\IgnoreBlockException.cs" />
-    <Compile Include="Model\Options\FormOptions.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\Model.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\Model.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Model.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\Formula\Eval.cs" />
+    <Compile Include="Src\ConcreteDB\iItem.cs" />
+    <Compile Include="Src\ConcreteDB\Formula\ParserFormula.cs" />
+    <Compile Include="Src\IgnoreBlockException.cs" />
+    <Compile Include="Src\Options\FormOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Model\Options\FormOptions.designer.cs">
+    <Compile Include="Src\Options\FormOptions.designer.cs">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Options\Options.cs" />
-    <Compile Include="Model\Panels\BaseParams\BalconyDoorRow.cs" />
-    <Compile Include="Model\Panels\BaseParams\BalconyCutRow.cs" />
-    <Compile Include="Model\Panels\BaseParams\CheckBaseParams.cs" />
-    <Compile Include="Model\Panels\BaseParams\FormBaseParams.cs">
+    <Compile Include="Src\Options\Options.cs" />
+    <Compile Include="Src\Panels\BaseParams\BalconyDoorRow.cs" />
+    <Compile Include="Src\Panels\BaseParams\BalconyCutRow.cs" />
+    <Compile Include="Src\Panels\BaseParams\CheckBaseParams.cs" />
+    <Compile Include="Src\Panels\BaseParams\FormBaseParams.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Model\Panels\BaseParams\FormBaseParams.Designer.cs">
+    <Compile Include="Src\Panels\BaseParams\FormBaseParams.Designer.cs">
       <DependentUpon>FormBaseParams.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Panels\CheckPanels.cs" />
-    <Compile Include="Model\Panels\FilterPanel.cs" />
-    <Compile Include="Model\Panels\ParserMark.cs" />
-    <Compile Include="Model\Panels\RegPanels.cs" />
-    <Compile Include="Model\Panels\Workspace.cs" />
-    <Compile Include="Model\ConcreteDB\DbService.cs" />
-    <Compile Include="Model\Panels\EnumErrorItem.cs" />
-    <Compile Include="Model\Panels\IncorrectMarks.cs" />
-    <Compile Include="Model\Panels\FormPanels\FormPanels.cs">
+    <Compile Include="Src\Panels\CheckPanels.cs" />
+    <Compile Include="Src\Panels\FilterPanel.cs" />
+    <Compile Include="Src\Panels\ParserMark.cs" />
+    <Compile Include="Src\Panels\RegPanels.cs" />
+    <Compile Include="Src\Panels\Workspace.cs" />
+    <Compile Include="Src\ConcreteDB\DbService.cs" />
+    <Compile Include="Src\Panels\EnumErrorItem.cs" />
+    <Compile Include="Src\Panels\IncorrectMarks.cs" />
+    <Compile Include="Src\Panels\FormPanels\FormPanels.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Model\Panels\FormPanels\FormPanels.Designer.cs">
+    <Compile Include="Src\Panels\FormPanels\FormPanels.Designer.cs">
       <DependentUpon>FormPanels.cs</DependentUpon>
     </Compile>
-    <Compile Include="Model\Panels\Panel.cs" />
-    <Compile Include="Model\Panels\Windows\CheckPanelsViewModel.cs" />
-    <Compile Include="Model\Panels\Windows\PanelViewModel.cs" />
-    <Compile Include="Model\Panels\Windows\WindowCheckPanels.xaml.cs">
+    <Compile Include="Src\Panels\Panel.cs" />
+    <Compile Include="Src\Panels\Windows\CheckPanelsViewModel.cs" />
+    <Compile Include="Src\Panels\Windows\PanelViewModel.cs" />
+    <Compile Include="Src\Panels\Windows\WindowCheckPanels.xaml.cs">
       <DependentUpon>WindowCheckPanels.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -144,16 +183,12 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="AutoCADNetLoad.scr" />
-    <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xsc">
-      <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
-    </None>
-    <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xsd">
-      <Generator>MSDataSetGenerator</Generator>
-      <SubType>Designer</SubType>
-      <LastGenOutput>ConcerteDataSet.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Model\ConcreteDB\DataSet\ConcerteDataSet.xss">
-      <DependentUpon>ConcerteDataSet.xsd</DependentUpon>
+    <EntityDeploy Include="Src\ConcreteDB\DataBase\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Src\ConcreteDB\DataBase\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
     </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -162,13 +197,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Model\Options\FormOptions.resx">
+    <EmbeddedResource Include="Src\Options\FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Model\Panels\BaseParams\FormBaseParams.resx">
+    <EmbeddedResource Include="Src\Panels\BaseParams\FormBaseParams.resx">
       <DependentUpon>FormBaseParams.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Model\Panels\FormPanels\FormPanels.resx">
+    <EmbeddedResource Include="Src\Panels\FormPanels\FormPanels.resx">
       <DependentUpon>FormPanels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -180,7 +215,7 @@
     <None Include="Resources\group.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Model\Panels\Windows\WindowCheckPanels.xaml">
+    <Page Include="Src\Panels\Windows\WindowCheckPanels.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -190,6 +225,21 @@
       <Project>{8394E203-C619-42D1-8BAA-DA37B0FE9A45}</Project>
       <Name>MicroMvvm</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Src\ConcreteDB\DataBase\Model.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="Src\ConcreteDB\DataBase\Model.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>Model.edmx</DependentUpon>
+      <LastGenOutput>Model.cs</LastGenOutput>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

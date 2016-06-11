@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 using AcadLib;
 using AcadLib.Errors;
-using Autocad_ConcerteList.Model.ConcreteDB;
-using Autocad_ConcerteList.Model.RegystryPanel;
-using Autocad_ConcerteList.Model.RegystryPanel.IncorrectMark;
+using Autocad_ConcerteList.Src.ConcreteDB;
+using Autocad_ConcerteList.Src.RegystryPanel;
+using Autocad_ConcerteList.Src.RegystryPanel.IncorrectMark;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
@@ -104,11 +104,11 @@ namespace Autocad_ConcerteList
                 DbService.Init();
                 
                 // Поиск изделей в чертеже
-                Model.Panels.FilterPanel filter = new Model.Panels.FilterPanel();
+                Src.Panels.FilterPanel filter = new Src.Panels.FilterPanel();
                 filter.Filter();
                 var panels = filter.Panels;
 
-                Model.Panels.CheckPanels checkPanels = new Model.Panels.CheckPanels(panels);
+                Src.Panels.CheckPanels checkPanels = new Src.Panels.CheckPanels(panels);
                 checkPanels.Check();
 
                 Inspector.Show();
@@ -147,11 +147,11 @@ namespace Autocad_ConcerteList
 
                 DbService.Init();
 
-                Model.Panels.FilterPanel filter = new Model.Panels.FilterPanel();
+                Src.Panels.FilterPanel filter = new Src.Panels.FilterPanel();
                 filter.Filter();
                 var panels = filter.Panels;
 
-                Model.Panels.RegPanels regPanels = new Model.Panels.RegPanels(panels);
+                Src.Panels.RegPanels regPanels = new Src.Panels.RegPanels(panels);
                 int regCount = regPanels.Registry();
                 ed.WriteMessage($"\nЗарегистрировано {regCount} панелей.");
 

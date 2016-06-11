@@ -1,0 +1,531 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="Хранилище SAPRModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="I_C_Formula">
+          <Key>
+            <PropertyRef Name="FormulaId" />
+          </Key>
+          <Property Name="FormulaId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FormulaValue" Type="nvarchar" MaxLength="1000" />
+          <Property Name="FormulaAuthor" Type="nvarchar" MaxLength="50" />
+          <Property Name="FormulaCreateDate" Type="nvarchar" MaxLength="50" />
+          <Property Name="Description" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="I_C_Series">
+          <Key>
+            <PropertyRef Name="SeriesId" />
+          </Key>
+          <Property Name="SeriesId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SeriesParentId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Series" Type="nvarchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="I_J_ItemConstruction">
+          <Key>
+            <PropertyRef Name="ItemConstructionId" />
+          </Key>
+          <Property Name="ItemConstructionId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="HandMarkNoColour" Type="nvarchar" MaxLength="255" />
+          <Property Name="ItemGroupId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="Lenght" Type="smallint" />
+          <Property Name="Height" Type="smallint" />
+          <Property Name="Thickness" Type="smallint" />
+          <Property Name="Formwork" Type="smallint" />
+          <Property Name="BalconyDoorId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="BalconyCutId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="FormworkMirror" Type="smallint" />
+          <Property Name="Electrics" Type="nvarchar" MaxLength="10" />
+          <Property Name="Weight" Type="real" />
+          <Property Name="Volume" Type="real" />
+        </EntityType>
+        <EntityType Name="I_J_ItemSeries">
+          <Key>
+            <PropertyRef Name="ItemConstructionSeriesId" />
+          </Key>
+          <Property Name="ItemConstructionSeriesId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemConstructionId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="SeriesId" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="I_S_BalconyCut">
+          <Key>
+            <PropertyRef Name="BalconyCutId" />
+          </Key>
+          <Property Name="BalconyCutId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BalconyCut" Type="nvarchar" MaxLength="5" />
+          <Property Name="BalconyCutSize" Type="int" />
+          <Property Name="SideId" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="I_S_BalconyDoor">
+          <Key>
+            <PropertyRef Name="BalconyDoorId" />
+          </Key>
+          <Property Name="BalconyDoorId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BalconyDoor" Type="nvarchar" MaxLength="5" />
+          <Property Name="SideId" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <EntityType Name="I_S_ItemGroup">
+          <Key>
+            <PropertyRef Name="ItemGroupId" />
+          </Key>
+          <Property Name="ItemGroupId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemGroupUsage" Type="bit" Nullable="false" />
+          <Property Name="ItemGroup" Type="nvarchar" MaxLength="255" />
+          <Property Name="ItemGroupLongId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ItemGroupTextISO" Type="nvarchar" MaxLength="255" />
+          <Property Name="BuildingPartId" Type="numeric" Precision="18" Scale="0" />
+          <Property Name="ItemGroupISO" Type="nvarchar" MaxLength="255" />
+          <Property Name="ItemDescription" Type="nvarchar" MaxLength="255" />
+          <Property Name="ItemGroupStatic" Type="nvarchar" MaxLength="255" />
+          <Property Name="ItemGroupCut" Type="nvarchar" MaxLength="255" />
+          <Property Name="ItemGroupLayer" Type="nvarchar" MaxLength="255" />
+          <Property Name="HasFormula" Type="bit" />
+          <Property Name="FormulaId" Type="numeric" Precision="18" Scale="0" />
+        </EntityType>
+        <Association Name="FK_I_J_ItemConstruction_I_S_BalconyCut">
+          <End Role="I_S_BalconyCut" Type="Self.I_S_BalconyCut" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemConstruction" Type="Self.I_J_ItemConstruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_BalconyCut">
+              <PropertyRef Name="BalconyCutId" />
+            </Principal>
+            <Dependent Role="I_J_ItemConstruction">
+              <PropertyRef Name="BalconyCutId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_J_ItemConstruction_I_S_BalconyDoor">
+          <End Role="I_S_BalconyDoor" Type="Self.I_S_BalconyDoor" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemConstruction" Type="Self.I_J_ItemConstruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_BalconyDoor">
+              <PropertyRef Name="BalconyDoorId" />
+            </Principal>
+            <Dependent Role="I_J_ItemConstruction">
+              <PropertyRef Name="BalconyDoorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_J_ItemConstruction_I_S_ItemGroup">
+          <End Role="I_S_ItemGroup" Type="Self.I_S_ItemGroup" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemConstruction" Type="Self.I_J_ItemConstruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_ItemGroup">
+              <PropertyRef Name="ItemGroupId" />
+            </Principal>
+            <Dependent Role="I_J_ItemConstruction">
+              <PropertyRef Name="ItemGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_J_ItemSeries_I_C_Series">
+          <End Role="I_C_Series" Type="Self.I_C_Series" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemSeries" Type="Self.I_J_ItemSeries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_C_Series">
+              <PropertyRef Name="SeriesId" />
+            </Principal>
+            <Dependent Role="I_J_ItemSeries">
+              <PropertyRef Name="SeriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_J_ItemSeries_I_J_ItemConstruction">
+          <End Role="I_J_ItemConstruction" Type="Self.I_J_ItemConstruction" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemSeries" Type="Self.I_J_ItemSeries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_J_ItemConstruction">
+              <PropertyRef Name="ItemConstructionId" />
+            </Principal>
+            <Dependent Role="I_J_ItemSeries">
+              <PropertyRef Name="ItemConstructionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_S_ItemGroup_I_C_Formula">
+          <End Role="I_C_Formula" Type="Self.I_C_Formula" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_S_ItemGroup" Type="Self.I_S_ItemGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_C_Formula">
+              <PropertyRef Name="FormulaId" />
+            </Principal>
+            <Dependent Role="I_S_ItemGroup">
+              <PropertyRef Name="FormulaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="Хранилище SAPRModelContainer">
+          <EntitySet Name="I_C_Formula" EntityType="Self.I_C_Formula" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_C_Series" EntityType="Self.I_C_Series" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_J_ItemConstruction" EntityType="Self.I_J_ItemConstruction" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_J_ItemSeries" EntityType="Self.I_J_ItemSeries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_S_BalconyCut" EntityType="Self.I_S_BalconyCut" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_S_BalconyDoor" EntityType="Self.I_S_BalconyDoor" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_S_ItemGroup" EntityType="Self.I_S_ItemGroup" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_I_J_ItemConstruction_I_S_BalconyCut" Association="Self.FK_I_J_ItemConstruction_I_S_BalconyCut">
+            <End Role="I_S_BalconyCut" EntitySet="I_S_BalconyCut" />
+            <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_J_ItemConstruction_I_S_BalconyDoor" Association="Self.FK_I_J_ItemConstruction_I_S_BalconyDoor">
+            <End Role="I_S_BalconyDoor" EntitySet="I_S_BalconyDoor" />
+            <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_J_ItemConstruction_I_S_ItemGroup" Association="Self.FK_I_J_ItemConstruction_I_S_ItemGroup">
+            <End Role="I_S_ItemGroup" EntitySet="I_S_ItemGroup" />
+            <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_J_ItemSeries_I_C_Series" Association="Self.FK_I_J_ItemSeries_I_C_Series">
+            <End Role="I_C_Series" EntitySet="I_C_Series" />
+            <End Role="I_J_ItemSeries" EntitySet="I_J_ItemSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_J_ItemSeries_I_J_ItemConstruction" Association="Self.FK_I_J_ItemSeries_I_J_ItemConstruction">
+            <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
+            <End Role="I_J_ItemSeries" EntitySet="I_J_ItemSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_S_ItemGroup_I_C_Formula" Association="Self.FK_I_S_ItemGroup_I_C_Formula">
+            <End Role="I_C_Formula" EntitySet="I_C_Formula" />
+            <End Role="I_S_ItemGroup" EntitySet="I_S_ItemGroup" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SAPRModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="I_C_Formula">
+          <Key>
+            <PropertyRef Name="FormulaId" />
+          </Key>
+          <Property Name="FormulaId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FormulaValue" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="FormulaAuthor" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FormulaCreateDate" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="I_S_ItemGroup" Relationship="Self.FK_I_S_ItemGroup_I_C_Formula" FromRole="I_C_Formula" ToRole="I_S_ItemGroup" />
+        </EntityType>
+        <EntityType Name="I_J_ItemConstruction">
+          <Key>
+            <PropertyRef Name="ItemConstructionId" />
+          </Key>
+          <Property Name="ItemConstructionId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="HandMarkNoColour" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ItemGroupId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Lenght" Type="Int16" />
+          <Property Name="Height" Type="Int16" />
+          <Property Name="Thickness" Type="Int16" />
+          <Property Name="Formwork" Type="Int16" />
+          <Property Name="BalconyDoorId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="BalconyCutId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="FormworkMirror" Type="Int16" />
+          <Property Name="Electrics" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+          <Property Name="Weight" Type="Single" />
+          <Property Name="Volume" Type="Single" />
+          <NavigationProperty Name="I_S_BalconyCut" Relationship="Self.FK_I_J_ItemConstruction_I_S_BalconyCut" FromRole="I_J_ItemConstruction" ToRole="I_S_BalconyCut" />
+          <NavigationProperty Name="I_S_BalconyDoor" Relationship="Self.FK_I_J_ItemConstruction_I_S_BalconyDoor" FromRole="I_J_ItemConstruction" ToRole="I_S_BalconyDoor" />
+          <NavigationProperty Name="I_S_ItemGroup" Relationship="Self.FK_I_J_ItemConstruction_I_S_ItemGroup" FromRole="I_J_ItemConstruction" ToRole="I_S_ItemGroup" />
+          <NavigationProperty Name="I_J_ItemSeries" Relationship="Self.FK_I_J_ItemSeries_I_J_ItemConstruction" FromRole="I_J_ItemConstruction" ToRole="I_J_ItemSeries" />
+        </EntityType>
+        <EntityType Name="I_J_ItemSeries">
+          <Key>
+            <PropertyRef Name="ItemConstructionSeriesId" />
+          </Key>
+          <Property Name="ItemConstructionSeriesId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemConstructionId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="SeriesId" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="I_J_ItemConstruction" Relationship="Self.FK_I_J_ItemSeries_I_J_ItemConstruction" FromRole="I_J_ItemSeries" ToRole="I_J_ItemConstruction" />
+          <NavigationProperty Name="I_C_Series" Relationship="SAPRModel.FK_I_J_ItemSeries_I_C_Series" FromRole="I_J_ItemSeries" ToRole="I_C_Series" />
+        </EntityType>
+        <EntityType Name="I_S_BalconyCut">
+          <Key>
+            <PropertyRef Name="BalconyCutId" />
+          </Key>
+          <Property Name="BalconyCutId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BalconyCut" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="BalconyCutSize" Type="Int32" />
+          <Property Name="SideId" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="I_J_ItemConstruction" Relationship="Self.FK_I_J_ItemConstruction_I_S_BalconyCut" FromRole="I_S_BalconyCut" ToRole="I_J_ItemConstruction" />
+        </EntityType>
+        <EntityType Name="I_S_BalconyDoor">
+          <Key>
+            <PropertyRef Name="BalconyDoorId" />
+          </Key>
+          <Property Name="BalconyDoorId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BalconyDoor" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="SideId" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="I_J_ItemConstruction" Relationship="Self.FK_I_J_ItemConstruction_I_S_BalconyDoor" FromRole="I_S_BalconyDoor" ToRole="I_J_ItemConstruction" />
+        </EntityType>
+        <EntityType Name="I_S_ItemGroup">
+          <Key>
+            <PropertyRef Name="ItemGroupId" />
+          </Key>
+          <Property Name="ItemGroupId" Type="Decimal" Precision="18" Scale="0" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemGroupUsage" Type="Boolean" Nullable="false" />
+          <Property Name="ItemGroup" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ItemGroupLongId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ItemGroupTextISO" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="BuildingPartId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="ItemGroupISO" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDescription" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ItemGroupStatic" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ItemGroupCut" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="ItemGroupLayer" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="HasFormula" Type="Boolean" />
+          <Property Name="FormulaId" Type="Decimal" Precision="18" Scale="0" />
+          <NavigationProperty Name="I_C_Formula" Relationship="Self.FK_I_S_ItemGroup_I_C_Formula" FromRole="I_S_ItemGroup" ToRole="I_C_Formula" />
+          <NavigationProperty Name="I_J_ItemConstruction" Relationship="Self.FK_I_J_ItemConstruction_I_S_ItemGroup" FromRole="I_S_ItemGroup" ToRole="I_J_ItemConstruction" />
+        </EntityType>
+        <Association Name="FK_I_S_ItemGroup_I_C_Formula">
+          <End Role="I_C_Formula" Type="Self.I_C_Formula" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_S_ItemGroup" Type="Self.I_S_ItemGroup" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_C_Formula">
+              <PropertyRef Name="FormulaId" />
+            </Principal>
+            <Dependent Role="I_S_ItemGroup">
+              <PropertyRef Name="FormulaId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_J_ItemConstruction_I_S_BalconyCut">
+          <End Role="I_S_BalconyCut" Type="Self.I_S_BalconyCut" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemConstruction" Type="Self.I_J_ItemConstruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_BalconyCut">
+              <PropertyRef Name="BalconyCutId" />
+            </Principal>
+            <Dependent Role="I_J_ItemConstruction">
+              <PropertyRef Name="BalconyCutId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_J_ItemConstruction_I_S_BalconyDoor">
+          <End Role="I_S_BalconyDoor" Type="Self.I_S_BalconyDoor" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemConstruction" Type="Self.I_J_ItemConstruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_BalconyDoor">
+              <PropertyRef Name="BalconyDoorId" />
+            </Principal>
+            <Dependent Role="I_J_ItemConstruction">
+              <PropertyRef Name="BalconyDoorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_J_ItemConstruction_I_S_ItemGroup">
+          <End Role="I_S_ItemGroup" Type="Self.I_S_ItemGroup" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemConstruction" Type="Self.I_J_ItemConstruction" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_ItemGroup">
+              <PropertyRef Name="ItemGroupId" />
+            </Principal>
+            <Dependent Role="I_J_ItemConstruction">
+              <PropertyRef Name="ItemGroupId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_J_ItemSeries_I_J_ItemConstruction">
+          <End Role="I_J_ItemConstruction" Type="Self.I_J_ItemConstruction" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="I_J_ItemSeries" Type="Self.I_J_ItemSeries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_J_ItemConstruction">
+              <PropertyRef Name="ItemConstructionId" />
+            </Principal>
+            <Dependent Role="I_J_ItemSeries">
+              <PropertyRef Name="ItemConstructionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SAPREntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="I_C_Formula" EntityType="Self.I_C_Formula" />
+          <EntitySet Name="I_J_ItemConstruction" EntityType="Self.I_J_ItemConstruction" />
+          <EntitySet Name="I_J_ItemSeries" EntityType="Self.I_J_ItemSeries" />
+          <EntitySet Name="I_S_BalconyCut" EntityType="Self.I_S_BalconyCut" />
+          <EntitySet Name="I_S_BalconyDoor" EntityType="Self.I_S_BalconyDoor" />
+          <EntitySet Name="I_S_ItemGroup" EntityType="Self.I_S_ItemGroup" />
+          <AssociationSet Name="FK_I_S_ItemGroup_I_C_Formula" Association="Self.FK_I_S_ItemGroup_I_C_Formula">
+            <End Role="I_C_Formula" EntitySet="I_C_Formula" />
+            <End Role="I_S_ItemGroup" EntitySet="I_S_ItemGroup" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_J_ItemConstruction_I_S_BalconyCut" Association="Self.FK_I_J_ItemConstruction_I_S_BalconyCut">
+            <End Role="I_S_BalconyCut" EntitySet="I_S_BalconyCut" />
+            <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_J_ItemConstruction_I_S_BalconyDoor" Association="Self.FK_I_J_ItemConstruction_I_S_BalconyDoor">
+            <End Role="I_S_BalconyDoor" EntitySet="I_S_BalconyDoor" />
+            <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_J_ItemConstruction_I_S_ItemGroup" Association="Self.FK_I_J_ItemConstruction_I_S_ItemGroup">
+            <End Role="I_S_ItemGroup" EntitySet="I_S_ItemGroup" />
+            <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_J_ItemSeries_I_J_ItemConstruction" Association="Self.FK_I_J_ItemSeries_I_J_ItemConstruction">
+            <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
+            <End Role="I_J_ItemSeries" EntitySet="I_J_ItemSeries" />
+          </AssociationSet>
+          <EntitySet Name="I_C_Series" EntityType="SAPRModel.I_C_Series" />
+          <AssociationSet Name="FK_I_J_ItemSeries_I_C_Series" Association="SAPRModel.FK_I_J_ItemSeries_I_C_Series">
+            <End Role="I_C_Series" EntitySet="I_C_Series" />
+            <End Role="I_J_ItemSeries" EntitySet="I_J_ItemSeries" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="I_C_Series">
+          <Key>
+            <PropertyRef Name="SeriesId" />
+          </Key>
+          <Property Name="SeriesId" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SeriesParentId" Type="Decimal" Precision="18" Scale="0" />
+          <Property Name="Series" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="I_J_ItemSeries" Relationship="SAPRModel.FK_I_J_ItemSeries_I_C_Series" FromRole="I_C_Series" ToRole="I_J_ItemSeries" />
+        </EntityType>
+        <Association Name="FK_I_J_ItemSeries_I_C_Series">
+          <End Type="SAPRModel.I_C_Series" Role="I_C_Series" Multiplicity="0..1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="SAPRModel.I_J_ItemSeries" Role="I_J_ItemSeries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_C_Series">
+              <PropertyRef Name="SeriesId" />
+            </Principal>
+            <Dependent Role="I_J_ItemSeries">
+              <PropertyRef Name="SeriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="Хранилище SAPRModelContainer" CdmEntityContainer="SAPREntities">
+          <EntitySetMapping Name="I_C_Formula">
+            <EntityTypeMapping TypeName="SAPRModel.I_C_Formula">
+              <MappingFragment StoreEntitySet="I_C_Formula">
+                <ScalarProperty Name="FormulaId" ColumnName="FormulaId" />
+                <ScalarProperty Name="FormulaValue" ColumnName="FormulaValue" />
+                <ScalarProperty Name="FormulaAuthor" ColumnName="FormulaAuthor" />
+                <ScalarProperty Name="FormulaCreateDate" ColumnName="FormulaCreateDate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_J_ItemConstruction">
+            <EntityTypeMapping TypeName="SAPRModel.I_J_ItemConstruction">
+              <MappingFragment StoreEntitySet="I_J_ItemConstruction">
+                <ScalarProperty Name="ItemConstructionId" ColumnName="ItemConstructionId" />
+                <ScalarProperty Name="HandMarkNoColour" ColumnName="HandMarkNoColour" />
+                <ScalarProperty Name="ItemGroupId" ColumnName="ItemGroupId" />
+                <ScalarProperty Name="Lenght" ColumnName="Lenght" />
+                <ScalarProperty Name="Height" ColumnName="Height" />
+                <ScalarProperty Name="Thickness" ColumnName="Thickness" />
+                <ScalarProperty Name="Formwork" ColumnName="Formwork" />
+                <ScalarProperty Name="BalconyDoorId" ColumnName="BalconyDoorId" />
+                <ScalarProperty Name="BalconyCutId" ColumnName="BalconyCutId" />
+                <ScalarProperty Name="FormworkMirror" ColumnName="FormworkMirror" />
+                <ScalarProperty Name="Electrics" ColumnName="Electrics" />
+                <ScalarProperty Name="Weight" ColumnName="Weight" />
+                <ScalarProperty Name="Volume" ColumnName="Volume" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_J_ItemSeries">
+            <EntityTypeMapping TypeName="SAPRModel.I_J_ItemSeries">
+              <MappingFragment StoreEntitySet="I_J_ItemSeries">
+                <ScalarProperty Name="ItemConstructionSeriesId" ColumnName="ItemConstructionSeriesId" />
+                <ScalarProperty Name="ItemConstructionId" ColumnName="ItemConstructionId" />
+                <ScalarProperty Name="SeriesId" ColumnName="SeriesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_S_BalconyCut">
+            <EntityTypeMapping TypeName="SAPRModel.I_S_BalconyCut">
+              <MappingFragment StoreEntitySet="I_S_BalconyCut">
+                <ScalarProperty Name="BalconyCutId" ColumnName="BalconyCutId" />
+                <ScalarProperty Name="BalconyCut" ColumnName="BalconyCut" />
+                <ScalarProperty Name="BalconyCutSize" ColumnName="BalconyCutSize" />
+                <ScalarProperty Name="SideId" ColumnName="SideId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_S_BalconyDoor">
+            <EntityTypeMapping TypeName="SAPRModel.I_S_BalconyDoor">
+              <MappingFragment StoreEntitySet="I_S_BalconyDoor">
+                <ScalarProperty Name="BalconyDoorId" ColumnName="BalconyDoorId" />
+                <ScalarProperty Name="BalconyDoor" ColumnName="BalconyDoor" />
+                <ScalarProperty Name="SideId" ColumnName="SideId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_S_ItemGroup">
+            <EntityTypeMapping TypeName="SAPRModel.I_S_ItemGroup">
+              <MappingFragment StoreEntitySet="I_S_ItemGroup">
+                <ScalarProperty Name="ItemGroupId" ColumnName="ItemGroupId" />
+                <ScalarProperty Name="ItemGroupUsage" ColumnName="ItemGroupUsage" />
+                <ScalarProperty Name="ItemGroup" ColumnName="ItemGroup" />
+                <ScalarProperty Name="ItemGroupLongId" ColumnName="ItemGroupLongId" />
+                <ScalarProperty Name="ItemGroupTextISO" ColumnName="ItemGroupTextISO" />
+                <ScalarProperty Name="BuildingPartId" ColumnName="BuildingPartId" />
+                <ScalarProperty Name="ItemGroupISO" ColumnName="ItemGroupISO" />
+                <ScalarProperty Name="ItemDescription" ColumnName="ItemDescription" />
+                <ScalarProperty Name="ItemGroupStatic" ColumnName="ItemGroupStatic" />
+                <ScalarProperty Name="ItemGroupCut" ColumnName="ItemGroupCut" />
+                <ScalarProperty Name="ItemGroupLayer" ColumnName="ItemGroupLayer" />
+                <ScalarProperty Name="HasFormula" ColumnName="HasFormula" />
+                <ScalarProperty Name="FormulaId" ColumnName="FormulaId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_C_Series">
+            <EntityTypeMapping TypeName="SAPRModel.I_C_Series">
+              <MappingFragment StoreEntitySet="I_C_Series">
+                <ScalarProperty Name="Series" ColumnName="Series" />
+                <ScalarProperty Name="SeriesParentId" ColumnName="SeriesParentId" />
+                <ScalarProperty Name="SeriesId" ColumnName="SeriesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Нет" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
