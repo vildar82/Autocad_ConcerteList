@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AcadLib.Errors;
 using Autocad_ConcerteList.Model.ConcreteDB.DataSet.ConcerteDataSetTableAdapters;
 using Autocad_ConcerteList.Model.ConcreteDB.Formula;
 
@@ -14,7 +11,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
     /// </summary>
     public static class DbService
     {
-        private static I_J_ItemConstructionTableAdapter itemConstrAdapter;        
+        private static I_J_ItemConstructionTableAdapter itemConstrAdapter;
         private static I_S_ItemGroupTableAdapter itemGroupAdapter;
         private static I_C_FormulaTableAdapter formulaAdapter;
         private static I_C_SeriesTableAdapter seriesAdapter;
@@ -23,11 +20,12 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         private static I_R_ItemTableAdapter colorConstructAdapter;
         private static myItemTableAdapter myItemAdapter;
         //private static myFormulaTableAdapter myTableFormula;
-        private static Dictionary<decimal,string> dictFormules;
+        private static Dictionary<decimal, string> dictFormules;
+
         private static Dictionary<string, decimal> dictBalconyDoor;
         private static Dictionary<string, decimal> dictBalconyCut;
 
-        public static void Init ()
+        public static void Init()
         {
             itemConstrAdapter = new I_J_ItemConstructionTableAdapter();
             //myTableFormula = new myFormulaTableAdapter();
@@ -51,17 +49,17 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
 
         /// <summary>
         /// Поиск панели в базе по параметрам
-        /// </summary>        
+        /// </summary>
         public static ConcreteDB.DataSet.ConcerteDataSet.myItemDataTable FindByParameters(Panel panel)
         {
             return myItemAdapter.FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness,
-                panel.Formwork,panel.BalconyDoor, panel.BalconyCut, null, panel.Electrics);                   
+                panel.Formwork, panel.BalconyDoor, panel.BalconyCut, null, panel.Electrics);
         }
 
-        public static ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
-        {
-            return myItemAdapter.FindByMark(mark).FirstOrDefault();
-        }
+        //public static ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)
+        //{
+        //    return myItemAdapter.FindByMark(mark).FirstOrDefault();
+        //}
 
         public static List<ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow> GetSeries()
         {
@@ -71,12 +69,12 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
 
         /// <summary>
         /// Определение марки панели по формуле из базы
-        /// </summary>        
+        /// </summary>
         public static string GetDbMark(Panel panel)
         {
             string markDb = null;
 
-            // Получение id группы     
+            // Получение id группы
             if (panel.DbGroup == null)
             {
                 panel.DbGroup = FindGroup(panel.ItemGroup);
@@ -110,7 +108,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 }
                 else
                 {
-                    // Получение марки панели по формуле                                        
+                    // Получение марки панели по формуле
                     ParserFormula parserFormula = new ParserFormula(formula, panel);
                     parserFormula.Parse();
                     markDb = parserFormula.Result;
@@ -119,35 +117,35 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             else
             {
                 markDb = panel.Mark;
-            }     
+            }
             return markDb;
         }
 
-        /// <summary>
-        /// Удаление панели
-        /// </summary>
-        /// <param name="panel"></param>
-        internal static void RemovePanel(Panel panel)
-        {
-            itemConstrAdapter.DeleteByParameters(panel.Electrics, null, panel.BalconyCutId,
-                panel.BalconyDoorId, panel.Formwork, panel.Thickness, panel.Height, panel.Lenght, panel.ItemGroupId);
-        }
+        ///// <summary>
+        ///// Удаление панели
+        ///// </summary>
+        ///// <param name="panel"></param>
+        //internal static void RemovePanel(Panel panel)
+        //{
+        //    itemConstrAdapter.DeleteByParameters(panel.Electrics, null, panel.BalconyCutId,
+        //        panel.BalconyDoorId, panel.Formwork, panel.Thickness, panel.Height, panel.Lenght, panel.ItemGroupId);
+        //}
 
         private static string getFormula(decimal idFormula)
         {
             string resVal = null;
             if (!dictFormules.TryGetValue(idFormula, out resVal))
             {
-                // Поиск формулы в базе                
-                resVal = formulaAdapter.GetFormula(idFormula);                
+                // Поиск формулы в базе
+                resVal = formulaAdapter.GetFormula(idFormula);
                 dictFormules.Add(idFormula, resVal);
             }
             return resVal;
-        }        
+        }
 
         public static bool Register(Panel item, ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow ser)
         {
-            // Регистрация панели в базе.                        
+            // Регистрация панели в базе.
 
             // idBalconyDoor
             decimal? idBalDoor = null;
@@ -176,7 +174,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             RegColor(item, itemConstrId);
 #endif
             return true;
-        }       
+        }
 
         /// <summary>
         /// Регистрация покраски
@@ -202,14 +200,14 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         }
 
         public static ConcreteDB.DataSet.ConcerteDataSet.I_S_ItemGroupRow FindGroup(string itemGroup)
-        {            
-            return itemGroupAdapter.GetItemGroup(itemGroup).FirstOrDefault();            
+        {
+            return itemGroupAdapter.GetItemGroup(itemGroup).FirstOrDefault();
         }
 
         public static decimal? GetBalconyCutId(string balconyCut)
         {
             decimal id;
-            if (balconyCut!=null && dictBalconyCut.TryGetValue(balconyCut, out id))
+            if (balconyCut != null && dictBalconyCut.TryGetValue(balconyCut, out id))
             {
                 return id;
             }
@@ -222,7 +220,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         public static decimal? GetBalconyDoorId(string balconyDoor)
         {
             decimal id;
-            if (balconyDoor!=null && dictBalconyDoor.TryGetValue(balconyDoor, out id))
+            if (balconyDoor != null && dictBalconyDoor.TryGetValue(balconyDoor, out id))
             {
                 return id;
             }

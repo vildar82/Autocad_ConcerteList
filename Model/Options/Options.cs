@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using System.Xml.Serialization;
+using AcadLib;
 using AcadLib.Files;
 using Autodesk.AutoCAD.ApplicationServices;
 
