@@ -291,16 +291,16 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 }
                 else
                 {
-                    Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkDb + "'";
+                    Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkDb + "' ";
                 }
             }
             // 2. Проверка параметров в базе и в блоке
             if (DbItem != null)
             {                
-                if (this.Lenght != DbItem.Lenght ||
-                    this.Height != DbItem.Height ||
-                    this.Thickness != DbItem.Thickness ||
-                    this.Weight != DbItem.Weight)
+                if (this.Lenght != (DbItem.IsLenghtNull()? null : (short?)DbItem.Lenght) ||
+                    this.Height != (DbItem.IsHeightNull() ? null : (short?)DbItem.Height) ||
+                    this.Thickness != (DbItem.IsThicknessNull()? null: (short?)DbItem.Thickness) ||
+                    this.Weight != (DbItem.IsWeightNull()? null : (float?)DbItem.Weight))
                 {
                     ErrorStatus |= EnumErrorItem.DifferentParams;
                     Warning += "Параметры из атрибутов блока отличаются от параметров из базы. ";
@@ -309,6 +309,10 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
 
             // 3. Проверка имени блока
             IsCorrectBlockName = BlockName.Equals(ParseMark.MarkWoGroupClassIndex, StringComparison.OrdinalIgnoreCase);
+            if (!IsCorrectBlockName)
+            {
+                Warning += $" Имя блока '{BlockName}' не соответствует марке из атрибута '{Mark}'. ";
+            }
         }
 
         /// <summary>
@@ -385,6 +389,9 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                 return Result.Fail($"Неопределенная группа {ItemGroup}.");
             }
 
+            BalconyCutId = DbService.GetBalconyCutId(BalconyCut);
+            BalconyDoorId = DbService.GetBalconyCutId(BalconyDoor);
+
             // Поиск панели в базе по параметрам
             FindPanelInBase();            
 
@@ -431,18 +438,18 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
                           "Марка по формуле \t" + MarkDb + "\r\n\r\n" +
                           "Параметры панели из блока:\r\n" +
                           "Группа \t\t" + ItemGroup + "\r\n" +
-                          "Длина \t\t" + Lenght + ((DbItem != null && DbItem.Lenght != Lenght) ? ", в базе " + DbItem.Lenght : "") + "\r\n" +
-                          "Высота \t\t" + Height + ((DbItem != null && DbItem.Height != Height) ? ", в базе " + DbItem.Height : "") + "\r\n" +
-                          "Ширина \t\t" + Thickness + ((DbItem != null && DbItem.Thickness != Thickness) ? ", в базе " + DbItem.Thickness : "") + "\r\n" +
+                          "Длина \t\t" + Lenght + ((DbItem != null && (DbItem.IsLenghtNull()? null:(short?)DbItem.Lenght) != Lenght) ? ", в базе " + DbItem.Lenght : "") + "\r\n" +
+                          "Высота \t\t" + Height + ((DbItem != null && (DbItem.IsHeightNull()? null: (short?)DbItem.Height) != Height) ? ", в базе " + DbItem.Height : "") + "\r\n" +
+                          "Ширина \t\t" + Thickness + ((DbItem != null && (DbItem.IsThicknessNull()?null:(short?)DbItem.Thickness) != Thickness) ? ", в базе " + DbItem.Thickness : "") + "\r\n" +
                           (Formwork == null ? "" : "Опалубка \t" + Formwork + "\r\n") +
                           (string.IsNullOrEmpty(BalconyDoor) ? "" : "Балконный проем\t " + BalconyDoor + "\r\n") +
-                          (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка\t" + BalconyCut + (DbItem == null ? "" : ", ширина в базе " + DbItem.BalconyCutSize) + "\r\n") +
+                          (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка\t" + BalconyCut + ((DbItem!=null && DbItem.IsBalconyCutSizeNull())? ", в базе нет" : ", ширина в базе " + DbItem.BalconyCutSize) + "\r\n") +
                           //(FormworkMirror == null ? "" : "Зеркальность \t" + FormworkMirror + "\r\n") +
                           (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
                           (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color + "\r\n") +
-                          "Вес, кг \t\t" + Weight + ((DbItem != null && DbItem.Weight != Weight) ? ", в базе " + DbItem.Weight : "") + "\r\n" +
-                          "Объем, м3 \t" + Volume + ((DbItem != null && DbItem.Volume != Volume) ? ", в базе " + DbItem.Volume : "") + "\r\n" +
-                          "Наличие в базе: \t" + (DbItem == null ? "Нет" : "Есть") + "\r\n" +
+                          "Вес, кг \t\t" + Weight + ((DbItem != null && (DbItem.IsWeightNull()?null:(float?)DbItem.Weight) != Weight) ? ", в базе " + DbItem.Weight : "") + "\r\n" +
+                          "Объем, м3 \t" + Volume + ((DbItem != null && (DbItem.IsVolumeNull()?null:(float?)DbItem.Volume) != Volume) ? ", в базе " + DbItem.Volume : "") + "\r\n" +
+                          "Наличие в базе: \t" + (IsNew? "Есть" : "нет") + "\r\n" +
                           (string.IsNullOrEmpty(Warning) ? "" : "Предупреждения: \t" + Warning);
             return info;
         }        
@@ -487,7 +494,7 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
             }
             catch (Exception ex)
             {
-                Warning += "Ошибка формирования марки панели по параметрам - " + ex.Message;
+                Warning += "Ошибка формирования марки панели по параметрам - " + ex.Message + ". ";
             }
         }
 

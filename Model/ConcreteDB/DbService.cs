@@ -50,10 +50,19 @@ namespace Autocad_ConcerteList.Model.RegystryPanel
         /// <summary>
         /// Поиск панели в базе по параметрам
         /// </summary>
+        public static ConcreteDB.DataSet.ConcerteDataSet.myItemDataTable FindByParameters(
+            string ItemGroup, short? Lenght, short? Height, short? Thickness,
+                short? Formwork, string BalconyDoor, string BalconyCut, string Electrics
+            )
+        {            
+            return myItemAdapter.FindByParameters(ItemGroup, Lenght, Height, Thickness,
+                Formwork, Electrics,  BalconyDoor, BalconyCut, null);
+        }
+
         public static ConcreteDB.DataSet.ConcerteDataSet.myItemDataTable FindByParameters(Panel panel)
         {
-            return myItemAdapter.FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness,
-                panel.Formwork, panel.BalconyDoor, panel.BalconyCut, null, panel.Electrics);
+            return FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness, panel.Formwork,
+                panel.BalconyDoor, panel.BalconyCut, panel.Electrics);
         }
 
         //public static ConcreteDB.DataSet.ConcerteDataSet.myItemRow FindPanelByMark(string mark)

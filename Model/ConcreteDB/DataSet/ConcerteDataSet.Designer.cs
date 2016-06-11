@@ -16675,28 +16675,26 @@ WHERE        (I_J_ItemConstruction.HandMarkNoColour = @mark)";
             this._commandCollection[1].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@mark", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "HandMarkNoColour", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2] = new global::System.Data.SqlClient.SqlCommand();
             this._commandCollection[2].Connection = this.Connection;
-            this._commandCollection[2].CommandText = @"SELECT        I_J_ItemConstruction.HandMarkNoColour, I_S_ItemGroup.HasFormula, I_S_ItemGroup.FormulaId
+            this._commandCollection[2].CommandText = @"SELECT        I_J_ItemConstruction.HandMarkNoColour, I_S_ItemGroup.HasFormula, I_S_ItemGroup.FormulaId, I_J_ItemConstruction.ItemConstructionId
 FROM            I_J_ItemConstruction INNER JOIN
                          I_S_ItemGroup ON I_J_ItemConstruction.ItemGroupId = I_S_ItemGroup.ItemGroupId LEFT OUTER JOIN
                          I_S_BalconyCut ON I_J_ItemConstruction.BalconyCutId = I_S_BalconyCut.BalconyCutId LEFT OUTER JOIN
                          I_S_BalconyDoor ON I_J_ItemConstruction.BalconyDoorId = I_S_BalconyDoor.BalconyDoorId
 WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Lenght = @Lenght) AND (I_J_ItemConstruction.Height = @Height) AND 
-                         (I_J_ItemConstruction.Thickness = @Thickness) AND (I_J_ItemConstruction.Formwork = @Formwork OR
-                         I_J_ItemConstruction.Formwork IS NULL) AND (I_S_BalconyDoor.BalconyDoor = @BalconyDoor OR
+                         (I_J_ItemConstruction.Thickness = @Thickness) AND (I_J_ItemConstruction.Formwork = @Formwork) AND (I_J_ItemConstruction.Electrics = @Electrics) AND 
+                         (I_S_BalconyDoor.BalconyDoor = @BalconyDoor OR
                          I_S_BalconyDoor.BalconyDoor IS NULL) AND (I_S_BalconyCut.BalconyCut = @BalconyCut OR
-                         I_S_BalconyCut.BalconyCut IS NULL) AND (I_J_ItemConstruction.FormworkMirror = @FormworkMirror OR
-                         I_J_ItemConstruction.FormworkMirror IS NULL) AND (I_J_ItemConstruction.Electrics = @Electrics OR
-                         I_J_ItemConstruction.Electrics IS NULL)";
+                         I_S_BalconyCut.BalconyCut IS NULL) AND (I_J_ItemConstruction.FormworkMirror = @FormworkMirror)";
             this._commandCollection[2].CommandType = global::System.Data.CommandType.Text;
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@itemGroup", global::System.Data.SqlDbType.NVarChar, 255, global::System.Data.ParameterDirection.Input, 0, 0, "ItemGroup", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Lenght", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Lenght", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Height", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Height", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Thickness", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Thickness", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Formwork", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "Formwork", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
+            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyDoor", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyDoor", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@BalconyCut", global::System.Data.SqlDbType.NVarChar, 5, global::System.Data.ParameterDirection.Input, 0, 0, "BalconyCut", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
             this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@FormworkMirror", global::System.Data.SqlDbType.SmallInt, 2, global::System.Data.ParameterDirection.Input, 0, 0, "FormworkMirror", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
-            this._commandCollection[2].Parameters.Add(new global::System.Data.SqlClient.SqlParameter("@Electrics", global::System.Data.SqlDbType.NVarChar, 10, global::System.Data.ParameterDirection.Input, 0, 0, "Electrics", global::System.Data.DataRowVersion.Current, false, null, "", "", ""));
         }
         
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -16744,7 +16742,7 @@ WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Le
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.TableAdapter")]
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
-        public virtual ConcerteDataSet.myItemDataTable FindByParameters(string itemGroup, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, string BalconyDoor, string BalconyCut, global::System.Nullable<short> FormworkMirror, string Electrics) {
+        public virtual ConcerteDataSet.myItemDataTable FindByParameters(string itemGroup, global::System.Nullable<short> Lenght, global::System.Nullable<short> Height, global::System.Nullable<short> Thickness, global::System.Nullable<short> Formwork, string Electrics, string BalconyDoor, string BalconyCut, global::System.Nullable<short> FormworkMirror) {
             this.Adapter.SelectCommand = this.CommandCollection[2];
             if ((itemGroup == null)) {
                 this.Adapter.SelectCommand.Parameters[0].Value = global::System.DBNull.Value;
@@ -16776,29 +16774,29 @@ WHERE        (I_S_ItemGroup.ItemGroup = @itemGroup) AND (I_J_ItemConstruction.Le
             else {
                 this.Adapter.SelectCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
-            if ((BalconyDoor == null)) {
+            if ((Electrics == null)) {
                 this.Adapter.SelectCommand.Parameters[5].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[5].Value = ((string)(BalconyDoor));
+                this.Adapter.SelectCommand.Parameters[5].Value = ((string)(Electrics));
             }
-            if ((BalconyCut == null)) {
+            if ((BalconyDoor == null)) {
                 this.Adapter.SelectCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             else {
-                this.Adapter.SelectCommand.Parameters[6].Value = ((string)(BalconyCut));
+                this.Adapter.SelectCommand.Parameters[6].Value = ((string)(BalconyDoor));
             }
-            if ((FormworkMirror.HasValue == true)) {
-                this.Adapter.SelectCommand.Parameters[7].Value = ((short)(FormworkMirror.Value));
-            }
-            else {
+            if ((BalconyCut == null)) {
                 this.Adapter.SelectCommand.Parameters[7].Value = global::System.DBNull.Value;
             }
-            if ((Electrics == null)) {
-                this.Adapter.SelectCommand.Parameters[8].Value = global::System.DBNull.Value;
+            else {
+                this.Adapter.SelectCommand.Parameters[7].Value = ((string)(BalconyCut));
+            }
+            if ((FormworkMirror.HasValue == true)) {
+                this.Adapter.SelectCommand.Parameters[8].Value = ((short)(FormworkMirror.Value));
             }
             else {
-                this.Adapter.SelectCommand.Parameters[8].Value = ((string)(Electrics));
+                this.Adapter.SelectCommand.Parameters[8].Value = global::System.DBNull.Value;
             }
             ConcerteDataSet.myItemDataTable dataTable = new ConcerteDataSet.myItemDataTable();
             this.Adapter.Fill(dataTable);
