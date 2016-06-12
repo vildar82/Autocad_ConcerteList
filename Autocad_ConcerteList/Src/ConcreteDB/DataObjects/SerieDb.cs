@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
-    public class BalconyDoor
+    public class SerieDb
     {
-        public decimal BalconyDoorId { get; set; }
-        public string BalconyDoorName { get; set; }        
+        public decimal SeriesId { get; set; }        
+        public string Name { get; set; }
     }
 }

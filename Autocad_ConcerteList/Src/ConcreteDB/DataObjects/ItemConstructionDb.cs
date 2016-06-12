@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
-    public class ItemConstruction
+    public class ItemConstructionDb : IEquatable<ItemConstructionDb>
     {
         public decimal ItemConstructionId { get; set; }
         public string HandMarkNoColour { get; set; }
@@ -16,11 +16,29 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
         public Nullable<short> Height { get; set; }
         public Nullable<short> Thickness { get; set; }
         public Nullable<short> Formwork { get; set; }        
-        public BalconyCut BalconyCut { get; set; }
-        public BalconyDoor BalconyDoor { get; set; }
+        public BalconyCutDb BalconyCut { get; set; }
+        public BalconyDoorDb BalconyDoor { get; set; }
         public Nullable<short> FormworkMirror { get; set; }
         public string Electrics { get; set; }
         public Nullable<float> Weight { get; set; }
         public Nullable<float> Volume { get; set; }
+
+        public bool Equals(ItemConstructionDb other)
+        {
+            return ItemGroup == other.ItemGroup &&
+                Lenght == other.Lenght &&
+                Height == other.Height &&
+                Thickness == other.Thickness &&
+                Formwork == other.Formwork &&
+                BalconyCut == other.BalconyCut &&
+                BalconyDoor == other.BalconyDoor &&
+                FormworkMirror == other.FormworkMirror &&
+                Electrics == other.Electrics;
+        }
+
+        public override int GetHashCode()
+        {
+            return ItemGroup.GetHashCode();
+        }
     }
 }

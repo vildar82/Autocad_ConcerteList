@@ -8,6 +8,7 @@ using AcadLib.Errors;
 using Autocad_ConcerteList.Src.ConcreteDB;
 using Autocad_ConcerteList.Src.RegystryPanel;
 using Autocad_ConcerteList.Src.RegystryPanel.IncorrectMark;
+using Autocad_ConcerteList.Src.RegystryPanel.Windows;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
@@ -35,11 +36,11 @@ namespace Autocad_ConcerteList
             Document doc = Application.DocumentManager.MdiActiveDocument;
             if (doc == null) return;
             Editor ed = doc.Editor;
+            Database db = doc.Database;
 
             try
             {
                 Inspector.Clear();
-
                 // Запрос выбора блока
                 var selOpt = new PromptEntityOptions("Выберите один блок панели для проверки");
                 selOpt.SetRejectMessage("Это не блок");
@@ -47,38 +48,43 @@ namespace Autocad_ConcerteList
                 var sel = ed.GetEntity(selOpt);
                 if (sel.Status == PromptStatus.OK)
                 {
-                    DbService.Init();
-                    Panel panel = new Panel();
-                    var resDefine = panel.Define(sel.ObjectId);
-                    if (resDefine.Failure)
+                    using (var t = db.TransactionManager.StartTransaction())
                     {
-                        ed.WriteMessage("\nНе определен блок панели - " + resDefine.Error);
-                        return;
-                    }
-                    // Проверка соответствия марки и параметров в блоке панели
-                    panel.Check();
-
-                    if (panel.ErrorStatus != EnumErrorItem.None)
-                    {
-                        FormPanels panelForm = new FormPanels(new List<Panel> { panel });
-                        panelForm.Text = "Панели с ошибками";
-                        panelForm.BackColor = System.Drawing.Color.Red;
-                        panelForm.buttonCancel.Visible = false;
-                        panelForm.buttonOk.Visible = false;
-                        Application.ShowModelessDialog(panelForm);
-                        panelForm.listViewPanels.Items[0].Selected = true;
-                    }
-                    else
-                    {
-                        string msg = "\nОшибок в панели не обнаружено. " + (panel.DbItem == null ? "В базе НЕТ." : "В базе ЕСТЬ.");
-                        if (!string.IsNullOrEmpty(panel.Warning))
+                        DbService.Init();
+                        Panel panel = new Panel();
+                        var resDefine = panel.Define(sel.ObjectId, false);
+                        if (resDefine.Failure)
                         {
-                            msg += " Предупреждения: " + panel.Warning;
+                            ed.WriteMessage("\nНе определен блок панели - " + resDefine.Error);
+                            return;
                         }
-                        ed.WriteMessage(msg);
+                        // Проверка соответствия марки и параметров в блоке панели
+                        panel.Check();
+
+                        if (panel.HasErrors)
+                        {                            
+                            WindowCheckPanels winPanels = new WindowCheckPanels(new List<Panel> { panel }, "Ошибка в панели");
+                            Application.ShowModalWindow(winPanels);
+                            //FormPanels panelForm = new FormPanels(new List<Panel> { panel });
+                            //panelForm.Text = "Панели с ошибками";
+                            //panelForm.BackColor = System.Drawing.Color.Red;
+                            //panelForm.buttonCancel.Visible = false;
+                            //panelForm.buttonOk.Visible = false;
+                            //Application.ShowModelessDialog(panelForm);
+                            //panelForm.listViewPanels.Items[0].Selected = true;
+                        }
+                        else
+                        {
+                            string msg = "\nОшибок в панели не обнаружено. " + (panel.DbItem == null ? "В базе НЕТ." : "В базе ЕСТЬ.");
+                            if (!string.IsNullOrEmpty(panel.Warning))
+                            {
+                                msg += " Предупреждения: " + panel.Warning;
+                            }
+                            ed.WriteMessage(msg);
+                        }
+                        t.Commit();
                     }
                 }
-
                 // Показ ошибок если они есть.
                 Inspector.Show();
             }

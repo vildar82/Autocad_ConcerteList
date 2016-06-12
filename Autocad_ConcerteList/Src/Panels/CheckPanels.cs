@@ -31,7 +31,7 @@ namespace Autocad_ConcerteList.Src.Panels
         {
             Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
             // Панели для показа в форме проверки - новые и с ошибками
-            var checkPanels = Panels.Where(p => p.IsNew || p.ErrorStatus != EnumErrorItem.None || !p.IsCorrectBlockName).ToList();
+            var checkPanels = Panels.Where(p => p.IsNew || p.HasErrors).ToList();
             if (checkPanels.Count ==0)
             {                
                 ed.WriteMessage($"\nНет новых панелей и нет панелей с ошибками.");                
@@ -51,7 +51,7 @@ namespace Autocad_ConcerteList.Src.Panels
                 //panelForm.buttonCancel.Visible = false;
                 //panelForm.buttonOk.Visible = false;
                 //Application.ShowModelessDialog(panelForm);
-                WindowCheckPanels winPanels = new WindowCheckPanels(checkPanels);
+                WindowCheckPanels winPanels = new WindowCheckPanels(checkPanels, "Панели с ошибками");
                 Application.ShowModalWindow(winPanels);
             }            
             ed.WriteMessage($"\nОбработано {Panels.Count} блоков панелей.");

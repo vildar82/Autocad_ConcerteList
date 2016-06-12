@@ -41,7 +41,7 @@ namespace Autocad_ConcerteList.Src.Panels
             Panel p = new Panel();
             try
             {
-                res = p.Define(idEnt);
+                res = p.Define(idEnt, true);
                 if (res.Success)
                 {
                     p.Check();

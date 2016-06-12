@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,10 +16,10 @@ namespace Autocad_ConcerteList.Src.RegystryPanel.Windows
         {
             this.panel = panel;
         }
-
+        
         /// <summary>
         /// Марка панели из атрибута
-        /// </summary>
+        /// </summary>               
         public string MarkAtr
         {
             get { return panel.Mark; }            
@@ -28,7 +29,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel.Windows
         /// </summary>
         public string MarkByFormula
         {
-            get { return panel.MarkDb; }            
+            get { return panel.MarkByFormula; }            
         }
         /// <summary>
         /// Наличие в базе
@@ -37,7 +38,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel.Windows
         {
             get
             {
-                return panel.IsNew ? "Нет" : "Да";
+                return panel.IsNew ? "Новая" : "Есть";
             }
         }
         /// <summary>
@@ -119,6 +120,13 @@ namespace Autocad_ConcerteList.Src.RegystryPanel.Windows
         public float? Volume
         {
             get { return panel.Volume; }
+        }
+        /// <summary>
+        /// Описание ошибки
+        /// </summary>
+        public string Warning
+        {
+            get { return panel.Warning; }
         }
     }
 }

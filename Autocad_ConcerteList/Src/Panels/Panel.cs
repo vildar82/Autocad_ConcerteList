@@ -6,7 +6,6 @@ using System.Text.RegularExpressions;
 using AcadLib;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Src.ConcreteDB;
-using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 using Autocad_ConcerteList.Src.Panels;
 using Autodesk.AutoCAD.ApplicationServices;
@@ -40,9 +39,9 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         public string Aperture { get; set; }
         public List<AttributeInfo> AtrsInfo { get; set; }
         public string BalconyCut { get; set; }
-        public BalconyCut BalconyCutItem { get; set; }
+        public BalconyCutDb BalconyCutItem { get; set; }
         public string BalconyDoor { get; set; }
-        public BalconyDoor BalconyDoorItem { get; set; }
+        public BalconyDoorDb BalconyDoorItem { get; set; }
         /// <summary>
         /// Имя блока
         /// </summary>
@@ -54,8 +53,8 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         /// <summary>
         /// Изделие в базе
         /// </summary>
-        public ItemConstruction DbItem { get; set; }
-        public I_S_ItemGroup DbGroup { get; set; }
+        public ItemConstructionDb DbItem { get; set; }
+        public ItemGroupDb DbGroup { get; set; }
         //public short? FormworkMirror { get; set; }
         /// <summary>
         /// Элемтрика - 1э, 2э
@@ -74,6 +73,15 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
                     return "Разные параметры";
                 }
                 return "OK";
+            }
+        }
+        public bool HasErrors
+        {
+            get
+            {
+                return ErrorStatus != EnumErrorItem.None ||
+                    !IsCorrectBlockName ||
+                    !string.IsNullOrEmpty(Warning);
             }
         }
         /// <summary>
@@ -149,11 +157,11 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         /// <summary>
         /// Марка из базы
         /// </summary>
-        public string MarkDb { get; set; }
+        public string MarkByFormula { get; set; }
         /// <summary>
         /// Марка из базы без пробелов
         /// </summary>
-        public string MarkDbWoSpace { get; set; }
+        public string MarkByFormulaWoSpace { get; set; }
         /// <summary>
         /// Марка без пробелов
         /// </summary>
@@ -185,7 +193,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
                 Mark = panelGroupMark.Key,
                 Color = firstP.Color,
                 BlockName = firstP.BlockName,
-                MarkDb = "неопределено",
+                MarkByFormula = "неопределено",
                 ItemGroup = firstP.ItemGroup,
                 Lenght = firstP.Lenght,
                 Height = firstP.Height,
@@ -201,7 +209,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
             };
 
             resPanel.Info = "Марка\t\t" + resPanel.Mark + "\r\n" +
-                "Марка по базе\t" + resPanel.MarkDb + "\r\n" +
+                "Марка по базе\t" + resPanel.MarkByFormula + "\r\n" +
                 "Параметры панели из блока:\r\n" +
                 "Группа\t\t" + resPanel.ItemGroup + "\r\n" +
                 // Длина - * если различная, Lenght если одинаковая, и пусто если не задана
@@ -287,16 +295,16 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         {
             // Проверки.
             // 1. Проверка марки в атрибуте и по формуле
-            if (Mark != MarkDb)
+            if (Mark != MarkByFormula)
             {
-                if (MarkWoSpace != MarkDbWoSpace)
+                if (MarkWoSpace != MarkByFormulaWoSpace)
                 {
                     ErrorStatus |= EnumErrorItem.IncorrectMark;
                     Warning += "Марка в блоке отличается от марки полученной по формуле. ";
                 }
                 else
                 {
-                    Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkDb + "' ";
+                    Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkByFormula + "' ";
                 }
             }
             // 2. Проверка параметров в базе и в блоке
@@ -323,7 +331,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         /// <summary>
         /// Опеределение блока ЖБИ изделия.
         /// </summary>        
-        public Result Define(ObjectId idBlRef)
+        public Result Define(ObjectId idBlRef, bool isCheckAllPanels)
         {
             // определить параметры панели из блока
             var blRef = idBlRef.GetObject(OpenMode.ForRead, false, true) as BlockReference;
@@ -395,7 +403,15 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
             }
 
             // Поиск панели в базе по параметрам
-            DbItem = DbService.FindByParameters(this);
+            if (isCheckAllPanels)
+            {
+                DbItem = DbService.FindByParametersFromAllLoaded(this);
+            }
+            else
+            {
+                DbItem = DbService.FindByParameters(this);
+            }
+
 
             // Определение марки по формуле по параметрам
             DefineMarkByFormulaInDb();
@@ -406,7 +422,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         public string GetInfo()
         {
             string info = "Марка \t\t" + Mark + "\r\n" +
-                          "Марка по формуле \t" + MarkDb + "\r\n\r\n" +
+                          "Марка по формуле \t" + MarkByFormula + "\r\n\r\n" +
                           "Параметры панели из блока:\r\n" +
                           "Группа \t\t" + ItemGroup + "\r\n" +
                           "Длина \t\t" + Lenght + ((DbItem != null && DbItem.Lenght != Lenght) ? ", в базе " + DbItem.Lenght : "") + "\r\n" +
@@ -452,8 +468,8 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         {
             try
             {
-                MarkDb = DbService.GetDbMark(this);
-                MarkDbWoSpace = MarkDb.Replace(" ", "");
+                MarkByFormula = DbService.GetDbMark(this);
+                MarkByFormulaWoSpace = MarkByFormula.Replace(" ", "");
             }
             catch (Exception ex)
             {
