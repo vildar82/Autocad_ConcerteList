@@ -17,7 +17,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;CoreConsole1</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -30,12 +30,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="AcadLib, Version=1.0.162.337, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\AcadLib\AcadLib\bin\Release\AcadLib.dll</HintPath>
+    </Reference>
     <Reference Include="AcCoreMgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.Core.20.1.0\lib\45\AcCoreMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcCui, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.20.1.0\lib\45\AcCui.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="AcDbMgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
@@ -46,29 +46,13 @@
       <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.Model.20.1.0\lib\45\acdbmgdbrep.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AcDx, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.20.1.0\lib\45\AcDx.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="AcMgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.20.1.0\lib\45\AcMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AcMr, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.20.1.0\lib\45\AcMr.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcTcMgd, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.20.1.0\lib\45\AcTcMgd.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AcWindows, Version=20.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.20.1.0\lib\45\AcWindows.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AdWindows, Version=6.3.0.14, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\Autocad_ConcerteList\packages\AutoCAD.NET.20.1.0\lib\45\AdWindows.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="AutoCAD_PIK_Manager, Version=1.0.158.62, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\AutoCAD_PIK_Manager\AutoCAD_PIK_Manager\bin\Release\AutoCAD_PIK_Manager.dll</HintPath>
     </Reference>
     <Reference Include="nunit.framework, Version=3.2.1.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\Autocad_ConcerteList\packages\NUnit.3.2.1\lib\net45\nunit.framework.dll</HintPath>
@@ -94,6 +78,7 @@
     <Compile Include="Tests\DB\DbServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="AutoCADNetLoad.scr" />
     <None Include="AutoNetLoadCoreConsole.scr" />
     <None Include="packages.config" />
   </ItemGroup>

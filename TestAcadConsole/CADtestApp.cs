@@ -9,17 +9,17 @@ using Autodesk.AutoCAD.Runtime;
 
 namespace CADTestRunner
 {
-   /// <summary> AutoCAD extension application implementation. </summary>
-   /// <seealso cref="T:Autodesk.AutoCAD.Runtime.IExtensionApplication"/>
-   public class NUnitRunnerApp : IExtensionApplication
-   {
-      public void Initialize()
-      {
+    /// <summary> AutoCAD extension application implementation. </summary>
+    /// <seealso cref="T:Autodesk.AutoCAD.Runtime.IExtensionApplication"/>
+    public class NUnitRunnerApp : IExtensionApplication
+    {
+        public void Initialize()
+        {
 #if !CoreConsole
-      if ( !AttachConsole(-1) )  // Attach to a parent process console
-      AllocConsole(); // Alloc a new console if none available
+            if (!AttachConsole(-1))  // Attach to a parent process console
+                AllocConsole(); // Alloc a new console if none available
 
-#else         
+#else
          // http://forums.autodesk.com/t5/net/accoreconsole-exe-in-2015-doesn-t-do-system-console-writeline/m-p/5551652
          // This code is so you can see the test results in the console window, as per the above forum thread.
          if (Application.Version.Major * 10 + Application.Version.Minor > 190) // >v2013
@@ -34,30 +34,30 @@ namespace CADTestRunner
             FixStdOut();
          }
 #endif
-      }
+        }
 
 
-      public void Terminate()
-      {
+        public void Terminate()
+        {
 #if !CoreConsole
-      FreeConsole();
+            FreeConsole();
 #endif
-      }
+        }
 
 
 
-      // http://stackoverflow.com/questions/3917202/how-do-i-include-a-console-in-winforms/3917353#3917353
-      /// <summary> Allocates a new console for current process. </summary>
-      [DllImport("kernel32.dll")]
-      public static extern Boolean AllocConsole();
+        // http://stackoverflow.com/questions/3917202/how-do-i-include-a-console-in-winforms/3917353#3917353
+        /// <summary> Allocates a new console for current process. </summary>
+        [DllImport("kernel32.dll")]
+        public static extern Boolean AllocConsole();
 
-      /// <summary> Frees the console. </summary>
-      [DllImport("kernel32.dll")]
-      public static extern Boolean FreeConsole();
+        /// <summary> Frees the console. </summary>
+        [DllImport("kernel32.dll")]
+        public static extern Boolean FreeConsole();
 
-      // http://stackoverflow.com/a/8048269/492
-      [DllImport("kernel32.dll")]
-      private static extern bool AttachConsole(int pid);
+        // http://stackoverflow.com/a/8048269/492
+        [DllImport("kernel32.dll")]
+        private static extern bool AttachConsole(int pid);
 
 
 #if CoreConsole
@@ -78,5 +78,5 @@ namespace CADTestRunner
       [DllImport("kernel32.dll")]
       private static extern void SetStdHandle(UInt32 nStdHandle, IntPtr handle);
 #endif
-   }
+    }
 }

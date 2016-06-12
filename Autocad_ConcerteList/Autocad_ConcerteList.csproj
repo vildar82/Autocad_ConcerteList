@@ -20,7 +20,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\..\..\..\Autodesk\AutoCAD\Pik\Settings\Script\NET\КР-СБ-ГК\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -45,7 +45,7 @@
   <ItemGroup>
     <Reference Include="AcadLib">
       <HintPath>..\..\..\AcadLib\AcadLib\bin\Release\AcadLib.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="AcCoreMgd, Version=20.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\AutoCAD.NET.Core.20.0.1\lib\45\AcCoreMgd.dll</HintPath>
@@ -61,7 +61,7 @@
     </Reference>
     <Reference Include="AutoCAD_PIK_Manager">
       <HintPath>..\..\..\AutoCAD_PIK_Manager\AutoCAD_PIK_Manager\bin\Release\AutoCAD_PIK_Manager.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
@@ -127,6 +127,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Src\ConcreteDB\DataObjects\BalconyDoor.cs" />
+    <Compile Include="Src\ConcreteDB\DataObjects\BalconyCut.cs" />
+    <Compile Include="Src\ConcreteDB\DataObjects\ItemConstruction.cs" />
+    <Compile Include="Src\ConcreteDB\DataObjects\Serie.cs" />
     <Compile Include="Src\ConcreteDB\Formula\Eval.cs" />
     <Compile Include="Src\ConcreteDB\iItem.cs" />
     <Compile Include="Src\ConcreteDB\Formula\ParserFormula.cs" />

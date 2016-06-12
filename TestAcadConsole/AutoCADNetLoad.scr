@@ -1,2 +1,3 @@
 netload "C:\dev\ –-—¡-√ \Autocad_ConcerteList\TestAcadConsole\bin\Debug\TestAcadConsole.dll"
+netload "c:\dev\ –-—¡-√ \Autocad_ConcerteList\Autocad_ConcerteList\bin\Debug\Autocad_ConcerteList.dll"
 runcadtests

@@ -7,6 +7,7 @@ using AcadLib;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Src.ConcreteDB;
 using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
+using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 using Autocad_ConcerteList.Src.Panels;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
@@ -39,9 +40,9 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         public string Aperture { get; set; }
         public List<AttributeInfo> AtrsInfo { get; set; }
         public string BalconyCut { get; set; }
-        public I_S_BalconyCut BalconyCutItem { get; set; }
+        public BalconyCut BalconyCutItem { get; set; }
         public string BalconyDoor { get; set; }
-        public I_S_BalconyDoor BalconyDoorItem { get; set; }
+        public BalconyDoor BalconyDoorItem { get; set; }
         /// <summary>
         /// Имя блока
         /// </summary>
@@ -53,7 +54,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         /// <summary>
         /// Изделие в базе
         /// </summary>
-        public I_J_ItemConstruction DbItem { get; set; }
+        public ItemConstruction DbItem { get; set; }
         public I_S_ItemGroup DbGroup { get; set; }
         //public short? FormworkMirror { get; set; }
         /// <summary>
@@ -413,7 +414,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
                           "Ширина \t\t" + Thickness + ((DbItem != null && DbItem.Thickness != Thickness) ? ", в базе " + DbItem.Thickness : "") + "\r\n" +
                           (Formwork == null ? "" : "Опалубка \t" + Formwork + "\r\n") +
                           (string.IsNullOrEmpty(BalconyDoor) ? "" : "Балконный проем\t " + BalconyDoor + "\r\n") +
-                          (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка\t" + BalconyCut + ", ширина в базе " + DbItem.I_S_BalconyCut?.BalconyCutSize + "\r\n") +                          
+                          (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка\t" + BalconyCut + ", ширина в базе " + DbItem.BalconyCut?.BalconyCutSize + "\r\n") +                          
                           (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
                           (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color + "\r\n") +
                           "Вес, кг \t\t" + Weight + ((DbItem != null && DbItem.Weight != Weight) ? ", в базе " + DbItem.Weight : "") + "\r\n" +
