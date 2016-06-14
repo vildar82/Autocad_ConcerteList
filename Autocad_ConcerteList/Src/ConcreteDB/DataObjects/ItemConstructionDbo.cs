@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
-    public class ItemConstructionDb : IEquatable<ItemConstructionDb>
+    public class ItemConstructionDbo : IEquatable<ItemConstructionDbo>
     {
         public decimal ItemConstructionId { get; set; }
         public string HandMarkNoColour { get; set; }
@@ -16,14 +16,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
         public Nullable<short> Height { get; set; }
         public Nullable<short> Thickness { get; set; }
         public Nullable<short> Formwork { get; set; }        
-        public BalconyCutDb BalconyCut { get; set; }
-        public BalconyDoorDb BalconyDoor { get; set; }
+        public BalconyCutDbo BalconyCut { get; set; }
+        public decimal? BalconyCutId { get; set; }
+        public BalconyDoorDbo BalconyDoor { get; set; }
+        public decimal? BalconyDoorId { get; set; }
         public Nullable<short> FormworkMirror { get; set; }
         public string Electrics { get; set; }
         public Nullable<float> Weight { get; set; }
         public Nullable<float> Volume { get; set; }
 
-        public bool Equals(ItemConstructionDb other)
+        public bool Equals(ItemConstructionDbo other)
         {
             return ItemGroup == other.ItemGroup &&
                 Lenght == other.Lenght &&

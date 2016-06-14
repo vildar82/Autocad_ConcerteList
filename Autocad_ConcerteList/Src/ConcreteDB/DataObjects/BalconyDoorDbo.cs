@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
-    public class BalconyDoorDb :IEquatable<BalconyDoorDb>
+    public class BalconyDoorDbo :IEquatable<BalconyDoorDbo>
     {
         public decimal BalconyDoorId { get; set; }
         public string BalconyDoorName { get; set; }
 
-        public bool Equals(BalconyDoorDb other)
+        public bool Equals(BalconyDoorDbo other)
         {
             return BalconyDoorId == other.BalconyDoorId &&
                 BalconyDoorName == other.BalconyDoorName;

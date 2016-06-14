@@ -126,49 +126,49 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
-    <Compile Include="Src\ConcreteDB\DataObjects\BalconyDoorDb.cs" />
-    <Compile Include="Src\ConcreteDB\DataObjects\BalconyCutDb.cs" />
-    <Compile Include="Src\ConcreteDB\DataObjects\ItemConstructionDb.cs" />
+    <Compile Include="Src\ConcreteDB\DataObjects\BalconyDoorDbo.cs" />
+    <Compile Include="Src\ConcreteDB\DataObjects\BalconyCutDbo.cs" />
+    <Compile Include="Src\ConcreteDB\DataObjects\ItemConstructionDbo.cs" />
     <Compile Include="Src\ConcreteDB\DataObjects\ItemGroupDb.cs" />
     <Compile Include="Src\ConcreteDB\DataObjects\SerieDb.cs" />
     <Compile Include="Src\ConcreteDB\Formula\Eval.cs" />
     <Compile Include="Src\ConcreteDB\iItem.cs" />
     <Compile Include="Src\ConcreteDB\Formula\ParserFormula.cs" />
-    <Compile Include="Src\IgnoreBlockException.cs" />
-    <Compile Include="Src\Options\FormOptions.cs">
+    <Compile Include="Src\ConcreteDB\IgnoreBlockException.cs" />
+    <Compile Include="Src\ConcreteDB\Options\FormOptions.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Src\Options\FormOptions.designer.cs">
+    <Compile Include="Src\ConcreteDB\Options\FormOptions.designer.cs">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Options\Options.cs" />
-    <Compile Include="Src\Panels\BaseParams\BalconyDoorRow.cs" />
-    <Compile Include="Src\Panels\BaseParams\BalconyCutRow.cs" />
-    <Compile Include="Src\Panels\BaseParams\CheckBaseParams.cs" />
-    <Compile Include="Src\Panels\BaseParams\FormBaseParams.cs">
+    <Compile Include="Src\ConcreteDB\Options\Options.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\BaseParams\BalconyDoorRow.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\BaseParams\BalconyCutRow.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\BaseParams\CheckBaseParams.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\BaseParams\FormBaseParams.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Src\Panels\BaseParams\FormBaseParams.Designer.cs">
+    <Compile Include="Src\ConcreteDB\Panels\BaseParams\FormBaseParams.Designer.cs">
       <DependentUpon>FormBaseParams.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Panels\CheckPanels.cs" />
-    <Compile Include="Src\Panels\FilterPanel.cs" />
-    <Compile Include="Src\Panels\ParserMark.cs" />
-    <Compile Include="Src\Panels\RegPanels.cs" />
-    <Compile Include="Src\Panels\Workspace.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\CheckPanels.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\FilterPanel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\ParserMark.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\RegPanels.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Workspace.cs" />
     <Compile Include="Src\ConcreteDB\DbService.cs" />
-    <Compile Include="Src\Panels\EnumErrorItem.cs" />
-    <Compile Include="Src\Panels\IncorrectMarks.cs" />
-    <Compile Include="Src\Panels\FormPanels\FormPanels.cs">
+    <Compile Include="Src\ConcreteDB\Panels\EnumErrorItem.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\IncorrectMarks.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\FormPanels\FormPanels.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Src\Panels\FormPanels\FormPanels.Designer.cs">
+    <Compile Include="Src\ConcreteDB\Panels\FormPanels\FormPanels.Designer.cs">
       <DependentUpon>FormPanels.cs</DependentUpon>
     </Compile>
-    <Compile Include="Src\Panels\Panel.cs" />
-    <Compile Include="Src\Panels\Windows\CheckPanelsViewModel.cs" />
-    <Compile Include="Src\Panels\Windows\PanelViewModel.cs" />
-    <Compile Include="Src\Panels\Windows\WindowCheckPanels.xaml.cs">
+    <Compile Include="Src\ConcreteDB\Panels\Panel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\CheckPanelsViewModel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\PanelViewModel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\WindowCheckPanels.xaml.cs">
       <DependentUpon>WindowCheckPanels.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -201,13 +201,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Src\Options\FormOptions.resx">
+    <EmbeddedResource Include="Src\ConcreteDB\Options\FormOptions.resx">
       <DependentUpon>FormOptions.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Panels\BaseParams\FormBaseParams.resx">
+    <EmbeddedResource Include="Src\ConcreteDB\Panels\BaseParams\FormBaseParams.resx">
       <DependentUpon>FormBaseParams.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Src\Panels\FormPanels\FormPanels.resx">
+    <EmbeddedResource Include="Src\ConcreteDB\Panels\FormPanels\FormPanels.resx">
       <DependentUpon>FormPanels.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -219,7 +219,7 @@
     <None Include="Resources\group.png" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Src\Panels\Windows\WindowCheckPanels.xaml">
+    <Page Include="Src\ConcreteDB\Panels\Windows\WindowCheckPanels.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

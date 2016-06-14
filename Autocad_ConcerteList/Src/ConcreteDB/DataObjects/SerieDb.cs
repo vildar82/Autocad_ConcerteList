@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
-    public class SerieDb
+    public class SerieDbo
     {
         public decimal SeriesId { get; set; }        
         public string Name { get; set; }

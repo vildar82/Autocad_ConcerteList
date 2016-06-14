@@ -6,6 +6,7 @@ using System.Text.RegularExpressions;
 using AcadLib;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Src.ConcreteDB;
+using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 using Autocad_ConcerteList.Src.Panels;
 using Autodesk.AutoCAD.ApplicationServices;
@@ -39,9 +40,9 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         public string Aperture { get; set; }
         public List<AttributeInfo> AtrsInfo { get; set; }
         public string BalconyCut { get; set; }
-        public BalconyCutDb BalconyCutItem { get; set; }
+        public BalconyCutDbo BalconyCutItem { get; set; }
         public string BalconyDoor { get; set; }
-        public BalconyDoorDb BalconyDoorItem { get; set; }
+        public BalconyDoorDbo BalconyDoorItem { get; set; }
         /// <summary>
         /// Имя блока
         /// </summary>
@@ -53,8 +54,8 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         /// <summary>
         /// Изделие в базе
         /// </summary>
-        public ItemConstructionDb DbItem { get; set; }
-        public ItemGroupDb DbGroup { get; set; }
+        public ItemConstructionDbo DbItem { get; set; }
+        public ItemGroupDbo DbGroup { get; set; }
         //public short? FormworkMirror { get; set; }
         /// <summary>
         /// Элемтрика - 1э, 2э

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
-    public class ItemGroupDb
+    public class ItemGroupDbo
     {
         public decimal ItemGroupId { get; set; }        
         public string ItemGroup { get; set; }        

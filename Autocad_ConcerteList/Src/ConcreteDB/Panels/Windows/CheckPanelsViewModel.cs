@@ -27,7 +27,8 @@ namespace Autocad_ConcerteList.Src.RegystryPanel.Windows
                 Background = new SolidColorBrush(Colors.Red);
             }
             else
-            {                
+            {
+                Background = new SolidColorBrush(Colors.Lime);
             }
         }
     }
