@@ -5,30 +5,33 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using AcadLib;
 using AcadLib.Blocks;
-using Autocad_ConcerteList.Src.ConcreteDB;
-using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.Panels;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
 
-namespace Autocad_ConcerteList.Src.RegystryPanel
+namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     /// <summary>
     /// ЖБИ изделие полученное из автокада
     /// </summary>
-    public class Panel : iItem
+    public class Panel : iItem, IEquatable<Panel>, IComparable<Panel>
     {
+        private static AcadLib.Comparers.AlphanumComparator alpha = AcadLib.Comparers.AlphanumComparator.New;
         private bool _alreadyCalcExtents;
         private Extents3d _extents;
-        private string _info;
+        //private string _info;
         private bool _isNullExtents;
         /// <summary>
         /// Соответствие игнорируемых имен блоков.
         /// </summary>
         public static List<string> IgnoredBlockNamesMatch { get; } = new List<string> { "ММС" };
+
+        public bool CanShow ()
+        {
+            return !_isNullExtents;
+        }
 
         /// <summary>
         /// Альбом изделия - ?
@@ -122,25 +125,30 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         /// Опалубка
         /// </summary>
         public short? Formwork { get; set; }
+        /// <summary>
+        /// Высото (атр)
+        /// </summary>
         public short? Height { get; set; }
+        public bool IsHeightOk { get; set; }
+        public string HeightDesc { get; set; }
         public ObjectId IdBlRef { get; set; }
         public ObjectId IdBtr { get; set; }
         /// <summary>
         /// Это новая панель - нет в базе (DbItem == null)
         /// </summary>
         public bool IsNew { get { return DbItem == null; } }
-        public string Info
-        {
-            get
-            {
-                if (_info == null)
-                {
-                    _info = GetInfo();
-                }
-                return _info;
-            }
-            set { _info = value; }
-        }
+        //public string Info
+        //{
+        //    get
+        //    {
+        //        if (_info == null)
+        //        {
+        //            _info = GetInfo();
+        //        }
+        //        return _info;
+        //    }
+        //    set { _info = value; }
+        //}
         /// <summary>
         /// Имя блока соответствует атрибуту марки.
         /// Имя блока должно быть равно марке, за исключением индекса класса (2П, 2В, 3В, 3НСНг2)
@@ -149,8 +157,13 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         /// <summary>
         /// Группа изделия - В, П, 3НСг
         /// </summary>
-        public string ItemGroup { get; set; }        
-        public short? Lenght { get; set; }
+        public string ItemGroup { get; set; }
+        /// <summary>
+        /// Длина (атр)
+        /// </summary>                   
+        public short? Lenght { get; set; }        
+        public bool IsLengthOk { get; set; }
+        public string LengthDesc { get; set; }
         /// <summary>
         /// Марка от конструкторов - из атрибута
         /// </summary>
@@ -169,82 +182,27 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         public string MarkWoSpace { get; set; }
         public ParserMark ParseMark { get; set; }
         public Point3d Position { get; set; }
+        /// <summary>
+        /// Толщина (атр)
+        /// </summary>
         public short? Thickness { get; set; }
+        public bool IsThicknessOk { get; set; }
+        public string ThicknessDesc { get; set; }
         public float? Volume { get; set; }
         /// <summary>
         /// Пояснение по ошибкам в блоке
         /// </summary>
         public string Warning { get; set; }
+        /// <summary>
+        /// Масса
+        /// </summary>
         public float? Weight { get; set; }
+        public bool IsWeightOk { get; set; }
+        public string WeightDesc { get; set; }
         /// <summary>
         /// Рабочая область
         /// </summary>
-        public Workspace WS { get; set; }        
-
-        /// <summary>
-        /// Создание новой панели с отличающимися паркметрами
-        /// </summary>
-        /// <param name="panelGroupMark">список панелей с одной маркой но различными параметрами</param>
-        public static Panel GetErrParams(IGrouping<string, Panel> panelGroupMark)
-        {
-            var firstP = panelGroupMark.First();
-            Panel resPanel = new Panel()
-            {
-                IdBlRef = firstP.IdBlRef,
-                Mark = panelGroupMark.Key,
-                Color = firstP.Color,
-                BlockName = firstP.BlockName,
-                MarkByFormula = "неопределено",
-                ItemGroup = firstP.ItemGroup,
-                Lenght = firstP.Lenght,
-                Height = firstP.Height,
-                Thickness = firstP.Thickness,
-                Formwork = firstP.Formwork,
-                //FormworkMirror = firstP.FormworkMirror,
-                BalconyDoor = firstP.BalconyDoor,
-                BalconyCut = firstP.BalconyCut,
-                Electrics = firstP.Electrics,
-                Volume = firstP.Volume,
-                Weight = firstP.Weight,
-                ErrorStatus = EnumErrorItem.DifferentParams
-            };
-
-            resPanel.Info = "Марка\t\t" + resPanel.Mark + "\r\n" +
-                "Марка по базе\t" + resPanel.MarkByFormula + "\r\n" +
-                "Параметры панели из блока:\r\n" +
-                "Группа\t\t" + resPanel.ItemGroup + "\r\n" +
-                // Длина - * если различная, Lenght если одинаковая, и пусто если не задана
-                (panelGroupMark.GroupBy(g => g.Lenght).Skip(1).Any() ? "Длина\t\t*\r\n" :
-                    ((resPanel.Lenght == null ? "" : "Длина\t\t" + resPanel.Lenght + "\r\n"))) +
-                // Высота
-                (panelGroupMark.GroupBy(g => g.Height).Skip(1).Any() ? "Высота\t\t*\r\n" :
-                    ((resPanel.Height == null ? "" : "Высота\t\t" + resPanel.Height + "\r\n"))) +
-                // Ширина
-                (panelGroupMark.GroupBy(g => g.Thickness).Skip(1).Any() ? "Ширина\t\t*\r\n" :
-                    ((resPanel.Thickness == null ? "" : "Ширина\t\t" + resPanel.Thickness + "\r\n"))) +
-                // Опалубка
-                (panelGroupMark.GroupBy(g => g.Formwork).Skip(1).Any() ? "Опалубка\t*\r\n" :
-                    ((resPanel.Formwork == null ? "" : "Опалубка\t" + resPanel.Formwork + "\r\n"))) +
-                // BalconyDoor
-                (panelGroupMark.GroupBy(g => g.BalconyDoor).Skip(1).Any() ? "Балконный проем\t *\r\n" :
-                    ((resPanel.BalconyDoor == null ? "" : "Балконный проем\t" + resPanel.BalconyDoor + "\r\n"))) +
-                // BalconyCut
-                (panelGroupMark.GroupBy(g => g.BalconyCut).Skip(1).Any() ? "Подрезка\t *\r\n" :
-                    ((resPanel.BalconyCut == null ? "" : "Подрезка\t" + resPanel.BalconyCut + "\r\n"))) +
-                //// FormworkMirror
-                //(panelGroupMark.GroupBy(g => g.FormworkMirror).Skip(1).Any() ? "Зеркальность\t*\r\n" :
-                //    ((resPanel.FormworkMirror == null ? "" : "Зеркальность\t" + resPanel.FormworkMirror + "\r\n"))) +
-                // Electrics
-                (panelGroupMark.GroupBy(g => g.Electrics).Skip(1).Any() ? "Электрика\t*\r\n" :
-                    ((resPanel.Electrics == null ? "" : "Электрика\t" + resPanel.Electrics + "\r\n"))) +
-                // Weight
-                (panelGroupMark.GroupBy(g => g.Weight).Skip(1).Any() ? "Вес, кг\t\t*\r\n" :
-                    ((resPanel.Weight == null ? "" : "Вес, кг\t\t" + resPanel.Weight + "\r\n"))) +
-                // Volume
-                (panelGroupMark.GroupBy(g => g.Volume).Skip(1).Any() ? "Объем, м3\t*\r\n" :
-                    ((resPanel.Volume == null ? "" : "Объем, м3\t" + resPanel.Volume)));
-            return resPanel;
-        }
+        public Workspace WS { get; set; }                
 
         public static float? GetFloatNullable(object obj)
         {
@@ -309,12 +267,40 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
                 }
             }
             // 2. Проверка параметров в базе и в блоке
-            if (DbItem != null)
-            {                
-                if (this.Lenght != DbItem.Lenght ||
-                    this.Height != DbItem.Height ||
-                    this.Thickness != DbItem.Thickness ||
-                    this.Weight != DbItem.Weight)
+            if (DbItem != null && DbGroup!=null)
+            {
+                // Определение длин из распарсенной марки
+                bool isOk;
+                short? parseGab = ParseMark.Length;
+                string desc;
+                CheckGab(out isOk, ref parseGab, Lenght,DbGroup.LengthFactor, "Длина", out desc);
+                IsLengthOk = isOk;
+                ParseMark.Length = parseGab;
+                LengthDesc = desc;
+                
+                parseGab = ParseMark.Height;
+                CheckGab(out isOk, ref parseGab, Height, DbGroup.HeightFactor, "Высота", out desc);
+                IsHeightOk = isOk;
+                ParseMark.Height = parseGab;
+                HeightDesc = desc;
+                
+                parseGab = ParseMark.Thickness;
+                CheckGab(out isOk, ref parseGab, Thickness, DbGroup.ThicknessFactor, "Ширина", out desc);
+                IsThicknessOk = isOk;
+                ParseMark.Thickness = parseGab;
+                ThicknessDesc = desc;
+
+                IsWeightOk = true;
+                if (Weight != DbItem.Weight)
+                {
+                    IsWeightOk = false;
+                    WeightDesc = $"Масса(атр)={Weight}, Масса из базы={DbItem.Weight}";
+                }                
+
+                if (!IsLengthOk ||
+                    !IsHeightOk ||
+                    !IsThicknessOk ||
+                    !IsWeightOk)
                 {
                     ErrorStatus |= EnumErrorItem.DifferentParams;
                     Warning += "Параметры из атрибутов блока отличаются от параметров из базы. ";
@@ -329,10 +315,39 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
             }
         }
 
+        private void CheckGab (out bool isOk, ref short? parseMarkGab, short? gab, short factor, 
+            string nameGab, out string desc)
+        {
+            isOk = true;
+            desc = "пусто";
+            if (gab != null && parseMarkGab != null)
+            {
+                parseMarkGab = (short)(parseMarkGab * factor);
+                if (Math.Abs(gab.Value - parseMarkGab.Value) > factor)
+                {
+                    isOk = false;
+                }
+                desc = $"{nameGab}(атр)={gab}, {nameGab} по марке={parseMarkGab}";
+            }
+            else if (gab == null)
+            {
+                isOk = false;
+                // Атрибут габарита не задан, а в базе есть значение - пока такого не может быть, т.к. поиск в базе происходит по параметрам из атрибутов
+                //desc = $"{nameGab}(атр)=0, {nameGab} по марке={parseMarkGab}";
+                desc = $"Параметр {nameGab} не задан.";
+            }
+            else if (parseMarkGab == null)
+            {
+                isOk = false;
+                // Атрибут габарита задан, а в базе нет значения
+                desc = $"{nameGab}(атр)={gab}, {nameGab} по марке=нет";
+            }               
+        }
+
         /// <summary>
         /// Опеределение блока ЖБИ изделия.
         /// </summary>        
-        public Result Define(ObjectId idBlRef, bool isCheckAllPanels)
+        public Result Define(ObjectId idBlRef)
         {
             // определить параметры панели из блока
             var blRef = idBlRef.GetObject(OpenMode.ForRead, false, true) as BlockReference;
@@ -392,19 +407,25 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
             }
 
             ParseMark = new ParserMark(Mark);
-            ParseMark.Parse();
-            // Перенос распарсеных параметров в панель
-            FillParseParams();
+            ParseMark.Parse();            
 
+            // Перенос распарсеных параметров в панель
+            FillParseParams();           
+
+            return Result.Ok();
+        }        
+
+        public void DefineDbParams (bool checkInAllPanels)
+        {
             // Проверка есть ли такая группа ЖБИ в базе
             DbGroup = DbService.FindGroup(ItemGroup);
             if (DbGroup == null)
             {
-                return Result.Fail($"Неопределенная группа {ItemGroup}.");
+                throw new Exception($"Неопределенная группа {ItemGroup}.");
             }
 
             // Поиск панели в базе по параметрам
-            if (isCheckAllPanels)
+            if (checkInAllPanels)
             {
                 DbItem = DbService.FindByParametersFromAllLoaded(this);
             }
@@ -413,32 +434,8 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
                 DbItem = DbService.FindByParameters(this);
             }
 
-
             // Определение марки по формуле по параметрам
-            DefineMarkByFormulaInDb();
-
-            return Result.Ok();
-        }        
-
-        public string GetInfo()
-        {
-            string info = "Марка \t\t" + Mark + "\r\n" +
-                          "Марка по формуле \t" + MarkByFormula + "\r\n\r\n" +
-                          "Параметры панели из блока:\r\n" +
-                          "Группа \t\t" + ItemGroup + "\r\n" +
-                          "Длина \t\t" + Lenght + ((DbItem != null && DbItem.Lenght != Lenght) ? ", в базе " + DbItem.Lenght : "") + "\r\n" +
-                          "Высота \t\t" + Height + ((DbItem != null && DbItem.Height != Height) ? ", в базе " + DbItem.Height : "") + "\r\n" +
-                          "Ширина \t\t" + Thickness + ((DbItem != null && DbItem.Thickness != Thickness) ? ", в базе " + DbItem.Thickness : "") + "\r\n" +
-                          (Formwork == null ? "" : "Опалубка \t" + Formwork + "\r\n") +
-                          (string.IsNullOrEmpty(BalconyDoor) ? "" : "Балконный проем\t " + BalconyDoor + "\r\n") +
-                          (string.IsNullOrEmpty(BalconyCut) ? "" : "Подрезка\t" + BalconyCut + ", ширина в базе " + DbItem.BalconyCut?.BalconyCutSize + "\r\n") +                          
-                          (string.IsNullOrEmpty(Electrics) ? "" : "Электрика \t" + Electrics + "\r\n") +
-                          (string.IsNullOrEmpty(Color) ? "" : "Покраска \t" + Color + "\r\n") +
-                          "Вес, кг \t\t" + Weight + ((DbItem != null && DbItem.Weight != Weight) ? ", в базе " + DbItem.Weight : "") + "\r\n" +
-                          "Объем, м3 \t" + Volume + ((DbItem != null && DbItem.Volume != Volume) ? ", в базе " + DbItem.Volume : "") + "\r\n" +
-                          "Наличие в базе: \t" + (IsNew? "Есть" : "нет") + "\r\n" +
-                          (string.IsNullOrEmpty(Warning) ? "" : "Предупреждения: \t" + Warning);
-            return info;
+            DefineMarkByFormulaInDb();            
         }        
 
         public void Show()
@@ -457,10 +454,10 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
             }
         }
 
-        public override string ToString()
-        {
-            return Mark;
-        }        
+        //public override string ToString()
+        //{
+        //    return Mark;
+        //}        
 
         /// <summary>
         /// Определение марки по формуле из DB
@@ -488,6 +485,8 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
             BalconyDoor = ParseMark.BalconyDoor;
             BalconyDoorItem = DbService.GetBalconyDoorItem(BalconyDoor);
             Electrics = ParseMark.Electrics;
+            // Определение правильности габаритов - определенных по марке и заданных в атрибутах    
+                    
         }
         
         /// <summary>
@@ -498,6 +497,26 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
         {
             return $"Марка={Mark},Группа={ItemGroup},Lenght={Lenght},Height={Height},Thickness={Thickness},Formwork={Formwork}" +
                 $"BalconyDoor={BalconyDoor},BalconyCut={BalconyCut},Electrics={Electrics}.";            
-        }    
+        }
+
+        public bool Equals (Panel other)
+        {
+            return Mark.Equals(other.Mark) &&
+                   BlockName.Equals(other.BlockName) &&
+                   Lenght == other.Lenght &&
+                   Height == other.Lenght &&
+                   Thickness == other.Thickness &&
+                   Weight == other.Weight;                        
+        }
+
+        public int CompareTo (Panel other)
+        {
+            return alpha.Compare(Mark, other.Mark);
+        }
+
+        public override int GetHashCode ()
+        {
+            return Mark.GetHashCode();
+        }
     }
 }

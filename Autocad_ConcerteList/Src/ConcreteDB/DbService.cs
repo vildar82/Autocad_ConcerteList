@@ -8,8 +8,9 @@ using Autocad_ConcerteList.Properties;
 using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 using Autocad_ConcerteList.Src.ConcreteDB.Formula;
+using Autocad_ConcerteList.Src.ConcreteDB.Panels;
 
-namespace Autocad_ConcerteList.Src.RegystryPanel
+namespace Autocad_ConcerteList.Src.ConcreteDB
 {
     /// <summary>
     /// Сервисные функции работы с базой ЖБИ
@@ -36,7 +37,10 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
                     ItemGroupId = s.ItemGroupId,
                     ItemGroup = s.ItemGroup,
                     HasFormula = s.HasFormula,
-                    Formula = s.I_C_Formula == null ? null : s.I_C_Formula.FormulaValue
+                    Formula = s.I_C_Formula == null ? null : s.I_C_Formula.FormulaValue,
+                    LengthFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.LengthFactor,
+                    HeightFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.HeightFactor,
+                    ThicknessFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.ThicknessFactor
                 }).ToList();
                 BalconyCuts = ents.I_S_BalconyCut.AsNoTracking().Select(s => new BalconyCutDbo
                 {
@@ -218,7 +222,7 @@ namespace Autocad_ConcerteList.Src.RegystryPanel
                 Electrics = panel.Electrics
             };
             var finds = Items.FindAll(i => i.Equals(itemSearch));
-            return finds.First();
+            return finds.FirstOrDefault();
             //return Items.FirstOrDefault(i =>
             //            i.ItemGroup == panel.ItemGroup &&
             //            i.Lenght == panel.Lenght && i.Height == panel.Height && i.Thickness == panel.Thickness &&

@@ -1,4 +1,4 @@
-﻿// Создание кода T4 для модели "C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Src\ConcreteDB\DataBase\Model.edmx" включено. 
+﻿// Создание кода T4 для модели "C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\DataBase\Model.edmx" включено. 
 // Чтобы включить формирование кода прежних версий, измените значение свойства "Стратегия создания кода" конструктора
 // на "Legacy ObjectContext". Это свойство доступно в окне "Свойства", если модель
 // открыта в конструкторе.

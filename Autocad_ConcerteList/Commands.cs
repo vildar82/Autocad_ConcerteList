@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 using AcadLib;
 using AcadLib.Errors;
 using Autocad_ConcerteList.Src.ConcreteDB;
-using Autocad_ConcerteList.Src.RegystryPanel;
-using Autocad_ConcerteList.Src.RegystryPanel.IncorrectMark;
-using Autocad_ConcerteList.Src.RegystryPanel.Windows;
+using Autocad_ConcerteList.Src.ConcreteDB.Panels;
+using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
@@ -30,7 +29,7 @@ namespace Autocad_ConcerteList
         /// Проверка одного блока - соответствия марки и параметров.
         /// </summary>
         [CommandMethod("PIK", "SB-CheckPanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
-        public void SB_CheckPanel()
+        public void SB_CheckPanel ()
         {
             Logger.Log.StartCommand(nameof(SB_CheckPanel));
             Document doc = Application.DocumentManager.MdiActiveDocument;
@@ -52,18 +51,19 @@ namespace Autocad_ConcerteList
                     {
                         DbService.Init();
                         Panel panel = new Panel();
-                        var resDefine = panel.Define(sel.ObjectId, false);
+                        var resDefine = panel.Define(sel.ObjectId);
                         if (resDefine.Failure)
                         {
                             ed.WriteMessage("\nНе определен блок панели - " + resDefine.Error);
                             return;
                         }
-                        // Проверка соответствия марки и параметров в блоке панели
+                        // Проверка соответствия марки и параметров в блоке панели                        
+                        panel.DefineDbParams(false);
                         panel.Check();
 
                         if (panel.HasErrors)
-                        {                            
-                            WindowCheckPanels winPanels = new WindowCheckPanels(new List<Panel> { panel }, "Ошибка в панели");
+                        {
+                            WindowCheckPanels winPanels = new WindowCheckPanels(panel);
                             Application.ShowModalWindow(winPanels);
                             //FormPanels panelForm = new FormPanels(new List<Panel> { panel });
                             //panelForm.Text = "Панели с ошибками";
@@ -116,12 +116,37 @@ namespace Autocad_ConcerteList
                 DbService.Init();
                 
                 // Поиск изделей в чертеже
-                Src.Panels.FilterPanel filter = new Src.Panels.FilterPanel();
+                FilterPanel filter = new FilterPanel();
                 filter.Filter();
                 var panels = filter.Panels;
-
-                Src.Panels.CheckPanels checkPanels = new Src.Panels.CheckPanels(panels);
-                checkPanels.Check();
+                // группировка панелей - с одинаковыми параметрами
+                var groupedPanels = panels.GroupBy(p=>p).OrderBy(p=>p.Key).ToList();
+                // Определение параметров панелей из базы данных
+                foreach (var item in groupedPanels)
+                {
+                    try
+                    {
+                        item.Key.DefineDbParams(true);
+                        item.Key.Check();
+                    }
+                    catch (System.Exception ex)
+                    {
+                        Inspector.AddError($"Ошибка обработки панели {item.Key.Mark} - {ex}");
+                    }
+                }
+                
+                // Панели для показа в форме проверки - новые и с ошибками
+                var checkPanels = groupedPanels.Where(p => p.Key.IsNew || p.Key.HasErrors).ToList();
+                if (checkPanels.Count == 0)
+                {
+                    ed.WriteMessage($"\nНет новых панелей и нет панелей с ошибками.");
+                }
+                else
+                {                    
+                    WindowCheckPanels winPanels = new WindowCheckPanels(checkPanels, "Панели с ошибками");
+                    Application.ShowModelessWindow(winPanels);
+                }
+                ed.WriteMessage($"\nОбработано {panels.Count} блоков панелей.");
 
                 Inspector.Show();
             }
@@ -159,11 +184,11 @@ namespace Autocad_ConcerteList
 
                 DbService.Init();
 
-                Src.Panels.FilterPanel filter = new Src.Panels.FilterPanel();
+                FilterPanel filter = new FilterPanel();
                 filter.Filter();
                 var panels = filter.Panels;
 
-                Src.Panels.RegPanels regPanels = new Src.Panels.RegPanels(panels);
+                RegPanels regPanels = new RegPanels(panels);
                 int regCount = regPanels.Registry();
                 ed.WriteMessage($"\nЗарегистрировано {regCount} панелей.");
 

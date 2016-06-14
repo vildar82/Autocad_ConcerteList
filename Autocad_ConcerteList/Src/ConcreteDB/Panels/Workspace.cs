@@ -2,7 +2,7 @@
 using AcadLib.Errors;
 using Autodesk.AutoCAD.DatabaseServices;
 
-namespace Autocad_ConcerteList.Src.Panels
+namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class Workspace
     {

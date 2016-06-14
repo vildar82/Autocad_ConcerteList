@@ -12,5 +12,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
         public string ItemGroup { get; set; }        
         public Nullable<bool> HasFormula { get; set; }
         public string Formula { get; set; }
+        public short LengthFactor { get; set; }
+        public short HeightFactor { get; set; }
+        public short ThicknessFactor { get; set; }
     }
 }

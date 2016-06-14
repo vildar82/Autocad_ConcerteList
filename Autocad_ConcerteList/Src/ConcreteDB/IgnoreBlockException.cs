@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autocad_ConcerteList.Src
+namespace Autocad_ConcerteList.Src.ConcreteDB
 {
     /// <summary>
     /// Исключение - игнорируемые имена блоков - заведомо не изделия ЖБИ

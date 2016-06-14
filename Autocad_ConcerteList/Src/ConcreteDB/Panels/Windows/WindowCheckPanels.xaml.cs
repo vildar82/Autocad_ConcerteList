@@ -13,22 +13,27 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-namespace Autocad_ConcerteList.Src.RegystryPanel.Windows
+namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
     /// <summary>
     /// Логика взаимодействия для WindowCheckPanels.xaml
     /// </summary>
     public partial class WindowCheckPanels : Window
     {
-        public WindowCheckPanels() { }
+        public WindowCheckPanels(Panel panel)
+        {
+            InitializeComponent();
+            Title = "Проверка панели";
+            var dataModel = new CheckPanelsViewModel(panel);
+            DataContext = dataModel;
+        }
 
-        public WindowCheckPanels(List<Panel> panels, string title)
+        public WindowCheckPanels(List<IGrouping<Panel,Panel>> panels, string title)
         {            
             InitializeComponent();
             Title = title;
             var dataModel = new CheckPanelsViewModel(panels);
-            DataContext = dataModel;
-            //gridPanels.ItemsSource = dataModel.Panels;
+            DataContext = dataModel;               
         }
     }
 }

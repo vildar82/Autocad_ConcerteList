@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autocad_ConcerteList.Src.Panels.BaseParams;
-using Autocad_ConcerteList.Src.RegystryPanel;
-using Autocad_ConcerteList.Src.RegystryPanel.IncorrectMark;
+using Autocad_ConcerteList.Src.ConcreteDB;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.EditorInput;
 
-namespace Autocad_ConcerteList.Src.Panels
+namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class RegPanels
     {

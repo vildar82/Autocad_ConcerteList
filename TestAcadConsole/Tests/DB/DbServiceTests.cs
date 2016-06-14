@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autocad_ConcerteList.Src.RegystryPanel;
+using Autocad_ConcerteList.Src.ConcreteDB;
+using Autocad_ConcerteList.Src.ConcreteDB.Panels;
 using NUnit.Framework;
 
 namespace TestAcadConsole.Tests.DB

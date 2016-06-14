@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using AcadLib.Errors;
 
-namespace Autocad_ConcerteList.Src.Panels
+namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class ParserMark
     {
@@ -35,15 +35,15 @@ namespace Autocad_ConcerteList.Src.Panels
         /// <summary>
         /// Длина - первое число в габаритах марки. Для группы вентблоков это может быть высота.
         /// </summary>        
-        public short? Length { get; private set; }
+        public short? Length { get; set; }
         /// <summary>
         /// Высота - второе число в габаритах марки.
         /// </summary>
-        public short? Height { get; private set; }
+        public short? Height { get; set; }
         /// <summary>
         /// Толщина - третий параметр в габаритах марки
         /// </summary>
-        public short? Thickness { get; private set; }        
+        public short? Thickness { get; set; }        
         /// <summary>
         /// Опалубка. Например 1, 2. 
         /// </summary>
@@ -76,9 +76,7 @@ namespace Autocad_ConcerteList.Src.Panels
             parsePartDop();
             // определение индекса класса бетона по группе
             defineIndexClass();
-        }
-
-        
+        }       
 
         private void defineParts()
         {            

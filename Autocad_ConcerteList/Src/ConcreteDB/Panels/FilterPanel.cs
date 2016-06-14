@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using AcadLib.Errors;
-using Autocad_ConcerteList.Src.RegystryPanel;
+using Autocad_ConcerteList.Src.ConcreteDB;
 using Autodesk.AutoCAD.DatabaseServices;
 
-namespace Autocad_ConcerteList.Src.Panels
+namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class FilterPanel
     {
@@ -41,10 +41,10 @@ namespace Autocad_ConcerteList.Src.Panels
             Panel p = new Panel();
             try
             {
-                res = p.Define(idEnt, true);
+                res = p.Define(idEnt);
                 if (res.Success)
                 {
-                    p.Check();
+                    //p.Check();
                     panels.Add(p);
                     return p;
                 }                
