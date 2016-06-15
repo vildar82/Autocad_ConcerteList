@@ -2,8 +2,8 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"     
-        xmlns:local="clr-namespace:Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
+        xmlns:local="clr-namespace:Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows"        
         mc:Ignorable="d"
         Background="{Binding Background}">
     <Window.Resources>        
@@ -17,17 +17,21 @@
         <DataGrid x:Name="gridPanels" ItemsSource="{Binding Panels}" SelectedItem="{Binding SelectedPanel}"
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
                   CanUserResizeColumns="True" CanUserSortColumns="True" AutoGenerateColumns="False"
-                  Margin="5" FrozenColumnCount="1" FontSize="12" Grid.Row="0">
-            <DataGrid.RowStyle>
-                <Style TargetType="{x:Type DataGridRow}">
-                    <Setter Property="FontSize" Value="12"/>                    
-                </Style>
-            </DataGrid.RowStyle>
+                  Margin="5" FrozenColumnCount="1" FontSize="12" Grid.Row="0" AlternatingRowBackground="LightGray"
+                  RowDetailsVisibilityMode="VisibleWhenSelected">                        
             <DataGrid.Columns>
+                <DataGridTextColumn Header="+/-" Binding="{Binding DetailVisibility}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Марка(атр)" Binding="{Binding MarkAtr}" IsReadOnly="True" />
                 <DataGridTextColumn Header="По формуле" Binding="{Binding MarkByFormula}" IsReadOnly="True" />
-                <DataGridTextColumn Header="В базе" Binding="{Binding ExistsInBase}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Имя блока" Binding="{Binding IsCorrectBlockName}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Ошибки" Binding="{Binding ErrorStatus}" IsReadOnly="True" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Background" Value="{Binding ErrorStatusBackground}"/>
+                            <Setter Property="ToolTipService.ToolTip" Value="{Binding ErrorStatusDesc}" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="В базе" Binding="{Binding ExistsInBase}" IsReadOnly="True" />                
                 <DataGridTextColumn Header="Группа" Binding="{Binding Group}" IsReadOnly="True" />
                 <DataGridTextColumn Header="Длина" Binding="{Binding Length}"  IsReadOnly="False">
                     <DataGridTextColumn.ElementStyle>
@@ -68,34 +72,64 @@
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
-                    <Border BorderThickness="1" Padding="5" Background="WhiteSmoke">
-                        <ListBox ItemsSource="{Binding PanelsInModel}" 
-                                 ScrollViewer.HorizontalScrollBarVisibility="Disabled">
-                            <ListBox.ItemsPanel>
-                                <ItemsPanelTemplate>
-                                    <WrapPanel Orientation="Vertical">
-                                    </WrapPanel>
-                                </ItemsPanelTemplate>
-                            </ListBox.ItemsPanel>
-                            <ListBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock>                                
-                                        <Hyperlink Command="{Binding Show}">
-                                            <TextBlock Text="{Binding Position}"/>
-                                        </Hyperlink>
-                                    </TextBlock>                                   
-                                </DataTemplate>
-                            </ListBox.ItemTemplate>
-                        </ListBox>                        
+                    <Border BorderThickness="1" Padding="5">
+                        <DataGrid x:Name="gridPanels" ItemsSource="{Binding PanelsInModel}" 
+                                  SelectedItem="{Binding SelectedPanel, UpdateSourceTrigger=PropertyChanged}"   
+                                  Background="AliceBlue" CanUserAddRows="False" CanUserDeleteRows="False" 
+                                  CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="True"
+                                  AutoGenerateColumns="False" Margin="5" FrozenColumnCount="1" FontSize="12" Grid.Row="0"
+                                  AlternatingRowBackground="LightGray" IsReadOnly="True">                            
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Марка(атр)" Binding="{Binding MarkAtr}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding MarkAtrBackground}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>                                
+                                <DataGridTextColumn Header="По формуле" Binding="{Binding BlockName}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding BlockNameBackground}"/>
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Длина" Binding="{Binding Length}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding LengthBackground}"/>                                            
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Высота" Binding="{Binding Height}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding HeightBackground}"/>                                            
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                                <DataGridTextColumn Header="Толщина" Binding="{Binding Thickness}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding ThicknessBackground}"/>                                            
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>                                
+                                <DataGridTextColumn Header="Масса" Binding="{Binding Weight}">
+                                    <DataGridTextColumn.ElementStyle>
+                                        <Style TargetType="{x:Type TextBlock}">
+                                            <Setter Property="Background" Value="{Binding WeightBackground}"/>                                            
+                                        </Style>
+                                    </DataGridTextColumn.ElementStyle>
+                                </DataGridTextColumn>
+                            </DataGrid.Columns>
+                        </DataGrid>
                     </Border>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>        
         <TextBlock Grid.Row="1" Text="{Binding Path=SelectedPanel.Warning}" FontSize="12" 
-                   Background="WhiteSmoke" TextWrapping="WrapWithOverflow" Padding="5"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Background="WhiteSmoke">
-            <Label Content="{Binding CountRow, StringFormat={Строк }{0}}" Margin="2"/>
-            <Label Content="{Binding CountBlocks, StringFormat={} Блоков {0}}" Margin="2"/>
-        </StackPanel>        
+                   Background="WhiteSmoke" TextWrapping="WrapWithOverflow" Padding="5"/>        
+        <TextBlock Grid.Row="2" Text ="{Binding CountString}" Padding="2" FontSize="12"/>                    
     </Grid>
 </Window>

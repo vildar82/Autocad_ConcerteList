@@ -79,7 +79,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
             if (evaluate.IndexOfAny(charOperands) !=-1)
             {
                 var objRes = t.Compute(evaluate, null);
-                resVal = getRoundValue(objRes);
+                resVal = GetRoundValue(objRes).ToString();
             }
             else
             {
@@ -104,9 +104,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
             return resVal;
         }
 
-        private string getRoundValue(object objRes)
+        /// <summary>
+        /// Округление вычисленного значения в формуле
+        /// </summary>
+        /// <param name="objRes"></param>
+        /// <returns></returns>
+        public static short GetRoundValue(object objRes)
         {
-            return Convert.ToInt32(objRes).ToString();
+            return Convert.ToInt16(objRes);
         }
 
         private string getFieldValue(string fieldName)

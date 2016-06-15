@@ -27,6 +27,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                  return Panels.Sum(s => s.PanelsInModel.Count);
             }
         }
+        public string CountString {
+            get { return $"Строк {CountRow}, блоков {CountBlocks}"; }
+        }
+
 
         public CheckPanelsViewModel (Panel panel)
         {
@@ -45,12 +49,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 
         }
 
-        public CheckPanelsViewModel(List<IGrouping<Panel, Panel>> panels)
+        public CheckPanelsViewModel(List<KeyValuePair<Panel, List<Panel>>> panels)
         {
             Panels = new ObservableCollection<PanelViewModel>();            
             foreach (var item in panels)
             {                
-                Panels.Add(new PanelViewModel(item));
+                Panels.Add(new PanelViewModel(item.Key, item.Value));
             }
 
             // Фон - есть панели с ошибками - красная
@@ -62,6 +66,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             {
                 Background = new SolidColorBrush(Colors.Lime);
             }
-        }
+        }        
     }
 }

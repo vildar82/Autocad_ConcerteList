@@ -28,12 +28,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             DataContext = dataModel;
         }
 
-        public WindowCheckPanels(List<IGrouping<Panel,Panel>> panels, string title)
+        public WindowCheckPanels(List<KeyValuePair<Panel, List<Panel>>> checkPanels, string title)
         {            
             InitializeComponent();
             Title = title;
-            var dataModel = new CheckPanelsViewModel(panels);
-            DataContext = dataModel;               
-        }
+            var dataModel = new CheckPanelsViewModel(checkPanels);
+            DataContext = dataModel;            
+        }        
     }
 }

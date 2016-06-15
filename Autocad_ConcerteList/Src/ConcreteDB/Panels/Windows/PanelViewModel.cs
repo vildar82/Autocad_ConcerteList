@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using MicroMvvm;
@@ -13,28 +14,44 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
     public class PanelViewModel : ObservableObject
     {
-        private static Brush BadValue = new SolidColorBrush(Colors.Red);
+        private static Brush BadValue = new SolidColorBrush(Colors.Red);        
+        private Panel panel;
+        private PanelDetailViewModel _selectedPanel;        
 
-        private Panel panel;        
         /// <summary>
-        /// Панели с такими паракметрами на чертеже
+        /// Панели на чертеже
         /// </summary>
-        public ObservableCollection<PanelViewModel> PanelsInModel { get; set; }        
+        public ObservableCollection<PanelDetailViewModel> PanelsInModel { get; set; }
+        
+        public PanelDetailViewModel SelectedPanel {
+            get {
+                return _selectedPanel;
+            }
+            set {
+                _selectedPanel = value;
+                _selectedPanel.Show.Execute(null);
+            }
+        }
 
         public PanelViewModel (Panel item)
         {
             panel = item;
-            PanelsInModel = new ObservableCollection<PanelViewModel>();
-            PanelsInModel.Add(this);
+            PanelsInModel = new ObservableCollection<PanelDetailViewModel>();
+            PanelsInModel.Add(new PanelDetailViewModel(item, item));            
         }
 
-        public PanelViewModel (IGrouping<Panel, Panel> items)
+        public PanelViewModel (Panel panel, List<Panel> blocks)
         {
-            panel = items.Key;
-            PanelsInModel = new ObservableCollection<PanelViewModel>();
-            foreach (var item in items)
+            this.panel = panel;            
+            PanelsInModel = new ObservableCollection<PanelDetailViewModel>();
+            foreach (var item in blocks)
             {
-                PanelsInModel.Add(new PanelViewModel(item));
+                PanelsInModel.Add(new PanelDetailViewModel(item, panel));
+            }
+            // Проверка парамаметров в группе - с панелью в строке
+            if (blocks.GroupBy(p => p.Lenght).Skip(1).Any())
+            {
+                
             }
         }
 
@@ -57,15 +74,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get {
                 return panel.IsNew ? "Новая" : "Есть";
             }
-        }
-        /// <summary>
-        /// Имя блока
-        /// </summary>
-        public string IsCorrectBlockName {
-            get {
-                return panel.IsCorrectBlockName ? "Ок" : "Ошибка";
-            }
-        }
+        }        
         /// <summary>
         /// Группа
         /// </summary>
@@ -146,24 +155,29 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.WeightDesc; }
         }
         /// <summary>
-        /// Объем
-        /// </summary>
-        public float? Volume {
-            get { return panel.Volume; }
-        }
-        /// <summary>
         /// Описание ошибки
         /// </summary>
         public string Warning {
             get { return panel.Warning; }
         }
 
-        /// <summary>
-        /// Позиция
-        /// </summary>               
-        public string Position {
-            get { return panel.Position.ToString(); }
-        }        
+        public string ErrorStatus {
+            get { return panel.ErrorStatus.ToString("D"); }
+        }
+        public Brush ErrorStatusBackground {
+            get { return panel.ErrorStatus == ErrorStatusEnum.None? null : BadValue; }
+        }
+        public string ErrorStatusDesc {
+            get {
+                 return panel.GetErrorStatusDesc();
+            }
+        }
+
+        public Visibility DetailVisibility {
+            get {
+                return checkPanelsModel.SelectedPanel == this ? Visibility.Visible : Visibility.Collapsed;
+            }
+        }
 
         /// <summary>
         /// Команда - показать панель на чертеже

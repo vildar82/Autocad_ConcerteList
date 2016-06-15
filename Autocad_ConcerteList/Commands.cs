@@ -31,14 +31,10 @@ namespace Autocad_ConcerteList
         [CommandMethod("PIK", "SB-CheckPanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
         public void SB_CheckPanel ()
         {
-            Logger.Log.StartCommand(nameof(SB_CheckPanel));
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc == null) return;
-            Editor ed = doc.Editor;
-            Database db = doc.Database;
-
-            try
+            CommandStart.Start((doc) =>
             {
+                Editor ed = doc.Editor;
+                Database db = doc.Database;
                 Inspector.Clear();
                 // Запрос выбора блока
                 var selOpt = new PromptEntityOptions("Выберите один блок панели для проверки");
@@ -58,10 +54,11 @@ namespace Autocad_ConcerteList
                             return;
                         }
                         // Проверка соответствия марки и параметров в блоке панели                        
+                        panel.CheckBlockParams();
                         panel.DefineDbParams(false);
-                        panel.Check();
+                        panel.CheckBdParams();
 
-                        if (panel.HasErrors)
+                        if (panel.HasErrors || !panel.IsWeightOk)
                         {
                             WindowCheckPanels winPanels = new WindowCheckPanels(panel);
                             Application.ShowModalWindow(winPanels);
@@ -85,79 +82,73 @@ namespace Autocad_ConcerteList
                         t.Commit();
                     }
                 }
-                // Показ ошибок если они есть.
-                Inspector.Show();
-            }
-            catch (System.Exception ex)
-            {
-                doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
-                if (!ex.Message.Contains(General.CanceledByUser))
-                {
-                    Logger.Log.Error(ex, $"{nameof(SB_CheckPanel)}. {doc.Name}");
-                }
-            }
+            });
         }
 
         /// <summary>
         /// Проверка блоков
         /// </summary>
         [CommandMethod("PIK", "SB-CheckPanels", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
-        public void SB_CheckPanels()
+        public void SB_CheckPanels ()
         {
-            Logger.Log.StartCommand(nameof(SB_CheckPanels));
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc == null) return;
-            Editor ed = doc.Editor;
-
-            try
+            CommandStart.Start((doc) =>
             {
-                Inspector.Clear();
-
+                Editor ed = doc.Editor;
                 DbService.Init();
-                
+
                 // Поиск изделей в чертеже
                 FilterPanel filter = new FilterPanel();
                 filter.Filter();
                 var panels = filter.Panels;
-                // группировка панелей - с одинаковыми параметрами
-                var groupedPanels = panels.GroupBy(p=>p).OrderBy(p=>p.Key).ToList();
-                // Определение параметров панелей из базы данных
-                foreach (var item in groupedPanels)
+
+                // группировка панелей - по уникальной марке (без пробелов)
+                var groupedMarkPanels = panels.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, AcadLib.Comparers.AlphanumComparator.New);
+
+                // Проверка одинаковости панелей в группе (должны быть одинаковыми все параметры)
+                List<KeyValuePair<Panel, List<Panel>>> checkedPanels = new List<KeyValuePair<Panel, List<Panel>>> ();
+                foreach (var item in groupedMarkPanels)
                 {
-                    try
+                    var first = item.First();
+                    var someParams = item.GroupBy(g => g);
+                    if (someParams.Skip(1).Any())
                     {
-                        item.Key.DefineDbParams(true);
-                        item.Key.Check();
+                        // Ошибка - разные параметры в панелях с одной маркой
+                        first.ErrorStatus |= ErrorStatusEnum.DifferentParamInGroup;
+                        first.Warning += $" Различие параметров в панелях этой марки {first.Mark}.";
                     }
-                    catch (System.Exception ex)
+                    else
                     {
-                        Inspector.AddError($"Ошибка обработки панели {item.Key.Mark} - {ex}");
+                        try
+                        {
+                            first.DefineDbParams(true);
+                            first.CheckBdParams();
+                        }
+                        catch (System.Exception ex)
+                        {
+                            Inspector.AddError($"Ошибка обработки панели {first.Mark} - {ex}");
+                        }
+                    }
+                    if (first.IsNew || first.HasErrors | !first.IsWeightOk)
+                    {
+                        checkedPanels.Add(new KeyValuePair<Panel, List<Panel>>(first, item.ToList()));
+                    }
+                    else
+                    {
+                        ed.WriteMessage($"\nВ панеле марки {first.Mark} не найдено ошибок и она есть в базе.");
                     }
                 }
-                
-                // Панели для показа в форме проверки - новые и с ошибками
-                var checkPanels = groupedPanels.Where(p => p.Key.IsNew || p.Key.HasErrors).ToList();
-                if (checkPanels.Count == 0)
+
+                if (checkedPanels.Count == 0)
                 {
                     ed.WriteMessage($"\nНет новых панелей и нет панелей с ошибками.");
                 }
                 else
-                {                    
-                    WindowCheckPanels winPanels = new WindowCheckPanels(checkPanels, "Панели с ошибками");
+                {
+                    WindowCheckPanels winPanels = new WindowCheckPanels(checkedPanels, "Панели с ошибками");
                     Application.ShowModelessWindow(winPanels);
                 }
                 ed.WriteMessage($"\nОбработано {panels.Count} блоков панелей.");
-
-                Inspector.Show();
-            }
-            catch (System.Exception ex)
-            {
-                doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
-                if (!ex.Message.Contains(General.CanceledByUser))
-                {
-                    Logger.Log.Error(ex, $"{nameof(SB_CheckPanels)}. {doc.Name}");
-                }
-            }
+            });
         }
 
         /// <summary>
@@ -166,21 +157,16 @@ namespace Autocad_ConcerteList
         [CommandMethod("PIK", "SB-RegPanels", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
         public void SB_RegPanels()
         {
-            Logger.Log.StartCommand(nameof(SB_RegPanels));
-            Document doc = Application.DocumentManager.MdiActiveDocument;
-            if (doc == null) return;
-            Editor ed = doc.Editor;
-
-            try
+            CommandStart.Start((doc) =>
             {
+                Editor ed = doc.Editor;
+                ed.WriteMessage("\nПока не работает (");
                 // Проверка доступа. Только Лукашовой?????
                 if (!Access.Success())
                 {
-                    doc.Editor.WriteMessage("\nОтказано в доступе.");
+                    ed.WriteMessage("\nОтказано в доступе.");
                     return;
-                }
-
-                Inspector.Clear();
+                }               
 
                 DbService.Init();
 
@@ -191,17 +177,7 @@ namespace Autocad_ConcerteList
                 RegPanels regPanels = new RegPanels(panels);
                 int regCount = regPanels.Registry();
                 ed.WriteMessage($"\nЗарегистрировано {regCount} панелей.");
-
-                Inspector.Show();
-            }
-            catch (System.Exception ex)
-            {
-                doc.Editor.WriteMessage($"\nОшибка: {ex.Message}");
-                if (!ex.Message.Contains(AcadLib.General.CanceledByUser))
-                {
-                    Logger.Log.Error(ex, $"{nameof(SB_RegPanels)}. {doc.Name}");
-                }
-            }
+            });
         }
 
         public void Terminate()

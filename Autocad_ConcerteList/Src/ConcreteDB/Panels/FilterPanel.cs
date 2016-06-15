@@ -23,6 +23,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 var ms = db.CurrentSpaceId.GetObject(OpenMode.ForRead) as BlockTableRecord;
                 foreach (var idEnt in ms)
                 {
+                    if (idEnt.ObjectClass.Name != "AcDbBlockReference") continue;                    
                     var p = DefinePanel(idEnt, ref panels);
                     if (p.BlockName == Options.Instance.WorkspaceBlockName)
                     {
@@ -31,7 +32,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     }
                 }                
                 t.Commit();
-            }            
+            }
+            definePanelsWS(panels, ws);
             Panels = panels.OrderBy(p=>p.Mark).ToList();
         }
 
@@ -45,9 +47,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 if (res.Success)
                 {
                     //p.Check();
+                    p.CheckBlockParams();
                     panels.Add(p);
                     return p;
                 }                
+            }
+            catch (IgnoreBlockException i)
+            {
+                res = AcadLib.Result.Fail($"Игнорируемое имя блока - {i.BlName}");
             }
             catch (Exception ex)
             {

@@ -27,7 +27,7 @@
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
+    <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE;NODB</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
@@ -145,12 +145,13 @@
     <Compile Include="Src\ConcreteDB\Panels\FilterPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\ParserMark.cs" />
     <Compile Include="Src\ConcreteDB\Panels\RegPanels.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\PanelViewModel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Workspace.cs" />
     <Compile Include="Src\ConcreteDB\DbService.cs" />
-    <Compile Include="Src\ConcreteDB\Panels\EnumErrorItem.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\ErrorStatusEnum.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Panel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\CheckPanelsViewModel.cs" />
-    <Compile Include="Src\ConcreteDB\Panels\Windows\PanelViewModel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\PanelDetailViewModel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\WindowCheckPanels.xaml.cs">
       <DependentUpon>WindowCheckPanels.xaml</DependentUpon>
     </Compile>
