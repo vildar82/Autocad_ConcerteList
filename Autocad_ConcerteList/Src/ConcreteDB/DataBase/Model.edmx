@@ -17,6 +17,7 @@
           <Property Name="LengthFactor" Type="smallint" Nullable="false" />
           <Property Name="HeightFactor" Type="smallint" Nullable="false" />
           <Property Name="ThicknessFactor" Type="smallint" Nullable="false" />
+          <Property Name="GabKey" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="I_C_Series">
           <Key>
@@ -221,6 +222,7 @@
           <Property Name="LengthFactor" Type="Int16" Nullable="false" />
           <Property Name="HeightFactor" Type="Int16" Nullable="false" />
           <Property Name="ThicknessFactor" Type="Int16" Nullable="false" />
+          <Property Name="GabKey" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="I_J_ItemConstruction">
           <Key>
@@ -428,6 +430,7 @@
           <EntitySetMapping Name="I_C_Formula">
             <EntityTypeMapping TypeName="SAPRModel.I_C_Formula">
               <MappingFragment StoreEntitySet="I_C_Formula">
+                <ScalarProperty Name="GabKey" ColumnName="GabKey" />
                 <ScalarProperty Name="ThicknessFactor" ColumnName="ThicknessFactor" />
                 <ScalarProperty Name="HeightFactor" ColumnName="HeightFactor" />
                 <ScalarProperty Name="LengthFactor" ColumnName="LengthFactor" />

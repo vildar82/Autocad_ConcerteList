@@ -20,6 +20,8 @@ namespace Autocad_ConcerteList
 {
     public class Commands : IExtensionApplication
     {
+        public static Document Doc { get; set; }
+
         public void Initialize()
         {
             LoadService.LoadEntityFramework();
@@ -33,6 +35,7 @@ namespace Autocad_ConcerteList
         {
             CommandStart.Start((doc) =>
             {
+                Doc = doc;
                 Editor ed = doc.Editor;
                 Database db = doc.Database;
                 Inspector.Clear();
@@ -58,15 +61,11 @@ namespace Autocad_ConcerteList
 
                         if (panel.HasErrors || !panel.IsWeightOk)
                         {
-                            WindowCheckPanels winPanels = new WindowCheckPanels(panel);
-                            Application.ShowModalWindow(winPanels);
-                            //FormPanels panelForm = new FormPanels(new List<Panel> { panel });
-                            //panelForm.Text = "Панели с ошибками";
-                            //panelForm.BackColor = System.Drawing.Color.Red;
-                            //panelForm.buttonCancel.Visible = false;
-                            //panelForm.buttonOk.Visible = false;
-                            //Application.ShowModelessDialog(panelForm);
-                            //panelForm.listViewPanels.Items[0].Selected = true;
+                            var checkPanel = new List<KeyValuePair<Panel, List<Panel>>> ();
+                            checkPanel.Add(new KeyValuePair<Panel, List<Panel>>(panel, new List<Panel> { panel }));
+                            CheckPanelsViewModel model = new CheckPanelsViewModel (checkPanel);
+                            WindowCheckPanels winPanels = new WindowCheckPanels(model, "Ошибки в панели");
+                            Application.ShowModalWindow(winPanels);                            
                         }
                         else
                         {
@@ -91,6 +90,7 @@ namespace Autocad_ConcerteList
         {
             CommandStart.Start((doc) =>
             {
+                Doc = doc;
                 Editor ed = doc.Editor;
                 DbService.Init();
 
@@ -135,7 +135,8 @@ namespace Autocad_ConcerteList
                 }
                 else
                 {
-                    WindowCheckPanels winPanels = new WindowCheckPanels(checkedPanels, "Панели с ошибками");
+                    var model = new CheckPanelsViewModel (checkedPanels);
+                    WindowCheckPanels winPanels = new WindowCheckPanels(model, "Панели с ошибками");
                     Application.ShowModelessWindow(winPanels);
                 }
                 ed.WriteMessage($"\nОбработано {panels.Count} блоков панелей.");
@@ -150,6 +151,7 @@ namespace Autocad_ConcerteList
         {
             CommandStart.Start((doc) =>
             {
+                Doc = doc;
                 Editor ed = doc.Editor;                
                 // Проверка доступа. Только Лукашовой?????
                 if (!Access.Success())

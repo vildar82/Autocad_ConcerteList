@@ -2,6 +2,7 @@
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 
 //Event Design: http://msdn.microsoft.com/en-us/library/ms229011.aspx
 
@@ -28,10 +29,10 @@ namespace MicroMvvm
             this.RaisePropertyChanged(propertyName);
         }
 
-        protected void RaisePropertyChanged(String propertyName)
+        protected void RaisePropertyChanged([CallerMemberName]string memberName = "")
         {
-            VerifyPropertyName(propertyName);
-            OnPropertyChanged(new PropertyChangedEventArgs(propertyName));
+            VerifyPropertyName(memberName);
+            OnPropertyChanged(new PropertyChangedEventArgs(memberName));
         }
 
         /// <summary>

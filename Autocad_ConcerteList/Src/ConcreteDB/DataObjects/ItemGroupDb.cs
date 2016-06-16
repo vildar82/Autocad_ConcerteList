@@ -15,5 +15,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
         public short LengthFactor { get; set; }
         public short HeightFactor { get; set; }
         public short ThicknessFactor { get; set; }
+        /// <summary>
+        /// Ключ габаритов в формуле - последовательность параметров Длины, Высоты и Ширины (LHT)
+        /// </summary>
+        public string GabKey { get; set; }
     }
 }

@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Autodesk.AutoCAD.ApplicationServices;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
@@ -20,19 +21,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
     /// </summary>
     public partial class WindowCheckPanels : Window
     {
-        public WindowCheckPanels(Panel panel)
-        {
-            InitializeComponent();
-            Title = "Проверка панели";
-            var dataModel = new CheckPanelsViewModel(panel);
-            DataContext = dataModel;
-        }
-
-        public WindowCheckPanels(List<KeyValuePair<Panel, List<Panel>>> checkPanels, string title)
+        public WindowCheckPanels(CheckPanelsViewModel model, string title)
         {            
             InitializeComponent();
             Title = title;
-            var dataModel = new CheckPanelsViewModel(checkPanels);
+            var dataModel = model;
             DataContext = dataModel;            
         }
 

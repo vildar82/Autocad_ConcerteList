@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
@@ -14,6 +15,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public Brush Background { get; set; }
         public PanelViewModel SelectedPanel { get; set; }
         public bool CanRegistry { get; set; }
+        public ObservableCollection<SerieDbo> Series { get; set; }
+        public SerieDbo SelectedSerie { get; set; }
         /// <summary>
         /// Количество строк
         /// </summary>
@@ -32,8 +35,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return $"Строк {CountRow}, блоков {CountBlocks}"; }
         }        
 
-        public RegPanelsViewModel (List<KeyValuePair<Panel, List<Panel>>> regPanels)
+        public RegPanelsViewModel (List<KeyValuePair<Panel, List<Panel>>> regPanels, List<SerieDbo> series)
         {
+            Series = new ObservableCollection<SerieDbo>(series);
             Panels = new ObservableCollection<PanelViewModel>();            
             foreach (var item in regPanels)
             {                

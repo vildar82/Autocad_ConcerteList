@@ -19,13 +19,13 @@ namespace TestAcadConsole.Tests.DB
             DbService.Init();
         }
 
-        [Test(Description = "Тест поиска одной панели по параметрам")]
-        public void FindPanelByParametersTest()
-        {
-            // В706.26.18-1-3э
-            var item = DbService.FindByParameters("В", 7060, 2620, 180, 1, null, null, "3э");
-            Assert.IsNotNull(item);
-        }
+        //[Test(Description = "Тест поиска одной панели по параметрам")]
+        //public void FindPanelByParametersTest()
+        //{
+        //    // В706.26.18-1-3э
+        //    var item = DbService.FindByParameters("В", 7060, 2620, 180, 1, null, null, "3э");
+        //    Assert.IsNotNull(item);
+        //}
 
         [Test(Description = "Тест загрузки всех панелей - и поиска")]
         public void FindPanelByAllParametersTest ()

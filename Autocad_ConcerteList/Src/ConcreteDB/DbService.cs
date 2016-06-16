@@ -21,7 +21,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         static List<BalconyDoorDbo> BalconyDoors;
         static List<ItemGroupDbo> Groups;
         static List<ItemConstructionDbo> Items;
-        static SerieDbo SerPik2;
+        public static List<SerieDbo> Series { get; set; }
 
         public static SAPREntities ConnectEntities()
         {            
@@ -31,17 +31,30 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         public static void Init()
         {
             using (var ents = ConnectEntities())
-            {                
-                Groups = ents.I_S_ItemGroup.AsNoTracking().Select(s => new ItemGroupDbo
-                {
-                    ItemGroupId = s.ItemGroupId,
-                    ItemGroup = s.ItemGroup,
-                    HasFormula = s.HasFormula,
-                    Formula = s.I_C_Formula == null ? null : s.I_C_Formula.FormulaValue,
-                    LengthFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.LengthFactor,
-                    HeightFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.HeightFactor,
-                    ThicknessFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.ThicknessFactor
-                }).ToList();
+            {
+                Groups = (from s in ents.I_S_ItemGroup.AsNoTracking()
+                          join f in ents.I_C_Formula on s.FormulaId equals f.FormulaId into gf
+                          from fJoined in gf.DefaultIfEmpty()
+                          select new ItemGroupDbo {
+                              ItemGroupId = s.ItemGroupId,
+                              ItemGroup = s.ItemGroup,
+                              HasFormula = s.HasFormula,
+                              Formula = (fJoined == null) ? null : fJoined.FormulaValue,
+                              LengthFactor = (fJoined == null) ? (short)1 : fJoined.LengthFactor,
+                              HeightFactor = (fJoined == null) ? (short)1 : fJoined.HeightFactor,
+                              ThicknessFactor = (fJoined == null) ? (short)1 : fJoined.ThicknessFactor,
+                              GabKey = (fJoined == null) ? null : fJoined.GabKey
+                          }).ToList();
+                //Groups = ents.I_S_ItemGroup.AsNoTracking().Select(s => new ItemGroupDbo {
+                //    ItemGroupId = s.ItemGroupId,
+                //    ItemGroup = s.ItemGroup,
+                //    HasFormula = s.HasFormula,
+                //    Formula = s.I_C_Formula == null ? null : s.I_C_Formula.FormulaValue,
+                //    LengthFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.LengthFactor,
+                //    HeightFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.HeightFactor,
+                //    ThicknessFactor = s.I_C_Formula == null ? (short)1 : s.I_C_Formula.ThicknessFactor,
+                //    GabKey = s.I_C_Formula == null ? null : s.I_C_Formula.GabKey
+                //}).ToList();
                 BalconyCuts = ents.I_S_BalconyCut.AsNoTracking().Select(s => new BalconyCutDbo
                 {
                     BalconyCutId = s.BalconyCutId,
@@ -53,93 +66,68 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                     BalconyDoorId = s.BalconyDoorId,
                     BalconyDoorName = s.BalconyDoor
                 }).ToList();
-                SerPik2 = ents.I_C_Series.AsNoTracking().Where(s => s.Series == "ПИК-2.0").Select(s => new SerieDbo
+                Series = ents.I_C_Series.AsNoTracking().Select(s => new SerieDbo
                 {
                     Name = s.Series,
                     SeriesId = s.SeriesId
-                }).FirstOrDefault();
+                }).ToList();
             }
         }
 
-        /// <summary>
-        /// Поиск панели в базе по параметрам
-        /// </summary>
-        public static ItemConstructionDbo FindByParameters(
-            string ItemGroup, short? Lenght, short? Height, short? Thickness,
-                short? Formwork, string BalconyDoor, string BalconyCut, string Electrics
-            )
-        {   
-            using (var ents = ConnectEntities())
-            {
-                var query = (from i in ents.I_J_ItemConstruction.AsNoTracking()
-                             join g in ents.I_S_ItemGroup.AsNoTracking() on i.ItemGroupId equals g.ItemGroupId
+        ///// <summary>
+        ///// Поиск панели в базе по параметрам
+        ///// </summary>
+        //public static ItemConstructionDbo FindByParameters(
+        //    string ItemGroup, short? Lenght, short? Height, short? Thickness,
+        //        short? Formwork, string BalconyDoor, string BalconyCut, string Electrics
+        //    )
+        //{   
+        //    using (var ents = ConnectEntities())
+        //    {
+        //        var query = (from i in ents.I_J_ItemConstruction.AsNoTracking()
+        //                     join g in ents.I_S_ItemGroup.AsNoTracking() on i.ItemGroupId equals g.ItemGroupId
 
-                             join bc in ents.I_S_BalconyCut.AsNoTracking() on i.BalconyCutId equals bc.BalconyCutId into gbc
-                             from bcJoined in gbc.DefaultIfEmpty()
+        //                     join bc in ents.I_S_BalconyCut.AsNoTracking() on i.BalconyCutId equals bc.BalconyCutId into gbc
+        //                     from bcJoined in gbc.DefaultIfEmpty()
 
-                             join bd in ents.I_S_BalconyDoor.AsNoTracking() on i.BalconyDoorId equals bd.BalconyDoorId into gbd
-                             from bdJoined in gbd.DefaultIfEmpty()
+        //                     join bd in ents.I_S_BalconyDoor.AsNoTracking() on i.BalconyDoorId equals bd.BalconyDoorId into gbd
+        //                     from bdJoined in gbd.DefaultIfEmpty()
 
-                             where g.ItemGroup == ItemGroup &&
-                       i.Lenght == Lenght && i.Height == Height && i.Thickness == Thickness &&
-                       i.Formwork == Formwork &&
-                       ((string.IsNullOrEmpty(BalconyCut) && bcJoined == null) ||
-                       (bcJoined != null && bcJoined.BalconyCut == BalconyCut)) &&
-                       ((string.IsNullOrEmpty(BalconyDoor) && bdJoined == null) ||
-                       (bdJoined != null && bdJoined.BalconyDoor == BalconyDoor)) &&                       
-                       i.Electrics == Electrics
-                             select new ItemConstructionDbo {
-                                 HandMarkNoColour = i.HandMarkNoColour,
-                                 ItemGroupId = i.ItemGroupId,
-                                 ItemGroup = g.ItemGroup,
-                                 Lenght = i.Lenght,
-                                 Height = i.Height,
-                                 Thickness = i.Thickness,
-                                 Formwork = i.Formwork,
-                                 FormworkMirror = i.FormworkMirror,
-                                 BalconyCut = bcJoined == null ? null : new BalconyCutDbo {
-                                     BalconyCutId = i.BalconyCutId.Value,
-                                     BalconyCutName = bcJoined.BalconyCut, BalconyCutSize = bcJoined.BalconyCutSize
-                                 },
-                                 BalconyDoor = bdJoined == null ? null : new BalconyDoorDbo {
-                                     BalconyDoorId = i.BalconyDoorId.Value,
-                                     BalconyDoorName = bdJoined.BalconyDoor
-                                 },
-                                 Electrics = i.Electrics,
-                                 ItemConstructionId = i.ItemConstructionId,
-                                 Weight = i.Weight,
-                                 Volume = i.Volume
-                             }).ToList();
-
-                //var query = ents.I_J_ItemConstruction.AsNoTracking().Where(i =>
-                //        i.I_S_ItemGroup.ItemGroup == ItemGroup &&
-                //        i.Lenght == Lenght && i.Height == Height && i.Thickness == Thickness &&
-                //        i.Formwork == Formwork &&
-                //        (BalconyDoor == null || i.I_S_BalconyDoor.BalconyDoor == BalconyDoor) &&
-                //        (BalconyCut == null || i.I_S_BalconyCut.BalconyCut == BalconyCut) &&
-                //        i.Electrics == Electrics
-                //    ).Select(s => new ItemConstructionDbo
-                //    {
-                //        HandMarkNoColour = s.HandMarkNoColour,
-                //        ItemGroupId = s.ItemGroupId,
-                //        ItemGroup = s.I_S_ItemGroup.ItemGroup,
-                //        Lenght = s.Lenght,
-                //        Height = s.Height,
-                //        Thickness = s.Thickness,
-                //        Formwork = s.Formwork,
-                //        FormworkMirror = s.FormworkMirror,
-                //        BalconyCut = (s.I_S_BalconyCut == null) ? null : (new BalconyCutDbo { BalconyCutId = s.I_S_BalconyCut.BalconyCutId, BalconyCutName = s.I_S_BalconyCut.BalconyCut, BalconyCutSize = s.I_S_BalconyCut.BalconyCutSize }),
-                //        BalconyDoor = (s.I_S_BalconyDoor == null)? null : (new BalconyDoorDbo { BalconyDoorId =s.I_S_BalconyDoor.BalconyDoorId, BalconyDoorName = s.I_S_BalconyDoor.BalconyDoor}),
-                //        Electrics = s.Electrics,
-                //        ItemConstructionId = s.ItemConstructionId,
-                //        Weight = s.Weight,
-                //        Volume = s.Volume
-                //    }).ToList();
-                var first = query.FirstOrDefault();
-                LogMultiplyPanelsInBd(query);
-                return first;
-            }
-        }
+        //                     where g.ItemGroup == ItemGroup &&
+        //               i.Lenght == Lenght && i.Height == Height && i.Thickness == Thickness &&
+        //               i.Formwork == Formwork &&
+        //               ((string.IsNullOrEmpty(BalconyCut) && bcJoined == null) ||
+        //               (bcJoined != null && bcJoined.BalconyCut == BalconyCut)) &&
+        //               ((string.IsNullOrEmpty(BalconyDoor) && bdJoined == null) ||
+        //               (bdJoined != null && bdJoined.BalconyDoor == BalconyDoor)) &&                       
+        //               i.Electrics == Electrics
+        //                     select new ItemConstructionDbo {
+        //                         HandMarkNoColour = i.HandMarkNoColour,
+        //                         ItemGroupId = i.ItemGroupId,
+        //                         ItemGroup = g.ItemGroup,
+        //                         Lenght = i.Lenght,
+        //                         Height = i.Height,
+        //                         Thickness = i.Thickness,
+        //                         Formwork = i.Formwork,
+        //                         FormworkMirror = i.FormworkMirror,
+        //                         BalconyCut = bcJoined == null ? null : new BalconyCutDbo {
+        //                             BalconyCutId = i.BalconyCutId.Value,
+        //                             BalconyCutName = bcJoined.BalconyCut, BalconyCutSize = bcJoined.BalconyCutSize
+        //                         },
+        //                         BalconyDoor = bdJoined == null ? null : new BalconyDoorDbo {
+        //                             BalconyDoorId = i.BalconyDoorId.Value,
+        //                             BalconyDoorName = bdJoined.BalconyDoor
+        //                         },
+        //                         Electrics = i.Electrics,
+        //                         ItemConstructionId = i.ItemConstructionId,
+        //                         Weight = i.Weight,
+        //                         Volume = i.Volume
+        //                     }).ToList();               
+        //        var first = query.FirstOrDefault();
+        //        LogMultiplyPanelsInBd(query);
+        //        return first;
+        //    }
+        //}
 
         private static void LogMultiplyPanelsInBd (List<ItemConstructionDbo> panels)
         {
@@ -151,71 +139,34 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             }
         }
 
-        public static ItemConstructionDbo FindByParameters(Panel panel)
+        public static ItemConstructionDbo FindByMark (string mark)
         {
-            return FindByParameters(panel.ItemGroup, panel.Lenght, panel.Height, panel.Thickness, panel.Formwork,
-                panel.BalconyDoor, panel.BalconyCut, panel.Electrics);
-        }
+            if (Items == null)
+            {
+                LoadItems();
+            }
+            var finds = Items.FindAll(i=>i.HandMarkNoColour.Equals(mark, StringComparison.OrdinalIgnoreCase));
+            if (finds.Count == 0)
+            {
+                finds = Items.FindAll(i => i.HandMarkNoColour.Equals(mark.Replace(" ", "")));
+            }
+            if (finds.Count>0)
+            {
+                LogMultiplyPanelsInBd(finds);
+                return finds.First();
+            }
+            else
+            {
+                return null;
+            }
+        }        
 
         public static ItemConstructionDbo FindByParametersFromAllLoaded(Panel panel)
         {
             if (Items == null)
             {
-                using (var ents = ConnectEntities())
-                {
-                    Items = (from i in ents.I_J_ItemConstruction.AsNoTracking()
-                             join g in ents.I_S_ItemGroup on i.ItemGroupId equals g.ItemGroupId
-
-                             join bc in ents.I_S_BalconyCut on i.BalconyCutId equals bc.BalconyCutId into gbc
-                             from bcJoined in gbc.DefaultIfEmpty()
-
-                             join bd in ents.I_S_BalconyDoor on i.BalconyDoorId equals bd.BalconyDoorId into gbd
-                             from bdJoined in gbd.DefaultIfEmpty()
-                             
-                             where g.HasFormula != null
-                             select new ItemConstructionDbo {
-                                 HandMarkNoColour = i.HandMarkNoColour,
-                                 ItemGroupId = i.ItemGroupId,
-                                 ItemGroup = g.ItemGroup,
-                                 Lenght = i.Lenght,
-                                 Height = i.Height,
-                                 Thickness = i.Thickness,
-                                 Formwork = i.Formwork,
-                                 FormworkMirror = i.FormworkMirror,
-                                 BalconyCut = (bcJoined == null) ? null : new BalconyCutDbo {
-                                     BalconyCutId = i.BalconyCutId.Value,
-                                     BalconyCutName = bcJoined.BalconyCut, BalconyCutSize = bcJoined.BalconyCutSize
-                                 },
-                                 BalconyDoor = (bdJoined == null) ? null : new BalconyDoorDbo {
-                                     BalconyDoorId = i.BalconyDoorId.Value,
-                                     BalconyDoorName = bdJoined.BalconyDoor
-                                 },
-                                 Electrics = i.Electrics,
-                                 ItemConstructionId = i.ItemConstructionId,
-                                 Weight = i.Weight,
-                                 Volume = i.Volume
-                             }).ToList();
-
-                    //Items = ents.I_J_ItemConstruction.AsNoTracking().Where(i => i.I_S_ItemGroup.HasFormula != null).
-                    //    Select(s=> new ItemConstructionDbo
-                    //    {
-                    //        HandMarkNoColour = s.HandMarkNoColour,
-                    //        ItemGroupId = s.ItemGroupId,
-                    //        ItemGroup = s.I_S_ItemGroup.ItemGroup,
-                    //        Lenght = s.Lenght,
-                    //        Height = s.Height,
-                    //        Thickness = s.Thickness,
-                    //        Formwork = s.Formwork,
-                    //        FormworkMirror = s.FormworkMirror,
-                    //        BalconyCut = (s.I_S_BalconyCut == null) ? null : (new BalconyCutDbo { BalconyCutId = s.I_S_BalconyCut.BalconyCutId, BalconyCutName = s.I_S_BalconyCut.BalconyCut, BalconyCutSize = s.I_S_BalconyCut.BalconyCutSize }),
-                    //        BalconyDoor = (s.I_S_BalconyDoor == null) ? null : (new BalconyDoorDbo { BalconyDoorId = s.I_S_BalconyDoor.BalconyDoorId, BalconyDoorName = s.I_S_BalconyDoor.BalconyDoor }),
-                    //        Electrics = s.Electrics,
-                    //        ItemConstructionId = s.ItemConstructionId,
-                    //        Weight = s.Weight,
-                    //        Volume = s.Volume
-                    //    }).ToList();                    
-                }
-            }            
+                LoadItems();
+            }
             var itemSearch = new ItemConstructionDbo()
             {
                 ItemGroup = panel.ItemGroup,
@@ -240,10 +191,49 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             //);
         }
 
+        private static void LoadItems ()
+        {
+            using (var ents = ConnectEntities())
+            {
+                Items = (from i in ents.I_J_ItemConstruction.AsNoTracking()
+                         join g in ents.I_S_ItemGroup on i.ItemGroupId equals g.ItemGroupId
+
+                         join bc in ents.I_S_BalconyCut on i.BalconyCutId equals bc.BalconyCutId into gbc
+                         from bcJoined in gbc.DefaultIfEmpty()
+
+                         join bd in ents.I_S_BalconyDoor on i.BalconyDoorId equals bd.BalconyDoorId into gbd
+                         from bdJoined in gbd.DefaultIfEmpty()
+
+                         where g.HasFormula != null
+                         select new ItemConstructionDbo {
+                             HandMarkNoColour = i.HandMarkNoColour,
+                             ItemGroupId = i.ItemGroupId,
+                             ItemGroup = g.ItemGroup,
+                             Lenght = i.Lenght,
+                             Height = i.Height,
+                             Thickness = i.Thickness,
+                             Formwork = i.Formwork,
+                             FormworkMirror = i.FormworkMirror,
+                             BalconyCut = (bcJoined == null) ? null : new BalconyCutDbo {
+                                 BalconyCutId = i.BalconyCutId.Value,
+                                 BalconyCutName = bcJoined.BalconyCut, BalconyCutSize = bcJoined.BalconyCutSize
+                             },
+                             BalconyDoor = (bdJoined == null) ? null : new BalconyDoorDbo {
+                                 BalconyDoorId = i.BalconyDoorId.Value,
+                                 BalconyDoorName = bdJoined.BalconyDoor
+                             },
+                             Electrics = i.Electrics,
+                             ItemConstructionId = i.ItemConstructionId,
+                             Weight = i.Weight,
+                             Volume = i.Volume
+                         }).ToList();
+            }
+        }
+
         /// <summary>
         /// Определение марки панели по формуле из базы
         /// </summary>
-        public static string GetDbMark (Panel panel, out ParserFormula parseFormula)
+        public static Result<string> GetDbMark (Panel panel, out ParserFormula parseFormula)
         {
             string markDb = null;
             parseFormula = null;
@@ -252,13 +242,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             panel.DefineItemGroup();
             if (panel.DbGroup == null)
             {
-                throw new Exception($"Не найдена группа {panel.ItemGroup}");
+                return Result.Fail<string>($"Не найдена группа {panel.ItemGroup}.");
+                //throw new Exception($"Не найдена группа {panel.ItemGroup}");
             }
                                                 
             if (panel.DbGroup.HasFormula == null)
             {
                 // Не задано значение HasFormula - считается, что это ошибка определения формулы для группы.
-                throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
+                return Result.Fail<string>($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}.");
+                //throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
             }
             bool hasFormula = panel.DbGroup.HasFormula.Value;
             if (hasFormula)
@@ -267,14 +259,22 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 string formula = panel.DbGroup.Formula;
                 if (formula == null)
                 {
+                    return Result.Fail<string>($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}.");
                     // Добавление ошибки в панель.
-                    throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
+                    //throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
                 }
                 else
                 {
                     // Получение марки панели по формуле
                     parseFormula = new ParserFormula(formula, panel);
-                    parseFormula.Parse();
+                    try
+                    {
+                        parseFormula.Parse();
+                    }
+                    catch (Exception ex)
+                    {
+                        return Result.Fail<string>($"Ошибка определения марки ао формуле - {ex.Message}");
+                    }                    
                     markDb = parseFormula.Result;
                 }
             }
@@ -282,10 +282,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             {
                 markDb = panel.Mark;
             }
-            return markDb;
+            return Result.Ok(markDb);
         }
 
-        public static void Register(List<Panel> panels)
+        public static void Register(List<Panel> panels, SerieDbo ser)
         {
 
             // Регистрация панели в базе.
@@ -295,7 +295,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 {
                     try
                     {
-                        Register(panel);
+                        Register(panel, ser);
                     }
                     catch (Exception ex)
                     {
@@ -308,7 +308,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             //}
         }
 
-        public static bool Register(Panel panel)
+        public static bool Register(Panel panel, SerieDbo ser)
         {
             using (var ents = ConnectEntities())
             {
@@ -324,12 +324,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                     BalconyDoorId  = panel.BalconyDoorItem.BalconyDoorId,
                     Electrics = panel.Electrics
                 });
-                if (SerPik2 != null)
+                if (ser != null)
                 {
                     ents.I_J_ItemSeries.Add(new I_J_ItemSeries()
                     {
                         I_J_ItemConstruction = newItem,
-                        SeriesId = SerPik2.SeriesId
+                        SeriesId = ser.SeriesId
                     });
                 }
 #if DB
@@ -353,5 +353,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         {
             return BalconyDoors.Where(b => b.BalconyDoorName.Equals(balconyDoor)).FirstOrDefault();
         }
+
+        
     }
 }

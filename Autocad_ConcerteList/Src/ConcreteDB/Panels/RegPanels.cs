@@ -36,12 +36,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             var groupedNewPanels = PanelsNewWoErr.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, AcadLib.Comparers.AlphanumComparator.New);
             List<KeyValuePair<Panel, List<Panel>>> newPanels = new List<KeyValuePair<Panel, List<Panel>>> ();
 
-            WindowRegPanels winPanels = new WindowRegPanels(newPanels, "Новые панели без ошибок");
+            RegPanelsViewModel model = new RegPanelsViewModel (newPanels, DbService.Series);
+            WindowRegPanels winPanels = new WindowRegPanels(model, "Новые панели без ошибок");
             var dialogRes = Application.ShowModalWindow(winPanels);
             if (dialogRes.HasValue && dialogRes.Value)
             {
                 var panels = groupedNewPanels.Select(s=>s.First()).ToList();
-                DbService.Register(panels);                
+                DbService.Register(panels, model.SelectedSerie);                
             }
             else
             {

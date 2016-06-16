@@ -75,7 +75,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             parsePartGab();
             parsePartDop();
             // определение индекса класса бетона по группе
-            defineIndexClass();
+            defineIndexClass();            
         }       
 
         private void defineParts()
@@ -301,6 +301,41 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             else
             {
                 Error.AdditionToMessage(msg);
+            }
+        }
+
+        /// <summary>
+        /// Исправление порядка габаритов - в соответствии с ключем GabKey (LHT)
+        /// </summary>
+        /// <param name="gabKey">Ключ габаритов в формуле - LHT</param>
+        public void UpdateGab (string gabKey)
+        {
+            if (string.IsNullOrEmpty(gabKey))
+            {
+                return;
+            }
+            var l = Length; // 0
+            var h = Height; // 1
+            var t = Thickness; // 2
+                        
+            Length = getGabByKey("L", gabKey, l, h, t);
+            Height = getGabByKey("H", gabKey, l, h, t);
+            Thickness = getGabByKey("T", gabKey, l, h, t);
+        }
+
+        private short? getGabByKey (string k, string gabKey, short? l, short? h, short? t)
+        {
+            var index = gabKey.ToUpper().IndexOf(k);
+            switch (index)
+            {
+                case 0:
+                    return l;
+                case 1:
+                    return h;
+                case 2:
+                    return t;
+                default:
+                    return null;
             }
         }
     }

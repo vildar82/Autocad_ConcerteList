@@ -14,7 +14,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
     public class PanelViewModel : ObservableObject
     {
-        private static Brush BadValue = new SolidColorBrush(Colors.Red);        
+        private static Brush BadValueColor = new SolidColorBrush(Colors.Red);
+        private static Brush NewPanelColor = new SolidColorBrush(Colors.LawnGreen);
+        
         private Panel panel;
         private PanelDetailViewModel _selectedPanel;        
 
@@ -47,12 +49,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             foreach (var item in blocks)
             {
                 PanelsInModel.Add(new PanelDetailViewModel(item, panel));
-            }
-            // Проверка парамаметров в группе - с панелью в строке
-            if (blocks.GroupBy(p => p.Lenght).Skip(1).Any())
-            {
-                
-            }
+            }            
         }
 
         /// <summary>
@@ -66,7 +63,26 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public string MarkByFormula {
             get { return panel.MarkByFormula; }
+            set { RaisePropertyChanged(); }
         }
+        public Brush MarkByFormulaBackground {
+            get {
+                return MarkAtr.Replace(" ", "")== MarkByFormula.Replace(" ", "") ? null : BadValueColor;
+            }
+        }
+        public string MarkByFormulaDesc {
+            get {
+                if (MarkAtr == MarkByFormula)
+                {
+                    return $"Марки совпадают, из атр и по формуле.";
+                }
+                else
+                {
+                    return $"Марки отличаются атр={MarkAtr}, по формуле={MarkByFormula}.";
+                }
+            }
+        }
+
         /// <summary>
         /// Наличие в базе
         /// </summary>
@@ -78,7 +94,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 }
                 return panel.IsNew.Value ? "Новая" : "Есть";
             }
-        }        
+        }
+        public Brush ExistsInBaseBackground {
+            get { return (panel.IsNew== null || !panel.IsNew.Value) ? null : NewPanelColor; }
+        }
+        
         /// <summary>
         /// Группа
         /// </summary>
@@ -86,7 +106,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.ItemGroup; }
         }
         public Brush GroupBackground {
-            get { return panel.IsItemGroupOk ? null : BadValue; }
+            get { return panel.IsItemGroupOk ? null : BadValueColor; }
         }
         public string GroupDesc {
             get { return panel.ItemGroupDesc; }
@@ -97,9 +117,24 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public short? Length {
             get { return panel.Lenght; }
+            set {                
+                var len = panel.UpdateLength(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                if (len != null)
+                {
+                    // обновление поля в деталях
+                    foreach (var item in PanelsInModel)
+                    {
+                        item.Length = len;
+                    }
+                    // Обновление марки по формуле
+                    panel.UpdateMarkByFormula();
+                    MarkByFormula = panel.MarkByFormula;
+                }
+                RaisePropertyChanged();
+            }
         }
         public Brush LengthBackground {
-            get { return panel.IsLengthOk ? null : BadValue; }
+            get { return panel.IsLengthOk ? null : BadValueColor; }
         }
         public string LengthDesc {
             get { return panel.LengthDesc; }
@@ -112,7 +147,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.Height; }
         }
         public Brush HeightBackground {
-            get { return panel.IsHeightOk ? null : BadValue; }
+            get { return panel.IsHeightOk ? null : BadValueColor; }
         }
         public string HeightDesc {
             get { return panel.HeightDesc; }
@@ -124,7 +159,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.Thickness; }
         }
         public Brush ThicknessBackground {
-            get { return panel.IsThicknessOk ? null : BadValue; }
+            get { return panel.IsThicknessOk ? null : BadValueColor; }
         }
         public string ThicknessDesc {
             get { return panel.ThicknessDesc; }
@@ -160,7 +195,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.Weight; }
         }
         public Brush WeightBackground {
-            get { return panel.IsWeightOk ? null : BadValue; }
+            get { return panel.IsWeightOk ? null : BadValueColor; }
         }
         public string WeightDesc {
             get { return panel.WeightDesc; }
@@ -176,7 +211,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.ErrorStatus.ToString("D"); }
         }
         public Brush ErrorStatusBackground {
-            get { return panel.ErrorStatus == ErrorStatusEnum.None? null : BadValue; }
+            get { return panel.ErrorStatus == ErrorStatusEnum.None? null : BadValueColor; }
         }
         public string ErrorStatusDesc {
             get {

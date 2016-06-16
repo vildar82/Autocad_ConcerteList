@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
@@ -19,12 +20,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
     /// </summary>
     public partial class WindowRegPanels : Window
     {
-        public WindowRegPanels (List<KeyValuePair<Panel, List<Panel>>> regPanels, string title)
+        public WindowRegPanels (RegPanelsViewModel model, string title)
         {
             InitializeComponent();
-            Title = title;
-            var dataModel = new CheckPanelsViewModel(regPanels);
-            DataContext = dataModel;
+            Title = title;            
+            DataContext = model;
         }
 
         private void OkClick (object sender, RoutedEventArgs e)

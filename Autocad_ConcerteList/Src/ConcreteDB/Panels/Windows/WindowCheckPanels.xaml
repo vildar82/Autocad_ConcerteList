@@ -21,12 +21,21 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnExpandCollapse" Content="+" Click="btnExpandCollapse_Click_1"></Button>
+                            <Button x:Name="btnExpandCollapse" Content="+" Click="btnExpandCollapse_Click_1" Background="Transparent"
+                                    Height="16" FontSize="9" Padding="0" Margin="0"
+                                    HorizontalContentAlignment="Center" VerticalContentAlignment="Center"></Button>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>                
                 <DataGridTextColumn Header="Марка(атр)" Binding="{Binding MarkAtr}" IsReadOnly="True" />
-                <DataGridTextColumn Header="По формуле" Binding="{Binding MarkByFormula}" IsReadOnly="True" />
+                <DataGridTextColumn Header="По формуле" Binding="{Binding MarkByFormula}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Background" Value="{Binding MarkByFormulaBackground}"/>
+                            <Setter Property="ToolTipService.ToolTip" Value="{Binding MarkByFormulaDesc}" />                            
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Ошибки" Binding="{Binding ErrorStatus}" IsReadOnly="True" >
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
@@ -36,7 +45,13 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="В базе" Binding="{Binding ExistsInBase}" IsReadOnly="True" />                
+                <DataGridTextColumn Header="В базе" Binding="{Binding ExistsInBase}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="Background" Value="{Binding ExistsInBaseBackground}"/>                            
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Группа" Binding="{Binding Group}" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">

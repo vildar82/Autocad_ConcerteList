@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
+using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
@@ -12,7 +13,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
     {
         public ObservableCollection<PanelViewModel> Panels { get; set; }
         public Brush Background { get; set; }
-        public PanelViewModel SelectedPanel { get; set; }
+        public PanelViewModel SelectedPanel { get; set; }        
         /// <summary>
         /// Количество строй
         /// </summary>
@@ -29,28 +30,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         }
         public string CountString {
             get { return $"Строк {CountRow}, блоков {CountBlocks}"; }
-        }
-
-
-        public CheckPanelsViewModel (Panel panel)
-        {
-            Panels = new ObservableCollection<PanelViewModel>();            
-            Panels.Add(new PanelViewModel(panel));            
-
-            // Фон - есть панели с ошибками - красная
-            if (panel.HasErrors)
-            {
-                Background = new SolidColorBrush(Colors.Red);
-            }
-            else
-            {
-                Background = new SolidColorBrush(Colors.Lime);
-            }
-
-        }
+        }        
 
         public CheckPanelsViewModel(List<KeyValuePair<Panel, List<Panel>>> panels)
-        {
+        {            
             Panels = new ObservableCollection<PanelViewModel>();            
             foreach (var item in panels)
             {                

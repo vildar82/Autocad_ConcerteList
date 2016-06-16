@@ -1,13 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Windows;
 using AcadLib;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 using Autocad_ConcerteList.Src.ConcreteDB.Formula;
+using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
@@ -20,6 +23,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     /// </summary>
     public class Panel : iItem, IEquatable<Panel>, IComparable<Panel>
     {
+        private const string AtrTagMark = "МАРКА";
+        private const string AtrTagLength = "ДЛИНА";
+        private const string AtrTagHeight = "ВЫСОТА";
+        private const string AtrTagThickness = "ТОЛЩИНА";
+        private const string AtrTagWeight = "МАССА";
+        private const string AtrTagColor = "ПОКРАСКА";
+        private const string AtrTagAperture = "ПРОЕМ";
+        private const string AtrTagAlbum = "ДОК";
+
         private static AcadLib.Comparers.AlphanumComparator alpha = AcadLib.Comparers.AlphanumComparator.New;
 
         private ParserFormula parserFormula;
@@ -110,6 +122,83 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 return _extents;
             }
         }
+
+        /// <summary>
+        /// Определение марки по формуле
+        /// </summary>
+        /// <returns></returns>
+        public void UpdateMarkByFormula ()
+        {
+            DefineMarkByFormulaInDb();
+        }
+
+        /// <summary>
+        /// Изменение длины в атрибуте - во всех блоках
+        /// </summary>
+        /// <param name="value">Новое значение</param>
+        /// <param name="panelsInModel">Все панели в модели этой марки</param>
+        /// <returns></returns>
+        public short? UpdateLength (short? value, List<Panel> panelsInModel)
+        {
+            // Проверка длины
+            if (value == null)
+            {
+                return Lenght;
+            }
+            // Длина должна соответствовать марке
+            if (CheckGabInput(value.Value, DbGroup.LengthFactor, ParseMark.Length))
+            {
+                Lenght = value;
+                SetPanelsAtrValue(panelsInModel, AtrTagLength, Lenght.Value.ToString());
+                return Lenght;
+            }
+            else
+            {
+                return null;
+            }       
+        }
+
+        private bool CheckGabInput(short val, short factor, short? parseGab)
+        {
+            if (parseGab == null)
+            {
+                return true;
+            }
+            if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
+            {
+                var lenDiv = Eval.GetRoundValue(val / factor);
+                if (lenDiv != ParseMark.Length)
+                {
+                    MessageBox.Show($"Введенное значение '{val}' не соответствует марке '{Mark}'");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void SetPanelsAtrValue (List<Panel> panels, string tag, string value)
+        {
+            using (Commands.Doc.LockDocument())
+            {
+                using (var t = panels.First().IdBlRef.Database.TransactionManager.StartTransaction())
+                {
+                    foreach (var item in panels)
+                    {                                             
+                        var atrInfo = item.AtrsInfo.FirstOrDefault(a => a.Tag.Equals(tag));
+                        if (atrInfo != null)
+                        {
+                            var atrRef = atrInfo.IdAtr.GetObject(OpenMode.ForWrite, false, true) as AttributeReference;
+                            if (atrRef != null)
+                            {
+                                atrRef.TextString = value;
+                            }
+                        }
+                    }
+                    t.Commit();
+                }
+            }
+        }
+
         /// <summary>
         /// Опалубка
         /// </summary>
@@ -201,7 +290,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Масса
         /// </summary>
         public float? Weight { get; set; }
-        public bool IsWeightOk { get; set; }
+        public bool IsWeightOk { get; set; } = true;
         public string WeightDesc { get; set; }
         /// <summary>
         /// Рабочая область
@@ -253,18 +342,32 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public void Checks ()
         {
-            ParseMark = new ParserMark(Mark);
-            ParseMark.Parse();
-            // Перенос распарсеных параметров в панель
-            FillParseParams();
+            try
+            {
+                ParseMark = new ParserMark(Mark);
+                ParseMark.Parse();
+                // Перенос распарсеных параметров в панель
+                FillParseParams();
 
-            DefineDbParams(true);
+                DefineDbParams();
 
-            // Определение марки по формуле по параметрам
-            DefineMarkByFormulaInDb();
+                // Исправление порядка габаритов в распарсенной марке - в соответствии с ключом GabKey в таблице формулы
+                if (DbGroup != null)
+                {
+                    ParseMark.UpdateGab(DbGroup.GabKey);
+                }
 
-            CheckBlockParams();            
-            CheckBdParams();
+                // Определение марки по формуле по параметрам
+                DefineMarkByFormulaInDb();
+
+                CheckBlockParams();
+                CheckBdParams();
+            }
+            catch(Exception ex)
+            {
+                Logger.Log.Error(ex, $"Panel.Checks() - марка - {Mark}");
+                Warning += "Ошибка при проверка параметров панели - " + ex.Message;
+            }
         }
 
         private void CheckBlockParams()
@@ -278,7 +381,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
 
             // Проверка имени блока
-            var isCorBlName = BlockName.Equals(ParseMark.MarkWoGroupClassIndex, StringComparison.OrdinalIgnoreCase);
+            var isCorBlName = BlockName.Replace(" ", "").Equals(ParseMark.MarkWoGroupClassIndex.Replace(" ", ""), StringComparison.OrdinalIgnoreCase);
             if (!isCorBlName)
             {
                 ErrorStatus |= ErrorStatusEnum.IncorrectBlockName;
@@ -324,23 +427,22 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 if (MarkWoSpace != MarkByFormulaWoSpace)
                 {
                     ErrorStatus |= ErrorStatusEnum.IncorrectMarkAndFormula;
-                    Warning += "Марка в блоке отличается от марки полученной по формуле. ";
+                    Warning += $" Марка(атр) '{Mark}' отличается от марки по формуле '{MarkByFormula}'. ";
                 }
                 else
                 {
-                    Warning += "Пропущен пробел в марке '" + Mark + "', правильно '" + MarkByFormula + "' ";
+                    Warning += " Пропущен пробел в марке '" + Mark + "', правильно '" + MarkByFormula + "'. ";
                 }
             }
-
+                        
             if (DbItem != null)
             {
-                // Проверка массы
-                IsWeightOk = true;
+                // Проверка массы                
                 if (Weight != DbItem.Weight)
                 {
                     IsWeightOk = false;
                     WeightDesc = $"Масса(атр)={Weight}, из базы={DbItem.Weight}";                    
-                    Warning += "Масса в атрибуте отличается от массы в базе. ";
+                    Warning += $" Масса в атрибуте '{Weight}' отличается от массы в базе '{DbItem.Weight}'. ";
                 }
             }
         }
@@ -396,36 +498,36 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 AtrsInfo = AttributeInfo.GetAttrRefs(blRef);
                 foreach (var atr in AtrsInfo)
                 {
-                    if (atr.Tag.Equals("МАРКА", StringComparison.OrdinalIgnoreCase))
+                    if (atr.Tag.Equals(AtrTagMark, StringComparison.OrdinalIgnoreCase))
                     {
                         Mark = atr.Text.Trim();
                         MarkWoSpace = Mark.Replace(" ", "");
                     }
-                    else if (atr.Tag.Equals("ДЛИНА", StringComparison.OrdinalIgnoreCase))
+                    else if (atr.Tag.Equals(AtrTagLength, StringComparison.OrdinalIgnoreCase))
                     {
                         Lenght = GetShortNullable(atr.Text);
                     }
-                    else if (atr.Tag.Equals("ВЫСОТА", StringComparison.OrdinalIgnoreCase))
+                    else if (atr.Tag.Equals(AtrTagHeight, StringComparison.OrdinalIgnoreCase))
                     {
                         Height = GetShortNullable(atr.Text);
                     }
-                    else if (atr.Tag.Equals("ТОЛЩИНА", StringComparison.OrdinalIgnoreCase))
+                    else if (atr.Tag.Equals(AtrTagThickness, StringComparison.OrdinalIgnoreCase))
                     {
                         Thickness = GetShortNullable(atr.Text);
                     }                    
-                    else if (atr.Tag.Equals("МАССА", StringComparison.OrdinalIgnoreCase))
+                    else if (atr.Tag.Equals(AtrTagWeight, StringComparison.OrdinalIgnoreCase))
                     {
                         Weight = GetFloatNullable(atr.Text);
                     }
-                    else if (atr.Tag.Equals("ПОКРАСКА", StringComparison.OrdinalIgnoreCase))
+                    else if (atr.Tag.Equals(AtrTagColor, StringComparison.OrdinalIgnoreCase))
                     {
                         Color = atr.Text.Trim();
                     }
-                    else if (atr.Tag.Equals("ПРОЕМ", StringComparison.OrdinalIgnoreCase))
+                    else if (atr.Tag.Equals(AtrTagAperture, StringComparison.OrdinalIgnoreCase))
                     {
                         Aperture = atr.Text.Trim();
                     }
-                    else if (atr.Tag.Equals("ДОК", StringComparison.OrdinalIgnoreCase))
+                    else if (atr.Tag.Equals(AtrTagAlbum, StringComparison.OrdinalIgnoreCase))
                     {
                         Album = atr.Text.Trim();
                     }
@@ -440,21 +542,25 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return Result.Ok();
         }        
 
-        private void DefineDbParams (bool checkInAllPanels)
+        private void DefineDbParams ()
         {
             // Проверка есть ли такая группа ЖБИ в базе
             DefineItemGroup();
 
-            // Поиск панели в базе по параметрам
-            if (checkInAllPanels)
+            if (DbGroup != null)
             {
-                DbItem = DbService.FindByParametersFromAllLoaded(this);
+                if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
+                {
+                    // Поиск панели в базе по параметрам                    
+                    DbItem = DbService.FindByParametersFromAllLoaded(this);   
+                }
+                else
+                {
+                    // Поиск по марке
+                    DbItem = DbService.FindByMark(Mark);
+                }
+                _isNew = DbItem == null;
             }
-            else
-            {
-                DbItem = DbService.FindByParameters(this);
-            }
-            _isNew = DbItem == null;                   
         }        
 
         public void DefineItemGroup ()
@@ -466,7 +572,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 {
                     IsItemGroupOk = false;
                     ItemGroupDesc = $"Неопределенная группа.";
-                    Warning += $"Неопределенная группа {ItemGroup}.";
+                    Warning += $" Неопределенная группа {ItemGroup}. ";
                     return;
                     //throw new Exception($"Неопределенная группа {ItemGroup}.");
                 }
@@ -476,12 +582,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public void Show()
         {
-            var doc = Application.DocumentManager.MdiActiveDocument;
+            var doc = Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument;
             if (doc != null)
             {
                 if (doc.Database != IdBlRef.Database)
                 {
-                    Application.ShowAlertDialog($"Переключитесь на чертеж {Path.GetFileNameWithoutExtension(IdBlRef.Database.Filename)}");
+                    Autodesk.AutoCAD.ApplicationServices.Application.ShowAlertDialog($"Переключитесь на чертеж {Path.GetFileNameWithoutExtension(IdBlRef.Database.Filename)}");
                     return;
                 }
                 Editor ed = doc.Editor;
@@ -502,12 +608,28 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             try
             {
-                MarkByFormula = DbService.GetDbMark(this, out parserFormula);
-                MarkByFormulaWoSpace = MarkByFormula.Replace(" ", "");
+                if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
+                {
+                    var res = DbService.GetDbMark(this, out parserFormula);
+                    if (res.Success)
+                    {
+                        MarkByFormula = res.Value;
+                        MarkByFormulaWoSpace = MarkByFormula.Replace(" ", "");
+                    }
+                    else
+                    {
+                        Warning += " " + res.Error;
+                    }
+                }
+                else
+                {
+                    MarkByFormula = Mark;
+                    MarkByFormulaWoSpace = MarkWoSpace;
+                }
             }
             catch (Exception ex)
             {
-                Warning += "Ошибка формирования марки панели по параметрам - " + ex.Message + ". ";
+                Warning += " Ошибка формирования марки панели по параметрам - " + ex.Message + ". ";
             }
         }
 
@@ -541,16 +663,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
             sb.Replace("None", "Ok");
             sb.Replace("IncorrectMarkAndParams", "Параметры габаритов из атрибутов не соответствуют марке(атр)");
-            sb.Replace("IncorrectBlockName", $"Несоответствие имени блока {BlockName} и марки (атр) {Mark}");
+            sb.Replace("IncorrectBlockName", $"Несоответствие имени блока '{BlockName}' и марки (атр) '{Mark}'");
             sb.Replace("MarkHasLatin", "В марке есть латинские символы");
-            sb.Replace("IncorrectMarkAndFormula", "Марка(атр) отличается от марки по формуле.");
+            sb.Replace("IncorrectMarkAndFormula", $"Марка(атр) '{Mark}' отличается от марки по формуле '{MarkByFormula}'.");
             sb.Replace("DifferentParamInGroup", "Различные параметры в панелях(блоках) одной марки.");            
 
             var res = sb.ToString();
 
-            if (res.Length>0)
+            if (res.Length>0 && status!= ErrorStatusEnum.None)
             {
-                Warning += res;
+                Warning += " " + res + ". ";
             }
             return res;
         }

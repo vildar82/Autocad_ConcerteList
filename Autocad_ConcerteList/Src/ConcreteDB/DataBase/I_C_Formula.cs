@@ -28,6 +28,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
         public short LengthFactor { get; set; }
         public short HeightFactor { get; set; }
         public short ThicknessFactor { get; set; }
+        public string GabKey { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<I_S_ItemGroup> I_S_ItemGroup { get; set; }

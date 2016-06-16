@@ -24,6 +24,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             panelFirst = firstPanel;
         }        
 
+        public Panel PanelDetail {
+            get { return panelDetail; }
+        }
+
         /// <summary>
         /// Марка панели из атрибута
         /// </summary>               
@@ -47,6 +51,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public short? Length {
             get { return panelDetail.Lenght; }
+            set {
+                panelDetail.Lenght = value;
+                RaisePropertyChanged();
+            }
         }
         public Brush LengthBackground {
             get { return panelDetail.Lenght == panelFirst.Lenght ? null : BadValue; }
