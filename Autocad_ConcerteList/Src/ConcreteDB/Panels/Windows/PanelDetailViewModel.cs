@@ -106,5 +106,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// Команда - показать панель на чертеже
         /// </summary>
         public ICommand Show { get { return new RelayCommand(() => panelDetail.Show(), () => panelDetail.CanShow()); } }
+
+        internal void UpdateCheckPanel ()
+        {
+            panelDetail.Checks();
+        }
     }
 }

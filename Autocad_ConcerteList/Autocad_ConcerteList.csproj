@@ -145,6 +145,7 @@
     <Compile Include="Src\ConcreteDB\Panels\FilterPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\ParserMark.cs" />
     <Compile Include="Src\ConcreteDB\Panels\RegPanels.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\PanelsBaseView.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\RegPanelsViewModel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\PanelViewModel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\WindowRegPanels.xaml.cs">

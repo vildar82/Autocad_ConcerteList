@@ -129,14 +129,24 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         //    }
         //}
 
-        private static void LogMultiplyPanelsInBd (List<ItemConstructionDbo> panels)
+        private static ItemConstructionDbo SelectItemPanelFromFinds (List<ItemConstructionDbo> panels)
         {
             if (panels.Skip(1).Any())
             {
                 // Несколько записей в базе с этими параметрвами
-                string idsItems = string.Join(",", panels.Select(i => i.ItemConstructionId));
-                Logger.Log.Error($"Найдено несколько панелей по параметрам для марки {panels.First().HandMarkNoColour}, ItemConstructionId: {idsItems}.");
+                //    string idsItems = string.Join(",", panels.Select(i => i.ItemConstructionId));
+                //    Logger.Log.Error($"Найдено несколько панелей по параметрам для марки {panels.First().HandMarkNoColour}, ItemConstructionId: {idsItems}.");
+                var res = panels.FirstOrDefault(p => p.Weight != null);
+                if (res != null)
+                {
+                    return res;
+                }
             }
+            else if (panels.Any())
+            {
+                return panels.First();
+            }
+            return null;
         }
 
         public static ItemConstructionDbo FindByMark (string mark)
@@ -152,8 +162,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             }
             if (finds.Count>0)
             {
-                LogMultiplyPanelsInBd(finds);
-                return finds.First();
+                return SelectItemPanelFromFinds(finds);                
             }
             else
             {
@@ -179,16 +188,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 Electrics = panel.Electrics
             };
             var finds = Items.FindAll(i => i.Equals(itemSearch));
-            LogMultiplyPanelsInBd(finds);
-            return finds.FirstOrDefault();
-            //return Items.FirstOrDefault(i =>
-            //            i.ItemGroup == panel.ItemGroup &&
-            //            i.Lenght == panel.Lenght && i.Height == panel.Height && i.Thickness == panel.Thickness &&
-            //            i.Formwork == panel.Formwork &&
-            //            i.BalconyDoor?.BalconyDoorName == panel.BalconyDoor &&
-            //            i.BalconyCut?.BalconyCutName == panel.BalconyCut &&
-            //            i.Electrics == panel.Electrics
-            //);
+            return SelectItemPanelFromFinds(finds);
         }
 
         private static void LoadItems ()
@@ -238,8 +238,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             string markDb = null;
             parseFormula = null;
 
-            // Получение id группы            
-            panel.DefineItemGroup();
+            // Получение id группы  
+            if (panel.DbGroup == null)
+            {
+                panel.DefineItemGroup();
+            }            
             if (panel.DbGroup == null)
             {
                 return Result.Fail<string>($"Не найдена группа {panel.ItemGroup}.");

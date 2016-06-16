@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.Linq;
 using System.Text;
@@ -16,7 +17,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
     {
         private static Brush BadValueColor = new SolidColorBrush(Colors.Red);
         private static Brush NewPanelColor = new SolidColorBrush(Colors.LawnGreen);
-        
+
+        private PanelsBaseView model;
         private Panel panel;
         private PanelDetailViewModel _selectedPanel;        
 
@@ -33,17 +35,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 _selectedPanel = value;
                 _selectedPanel.Show.Execute(null);
             }
-        }
+        }        
 
-        public PanelViewModel (Panel item)
+        public PanelViewModel (Panel panel, List<Panel> blocks, PanelsBaseView model)
         {
-            panel = item;
-            PanelsInModel = new ObservableCollection<PanelDetailViewModel>();
-            PanelsInModel.Add(new PanelDetailViewModel(item, item));            
-        }
-
-        public PanelViewModel (Panel panel, List<Panel> blocks)
-        {
+            this.model = model;
             this.panel = panel;            
             PanelsInModel = new ObservableCollection<PanelDetailViewModel>();
             foreach (var item in blocks)
@@ -125,14 +121,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                     foreach (var item in PanelsInModel)
                     {
                         item.Length = len;
+                        item.UpdateCheckPanel();
                     }
-                    // Обновление марки по формуле
-                    panel.UpdateMarkByFormula();
-                    MarkByFormula = panel.MarkByFormula;
+                    // Обновление всех значений
+                    UpdateRow();
                 }
                 RaisePropertyChanged();
             }
         }
+
+        private void UpdateRow ()
+        {
+            // Добавил в xaml - UpdateSourceTrigger=LostFocus
+            model.UpdateObservableColl();
+        }
+
         public Brush LengthBackground {
             get { return panel.IsLengthOk ? null : BadValueColor; }
         }

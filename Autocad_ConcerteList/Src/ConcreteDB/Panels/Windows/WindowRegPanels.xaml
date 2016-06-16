@@ -130,7 +130,10 @@
                    Background="WhiteSmoke" TextWrapping="WrapWithOverflow" Padding="5"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal">
             <TextBlock Text ="{Binding CountString}" Padding="2" FontSize="12"/>
-            <Button Click="OkClick" Content="Зарегистрировать" IsDefault="true" Margin="2"/>
+            <ComboBox ItemsSource="{Binding Series}" DisplayMemberPath="Name" SelectedValuePath="Name" 
+                      SelectedValue="{Binding SelectedSerie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      HorizontalAlignment="Center"/>
+            <Button Click="OkClick" Content="Зарегистрировать" HorizontalAlignment="Right" IsDefault="true" Margin="2"/>
         </StackPanel>
     </Grid>
 </Window>

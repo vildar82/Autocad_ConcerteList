@@ -121,16 +121,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 }
                 return _extents;
             }
-        }
-
-        /// <summary>
-        /// Определение марки по формуле
-        /// </summary>
-        /// <returns></returns>
-        public void UpdateMarkByFormula ()
-        {
-            DefineMarkByFormulaInDb();
-        }
+        }       
 
         /// <summary>
         /// Изменение длины в атрибуте - во всех блоках
@@ -150,6 +141,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 Lenght = value;
                 SetPanelsAtrValue(panelsInModel, AtrTagLength, Lenght.Value.ToString());
+                // Обновление статуса панели
+                Checks();
                 return Lenght;
             }
             else
@@ -342,6 +335,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public void Checks ()
         {
+            ErrorStatus = ErrorStatusEnum.None;
             try
             {
                 ParseMark = new ParserMark(Mark);
@@ -540,44 +534,38 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }            
 
             return Result.Ok();
-        }        
+        }
 
         private void DefineDbParams ()
         {
             // Проверка есть ли такая группа ЖБИ в базе
             DefineItemGroup();
 
-            if (DbGroup != null)
+            if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
             {
-                if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
-                {
-                    // Поиск панели в базе по параметрам                    
-                    DbItem = DbService.FindByParametersFromAllLoaded(this);   
-                }
-                else
-                {
-                    // Поиск по марке
-                    DbItem = DbService.FindByMark(Mark);
-                }
-                _isNew = DbItem == null;
+                // Поиск панели в базе по параметрам                    
+                DbItem = DbService.FindByParametersFromAllLoaded(this);
             }
-        }        
+            else
+            {
+                // Поиск по марке
+                DbItem = DbService.FindByMark(Mark);
+            }
+            _isNew = DbItem == null;
+        }
 
         public void DefineItemGroup ()
         {
+            DbGroup = DbService.FindGroup(ItemGroup);
             if (DbGroup == null)
             {
-                DbGroup = DbService.FindGroup(ItemGroup);
-                if (DbGroup == null)
-                {
-                    IsItemGroupOk = false;
-                    ItemGroupDesc = $"Неопределенная группа.";
-                    Warning += $" Неопределенная группа {ItemGroup}. ";
-                    return;
-                    //throw new Exception($"Неопределенная группа {ItemGroup}.");
-                }
-                IsItemGroupOk = true;
+                IsItemGroupOk = false;
+                ItemGroupDesc = $"Неопределенная группа.";
+                Warning += $" Неопределенная группа {ItemGroup}. ";
+                return;
+                //throw new Exception($"Неопределенная группа {ItemGroup}.");
             }
+            IsItemGroupOk = true;
         }
 
         public void Show()

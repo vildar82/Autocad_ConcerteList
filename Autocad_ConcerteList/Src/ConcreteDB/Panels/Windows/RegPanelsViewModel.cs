@@ -9,50 +9,23 @@ using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
-    public class RegPanelsViewModel
-    {
-        public ObservableCollection<PanelViewModel> Panels { get; set; }
-        public Brush Background { get; set; }
-        public PanelViewModel SelectedPanel { get; set; }
+    public class RegPanelsViewModel :PanelsBaseView
+    {        
         public bool CanRegistry { get; set; }
         public ObservableCollection<SerieDbo> Series { get; set; }
-        public SerieDbo SelectedSerie { get; set; }
-        /// <summary>
-        /// Количество строк
-        /// </summary>
-        public int CountRow {
-            get { return Panels.Count; }
-        }
-        /// <summary>
-        /// Количество блоков панелей
-        /// </summary>
-        public int CountBlocks {
-            get {
-                 return Panels.Sum(s => s.PanelsInModel.Count);
-            }
-        }
-        public string CountString {
-            get { return $"Строк {CountRow}, блоков {CountBlocks}"; }
-        }        
+        public SerieDbo SelectedSerie { get; set; }        
 
-        public RegPanelsViewModel (List<KeyValuePair<Panel, List<Panel>>> regPanels, List<SerieDbo> series)
+        public RegPanelsViewModel (List<KeyValuePair<Panel, List<Panel>>> regPanels, List<SerieDbo> series): base(regPanels)
         {
             Series = new ObservableCollection<SerieDbo>(series);
-            Panels = new ObservableCollection<PanelViewModel>();            
-            foreach (var item in regPanels)
-            {                
-                Panels.Add(new PanelViewModel(item.Key, item.Value));
-            }
-
+            SelectedSerie = Series.FirstOrDefault(s => s.Name.Equals("ПИК-1.0"));
             // Фон - есть панели с ошибками - красная
             if (regPanels.Any(p=>p.Key.HasErrors))
-            {
-                Background = new SolidColorBrush(Colors.Red);
+            {                
                 CanRegistry = false;
             }
             else
-            {
-                Background = new SolidColorBrush(Colors.Lime);
+            {                
                 CanRegistry = true;
             }
         }        
