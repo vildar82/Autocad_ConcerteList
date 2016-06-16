@@ -83,8 +83,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                              where g.ItemGroup == ItemGroup &&
                        i.Lenght == Lenght && i.Height == Height && i.Thickness == Thickness &&
                        i.Formwork == Formwork &&
-                       (bcJoined == null || bcJoined.BalconyCut == BalconyCut) &&
-                       (bdJoined == null || bdJoined.BalconyDoor == BalconyDoor) &&
+                       ((string.IsNullOrEmpty(BalconyCut) && bcJoined == null) ||
+                       (bcJoined != null && bcJoined.BalconyCut == BalconyCut)) &&
+                       ((string.IsNullOrEmpty(BalconyDoor) && bdJoined == null) ||
+                       (bdJoined != null && bdJoined.BalconyDoor == BalconyDoor)) &&                       
                        i.Electrics == Electrics
                              select new ItemConstructionDbo {
                                  HandMarkNoColour = i.HandMarkNoColour,
@@ -180,11 +182,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                                  Thickness = i.Thickness,
                                  Formwork = i.Formwork,
                                  FormworkMirror = i.FormworkMirror,
-                                 BalconyCut = bcJoined == null ? null : new BalconyCutDbo {
+                                 BalconyCut = (bcJoined == null) ? null : new BalconyCutDbo {
                                      BalconyCutId = i.BalconyCutId.Value,
                                      BalconyCutName = bcJoined.BalconyCut, BalconyCutSize = bcJoined.BalconyCutSize
                                  },
-                                 BalconyDoor = bdJoined == null ? null : new BalconyDoorDbo {
+                                 BalconyDoor = (bdJoined == null) ? null : new BalconyDoorDbo {
                                      BalconyDoorId = i.BalconyDoorId.Value,
                                      BalconyDoorName = bdJoined.BalconyDoor
                                  },

@@ -31,7 +31,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Соответствие игнорируемых имен блоков.
         /// </summary>
-        public static List<string> IgnoredBlockNamesMatch { get; } = new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук" };
+        public static List<string> IgnoredBlockNamesMatch { get; } = new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук", "^A$" };
 
         public bool CanShow ()
         {
@@ -118,7 +118,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Высото (атр)
         /// </summary>
         public short? Height { get; set; }
-        public bool IsHeightOk { get; set; }
+        public bool IsHeightOk { get; set; } = true;
         public string HeightDesc { get; set; }
         public ObjectId IdBlRef { get; set; }
         public ObjectId IdBtr { get; set; }
@@ -165,8 +165,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Длина (атр)
         /// </summary>                   
-        public short? Lenght { get; set; }        
-        public bool IsLengthOk { get; set; }
+        public short? Lenght { get; set; }
+        public bool IsLengthOk { get; set; } = true;
         public string LengthDesc { get; set; }
         /// <summary>
         /// Марка от конструкторов - из атрибута
@@ -190,7 +190,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Толщина (атр)
         /// </summary>
         public short? Thickness { get; set; }
-        public bool IsThicknessOk { get; set; }
+        public bool IsThicknessOk { get; set; } = true;
         public string ThicknessDesc { get; set; }
         public float? Volume { get; set; }
         /// <summary>
@@ -258,7 +258,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             // Перенос распарсеных параметров в панель
             FillParseParams();
 
-            DefineDbParams(false);
+            DefineDbParams(true);
 
             // Определение марки по формуле по параметрам
             DefineMarkByFormulaInDb();

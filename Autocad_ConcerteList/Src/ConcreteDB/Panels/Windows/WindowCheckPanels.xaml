@@ -32,6 +32,7 @@
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Background" Value="{Binding ErrorStatusBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding ErrorStatusDesc}" />
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -41,6 +42,7 @@
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Background" Value="{Binding GroupBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding GroupDesc}" />
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -49,6 +51,7 @@
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Background" Value="{Binding LengthBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding LengthDesc}" />
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -57,7 +60,8 @@
                     <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Background" Value="{Binding HeightBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding HeightDesc}" />
-                    </Style>
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Толщина" Binding="{Binding Thickness}" IsReadOnly="False">
@@ -65,18 +69,44 @@
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Background" Value="{Binding ThicknessBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding ThicknessDesc}" />
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Опалубка" Binding="{Binding Formwork}" IsReadOnly="True" />
-                <DataGridTextColumn Header="Б" Binding="{Binding BalconyDoor}" IsReadOnly="True" />
-                <DataGridTextColumn Header="П" Binding="{Binding BalconyCut}" IsReadOnly="True" />
-                <DataGridTextColumn Header="э" Binding="{Binding Electrics}" IsReadOnly="True" />
+                <DataGridTextColumn Header="Опалубка" Binding="{Binding Formwork}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">                            
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="Б" Binding="{Binding BalconyDoor}" IsReadOnly="True">
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="П" Binding="{Binding BalconyCut}" IsReadOnly="True" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
+                <DataGridTextColumn Header="э" Binding="{Binding Electrics}" IsReadOnly="True" >
+                    <DataGridTextColumn.ElementStyle>
+                        <Style TargetType="{x:Type TextBlock}">
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                        </Style>
+                    </DataGridTextColumn.ElementStyle>
+                </DataGridTextColumn>
                 <DataGridTextColumn Header="Масса" Binding="{Binding Weight}" IsReadOnly="False">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Background" Value="{Binding WeightBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding WeightDesc}" />
+                            <Setter Property="TextBlock.TextAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>

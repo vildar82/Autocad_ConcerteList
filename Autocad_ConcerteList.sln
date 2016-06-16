@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MicroMvvm", "MicroMvvm\Micr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAcadConsole", "TestAcadConsole\TestAcadConsole.csproj", "{2CBDD1E7-9AD5-4CBC-ABFB-27A1188C5740}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClassLibrary1", "ClassLibrary1\ClassLibrary1.csproj", "{98E53271-42C0-465F-ADDE-0AC26F1698F3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{2CBDD1E7-9AD5-4CBC-ABFB-27A1188C5740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CBDD1E7-9AD5-4CBC-ABFB-27A1188C5740}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2CBDD1E7-9AD5-4CBC-ABFB-27A1188C5740}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98E53271-42C0-465F-ADDE-0AC26F1698F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98E53271-42C0-465F-ADDE-0AC26F1698F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98E53271-42C0-465F-ADDE-0AC26F1698F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98E53271-42C0-465F-ADDE-0AC26F1698F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
