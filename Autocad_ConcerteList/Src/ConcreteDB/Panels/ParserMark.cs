@@ -31,7 +31,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Индекс "Класса Бетона" - Например 2,3 - 2П, 2В, 3В, 3НСг2 (2).
         /// </summary>
-        public int GroupIndexClass { get; private set; }             
+        public int GroupIndexClass { get; private set; }
         /// <summary>
         /// Длина - первое число в габаритах марки. Для группы вентблоков это может быть высота.
         /// </summary>        

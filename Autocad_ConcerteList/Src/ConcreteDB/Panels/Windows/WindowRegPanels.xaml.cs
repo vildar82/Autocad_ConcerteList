@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -16,24 +15,21 @@ using System.Windows.Shapes;
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
     /// <summary>
-    /// Логика взаимодействия для WindowCheckPanels.xaml
+    /// Логика взаимодействия для WindowRegPanels.xaml
     /// </summary>
-    public partial class WindowCheckPanels : Window
+    public partial class WindowRegPanels : Window
     {
-        public WindowCheckPanels(Panel panel)
+        public WindowRegPanels (List<KeyValuePair<Panel, List<Panel>>> regPanels, string title)
         {
             InitializeComponent();
-            Title = "Проверка панели";
-            var dataModel = new CheckPanelsViewModel(panel);
+            Title = title;
+            var dataModel = new CheckPanelsViewModel(regPanels);
             DataContext = dataModel;
         }
 
-        public WindowCheckPanels(List<KeyValuePair<Panel, List<Panel>>> checkPanels, string title)
-        {            
-            InitializeComponent();
-            Title = title;
-            var dataModel = new CheckPanelsViewModel(checkPanels);
-            DataContext = dataModel;            
+        private void OkClick (object sender, RoutedEventArgs e)
+        {
+            this.DialogResult = true;
         }
 
         private void btnExpandCollapse_Click_1 (object sender, RoutedEventArgs e)
@@ -72,5 +68,5 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 MessageBox.Show(ex.Message);
             }
         }
-    }
+    }    
 }

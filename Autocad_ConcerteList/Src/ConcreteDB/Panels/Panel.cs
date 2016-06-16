@@ -21,6 +21,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     public class Panel : iItem, IEquatable<Panel>, IComparable<Panel>
     {
         private static AcadLib.Comparers.AlphanumComparator alpha = AcadLib.Comparers.AlphanumComparator.New;
+
+        private ParserFormula parserFormula;
+        private bool? _isNew;        
         private bool _alreadyCalcExtents;
         private Extents3d _extents;
         //private string _info;
@@ -28,7 +31,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Соответствие игнорируемых имен блоков.
         /// </summary>
-        public static List<string> IgnoredBlockNamesMatch { get; } = new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат" };
+        public static List<string> IgnoredBlockNamesMatch { get; } = new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук" };
 
         public bool CanShow ()
         {
@@ -122,7 +125,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Это новая панель - нет в базе (DbItem == null)
         /// </summary>
-        public bool IsNew { get { return DbItem == null; } }
+        public bool? IsNew {
+            get {
+                return _isNew;
+            }
+            set {
+                _isNew = value;
+            }
+        }        
 
         public string GetErrorStatusDesc ()
         {
@@ -150,6 +160,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Группа изделия - В, П, 3НСг
         /// </summary>
         public string ItemGroup { get; set; }
+        public bool IsItemGroupOk { get; set; }
+        public string ItemGroupDesc { get; set; }
         /// <summary>
         /// Длина (атр)
         /// </summary>                   
@@ -163,7 +175,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Марка из базы
         /// </summary>
-        public string MarkByFormula { get; set; }
+        public string MarkByFormula { get; set; }        
         /// <summary>
         /// Марка из базы без пробелов
         /// </summary>
@@ -239,7 +251,23 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return false;
         }
 
-        public void CheckBlockParams()
+        public void Checks ()
+        {
+            ParseMark = new ParserMark(Mark);
+            ParseMark.Parse();
+            // Перенос распарсеных параметров в панель
+            FillParseParams();
+
+            DefineDbParams(false);
+
+            // Определение марки по формуле по параметрам
+            DefineMarkByFormulaInDb();
+
+            CheckBlockParams();            
+            CheckBdParams();
+        }
+
+        private void CheckBlockParams()
         {
             // Проверка латинских букв в марке
             var noLatin = Regex.IsMatch(Mark, "^[^a-z|^A-Z]+$");
@@ -257,25 +285,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 Warning += $" Имя блока '{BlockName}' не соответствует марке из атрибута '{Mark}'. ";
             }
 
-            // Соответствие параметров и марки       
-            if (DbGroup == null)
-            {
-                DbGroup = DbService.FindGroup(ItemGroup);
-            }
-            if (DbGroup != null)
+            // Соответствие параметров и марки                   
+            if (DbGroup != null && DbGroup.HasFormula!= null && DbGroup.HasFormula.Value)
             {
                 // Определение длин из распарсенной марки
                 bool isOk;                
                 string desc;
-                CheckGab(out isOk, ParseMark.Length, Lenght, DbGroup.LengthFactor, "Длина", out desc);
+                CheckGab(out isOk, parserFormula.Length, Lenght, DbGroup.LengthFactor, "Длина", out desc);
                 IsLengthOk = isOk;                
                 LengthDesc = desc;
                 
-                CheckGab(out isOk, ParseMark.Height, Height, DbGroup.HeightFactor, "Высота", out desc);
+                CheckGab(out isOk, parserFormula.Height, Height, DbGroup.HeightFactor, "Высота", out desc);
                 IsHeightOk = isOk;                
                 HeightDesc = desc;
                 
-                CheckGab(out isOk, ParseMark.Thickness, Thickness, DbGroup.ThicknessFactor, "Ширина", out desc);
+                CheckGab(out isOk, parserFormula.Thickness, Thickness, DbGroup.ThicknessFactor, "Ширина", out desc);
                 IsThicknessOk = isOk;                
                 ThicknessDesc = desc;                
 
@@ -292,7 +316,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Проверки панели
         /// </summary>
-        public void CheckBdParams ()
+        private void CheckBdParams ()
         {            
             // Проверка марки в атрибуте и по формуле
             if (Mark != MarkByFormula)
@@ -411,28 +435,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             if (string.IsNullOrEmpty(Mark))
             {
                 return Result.Fail("Марка не определена.");
-            }
-
-            ParseMark = new ParserMark(Mark);
-            ParseMark.Parse();            
-
-            // Перенос распарсеных параметров в панель
-            FillParseParams();           
+            }            
 
             return Result.Ok();
         }        
 
-        public void DefineDbParams (bool checkInAllPanels)
+        private void DefineDbParams (bool checkInAllPanels)
         {
             // Проверка есть ли такая группа ЖБИ в базе
-            if (DbGroup == null)
-            {
-                DbGroup = DbService.FindGroup(ItemGroup);
-                if (DbGroup == null)
-                {
-                    throw new Exception($"Неопределенная группа {ItemGroup}.");
-                }
-            }
+            DefineItemGroup();
 
             // Поиск панели в базе по параметрам
             if (checkInAllPanels)
@@ -443,10 +454,25 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 DbItem = DbService.FindByParameters(this);
             }
-
-            // Определение марки по формуле по параметрам
-            DefineMarkByFormulaInDb();            
+            _isNew = DbItem == null;                   
         }        
+
+        public void DefineItemGroup ()
+        {
+            if (DbGroup == null)
+            {
+                DbGroup = DbService.FindGroup(ItemGroup);
+                if (DbGroup == null)
+                {
+                    IsItemGroupOk = false;
+                    ItemGroupDesc = $"Неопределенная группа.";
+                    Warning += $"Неопределенная группа {ItemGroup}.";
+                    return;
+                    //throw new Exception($"Неопределенная группа {ItemGroup}.");
+                }
+                IsItemGroupOk = true;
+            }
+        }
 
         public void Show()
         {
@@ -476,7 +502,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             try
             {
-                MarkByFormula = DbService.GetDbMark(this);
+                MarkByFormula = DbService.GetDbMark(this, out parserFormula);
                 MarkByFormulaWoSpace = MarkByFormula.Replace(" ", "");
             }
             catch (Exception ex)

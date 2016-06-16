@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
 {
     public class Eval
-    {
+    {        
         public string EvalString { get; set; }
         public string ValueString { get; set; }
         public bool IsEvaluable { get; set; }
@@ -23,7 +23,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
                             .ToDictionary(f => f.Name);        
 
         public Eval (string eval, iItem item)
-        {   
+        {            
             EvalString = eval;
             this.item = item;
             IsEvaluable = eval.StartsWith("'");                  
@@ -38,7 +38,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
             else
             {
                 // Определение поля в объекте ItemEntryData и получение его значения
-                ValueString = getValue(EvalString);
+                ValueString = getValue(EvalString);                
             }
             return ValueString;
         }
@@ -64,14 +64,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
             {
                 if (itemOperand.Contains("dbo"))
                 {
-                    string fieldName = itemOperand.Split('.').Last().Trim();
+                    string fieldName = itemOperand.Split('.').Last().Trim();                    
                     string fieldValue = getFieldValue(fieldName);
                     if (fieldValue == null)
                     {
                         evaluate = string.Empty;
                         break;
                     }
-                    evaluate = evaluate.Replace(itemOperand, fieldValue);
+                    evaluate = evaluate.Replace(itemOperand, fieldValue);                    
                 }                      
             }                        
 

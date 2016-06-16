@@ -80,6 +80,20 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panelDetail.Weight == panelFirst.Weight ? null : BadValue; }
         }         
 
+        public string Section {
+            get {
+                return panelDetail.WS?.Section;
+            }
+        }
+        /// <summary>
+        /// Этаж
+        /// </summary>
+        public string Floor {
+            get {
+                return panelDetail.WS?.Floor;
+            }
+        }
+
         /// <summary>
         /// Команда - показать панель на чертеже
         /// </summary>

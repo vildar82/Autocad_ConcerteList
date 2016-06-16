@@ -10,6 +10,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
 {
     public class ParserFormula
     {
+        public short? Length { get; set; }
+        public short? Height { get; set; }
+        public short? Thickness { get; set; }
         public string Formula { get; private set; }
         public string Result { get; private set; }
         public List<Eval> Evals { get; private set; }
@@ -30,6 +33,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
                 Eval eval = new Eval(evalItem, item);
                 eval.Evaluate();           
                 Evals.Add(eval);
+                if (evalItem.Contains("Lenght"))
+                {
+                    Length =short.Parse(eval.ValueString);
+                }
+                else if (evalItem.Contains("Height"))
+                {
+                    Height = short.Parse(eval.ValueString);
+                }
+                else if (evalItem.Contains("Thickness"))
+                {
+                    Thickness = short.Parse(eval.ValueString);
+                }                
             }
 
             // Соединение значений по формуле

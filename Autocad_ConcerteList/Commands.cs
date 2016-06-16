@@ -54,9 +54,7 @@ namespace Autocad_ConcerteList
                             return;
                         }
                         // Проверка соответствия марки и параметров в блоке панели                        
-                        panel.CheckBlockParams();
-                        panel.DefineDbParams(false);
-                        panel.CheckBdParams();
+                        panel.Checks();                        
 
                         if (panel.HasErrors || !panel.IsWeightOk)
                         {
@@ -108,7 +106,11 @@ namespace Autocad_ConcerteList
                 List<KeyValuePair<Panel, List<Panel>>> checkedPanels = new List<KeyValuePair<Panel, List<Panel>>> ();
                 foreach (var item in groupedMarkPanels)
                 {
-                    var first = item.First();
+                    var first = item.FirstOrDefault(i=>i.IsNew!=null && !i.IsNew.Value);
+                    if (first == null)
+                    {
+                        first = item.First();
+                    }
                     var someParams = item.GroupBy(g => g);
                     if (someParams.Skip(1).Any())
                     {
@@ -116,19 +118,8 @@ namespace Autocad_ConcerteList
                         first.ErrorStatus |= ErrorStatusEnum.DifferentParamInGroup;
                         first.Warning += $" Различие параметров в панелях этой марки {first.Mark}.";
                     }
-                    else
-                    {
-                        try
-                        {
-                            first.DefineDbParams(true);
-                            first.CheckBdParams();
-                        }
-                        catch (System.Exception ex)
-                        {
-                            Inspector.AddError($"Ошибка обработки панели {first.Mark} - {ex}");
-                        }
-                    }
-                    if (first.IsNew || first.HasErrors | !first.IsWeightOk)
+                                     
+                    if (first.IsNew != null && first.IsNew.Value || first.HasErrors | !first.IsWeightOk)
                     {
                         checkedPanels.Add(new KeyValuePair<Panel, List<Panel>>(first, item.ToList()));
                     }
@@ -159,8 +150,7 @@ namespace Autocad_ConcerteList
         {
             CommandStart.Start((doc) =>
             {
-                Editor ed = doc.Editor;
-                ed.WriteMessage("\nПока не работает (");
+                Editor ed = doc.Editor;                
                 // Проверка доступа. Только Лукашовой?????
                 if (!Access.Success())
                 {
@@ -174,9 +164,7 @@ namespace Autocad_ConcerteList
                 filter.Filter();
                 var panels = filter.Panels;
 
-                RegPanels regPanels = new RegPanels(panels);
-                int regCount = regPanels.Registry();
-                ed.WriteMessage($"\nЗарегистрировано {regCount} панелей.");
+                RegPanels regPanels = new RegPanels(panels);                
             });
         }
 

@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using AcadLib.Errors;
 using Autocad_ConcerteList.Src.ConcreteDB;
+using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.EditorInput;
 
@@ -12,7 +14,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     public class RegPanels
     {
         public List<Panel> Panels { get; private set; }
-        public List<Panel> PanelsNew { get; private set; }
+        public List<Panel> PanelsNewWoErr { get; private set; }
 
         public RegPanels(List<Panel> panels)
         {
@@ -22,64 +24,35 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public int Registry()
         {
             int regCount = 0;
-            PanelsNew = Panels.Where(p => p.IsNew).ToList();
+            PanelsNewWoErr = Panels.Where(p => p.IsNew!=null && p.IsNew.Value && !p.HasErrors).ToList();
 
-            Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
-            if (PanelsNew.Count == 0)
+            var panelsNewWithErr = Panels.Where(p=>p.IsNew!=null && p.IsNew.Value && p.HasErrors);
+            foreach (var item in panelsNewWithErr)
             {
-                ed.WriteMessage($"\nНет новых панелей.");
+                Inspector.AddError($"Новая панель с ошибками - {item.Mark}, {item.Warning}, {item.GetErrorStatusDesc()}",
+                    item.IdBlRef, System.Drawing.SystemIcons.Error);
+            }
+
+            var groupedNewPanels = PanelsNewWoErr.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, AcadLib.Comparers.AlphanumComparator.New);
+            List<KeyValuePair<Panel, List<Panel>>> newPanels = new List<KeyValuePair<Panel, List<Panel>>> ();
+
+            WindowRegPanels winPanels = new WindowRegPanels(newPanels, "Новые панели без ошибок");
+            var dialogRes = Application.ShowModalWindow(winPanels);
+            if (dialogRes.HasValue && dialogRes.Value)
+            {
+                var panels = groupedNewPanels.Select(s=>s.First()).ToList();
+                DbService.Register(panels);                
             }
             else
             {
-                //// Если есть панели с ошибками, то показ немодальной формы без возможности регистрации.
-                //var errPanels = PanelsNew.Where(p => p.ErrorStatus != EnumErrorItem.None);
-                //if (errPanels.Any())
-                //{
-                //    FormPanels panelForm = new FormPanels(errPanels.ToList());
-                //    panelForm.Text = "Новые панели";                    
-                //    panelForm.BackColor = System.Drawing.Color.Red;
-                //    panelForm.buttonCancel.Visible = false;
-                //    panelForm.buttonOk.Visible = false;
-                //    Application.ShowModelessDialog(panelForm);
-                //}
-                //else
-                //{
-                //    // Проверка все ли подрезки и балконы определены в базе
-                //    CheckBaseParams.Check(PanelsNew);
-
-                //    // Форма регистрации панелей
-                //    FormPanels formPanels = new FormPanels(PanelsNew);
-                //    formPanels.SetGroupedPanels(true);
-                //    formPanels.BackColor = System.Drawing.Color.Green;
-                //    formPanels.Text = "Регистрация новых панелей";
-                //    formPanels.buttonOk.Text = "Регистрация";
-                //    var series = DbService.GetSeries();
-                //    var serPik1 = series.First(s => s.Series.Equals("ПИК-1.0"));
-                //    formPanels.SetSeries(series, serPik1);
-                //    if (Application.ShowModalDialog(formPanels) == System.Windows.Forms.DialogResult.OK)
-                //    {
-                //        var ser = formPanels.comboBoxSer.SelectedItem as Src.ConcreteDB.DataSet.ConcerteDataSet.I_C_SeriesRow;
-                //        foreach (var item in PanelsNew)
-                //        {
-                //            if (DbService.FindByParameters(item).Count==0)
-                //            {
-                //                if (DbService.Register(item, ser))
-                //                {
-                //                    regCount++;
-                //                }
-                //            }
-                //        }
-                //    }
-                //    else
-                //    {
-                //        // Прерывание и открытие этого окна в немодальном виде                
-                //        formPanels.buttonOk.Visible = false;
-                //        formPanels.buttonCancel.Visible = false;
-                //        Application.ShowModelessDialog(formPanels);
-                //        throw new System.Exception(AcadLib.General.CanceledByUser);
-                //    }
-                //}
+                throw new Exception(AcadLib.General.CanceledByUser);
             }
+
+            Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
+            if (PanelsNewWoErr.Count == 0)
+            {
+                ed.WriteMessage($"\nНет новых панелей.");
+            }            
             return regCount;
         }
     }

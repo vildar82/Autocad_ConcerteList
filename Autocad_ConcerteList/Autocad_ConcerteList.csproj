@@ -145,7 +145,11 @@
     <Compile Include="Src\ConcreteDB\Panels\FilterPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\ParserMark.cs" />
     <Compile Include="Src\ConcreteDB\Panels\RegPanels.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\RegPanelsViewModel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\PanelViewModel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\WindowRegPanels.xaml.cs">
+      <DependentUpon>WindowRegPanels.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Src\ConcreteDB\Panels\Workspace.cs" />
     <Compile Include="Src\ConcreteDB\DbService.cs" />
     <Compile Include="Src\ConcreteDB\Panels\ErrorStatusEnum.cs" />
@@ -198,6 +202,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Src\ConcreteDB\Panels\Windows\WindowCheckPanels.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Src\ConcreteDB\Panels\Windows\WindowRegPanels.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

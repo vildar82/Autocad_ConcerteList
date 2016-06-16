@@ -72,7 +72,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public string ExistsInBase {
             get {
-                return panel.IsNew ? "Новая" : "Есть";
+                if (panel.IsNew == null)
+                {
+                    return "Не определено";
+                }
+                return panel.IsNew.Value ? "Новая" : "Есть";
             }
         }        
         /// <summary>
@@ -81,6 +85,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public string Group {
             get { return panel.ItemGroup; }
         }
+        public Brush GroupBackground {
+            get { return panel.IsItemGroupOk ? null : BadValue; }
+        }
+        public string GroupDesc {
+            get { return panel.ItemGroupDesc; }
+        }
+
         /// <summary>
         /// Длина
         /// </summary>
@@ -171,13 +182,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get {
                  return panel.GetErrorStatusDesc();
             }
-        }
-
-        public Visibility DetailVisibility {
-            get {
-                return checkPanelsModel.SelectedPanel == this ? Visibility.Visible : Visibility.Collapsed;
-            }
-        }
+        }        
 
         /// <summary>
         /// Команда - показать панель на чертеже

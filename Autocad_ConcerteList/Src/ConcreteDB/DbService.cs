@@ -72,42 +72,42 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             using (var ents = ConnectEntities())
             {
                 var query = (from i in ents.I_J_ItemConstruction.AsNoTracking()
-                 join g in ents.I_S_ItemGroup.AsNoTracking() on i.ItemGroupId equals g.ItemGroupId
+                             join g in ents.I_S_ItemGroup.AsNoTracking() on i.ItemGroupId equals g.ItemGroupId
 
-                 join bc in ents.I_S_BalconyCut.AsNoTracking() on i.BalconyCutId equals bc.BalconyCutId into gbc
-                 from bcJoined in gbc.DefaultIfEmpty()
+                             join bc in ents.I_S_BalconyCut.AsNoTracking() on i.BalconyCutId equals bc.BalconyCutId into gbc
+                             from bcJoined in gbc.DefaultIfEmpty()
 
-                 join bd in ents.I_S_BalconyDoor.AsNoTracking() on i.BalconyDoorId equals bd.BalconyDoorId into gbd
-                 from bdJoined in gbd.DefaultIfEmpty()
+                             join bd in ents.I_S_BalconyDoor.AsNoTracking() on i.BalconyDoorId equals bd.BalconyDoorId into gbd
+                             from bdJoined in gbd.DefaultIfEmpty()
 
-                 where g.ItemGroup == ItemGroup &&
+                             where g.ItemGroup == ItemGroup &&
                        i.Lenght == Lenght && i.Height == Height && i.Thickness == Thickness &&
                        i.Formwork == Formwork &&
                        (bcJoined == null || bcJoined.BalconyCut == BalconyCut) &&
                        (bdJoined == null || bdJoined.BalconyDoor == BalconyDoor) &&
                        i.Electrics == Electrics
-                 select new ItemConstructionDbo {
-                     HandMarkNoColour = i.HandMarkNoColour,
-                     ItemGroupId = i.ItemGroupId,
-                     ItemGroup = g.ItemGroup,
-                     Lenght = i.Lenght,
-                     Height = i.Height,
-                     Thickness = i.Thickness,
-                     Formwork = i.Formwork,
-                     FormworkMirror = i.FormworkMirror,
-                     BalconyCut = bcJoined == null ? null : new BalconyCutDbo {
-                         BalconyCutId = i.BalconyCutId.Value,
-                         BalconyCutName = bcJoined.BalconyCut, BalconyCutSize = bcJoined.BalconyCutSize
-                     },
-                     BalconyDoor = bdJoined == null ? null : new BalconyDoorDbo {
-                         BalconyDoorId = i.BalconyDoorId.Value,
-                         BalconyDoorName = bdJoined.BalconyDoor
-                     },
-                     Electrics = i.Electrics,
-                     ItemConstructionId = i.ItemConstructionId,
-                     Weight = i.Weight,
-                     Volume = i.Volume
-                 }).ToList();
+                             select new ItemConstructionDbo {
+                                 HandMarkNoColour = i.HandMarkNoColour,
+                                 ItemGroupId = i.ItemGroupId,
+                                 ItemGroup = g.ItemGroup,
+                                 Lenght = i.Lenght,
+                                 Height = i.Height,
+                                 Thickness = i.Thickness,
+                                 Formwork = i.Formwork,
+                                 FormworkMirror = i.FormworkMirror,
+                                 BalconyCut = bcJoined == null ? null : new BalconyCutDbo {
+                                     BalconyCutId = i.BalconyCutId.Value,
+                                     BalconyCutName = bcJoined.BalconyCut, BalconyCutSize = bcJoined.BalconyCutSize
+                                 },
+                                 BalconyDoor = bdJoined == null ? null : new BalconyDoorDbo {
+                                     BalconyDoorId = i.BalconyDoorId.Value,
+                                     BalconyDoorName = bdJoined.BalconyDoor
+                                 },
+                                 Electrics = i.Electrics,
+                                 ItemConstructionId = i.ItemConstructionId,
+                                 Weight = i.Weight,
+                                 Volume = i.Volume
+                             }).ToList();
 
                 //var query = ents.I_J_ItemConstruction.AsNoTracking().Where(i =>
                 //        i.I_S_ItemGroup.ItemGroup == ItemGroup &&
@@ -134,15 +134,19 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 //        Volume = s.Volume
                 //    }).ToList();
                 var first = query.FirstOrDefault();
-
-                if (query.Skip(1).Any())
-                {
-                    // Несколько записей в базе с этими параметрвами
-                    string idsItems = string.Join(",", query.Select(i => i.ItemConstructionId));
-                    Logger.Log.Error($"Найдено несколько панелей по параметрам для марки {first.HandMarkNoColour}, ItemConstructionId: {idsItems}.");
-                }                
+                LogMultiplyPanelsInBd(query);
                 return first;
-            }            
+            }
+        }
+
+        private static void LogMultiplyPanelsInBd (List<ItemConstructionDbo> panels)
+        {
+            if (panels.Skip(1).Any())
+            {
+                // Несколько записей в базе с этими параметрвами
+                string idsItems = string.Join(",", panels.Select(i => i.ItemConstructionId));
+                Logger.Log.Error($"Найдено несколько панелей по параметрам для марки {panels.First().HandMarkNoColour}, ItemConstructionId: {idsItems}.");
+            }
         }
 
         public static ItemConstructionDbo FindByParameters(Panel panel)
@@ -222,6 +226,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 Electrics = panel.Electrics
             };
             var finds = Items.FindAll(i => i.Equals(itemSearch));
+            LogMultiplyPanelsInBd(finds);
             return finds.FirstOrDefault();
             //return Items.FirstOrDefault(i =>
             //            i.ItemGroup == panel.ItemGroup &&
@@ -236,20 +241,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         /// <summary>
         /// Определение марки панели по формуле из базы
         /// </summary>
-        public static string GetDbMark(Panel panel)
+        public static string GetDbMark (Panel panel, out ParserFormula parseFormula)
         {
             string markDb = null;
+            parseFormula = null;
 
-            // Получение id группы
+            // Получение id группы            
+            panel.DefineItemGroup();
             if (panel.DbGroup == null)
             {
-                panel.DbGroup = FindGroup(panel.ItemGroup);
-                if (panel.DbGroup == null)
-                {
-                    throw new Exception($"Не найдена группа {panel.ItemGroup}");
-                }
-            }                        
-            
+                throw new Exception($"Не найдена группа {panel.ItemGroup}");
+            }
+                                                
             if (panel.DbGroup.HasFormula == null)
             {
                 // Не задано значение HasFormula - считается, что это ошибка определения формулы для группы.
@@ -268,9 +271,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 else
                 {
                     // Получение марки панели по формуле
-                    ParserFormula parserFormula = new ParserFormula(formula, panel);
-                    parserFormula.Parse();
-                    markDb = parserFormula.Result;
+                    parseFormula = new ParserFormula(formula, panel);
+                    parseFormula.Parse();
+                    markDb = parseFormula.Result;
                 }
             }
             else

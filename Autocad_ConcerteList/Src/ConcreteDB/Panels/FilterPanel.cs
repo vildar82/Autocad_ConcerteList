@@ -47,8 +47,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 if (res.Success)
                 {
                     //p.Check();
-                    p.CheckBlockParams();
-                    panels.Add(p);
+                    p.Checks();
+                    panels.Add(p);                    
                     return p;
                 }                
             }
