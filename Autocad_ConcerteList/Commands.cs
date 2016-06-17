@@ -64,7 +64,7 @@ namespace Autocad_ConcerteList
                             var checkPanel = new List<KeyValuePair<Panel, List<Panel>>> ();
                             checkPanel.Add(new KeyValuePair<Panel, List<Panel>>(panel, new List<Panel> { panel }));
                             CheckPanelsViewModel model = new CheckPanelsViewModel (checkPanel);
-                            WindowCheckPanels winPanels = new WindowCheckPanels(model, "Ошибки в панели");
+                            WindowCheckPanels winPanels = new WindowCheckPanels(model);
                             Application.ShowModalWindow(winPanels);                            
                         }
                         else
@@ -136,7 +136,7 @@ namespace Autocad_ConcerteList
                 else
                 {
                     var model = new CheckPanelsViewModel (checkedPanels);
-                    WindowCheckPanels winPanels = new WindowCheckPanels(model, "Панели с ошибками");
+                    WindowCheckPanels winPanels = new WindowCheckPanels(model);
                     Application.ShowModelessWindow(winPanels);
                 }
                 ed.WriteMessage($"\nОбработано {panels.Count} блоков панелей.");
@@ -166,7 +166,8 @@ namespace Autocad_ConcerteList
                 filter.Filter();
                 var panels = filter.Panels;
 
-                RegPanels regPanels = new RegPanels(panels);                
+                RegPanels regPanels = new RegPanels(panels);
+                regPanels.Registry();            
             });
         }
 

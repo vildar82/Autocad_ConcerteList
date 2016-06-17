@@ -65,6 +65,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public short? Height {
             get { return panelDetail.Height; }
+            set {
+                panelDetail.Height = value;
+                RaisePropertyChanged();
+            }
         }
         public Brush HeightBackground {
             get { return panelDetail.Height == panelFirst.Height ? null : BadValue; }
@@ -74,6 +78,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public short? Thickness {
             get { return panelDetail.Thickness; }
+            set {
+                panelDetail.Thickness = value;
+                RaisePropertyChanged();
+            }
         }
         public Brush ThicknessBackground {
             get { return panelDetail.Thickness == panelFirst.Thickness ? null : BadValue; }
@@ -83,6 +91,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public float? Weight {
             get { return panelDetail.Weight; }
+            set {
+                panelDetail.Weight = value;
+                RaisePropertyChanged();
+            }
         }
         public Brush WeightBackground {
             get { return panelDetail.Weight == panelFirst.Weight ? null : BadValue; }

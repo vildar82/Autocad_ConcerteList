@@ -10,5 +10,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
     {
         public decimal SeriesId { get; set; }        
         public string Name { get; set; }
+
+        public override string ToString ()
+        {
+            return Name;
+        }
     }
 }

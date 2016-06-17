@@ -20,17 +20,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
     /// </summary>
     public partial class WindowRegPanels : Window
     {
-        public WindowRegPanels (RegPanelsViewModel model, string title)
-        {
-            InitializeComponent();
-            Title = title;            
-            DataContext = model;
-        }
+        private RegPanelsViewModel model;
 
-        private void OkClick (object sender, RoutedEventArgs e)
+        public WindowRegPanels (RegPanelsViewModel model)
         {
-            this.DialogResult = true;
-        }
+            this.model = model;
+            InitializeComponent();                  
+            DataContext = model;
+            Title = model.Title;
+        }        
 
         private void btnExpandCollapse_Click_1 (object sender, RoutedEventArgs e)
         {
@@ -67,6 +65,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             {
                 MessageBox.Show(ex.Message);
             }
-        }
+        }                
+
+        private void Registry (object sender, RoutedEventArgs e)
+        {
+            if (model.CanRegistry)
+            {
+                DialogResult = true;
+            }
+            else
+            {
+                MessageBox.Show("Нельзя регистрировать панели, пока есть ошибки");
+            }
+        }         
     }    
 }

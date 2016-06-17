@@ -19,7 +19,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         private static Brush NewPanelColor = new SolidColorBrush(Colors.LawnGreen);
 
         private PanelsBaseView model;
-        private Panel panel;
+        internal Panel panel;
         private PanelDetailViewModel _selectedPanel;        
 
         /// <summary>
@@ -53,6 +53,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>               
         public string MarkAtr {
             get { return panel.Mark; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Марка по формуле
@@ -62,9 +63,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set { RaisePropertyChanged(); }
         }
         public Brush MarkByFormulaBackground {
-            get {
-                return MarkAtr.Replace(" ", "")== MarkByFormula.Replace(" ", "") ? null : BadValueColor;
-            }
+            get {                return MarkAtr.Replace(" ", "")== MarkByFormula.Replace(" ", "") ? null : BadValueColor;            }
+            set { RaisePropertyChanged(); }
         }
         public string MarkByFormulaDesc {
             get {
@@ -77,6 +77,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                     return $"Марки отличаются атр={MarkAtr}, по формуле={MarkByFormula}.";
                 }
             }
+            set { RaisePropertyChanged(); }
         }
 
         /// <summary>
@@ -90,9 +91,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 }
                 return panel.IsNew.Value ? "Новая" : "Есть";
             }
+            set { RaisePropertyChanged(); }
         }
         public Brush ExistsInBaseBackground {
             get { return (panel.IsNew== null || !panel.IsNew.Value) ? null : NewPanelColor; }
+            set { RaisePropertyChanged(); }
         }
         
         /// <summary>
@@ -100,12 +103,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public string Group {
             get { return panel.ItemGroup; }
+            set { RaisePropertyChanged(); }
         }
         public Brush GroupBackground {
             get { return panel.IsItemGroupOk ? null : BadValueColor; }
+            set { RaisePropertyChanged(); }
         }
         public string GroupDesc {
             get { return panel.ItemGroupDesc; }
+            set { RaisePropertyChanged(); }
         }
 
         /// <summary>
@@ -128,19 +134,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 }
                 RaisePropertyChanged();
             }
-        }
-
-        private void UpdateRow ()
-        {
-            // Добавил в xaml - UpdateSourceTrigger=LostFocus
-            model.UpdateObservableColl();
-        }
+        }        
 
         public Brush LengthBackground {
             get { return panel.IsLengthOk ? null : BadValueColor; }
+            set { RaisePropertyChanged(); }
         }
         public string LengthDesc {
             get { return panel.LengthDesc; }
+            set { RaisePropertyChanged(); }
         }
 
         /// <summary>
@@ -148,83 +150,173 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public short? Height {
             get { return panel.Height; }
+            set {
+                var height = panel.UpdateHeight(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                if (height != null)
+                {
+                    // обновление поля в деталях
+                    foreach (var item in PanelsInModel)
+                    {
+                        item.Height = height;
+                        item.UpdateCheckPanel();
+                    }
+                    // Обновление всех значений
+                    UpdateRow();
+                }
+                RaisePropertyChanged();
+            }
         }
         public Brush HeightBackground {
             get { return panel.IsHeightOk ? null : BadValueColor; }
+            set { RaisePropertyChanged(); }
         }
         public string HeightDesc {
             get { return panel.HeightDesc; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Ширина
         /// </summary>
         public short? Thickness {
             get { return panel.Thickness; }
+            set {
+                var thick = panel.UpdateThickness(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                if (thick != null)
+                {
+                    // обновление поля в деталях
+                    foreach (var item in PanelsInModel)
+                    {
+                        item.Thickness = thick;
+                        item.UpdateCheckPanel();
+                    }
+                    // Обновление всех значений
+                    UpdateRow();
+                }
+                RaisePropertyChanged();
+            }
         }
         public Brush ThicknessBackground {
             get { return panel.IsThicknessOk ? null : BadValueColor; }
+            set { RaisePropertyChanged(); }
         }
         public string ThicknessDesc {
             get { return panel.ThicknessDesc; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Опалубка
         /// </summary>
         public short? Formwork {
             get { return panel.Formwork; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Балкон
         /// </summary>
         public string BalconyDoor {
             get { return panel.BalconyDoor; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Подрезка
         /// </summary>
         public string BalconyCut {
             get { return panel.BalconyCut; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Электрика
         /// </summary>
         public string Electrics {
             get { return panel.Electrics; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Вес
         /// </summary>
         public float? Weight {
             get { return panel.Weight; }
+            set {
+                var wei = panel.UpdateWeight(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                if (wei != null)
+                {
+                    // обновление поля в деталях
+                    foreach (var item in PanelsInModel)
+                    {
+                        item.Weight = wei;
+                        item.UpdateCheckPanel();
+                    }
+                    // Обновление всех значений
+                    UpdateRow();
+                }
+                RaisePropertyChanged();
+            }
         }
         public Brush WeightBackground {
             get { return panel.IsWeightOk ? null : BadValueColor; }
+            set { RaisePropertyChanged(); }
         }
         public string WeightDesc {
             get { return panel.WeightDesc; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Описание ошибки
         /// </summary>
         public string Warning {
             get { return panel.Warning; }
+            set { RaisePropertyChanged(); }
         }
 
         public string ErrorStatus {
             get { return panel.ErrorStatus.ToString("D"); }
+            set { RaisePropertyChanged(); }
         }
         public Brush ErrorStatusBackground {
             get { return panel.ErrorStatus == ErrorStatusEnum.None? null : BadValueColor; }
+            set { RaisePropertyChanged(); }
         }
         public string ErrorStatusDesc {
-            get {
-                 return panel.GetErrorStatusDesc();
-            }
-        }        
+            get {                 return panel.GetErrorStatusDesc();            }
+            set { RaisePropertyChanged(); }
+        }
+
+        private void UpdateRow ()
+        {
+            this.ErrorStatus = null;
+            this.ErrorStatusBackground = null;
+            this.ErrorStatusDesc = null;
+            this.ExistsInBase = null;
+            this.ExistsInBaseBackground = null;
+            this.HeightBackground = null;
+            this.HeightDesc = null;
+            this.LengthBackground = null;
+            this.LengthDesc = null;
+            this.MarkAtr = null;
+            this.MarkByFormula = null;
+            this.MarkByFormulaBackground = null;
+            this.MarkByFormulaDesc = null;
+            this.ThicknessBackground = null;
+            this.ThicknessDesc = null;
+            this.Warning = null;
+            this.WeightBackground = null;
+            this.WeightDesc = null;
+            model.CheckState();
+        }
 
         /// <summary>
         /// Команда - показать панель на чертеже
         /// </summary>
         public ICommand Show { get { return new RelayCommand(() => panel.Show(), () => panel.CanShow()); } }
+
+        /// <summary>
+        /// Исключение
+        /// </summary>
+        public ICommand Delete { get { return new RelayCommand(DeleteRow, () => true); } }
+        public void DeleteRow ()
+        {
+            model.DeleteRow(this);
+            model.CheckState();
+        }
     }
 }

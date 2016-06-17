@@ -21,9 +21,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             Panels = panels;
         }
 
-        public int Registry()
-        {
-            int regCount = 0;
+        public void Registry()
+        {            
             PanelsNewWoErr = Panels.Where(p => p.IsNew!=null && p.IsNew.Value && !p.HasErrors).ToList();
 
             var panelsNewWithErr = Panels.Where(p=>p.IsNew!=null && p.IsNew.Value && p.HasErrors);
@@ -33,28 +32,35 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     item.IdBlRef, System.Drawing.SystemIcons.Error);
             }
 
-            var groupedNewPanels = PanelsNewWoErr.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, AcadLib.Comparers.AlphanumComparator.New);
-            List<KeyValuePair<Panel, List<Panel>>> newPanels = new List<KeyValuePair<Panel, List<Panel>>> ();
-
-            RegPanelsViewModel model = new RegPanelsViewModel (newPanels, DbService.Series);
-            WindowRegPanels winPanels = new WindowRegPanels(model, "Новые панели без ошибок");
-            var dialogRes = Application.ShowModalWindow(winPanels);
-            if (dialogRes.HasValue && dialogRes.Value)
-            {
-                var panels = groupedNewPanels.Select(s=>s.First()).ToList();
-                DbService.Register(panels, model.SelectedSerie);                
-            }
-            else
-            {
-                throw new Exception(AcadLib.General.CanceledByUser);
-            }
+            Inspector.ShowDialog();
+            Inspector.Clear();
 
             Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
             if (PanelsNewWoErr.Count == 0)
             {
-                ed.WriteMessage($"\nНет новых панелей.");
-            }            
-            return regCount;
+                ed.WriteMessage($"\nНет новых панелей без ошибок.");
+                return;
+            }
+
+            var groupedNewPanels = PanelsNewWoErr.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, AcadLib.Comparers.AlphanumComparator.New);
+            List<KeyValuePair<Panel, List<Panel>>> newPanels = new List<KeyValuePair<Panel, List<Panel>>> ();
+
+            foreach (var item in groupedNewPanels)
+            {
+                newPanels.Add(new KeyValuePair<Panel, List<Panel>>(item.First(), item.ToList()));
+            }
+
+            RegPanelsViewModel model = new RegPanelsViewModel (newPanels, DbService.Series);
+            WindowRegPanels winPanels = new WindowRegPanels(model);
+            var dialogRes = Application.ShowModalWindow(winPanels);
+            if (dialogRes.HasValue && dialogRes.Value)
+            {                
+                DbService.Register(model.PanelsToReg, model.SelectedSerie);                
+            }
+            else
+            {
+                throw new Exception(AcadLib.General.CanceledByUser);
+            }                               
         }
     }
 }

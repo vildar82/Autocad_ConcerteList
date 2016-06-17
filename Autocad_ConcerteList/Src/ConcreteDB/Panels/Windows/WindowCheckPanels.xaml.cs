@@ -21,12 +21,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
     /// </summary>
     public partial class WindowCheckPanels : Window
     {
-        public WindowCheckPanels(CheckPanelsViewModel model, string title)
+        public WindowCheckPanels(CheckPanelsViewModel model)
         {            
-            InitializeComponent();
-            Title = title;
-            var dataModel = model;
-            DataContext = dataModel;            
+            InitializeComponent();            
+            var dataModel = model;            
+            DataContext = dataModel;
+            Title = model.Title;
         }
 
         private void btnExpandCollapse_Click_1 (object sender, RoutedEventArgs e)

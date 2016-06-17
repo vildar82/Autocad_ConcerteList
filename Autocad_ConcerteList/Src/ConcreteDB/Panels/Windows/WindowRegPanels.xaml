@@ -5,14 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows"
         mc:Ignorable="d"
-        Background="{Binding Background}">
+        Background="{Binding Background, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        Title="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">        
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="gridPanels" ItemsSource="{Binding Panels}" SelectedItem="{Binding SelectedPanel}"
+        <DataGrid x:Name="gridPanels" ItemsSource="{Binding Panels, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                  SelectedItem="{Binding SelectedPanel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
                   CanUserResizeColumns="True" CanUserSortColumns="True" AutoGenerateColumns="False"
                   Margin="5" FrozenColumnCount="1" FontSize="12" Grid.Row="0" AlternatingRowBackground="LightGray"
@@ -21,7 +23,7 @@
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>
-                            <Button x:Name="btnExpandCollapse" Content="+" Click="btnExpandCollapse_Click_1"></Button>
+                            <Button x:Name="btnExpandCollapse" Content="+" Click="btnExpandCollapse_Click_1"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -64,7 +66,14 @@
                 <DataGridTextColumn Header="Опалубка" Binding="{Binding Formwork}"/>
                 <DataGridTextColumn Header="Б" Binding="{Binding BalconyDoor}"/>
                 <DataGridTextColumn Header="П" Binding="{Binding BalconyCut}"/>
-                <DataGridTextColumn Header="э" Binding="{Binding Electrics}"/>                
+                <DataGridTextColumn Header="э" Binding="{Binding Electrics}"/>
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Исключить" Command="{Binding Delete}"/>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
@@ -126,14 +135,14 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>        
-        <TextBlock Grid.Row="1" Text="{Binding Path=SelectedPanel.Warning}" FontSize="12"                        
+        <TextBlock Grid.Row="1" Text="{Binding SelectedPanel.Warning}" FontSize="12"                        
                    Background="WhiteSmoke" TextWrapping="WrapWithOverflow" Padding="5"/>
-        <StackPanel Grid.Row="2" Orientation="Horizontal">
-            <TextBlock Text ="{Binding CountString}" Padding="2" FontSize="12"/>
-            <ComboBox ItemsSource="{Binding Series}" DisplayMemberPath="Name" SelectedValuePath="Name" 
-                      SelectedValue="{Binding SelectedSerie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                      HorizontalAlignment="Center"/>
-            <Button Click="OkClick" Content="Зарегистрировать" HorizontalAlignment="Right" IsDefault="true" Margin="2"/>
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
+            <TextBlock Text ="{Binding CountString}" Margin="2" VerticalAlignment="Center"/>
+            <Label Margin="2" VerticalAlignment="Center">Серия:</Label>
+            <ComboBox ItemsSource="{Binding Series}" SelectedItem="{Binding SelectedSerie, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                      Margin="2" VerticalAlignment="Center"/>
+            <Button Content="Зарегистрировать" Click="Registry" Margin="2" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         </StackPanel>
     </Grid>
 </Window>

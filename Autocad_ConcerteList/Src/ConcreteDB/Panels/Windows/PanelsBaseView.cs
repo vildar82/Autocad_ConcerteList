@@ -4,16 +4,55 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
+using MicroMvvm;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
-    public class PanelsBaseView
+    public class PanelsBaseView : ObservableObject
     {
-        private List<KeyValuePair<Panel, List<Panel>>> _panels;
-        public ObservableCollection<PanelViewModel> Panels { get; set; }
-        public Brush Background { get; set; }
-        public PanelViewModel SelectedPanel { get; set; }
+        protected Brush ColorBad = new SolidColorBrush(Colors.Red);
+        protected Brush ColorGood = new SolidColorBrush(Colors.Lime);
+        private string _title;
+        private PanelViewModel _selectedPanel;
+        private Brush _background;
+        private ObservableCollection<PanelViewModel> _panelsViewModel;
+
+        protected List<KeyValuePair<Panel, List<Panel>>> _panels;
+        public List<Panel> PanelsToReg {
+            get {
+                return _panels.Select(s => s.Key).ToList();
+            }
+        }
+        public ObservableCollection<PanelViewModel> Panels {
+            get { return _panelsViewModel; }
+            set {
+                _panelsViewModel = value;
+                RaisePropertyChanged();
+            }
+        }
+        public Brush Background {
+            get { return _background; }
+            set {
+                _background = value;
+                RaisePropertyChanged();
+            }
+        }
+        public PanelViewModel SelectedPanel {
+            get { return _selectedPanel; }
+            set {
+                _selectedPanel = value;
+                RaisePropertyChanged();
+            }
+        }
+        public string Title {
+            get { return _title; }
+            set {
+                _title = value;
+                RaisePropertyChanged();
+            }
+        }
 
         /// <summary>
         /// Количество строй
@@ -30,45 +69,41 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             }
         }
         public string CountString {
-            get { return $"Строк {CountRow}, блоков {CountBlocks}"; }
+            get { return $" Строк {CountRow} "; }
         }
 
         public PanelsBaseView (List<KeyValuePair<Panel, List<Panel>>> panels)
         {
             _panels = panels;
-            UpdateObservableColl();            
-        }
-
-        public void UpdateObservableColl()
-        {
-            var selMarkAtr = SelectedPanel?.MarkAtr;
-            if (Panels == null)
-            {
-                Panels = new ObservableCollection<PanelViewModel>();             
-            }
-            else
-            {                
-                Panels.Clear();
-            }
+            Panels = new ObservableCollection<PanelViewModel>();
             foreach (var item in _panels)
             {
                 Panels.Add(new PanelViewModel(item.Key, item.Value, this));
             }
+            CheckState();
+        }
+
+        public virtual void CheckState ()
+        {
             // Фон - есть панели с ошибками - красная
             if (_panels.Any(p => p.Key.HasErrors))
             {
-                Background = new SolidColorBrush(Colors.Red);
+                Background = ColorBad;
+                Title = "Панели с ошибками";
             }
             else
             {
-                Background = new SolidColorBrush(Colors.Lime);
+                Background = ColorGood;
+                Title = "Новые панели. Панелей с ошибками нет.";
             }
+        }
 
-            if (!string.IsNullOrEmpty(selMarkAtr))
-            {
-                SelectedPanel = null;
-                SelectedPanel = Panels.FirstOrDefault(p => p.MarkAtr == selMarkAtr);
-            }
+
+        public void DeleteRow (PanelViewModel panelView)
+        {
+            var index = _panels.FindIndex(p => p.Key == panelView.panel);
+            _panels.RemoveAt(index);
+            Panels.Remove(panelView);
         }
     }
 }

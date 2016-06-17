@@ -43,7 +43,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Соответствие игнорируемых имен блоков.
         /// </summary>
-        public static List<string> IgnoredBlockNamesMatch { get; } = new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук", "^A$" };
+        public static List<string> IgnoredBlockNamesMatch { get; } = new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук", @"\$", @"^\*" };
 
         public bool CanShow ()
         {
@@ -127,8 +127,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Изменение длины в атрибуте - во всех блоках
         /// </summary>
         /// <param name="value">Новое значение</param>
-        /// <param name="panelsInModel">Все панели в модели этой марки</param>
-        /// <returns></returns>
+        /// <param name="panelsInModel">Все панели в модели этой марки</param>        
         public short? UpdateLength (short? value, List<Panel> panelsInModel)
         {
             // Проверка длины
@@ -139,8 +138,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             // Длина должна соответствовать марке
             if (CheckGabInput(value.Value, DbGroup.LengthFactor, ParseMark.Length))
             {
-                Lenght = value;
-                SetPanelsAtrValue(panelsInModel, AtrTagLength, Lenght.Value.ToString());
+                Lenght = value;                
+                    SetPanelsAtrValue(panelsInModel, AtrTagLength, Lenght.Value.ToString());
                 // Обновление статуса панели
                 Checks();
                 return Lenght;
@@ -149,9 +148,82 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 return null;
             }       
+        }        
+
+        /// <summary>
+        /// Изменение высоты в атрибуте - во всех блоках
+        /// </summary>
+        /// <param name="value">Новое значение</param>
+        /// <param name="panelsInModel">Все панели в модели этой марки</param>        
+        public short? UpdateHeight (short? value, List<Panel> panelsInModel)
+        {
+            // Проверка высоты
+            if (value == null)
+            {
+                return Height;
+            }
+            // должна соответствовать марке
+            if (CheckGabInput(value.Value, DbGroup.HeightFactor, ParseMark.Height))
+            {
+                Height = value;
+                SetPanelsAtrValue(panelsInModel, AtrTagHeight, Height.Value.ToString());
+                // Обновление статуса панели
+                Checks();
+                return Height;
+            }
+            else
+            {
+                return null;
+            }
         }
 
-        private bool CheckGabInput(short val, short factor, short? parseGab)
+        /// <summary>
+        /// Изменение ширины в атрибуте - во всех блоках
+        /// </summary>
+        /// <param name="value">Новое значение</param>
+        /// <param name="panelsInModel">Все панели в модели этой марки</param>        
+        public short? UpdateThickness (short? value, List<Panel> panelsInModel)
+        {
+            // Проверка длины
+            if (value == null)
+            {
+                return Thickness;
+            }
+            // Длина должна соответствовать марке
+            if (CheckGabInput(value.Value, DbGroup.ThicknessFactor, ParseMark.Thickness))
+            {
+                Thickness = value;
+                SetPanelsAtrValue(panelsInModel, AtrTagThickness, Thickness.Value.ToString());
+                // Обновление статуса панели
+                Checks();
+                return Thickness;
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Изменение массы в атрибуте - во всех блоках
+        /// </summary>
+        /// <param name="value">Новое значение</param>
+        /// <param name="panelsInModel">Все панели в модели этой марки</param>        
+        public float? UpdateWeight (float? value, List<Panel> panelsInModel)
+        {
+            // Проверка длины
+            if (value == null)
+            {
+                return Weight;
+            }
+            Weight = value;
+            SetPanelsAtrValue(panelsInModel, AtrTagWeight, Weight.Value.ToString());
+            // Обновление статуса панели
+            Checks();
+            return Weight;
+        }
+
+        private bool CheckGabInput(short val, double factor, short? parseGab)
         {
             if (parseGab == null)
             {
@@ -160,7 +232,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
             {
                 var lenDiv = Eval.GetRoundValue(val / factor);
-                if (lenDiv != ParseMark.Length)
+                if (lenDiv != parseGab)
                 {
                     MessageBox.Show($"Введенное значение '{val}' не соответствует марке '{Mark}'");
                     return false;
@@ -171,24 +243,31 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         private void SetPanelsAtrValue (List<Panel> panels, string tag, string value)
         {
-            using (Commands.Doc.LockDocument())
+            try
             {
-                using (var t = panels.First().IdBlRef.Database.TransactionManager.StartTransaction())
+                using (Commands.Doc.LockDocument())
                 {
-                    foreach (var item in panels)
-                    {                                             
-                        var atrInfo = item.AtrsInfo.FirstOrDefault(a => a.Tag.Equals(tag));
-                        if (atrInfo != null)
+                    using (var t = panels.First().IdBlRef.Database.TransactionManager.StartTransaction())
+                    {
+                        foreach (var item in panels)
                         {
-                            var atrRef = atrInfo.IdAtr.GetObject(OpenMode.ForWrite, false, true) as AttributeReference;
-                            if (atrRef != null)
+                            var atrInfo = item.AtrsInfo.FirstOrDefault(a => a.Tag.Equals(tag));
+                            if (atrInfo != null)
                             {
-                                atrRef.TextString = value;
+                                var atrRef = atrInfo.IdAtr.GetObject(OpenMode.ForWrite, false, true) as AttributeReference;
+                                if (atrRef != null)
+                                {
+                                    atrRef.TextString = value;
+                                }
                             }
                         }
+                        t.Commit();
                     }
-                    t.Commit();
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка обновления атрибутов - {ex.Message}");
             }
         }
 
@@ -288,7 +367,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Рабочая область
         /// </summary>
-        public Workspace WS { get; set; }                
+        public Workspace WS { get; set; }
+        public decimal ItemConstructionId { get; internal set; }
 
         public static float? GetFloatNullable(object obj)
         {
@@ -335,7 +415,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public void Checks ()
         {
-            ErrorStatus = ErrorStatusEnum.None;
+            // Сброс статусов
+            ResetStatuses();
             try
             {
                 ParseMark = new ParserMark(Mark);
@@ -357,11 +438,27 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 CheckBlockParams();
                 CheckBdParams();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 Logger.Log.Error(ex, $"Panel.Checks() - марка - {Mark}");
                 Warning += "Ошибка при проверка параметров панели - " + ex.Message;
             }
+        }
+
+        private void ResetStatuses ()
+        {
+            ErrorStatus = ErrorStatusEnum.None;
+            this.HeightDesc = null;
+            this.IsHeightOk = true;
+            this.IsItemGroupOk = true;
+            this.IsLengthOk = true;
+            this.IsThicknessOk = true;
+            this.IsWeightOk = true;
+            this.ItemGroupDesc = null;
+            this.LengthDesc = null;
+            this.ThicknessDesc = null;
+            this.WeightDesc = null;
+            this.Warning = null;                
         }
 
         private void CheckBlockParams()
