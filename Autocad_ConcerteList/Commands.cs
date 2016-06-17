@@ -132,7 +132,7 @@ namespace Autocad_ConcerteList
 
                 if (checkedPanels.Count == 0)
                 {
-                    ed.WriteMessage($"\nНет новых панелей и нет панелей с ошибками.");
+                    ed.WriteMessage($"\nПанели не найдены.");
                 }
                 else
                 {
