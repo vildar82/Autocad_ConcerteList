@@ -98,7 +98,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         }
         public Brush WeightBackground {
             get { return panelDetail.Weight == panelFirst.Weight ? null : BadValue; }
-        }         
+        }
+
+        /// <summary>
+        /// Проем
+        /// </summary>
+        public string Aperture {
+            get { return panelDetail.Aperture; }
+            set {
+                panelDetail.Aperture = value;
+                RaisePropertyChanged();
+            }
+        }
 
         public string Section {
             get {

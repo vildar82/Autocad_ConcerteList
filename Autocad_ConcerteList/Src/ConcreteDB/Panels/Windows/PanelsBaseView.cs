@@ -75,12 +75,25 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public PanelsBaseView (List<KeyValuePair<Panel, List<Panel>>> panels)
         {
             _panels = panels;
-            Panels = new ObservableCollection<PanelViewModel>();
+            UpdateAllPanels();
+            CheckState();
+        }
+
+        protected void UpdateAllPanels ()
+        {
+            if (Panels != null)
+            {
+                if (_panels.Count == Panels.Count) return;
+                Panels.Clear();
+            }
+            else
+            {
+                Panels = new ObservableCollection<PanelViewModel>();
+            }            
             foreach (var item in _panels)
             {
                 Panels.Add(new PanelViewModel(item.Key, item.Value, this));
             }
-            CheckState();
         }
 
         public virtual void CheckState ()

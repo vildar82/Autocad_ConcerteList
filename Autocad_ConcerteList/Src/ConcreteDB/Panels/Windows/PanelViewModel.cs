@@ -260,6 +260,24 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.WeightDesc; }
             set { RaisePropertyChanged(); }
         }
+
+        /// <summary>
+        /// Проем
+        /// </summary>
+        public string Aperture {
+            get { return panel.Aperture; }
+            set {
+                var res = panel.UpdateAperture(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                // обновление поля в деталях
+                foreach (var item in PanelsInModel)
+                {
+                    item.Aperture = res;
+                    //item.UpdateCheckPanel();
+                }
+                RaisePropertyChanged();
+            }
+        }
+
         /// <summary>
         /// Описание ошибки
         /// </summary>

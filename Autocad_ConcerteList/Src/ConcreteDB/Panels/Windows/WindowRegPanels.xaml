@@ -92,7 +92,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
-                                <DataGridTextColumn Header="По формуле" Binding="{Binding BlockName}">
+                                <DataGridTextColumn Header="Имя блока" Binding="{Binding BlockName}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding BlockNameBackground}"/>

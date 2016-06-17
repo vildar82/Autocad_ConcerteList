@@ -223,6 +223,23 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return Weight;
         }
 
+        /// <summary>
+        /// Изменение проема в атрибуте - во всех блоках
+        /// </summary>
+        /// <param name="value">Новое значение</param>
+        /// <param name="panelsInModel">Все панели в модели этой марки</param>        
+        public string UpdateAperture (string value, List<Panel> panelsInModel)
+        {
+            // Проверка длины
+            if (value == null)
+            {
+                return Aperture;
+            }
+            Aperture = value;
+            SetPanelsAtrValue(panelsInModel, AtrTagAperture, Aperture);                        
+            return Aperture;
+        }
+
         private bool CheckGabInput(short val, double factor, short? parseGab)
         {
             if (parseGab == null)
@@ -522,7 +539,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 }
                 else
                 {
-                    Warning += " Пропущен пробел в марке '" + Mark + "', правильно '" + MarkByFormula + "'. ";
+                    // Пробел игнорировать
+                    //Warning += " Пропущен пробел в марке '" + Mark + "', правильно '" + MarkByFormula + "'. ";
                 }
             }
                         
@@ -576,7 +594,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             // определить параметры панели из блока
             var blRef = idBlRef.GetObject(OpenMode.ForRead, false, true) as BlockReference;
             {
-                if (blRef == null) return Result.Fail("Это не блок.");
+                if (blRef == null) return Result.Fail("");
                 IdBlRef = idBlRef;
                 IdBtr = blRef.BlockTableRecord;
                 Position = blRef.Position;
@@ -627,7 +645,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
             if (string.IsNullOrEmpty(Mark))
             {
-                return Result.Fail("Марка не определена.");
+
+                return Result.Fail("");
             }            
 
             return Result.Ok();

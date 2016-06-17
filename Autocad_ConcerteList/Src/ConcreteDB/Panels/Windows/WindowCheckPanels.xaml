@@ -14,15 +14,20 @@
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
             <RowDefinition />
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <DataGrid x:Name="gridPanels" ItemsSource="{Binding Panels, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+        <Border Grid.Row="0" Background="WhiteSmoke">
+            <ComboBox ItemsSource="{Binding Filter}" SelectedItem="{Binding CurFilter, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                  Margin="5" HorizontalAlignment="Left"/>            
+        </Border>        
+        <DataGrid Grid.Row="1" x:Name="gridPanels" ItemsSource="{Binding Panels, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   SelectedItem="{Binding SelectedPanel, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
                   CanUserAddRows="False" CanUserDeleteRows="False" CanUserReorderColumns="False"
                   CanUserResizeColumns="True" CanUserSortColumns="True" AutoGenerateColumns="False"
-                  Margin="5" FrozenColumnCount="1" FontSize="12" Grid.Row="0" AlternatingRowBackground="LightGray"
+                  Margin="5" FrozenColumnCount="1" FontSize="12" AlternatingRowBackground="LightGray"
                   RowDetailsVisibilityMode="Collapsed">
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
@@ -136,6 +141,8 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
+                <DataGridTextColumn Header="Проем" Binding="{Binding Aperture}" IsReadOnly="False" 
+                                    HeaderStyle="{StaticResource ColumnHeaderEditable}"/>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>
@@ -154,7 +161,7 @@
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>                                
-                                <DataGridTextColumn Header="По формуле" Binding="{Binding BlockName}">
+                                <DataGridTextColumn Header="Имя блока" Binding="{Binding BlockName}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding BlockNameBackground}"/>
@@ -197,8 +204,11 @@
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
         </DataGrid>        
-        <TextBlock Grid.Row="1" Text="{Binding SelectedPanel.Warning, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" FontSize="12" 
-                   Background="WhiteSmoke" TextWrapping="WrapWithOverflow" Padding="5"/>        
-        <TextBlock Grid.Row="2" Text ="{Binding CountString}" Padding="2" FontSize="12"/>                    
+        <TextBlock Grid.Row="2" Text="{Binding SelectedPanel.Warning, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" 
+                   Background="WhiteSmoke" TextWrapping="WrapWithOverflow" Padding="5"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal">
+            <TextBlock Text ="Строк " Padding="2"/>
+            <TextBlock Text ="{Binding Panels.Count}" Padding="2"/>
+        </StackPanel>
     </Grid>
 </Window>

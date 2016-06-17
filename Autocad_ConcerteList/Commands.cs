@@ -118,15 +118,16 @@ namespace Autocad_ConcerteList
                         first.ErrorStatus |= ErrorStatusEnum.DifferentParamInGroup;
                         first.Warning += $" Различие параметров в панелях этой марки {first.Mark}.";
                     }
-                                     
-                    if (first.IsNew != null && first.IsNew.Value || first.HasErrors | !first.IsWeightOk)
-                    {
+                              
+                    // Добавлять все панели в список       
+                    //if (first.IsNew != null && first.IsNew.Value || first.HasErrors | !first.IsWeightOk)
+                    //{
                         checkedPanels.Add(new KeyValuePair<Panel, List<Panel>>(first, item.ToList()));
-                    }
-                    else
-                    {
-                        ed.WriteMessage($"\nВ панеле марки {first.Mark} не найдено ошибок и она есть в базе.");
-                    }
+                    //}
+                    //else
+                    //{
+                    //    ed.WriteMessage($"\nВ панеле марки {first.Mark} не найдено ошибок и она есть в базе.");
+                    //}
                 }
 
                 if (checkedPanels.Count == 0)
