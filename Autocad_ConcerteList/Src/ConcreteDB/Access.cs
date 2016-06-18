@@ -9,7 +9,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
     public static class Access
     {
         //"kuznetsov_av"
-        private static List<string> _accessUsers = new List<string>() { "LukashovaTS", "khisyametdinovvt" };
+        private static List<string> _accessUsers = new List<string>() { "LukashovaTS", AutoCAD_PIK_Manager.Env.CadManLogin };
 
         public static bool Success()
         {
