@@ -8,19 +8,20 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
     public class BalconyCutDbo : IEquatable<BalconyCutDbo>
     {
-        public decimal BalconyCutId { get; set; }
-        public string BalconyCutName { get; set; }
-        public Nullable<int> BalconyCutSize { get; set; }
+        public decimal Id { get; set; }
+        public string Name { get; set; }
+        public string Side { get; internal set; }
+        public Nullable<int> Size { get; set; }
 
         public bool Equals(BalconyCutDbo other)
         {
-            return BalconyCutId == other.BalconyCutId &&
-                BalconyCutName == other.BalconyCutName;
+            return Id == other.Id &&
+                Name == other.Name;
         }
 
         public override int GetHashCode()
         {
-            return BalconyCutId.GetHashCode();
+            return Id.GetHashCode();
         }
     }
 }

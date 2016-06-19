@@ -33,31 +33,33 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>               
         public string MarkAtr {
             get { return panelDetail.Mark; }
+            set { RaisePropertyChanged(); }
         }
         public Brush MarkAtrBackground {
             get { return panelDetail.Mark == panelFirst.Mark ? null : BadValue; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Имя блока
         /// </summary>               
         public string BlockName {
             get { return panelDetail.BlockName; }
+            set { RaisePropertyChanged(); }
         }
         public Brush BlockNameBackground {
             get { return panelDetail.BlockName == panelFirst.BlockName ? null : BadValue; }
+            set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Длина
         /// </summary>
         public short? Length {
             get { return panelDetail.Lenght; }
-            set {
-                panelDetail.Lenght = value;
-                RaisePropertyChanged();
-            }
+            set {RaisePropertyChanged();}
         }
         public Brush LengthBackground {
             get { return panelDetail.Lenght == panelFirst.Lenght ? null : BadValue; }
+            set { RaisePropertyChanged(); }
         }        
 
         /// <summary>
@@ -65,39 +67,33 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public short? Height {
             get { return panelDetail.Height; }
-            set {
-                panelDetail.Height = value;
-                RaisePropertyChanged();
-            }
+            set { RaisePropertyChanged(); }
         }
         public Brush HeightBackground {
             get { return panelDetail.Height == panelFirst.Height ? null : BadValue; }
+            set { RaisePropertyChanged(); }
         }                
         /// <summary>
         /// Ширина
         /// </summary>
         public short? Thickness {
             get { return panelDetail.Thickness; }
-            set {
-                panelDetail.Thickness = value;
-                RaisePropertyChanged();
-            }
+            set { RaisePropertyChanged(); }
         }
         public Brush ThicknessBackground {
             get { return panelDetail.Thickness == panelFirst.Thickness ? null : BadValue; }
+            set { RaisePropertyChanged(); }
         }                                
         /// <summary>
         /// Вес
         /// </summary>
         public float? Weight {
             get { return panelDetail.Weight; }
-            set {
-                panelDetail.Weight = value;
-                RaisePropertyChanged();
-            }
+            set { RaisePropertyChanged(); }
         }
         public Brush WeightBackground {
             get { return panelDetail.Weight == panelFirst.Weight ? null : BadValue; }
+            set { RaisePropertyChanged(); }
         }
 
         /// <summary>
@@ -105,10 +101,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public string Aperture {
             get { return panelDetail.Aperture; }
-            set {
-                panelDetail.Aperture = value;
-                RaisePropertyChanged();
-            }
+            set { RaisePropertyChanged(); }
+        }
+        public Brush ApertureBackground {
+            get { return panelDetail.Aperture == panelFirst.Aperture ? null : BadValue; }
+            set { RaisePropertyChanged(); }
         }
 
         public string Section {
@@ -133,6 +130,20 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         internal void UpdateCheckPanel ()
         {
             panelDetail.Checks();
+            this.Aperture = null;
+            this.ApertureBackground = null;
+            this.BlockName = null;
+            this.BlockNameBackground = null;
+            this.Height = null;
+            this.HeightBackground = null;
+            this.Length = null;
+            this.LengthBackground = null;
+            this.MarkAtr = null;
+            this.MarkAtrBackground = null;
+            this.Thickness = null;
+            this.ThicknessBackground = null;
+            this.Weight = null;
+            this.WeightBackground = null;
         }
     }
 }

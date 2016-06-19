@@ -33,5 +33,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
         public virtual DbSet<I_S_BalconyDoor> I_S_BalconyDoor { get; set; }
         public virtual DbSet<I_S_ItemGroup> I_S_ItemGroup { get; set; }
         public virtual DbSet<I_C_Series> I_C_Series { get; set; }
+        public virtual DbSet<I_S_Side> I_S_Side { get; set; }
     }
 }

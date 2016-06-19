@@ -139,7 +139,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             if (CheckGabInput(value.Value, DbGroup.LengthFactor, ParseMark.Length))
             {
                 Lenght = value;                
-                    SetPanelsAtrValue(panelsInModel, AtrTagLength, Lenght.Value.ToString());
+                SetPanelsAtrValue(panelsInModel, AtrTagLength, Lenght.Value.ToString());
+                foreach (var item in panelsInModel)
+                {
+                    item.Lenght = value;
+                }
                 // Обновление статуса панели
                 Checks();
                 return Lenght;
@@ -167,6 +171,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 Height = value;
                 SetPanelsAtrValue(panelsInModel, AtrTagHeight, Height.Value.ToString());
+                foreach (var item in panelsInModel)
+                {
+                    item.Height = value;
+                }
                 // Обновление статуса панели
                 Checks();
                 return Height;
@@ -194,6 +202,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 Thickness = value;
                 SetPanelsAtrValue(panelsInModel, AtrTagThickness, Thickness.Value.ToString());
+                foreach (var item in panelsInModel)
+                {
+                    item.Thickness = value;
+                }
                 // Обновление статуса панели
                 Checks();
                 return Thickness;
@@ -218,6 +230,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
             Weight = value;
             SetPanelsAtrValue(panelsInModel, AtrTagWeight, Weight.Value.ToString());
+            foreach (var item in panelsInModel)
+            {
+                item.Weight = value;
+            }
             // Обновление статуса панели
             Checks();
             return Weight;
@@ -236,7 +252,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 return Aperture;
             }
             Aperture = value;
-            SetPanelsAtrValue(panelsInModel, AtrTagAperture, Aperture);                        
+            SetPanelsAtrValue(panelsInModel, AtrTagAperture, Aperture);
+            foreach (var item in panelsInModel)
+            {
+                item.Aperture = value;
+            }
+            // Обновление статуса панели
+            Checks();
             return Aperture;
         }
 
@@ -696,7 +718,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 }
                 Editor ed = doc.Editor;
                 ed.Zoom(Extents);
-                //IdBlRef.FlickObjectHighlight(2, 100, 100);
+                IdBlRef.FlickObjectHighlight(1, 100, 0);
             }
         }
 
@@ -776,7 +798,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
             if (res.Length>0 && status!= ErrorStatusEnum.None)
             {
-                Warning += " " + res + ". ";
+                //Warning += " " + res + ". ";
             }
             return res;
         }
@@ -788,7 +810,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                    Lenght == other.Lenght &&
                    Height == other.Height &&
                    Thickness == other.Thickness &&
-                   Weight == other.Weight;                        
+                   Weight == other.Weight &&
+                   Aperture == other.Aperture;                    
         }
 
         public int CompareTo (Panel other)

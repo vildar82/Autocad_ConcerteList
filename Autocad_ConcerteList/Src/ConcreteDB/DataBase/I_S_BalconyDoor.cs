@@ -26,5 +26,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<I_J_ItemConstruction> I_J_ItemConstruction { get; set; }
+        public virtual I_S_Side I_S_Side { get; set; }
     }
 }

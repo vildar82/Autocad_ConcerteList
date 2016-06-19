@@ -20,7 +20,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>..\..\..\..\Autodesk\AutoCAD\Pik\Settings\Script\NET\КР-СБ-ГК\</OutputPath>
-    <DefineConstants>TRACE;DEBUG;DB</DefineConstants>
+    <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -29,7 +29,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE;DB</DefineConstants>
+    <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <UpdateAssemblyVersion>True</UpdateAssemblyVersion>
@@ -109,6 +109,9 @@
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Src\ConcreteDB\DataBase\I_S_ItemGroup.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\I_S_Side.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Src\ConcreteDB\DataBase\Model.Context.cs">

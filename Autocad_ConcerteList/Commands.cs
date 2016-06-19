@@ -115,8 +115,8 @@ namespace Autocad_ConcerteList
                     if (someParams.Skip(1).Any())
                     {
                         // Ошибка - разные параметры в панелях с одной маркой
-                        first.ErrorStatus |= ErrorStatusEnum.DifferentParamInGroup;
-                        first.Warning += $" Различие параметров в панелях этой марки {first.Mark}.";
+                        first.ErrorStatus |= ErrorStatusEnum.DifferentParamInGroup;                        
+                        first.Warning += " Разные атрибуты в блоках, см. детальный вид. ";
                     }
                               
                     // Добавлять все панели в список       

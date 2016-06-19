@@ -47,14 +47,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                           }).ToList();                
                 BalconyCuts = ents.I_S_BalconyCut.AsNoTracking().Select(s => new BalconyCutDbo
                 {
-                    BalconyCutId = s.BalconyCutId,
-                    BalconyCutName = s.BalconyCut,
-                    BalconyCutSize = s.BalconyCutSize
+                    Id = s.BalconyCutId,
+                    Name = s.BalconyCut,
+                    Size = s.BalconyCutSize,
+                    Side = s.I_S_Side.Side
                 }).ToList();
                 BalconyDoors = ents.I_S_BalconyDoor.AsNoTracking().Select(s => new BalconyDoorDbo
                 {
-                    BalconyDoorId = s.BalconyDoorId,
-                    BalconyDoorName = s.BalconyDoor
+                    Id = s.BalconyDoorId,
+                    Name = s.BalconyDoor,
+                    Side = s.I_S_Side.Side
                 }).ToList();
                 Series = ents.I_C_Series.AsNoTracking().Select(s => new SerieDbo
                 {
@@ -153,12 +155,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                              Formwork = i.Formwork,
                              FormworkMirror = i.FormworkMirror,
                              BalconyCut = (bcJoined == null) ? null : new BalconyCutDbo {
-                                 BalconyCutId = i.BalconyCutId.Value,
-                                 BalconyCutName = bcJoined.BalconyCut, BalconyCutSize = bcJoined.BalconyCutSize
+                                 Id = i.BalconyCutId.Value,
+                                 Name = bcJoined.BalconyCut, Size = bcJoined.BalconyCutSize
                              },
                              BalconyDoor = (bdJoined == null) ? null : new BalconyDoorDbo {
-                                 BalconyDoorId = i.BalconyDoorId.Value,
-                                 BalconyDoorName = bdJoined.BalconyDoor
+                                 Id = i.BalconyDoorId.Value,
+                                 Name = bdJoined.BalconyDoor
                              },
                              Electrics = i.Electrics,
                              ItemConstructionId = i.ItemConstructionId,
@@ -241,8 +243,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                          Height = panel.Height,
                          Thickness = panel.Thickness,
                          Formwork = panel.Formwork,
-                         BalconyCutId = panel.BalconyCutItem?.BalconyCutId,
-                         BalconyDoorId = panel.BalconyDoorItem?.BalconyDoorId,
+                         BalconyCutId = panel.BalconyCutItem?.Id,
+                         BalconyDoorId = panel.BalconyDoorItem?.Id,
                          Electrics = panel.Electrics                         
                     };
                     decimal id;
@@ -291,9 +293,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                         SeriesId = ser.SeriesId
                     });
                 }
-#if DB
                 ents.SaveChanges();
-#endif
                 id = newItem.ItemConstructionId;
             }
             return true;
@@ -306,12 +306,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
 
         public static BalconyCutDbo GetBalconyCutItem(string balconyCut)
         {
-            return BalconyCuts.Where(b => b.BalconyCutName.Equals(balconyCut)).FirstOrDefault();
+            return BalconyCuts.Where(b => b.Name.Equals(balconyCut)).FirstOrDefault();
         }
 
         public static BalconyDoorDbo GetBalconyDoorItem(string balconyDoor)
         {
-            return BalconyDoors.Where(b => b.BalconyDoorName.Equals(balconyDoor)).FirstOrDefault();
+            return BalconyDoors.Where(b => b.Name.Equals(balconyDoor)).FirstOrDefault();
         }
 
         

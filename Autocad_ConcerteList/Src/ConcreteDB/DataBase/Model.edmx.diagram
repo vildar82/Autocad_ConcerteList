@@ -18,6 +18,9 @@
         <AssociationConnector Association="SAPRModel.FK_I_J_ItemSeries_I_J_ItemConstruction" ManuallyRouted="false" />
         <EntityTypeShape EntityType="SAPRModel.I_C_Series" Width="1.5" PointX="10.5" PointY="0.625" />
         <AssociationConnector Association="SAPRModel.FK_I_J_ItemSeries_I_C_Series" />
+        <EntityTypeShape EntityType="SAPRModel.I_S_Side" Width="1.5" PointX="12" PointY="4.5" />
+        <AssociationConnector Association="SAPRModel.FK_I_S_BalconyCut_I_S_Side" />
+        <AssociationConnector Association="SAPRModel.FK_I_S_BalconyDoor_I_S_Side" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

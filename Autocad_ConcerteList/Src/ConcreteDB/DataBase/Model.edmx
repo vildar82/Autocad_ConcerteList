@@ -88,6 +88,13 @@
           <Property Name="HasFormula" Type="bit" />
           <Property Name="FormulaId" Type="numeric" Precision="18" Scale="0" />
         </EntityType>
+        <EntityType Name="I_S_Side">
+          <Key>
+            <PropertyRef Name="SideId" />
+          </Key>
+          <Property Name="SideId" Type="numeric" Precision="18" Scale="0" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Side" Type="nvarchar" MaxLength="20" />
+        </EntityType>
         <Association Name="FK_I_J_ItemConstruction_I_S_BalconyCut">
           <End Role="I_S_BalconyCut" Type="Self.I_S_BalconyCut" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -158,6 +165,30 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_I_S_BalconyCut_I_S_Side">
+          <End Role="I_S_Side" Type="Self.I_S_Side" Multiplicity="0..1" />
+          <End Role="I_S_BalconyCut" Type="Self.I_S_BalconyCut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_Side">
+              <PropertyRef Name="SideId" />
+            </Principal>
+            <Dependent Role="I_S_BalconyCut">
+              <PropertyRef Name="SideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_S_BalconyDoor_I_S_Side">
+          <End Role="I_S_Side" Type="Self.I_S_Side" Multiplicity="0..1" />
+          <End Role="I_S_BalconyDoor" Type="Self.I_S_BalconyDoor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_Side">
+              <PropertyRef Name="SideId" />
+            </Principal>
+            <Dependent Role="I_S_BalconyDoor">
+              <PropertyRef Name="SideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_I_S_ItemGroup_I_C_Formula">
           <End Role="I_C_Formula" Type="Self.I_C_Formula" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -180,6 +211,7 @@
           <EntitySet Name="I_S_BalconyCut" EntityType="Self.I_S_BalconyCut" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="I_S_BalconyDoor" EntityType="Self.I_S_BalconyDoor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="I_S_ItemGroup" EntityType="Self.I_S_ItemGroup" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="I_S_Side" EntityType="Self.I_S_Side" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_I_J_ItemConstruction_I_S_BalconyCut" Association="Self.FK_I_J_ItemConstruction_I_S_BalconyCut">
             <End Role="I_S_BalconyCut" EntitySet="I_S_BalconyCut" />
             <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
@@ -199,6 +231,14 @@
           <AssociationSet Name="FK_I_J_ItemSeries_I_J_ItemConstruction" Association="Self.FK_I_J_ItemSeries_I_J_ItemConstruction">
             <End Role="I_J_ItemConstruction" EntitySet="I_J_ItemConstruction" />
             <End Role="I_J_ItemSeries" EntitySet="I_J_ItemSeries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_S_BalconyCut_I_S_Side" Association="Self.FK_I_S_BalconyCut_I_S_Side">
+            <End Role="I_S_Side" EntitySet="I_S_Side" />
+            <End Role="I_S_BalconyCut" EntitySet="I_S_BalconyCut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_S_BalconyDoor_I_S_Side" Association="Self.FK_I_S_BalconyDoor_I_S_Side">
+            <End Role="I_S_Side" EntitySet="I_S_Side" />
+            <End Role="I_S_BalconyDoor" EntitySet="I_S_BalconyDoor" />
           </AssociationSet>
           <AssociationSet Name="FK_I_S_ItemGroup_I_C_Formula" Association="Self.FK_I_S_ItemGroup_I_C_Formula">
             <End Role="I_C_Formula" EntitySet="I_C_Formula" />
@@ -265,6 +305,7 @@
           <Property Name="BalconyCutSize" Type="Int32" />
           <Property Name="SideId" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="I_J_ItemConstruction" Relationship="Self.FK_I_J_ItemConstruction_I_S_BalconyCut" FromRole="I_S_BalconyCut" ToRole="I_J_ItemConstruction" />
+          <NavigationProperty Name="I_S_Side" Relationship="SAPRModel.FK_I_S_BalconyCut_I_S_Side" FromRole="I_S_BalconyCut" ToRole="I_S_Side" />
         </EntityType>
         <EntityType Name="I_S_BalconyDoor">
           <Key>
@@ -274,6 +315,7 @@
           <Property Name="BalconyDoor" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="SideId" Type="Decimal" Precision="18" Scale="0" />
           <NavigationProperty Name="I_J_ItemConstruction" Relationship="Self.FK_I_J_ItemConstruction_I_S_BalconyDoor" FromRole="I_S_BalconyDoor" ToRole="I_J_ItemConstruction" />
+          <NavigationProperty Name="I_S_Side" Relationship="SAPRModel.FK_I_S_BalconyDoor_I_S_Side" FromRole="I_S_BalconyDoor" ToRole="I_S_Side" />
         </EntityType>
         <EntityType Name="I_S_ItemGroup">
           <Key>
@@ -397,6 +439,15 @@
             <End Role="I_C_Series" EntitySet="I_C_Series" />
             <End Role="I_J_ItemSeries" EntitySet="I_J_ItemSeries" />
           </AssociationSet>
+          <EntitySet Name="I_S_Side" EntityType="SAPRModel.I_S_Side" />
+          <AssociationSet Name="FK_I_S_BalconyCut_I_S_Side" Association="SAPRModel.FK_I_S_BalconyCut_I_S_Side">
+            <End Role="I_S_Side" EntitySet="I_S_Side" />
+            <End Role="I_S_BalconyCut" EntitySet="I_S_BalconyCut" />
+          </AssociationSet>
+          <AssociationSet Name="FK_I_S_BalconyDoor_I_S_Side" Association="SAPRModel.FK_I_S_BalconyDoor_I_S_Side">
+            <End Role="I_S_Side" EntitySet="I_S_Side" />
+            <End Role="I_S_BalconyDoor" EntitySet="I_S_BalconyDoor" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="I_C_Series">
           <Key>
@@ -418,6 +469,39 @@
             </Principal>
             <Dependent Role="I_J_ItemSeries">
               <PropertyRef Name="SeriesId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="I_S_Side">
+          <Key>
+            <PropertyRef Name="SideId" />
+          </Key>
+          <Property Name="SideId" Type="Decimal" Nullable="false" Precision="18" Scale="0" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Side" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="I_S_BalconyCut" Relationship="SAPRModel.FK_I_S_BalconyCut_I_S_Side" FromRole="I_S_Side" ToRole="I_S_BalconyCut" />
+          <NavigationProperty Name="I_S_BalconyDoor" Relationship="SAPRModel.FK_I_S_BalconyDoor_I_S_Side" FromRole="I_S_Side" ToRole="I_S_BalconyDoor" />
+        </EntityType>
+        <Association Name="FK_I_S_BalconyCut_I_S_Side">
+          <End Type="SAPRModel.I_S_Side" Role="I_S_Side" Multiplicity="0..1" />
+          <End Type="SAPRModel.I_S_BalconyCut" Role="I_S_BalconyCut" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_Side">
+              <PropertyRef Name="SideId" />
+            </Principal>
+            <Dependent Role="I_S_BalconyCut">
+              <PropertyRef Name="SideId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_I_S_BalconyDoor_I_S_Side">
+          <End Type="SAPRModel.I_S_Side" Role="I_S_Side" Multiplicity="0..1" />
+          <End Type="SAPRModel.I_S_BalconyDoor" Role="I_S_BalconyDoor" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="I_S_Side">
+              <PropertyRef Name="SideId" />
+            </Principal>
+            <Dependent Role="I_S_BalconyDoor">
+              <PropertyRef Name="SideId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -514,6 +598,14 @@
                 <ScalarProperty Name="Series" ColumnName="Series" />
                 <ScalarProperty Name="SeriesParentId" ColumnName="SeriesParentId" />
                 <ScalarProperty Name="SeriesId" ColumnName="SeriesId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="I_S_Side">
+            <EntityTypeMapping TypeName="SAPRModel.I_S_Side">
+              <MappingFragment StoreEntitySet="I_S_Side">
+                <ScalarProperty Name="Side" ColumnName="Side" />
+                <ScalarProperty Name="SideId" ColumnName="SideId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

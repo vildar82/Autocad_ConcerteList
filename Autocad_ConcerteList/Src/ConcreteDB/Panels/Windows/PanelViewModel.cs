@@ -119,20 +119,23 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// </summary>
         public short? Length {
             get { return panel.Lenght; }
-            set {                
-                var len = panel.UpdateLength(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
-                if (len != null)
+            set {
+                if (value != null)
                 {
-                    // обновление поля в деталях
-                    foreach (var item in PanelsInModel)
+                    var len = panel.UpdateLength(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                    if (len != null)
                     {
-                        item.Length = len;
-                        item.UpdateCheckPanel();
+                        // обновление поля в деталях
+                        foreach (var item in PanelsInModel)
+                        {
+                            item.Length = len;
+                            item.UpdateCheckPanel();
+                        }
+                        // Обновление всех значений
+                        UpdateRow();
+                        RaisePropertyChanged();
                     }
-                    // Обновление всех значений
-                    UpdateRow();
-                }
-                RaisePropertyChanged();
+                }                
             }
         }        
 
@@ -151,19 +154,22 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public short? Height {
             get { return panel.Height; }
             set {
-                var height = panel.UpdateHeight(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
-                if (height != null)
+                if (value != null)
                 {
-                    // обновление поля в деталях
-                    foreach (var item in PanelsInModel)
+                    var height = panel.UpdateHeight(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                    if (height != null)
                     {
-                        item.Height = height;
-                        item.UpdateCheckPanel();
+                        // обновление поля в деталях
+                        foreach (var item in PanelsInModel)
+                        {
+                            item.Height = height;
+                            item.UpdateCheckPanel();
+                        }
+                        // Обновление всех значений
+                        UpdateRow();
+                        RaisePropertyChanged();
                     }
-                    // Обновление всех значений
-                    UpdateRow();
-                }
-                RaisePropertyChanged();
+                }                
             }
         }
         public Brush HeightBackground {
@@ -180,19 +186,22 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public short? Thickness {
             get { return panel.Thickness; }
             set {
-                var thick = panel.UpdateThickness(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
-                if (thick != null)
+                if (value != null)
                 {
-                    // обновление поля в деталях
-                    foreach (var item in PanelsInModel)
+                    var thick = panel.UpdateThickness(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                    if (thick != null)
                     {
-                        item.Thickness = thick;
-                        item.UpdateCheckPanel();
+                        // обновление поля в деталях
+                        foreach (var item in PanelsInModel)
+                        {
+                            item.Thickness = thick;
+                            item.UpdateCheckPanel();
+                        }
+                        // Обновление всех значений
+                        UpdateRow();
+                        RaisePropertyChanged();
                     }
-                    // Обновление всех значений
-                    UpdateRow();
-                }
-                RaisePropertyChanged();
+                }                
             }
         }
         public Brush ThicknessBackground {
@@ -217,11 +226,19 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.BalconyDoor; }
             set { RaisePropertyChanged(); }
         }
+        public string BalconyDoorDesc {
+            get { return "Балкон " + panel.BalconyDoorItem?.Side; }
+            set { RaisePropertyChanged(); }
+        }
         /// <summary>
         /// Подрезка
         /// </summary>
         public string BalconyCut {
             get { return panel.BalconyCut; }
+            set { RaisePropertyChanged(); }
+        }
+        public string BalconyCutDesc {
+            get { return "Подрезка " + panel.BalconyCutItem?.Size?.ToString() + " " + panel.BalconyCutItem?.Side; }
             set { RaisePropertyChanged(); }
         }
         /// <summary>
@@ -237,19 +254,22 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public float? Weight {
             get { return panel.Weight; }
             set {
-                var wei = panel.UpdateWeight(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
-                if (wei != null)
+                if (value != null)
                 {
-                    // обновление поля в деталях
-                    foreach (var item in PanelsInModel)
+                    var wei = panel.UpdateWeight(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                    if (wei != null)
                     {
-                        item.Weight = wei;
-                        item.UpdateCheckPanel();
+                        // обновление поля в деталях
+                        foreach (var item in PanelsInModel)
+                        {
+                            item.Weight = wei;
+                            item.UpdateCheckPanel();
+                        }
+                        // Обновление всех значений
+                        UpdateRow();
+                        RaisePropertyChanged();
                     }
-                    // Обновление всех значений
-                    UpdateRow();
-                }
-                RaisePropertyChanged();
+                }                
             }
         }
         public Brush WeightBackground {
@@ -267,14 +287,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public string Aperture {
             get { return panel.Aperture; }
             set {
-                var res = panel.UpdateAperture(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
-                // обновление поля в деталях
-                foreach (var item in PanelsInModel)
+                if (value != null)
                 {
-                    item.Aperture = res;
-                    //item.UpdateCheckPanel();
+                    var res = panel.UpdateAperture(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+                    // обновление поля в деталях
+                    foreach (var item in PanelsInModel)
+                    {
+                        item.Aperture = res;
+                        item.UpdateCheckPanel();
+                    }
+                    UpdateRow();
+                    RaisePropertyChanged();
                 }
-                RaisePropertyChanged();
             }
         }
 
@@ -319,6 +343,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             this.Warning = null;
             this.WeightBackground = null;
             this.WeightDesc = null;
+            this.Aperture = null;
             model.CheckState();
         }
 

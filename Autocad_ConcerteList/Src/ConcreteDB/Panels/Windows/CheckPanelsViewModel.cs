@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
@@ -17,7 +18,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         private const string filterErrors = "Панели с ошибками";
 
         private string _curFilter;
+        private string _search = "";
 
+        public string Search {
+            get { return _search; }
+            set {
+                _search = value;
+                Filtering();
+                RaisePropertyChanged();
+            }
+        }       
         public ObservableCollection<string> Filter { get; set; } 
             = new ObservableCollection<string>() { filterAll, filterErrors };
         public string CurFilter {
@@ -29,19 +39,28 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             }
         }
 
+        private void Searching ()
+        {
+            var filterPanels = Panels.Where(p=> Regex.IsMatch(p.MarkAtr, _search, RegexOptions.IgnoreCase)).ToList();
+            Panels.Clear();
+            foreach (var item in filterPanels)
+            {
+                Panels.Add(item);
+            }
+        }
+
         private void Filtering ()
         {
+            UpdateAllPanels();
             switch (_curFilter)
-            {
-                case filterAll:
-                    UpdateAllPanels();
-                    break;
+            {                
                 case filterErrors:
                     FilterErrorPanels();
                     break;
                 default:                    
                     break;
             }
+            Searching();
         }
 
         private void FilterErrorPanels ()

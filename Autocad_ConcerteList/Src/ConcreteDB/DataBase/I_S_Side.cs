@@ -12,21 +12,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class I_S_BalconyCut
+    public partial class I_S_Side
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public I_S_BalconyCut()
+        public I_S_Side()
         {
-            this.I_J_ItemConstruction = new HashSet<I_J_ItemConstruction>();
+            this.I_S_BalconyCut = new HashSet<I_S_BalconyCut>();
+            this.I_S_BalconyDoor = new HashSet<I_S_BalconyDoor>();
         }
     
-        public decimal BalconyCutId { get; set; }
-        public string BalconyCut { get; set; }
-        public Nullable<int> BalconyCutSize { get; set; }
-        public Nullable<decimal> SideId { get; set; }
+        public decimal SideId { get; set; }
+        public string Side { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<I_J_ItemConstruction> I_J_ItemConstruction { get; set; }
-        public virtual I_S_Side I_S_Side { get; set; }
+        public virtual ICollection<I_S_BalconyCut> I_S_BalconyCut { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<I_S_BalconyDoor> I_S_BalconyDoor { get; set; }
     }
 }
