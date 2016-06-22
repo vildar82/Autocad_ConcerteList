@@ -679,17 +679,20 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             // Проверка есть ли такая группа ЖБИ в базе
             DefineItemGroup();
 
-            if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
+            if (DbGroup != null)
             {
-                // Поиск панели в базе по параметрам                    
-                DbItem = DbService.FindByParametersFromAllLoaded(this);
-            }
-            else
-            {
-                // Поиск по марке
-                DbItem = DbService.FindByMark(Mark);
-            }
-            _isNew = DbItem == null;
+                if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
+                {
+                    // Поиск панели в базе по параметрам                    
+                    DbItem = DbService.FindByParametersFromAllLoaded(this);
+                }
+                else
+                {
+                    // Поиск по марке
+                    DbItem = DbService.FindByMark(Mark);
+                }
+                _isNew = DbItem == null;
+            }            
         }
 
         public void DefineItemGroup ()
