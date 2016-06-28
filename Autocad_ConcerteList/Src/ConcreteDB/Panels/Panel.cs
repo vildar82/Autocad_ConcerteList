@@ -550,7 +550,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Проверки панели
         /// </summary>
         private void CheckBdParams ()
-        {            
+        {
             // Проверка марки в атрибуте и по формуле
             if (Mark != MarkByFormula)
             {
@@ -565,14 +565,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     //Warning += " Пропущен пробел в марке '" + Mark + "', правильно '" + MarkByFormula + "'. ";
                 }
             }
-                        
+
             if (DbItem != null)
             {
-                // Проверка массы                
-                if (Weight != DbItem.Weight)
+                // Проверка массы 
+                if (Weight != DbItem.Weight && DbItem.Weight != null && DbItem.Weight != 0)
                 {
                     IsWeightOk = false;
-                    WeightDesc = $"Масса(атр)={Weight}, из базы={DbItem.Weight}";                    
+                    WeightDesc = $"Масса(атр)={Weight}, из базы={DbItem.Weight}";
                     Warning += $" Масса в атрибуте '{Weight}' отличается от массы в базе '{DbItem.Weight}'. ";
                 }
             }
