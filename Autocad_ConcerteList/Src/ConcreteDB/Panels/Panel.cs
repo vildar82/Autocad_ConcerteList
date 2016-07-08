@@ -617,6 +617,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             var blRef = idBlRef.GetObject(OpenMode.ForRead, false, true) as BlockReference;
             {
                 if (blRef == null) return Result.Fail("");
+                if (blRef.BlockTableRecord.IsNull)
+                {
+                    Logger.Log.Error("blRef.BlockTableRecord.IsNull");
+                    return Result.Fail("");
+                }
+            
                 IdBlRef = idBlRef;
                 IdBtr = blRef.BlockTableRecord;
                 Position = blRef.Position;
