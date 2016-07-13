@@ -620,6 +620,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 if (blRef.BlockTableRecord.IsNull)
                 {
                     Logger.Log.Error("blRef.BlockTableRecord.IsNull");
+                    Commands.HasNullObjectId = true;
                     return Result.Fail("");
                 }
             

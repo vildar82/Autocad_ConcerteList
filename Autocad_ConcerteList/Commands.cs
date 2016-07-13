@@ -21,6 +21,7 @@ namespace Autocad_ConcerteList
     public class Commands : IExtensionApplication
     {
         public static Document Doc { get; set; }
+        public static bool HasNullObjectId;
 
         public void Initialize()
         {
@@ -34,7 +35,7 @@ namespace Autocad_ConcerteList
         public void SB_CheckPanel ()
         {
             CommandStart.Start((doc) =>
-            {
+            {                
                 Doc = doc;
                 Editor ed = doc.Editor;
                 Database db = doc.Database;
@@ -78,9 +79,9 @@ namespace Autocad_ConcerteList
                         }
                         t.Commit();
                     }
-                }
+                }                
             });
-        }
+        }        
 
         /// <summary>
         /// Проверка блоков
@@ -90,6 +91,7 @@ namespace Autocad_ConcerteList
         {
             CommandStart.Start((doc) =>
             {
+                HasNullObjectId = false;
                 Doc = doc;
                 Editor ed = doc.Editor;
                 DbService.Init();
@@ -141,6 +143,8 @@ namespace Autocad_ConcerteList
                     Application.ShowModelessWindow(winPanels);
                 }
                 ed.WriteMessage($"\nОбработано {panels.Count} блоков панелей.");
+
+                CheckNullObjectId();
             });
         }
 
@@ -151,7 +155,7 @@ namespace Autocad_ConcerteList
         public void SB_RegPanels()
         {
             CommandStart.Start((doc) =>
-            {
+            {                
                 Doc = doc;
                 Editor ed = doc.Editor;                
                 // Проверка доступа. Только Лукашовой?????
@@ -168,8 +172,16 @@ namespace Autocad_ConcerteList
                 var panels = filter.Panels;
 
                 RegPanels regPanels = new RegPanels(panels);
-                regPanels.Registry();            
+                regPanels.Registry();                
             });
+        }
+
+        private void CheckNullObjectId ()
+        {
+            if (HasNullObjectId)
+            {
+                Inspector.AddError($"Найдены объекты с ошибками, рекомендуется выполнить проверку чертежа с исправлением ошибок (команда _audit).");
+            }
         }
 
         public void Terminate()
