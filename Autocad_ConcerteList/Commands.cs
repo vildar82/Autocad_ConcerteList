@@ -180,7 +180,8 @@ namespace Autocad_ConcerteList
         {
             if (HasNullObjectId)
             {
-                Inspector.AddError($"Найдены объекты с ошибками, рекомендуется выполнить проверку чертежа с исправлением ошибок (команда _audit).");
+                Inspector.AddError($"Найдены объекты с ошибками, рекомендуется выполнить проверку чертежа с исправлением ошибок (команда _audit).",
+                    System.Drawing.SystemIcons.Warning);
             }
         }
 
