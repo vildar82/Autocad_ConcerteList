@@ -89,6 +89,24 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     !string.IsNullOrEmpty(Warning);
             }
         }
+
+        /// <summary>
+        /// Опалубка
+        /// </summary>
+        public short? Formwork { get; set; }
+        /// <summary>
+        /// Высото (атр)
+        /// </summary>
+        public short? Height { get; set; }
+        public bool IsHeightOk { get; set; } = true;
+        public string HeightDesc { get; set; }
+        public ObjectId IdBlRef { get; set; }
+        public ObjectId IdBtr { get; set; }
+        /// <summary>
+        /// Это новая панель - нет в базе (DbItem == null)
+        /// </summary>
+        public bool? IsNew { get { return _isNew; } set { _isNew = value; } }
+
         /// <summary>
         /// Статус изделия - ок,
         /// </summary>
@@ -310,29 +328,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
         }
 
-        /// <summary>
-        /// Опалубка
-        /// </summary>
-        public short? Formwork { get; set; }
-        /// <summary>
-        /// Высото (атр)
-        /// </summary>
-        public short? Height { get; set; }
-        public bool IsHeightOk { get; set; } = true;
-        public string HeightDesc { get; set; }
-        public ObjectId IdBlRef { get; set; }
-        public ObjectId IdBtr { get; set; }
-        /// <summary>
-        /// Это новая панель - нет в базе (DbItem == null)
-        /// </summary>
-        public bool? IsNew {
-            get {
-                return _isNew;
-            }
-            set {
-                _isNew = value;
-            }
-        }        
+        
 
         public string GetErrorStatusDesc ()
         {
