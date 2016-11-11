@@ -176,6 +176,31 @@ namespace Autocad_ConcerteList
             });
         }
 
+        [CommandMethod("PIK", "SB-RegColors", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
+        public void SB_RegColors()
+        {
+            CommandStart.Start((doc) =>
+            {
+                Doc = doc;
+                var ed = doc.Editor;
+                // Проверка доступа. Только Лукашовой?????
+                if (!Access.Success())
+                {
+                    ed.WriteMessage("\nОтказано в доступе.");
+                    return;
+                }
+
+                DbService.Init();
+
+                var filter = new FilterPanel();
+                filter.Filter();
+                var panels = filter.Panels;
+
+                var regPanels = new RegColors(panels);
+                regPanels.Registry();
+            });
+        }
+
         private void CheckNullObjectId ()
         {
             if (HasNullObjectId)

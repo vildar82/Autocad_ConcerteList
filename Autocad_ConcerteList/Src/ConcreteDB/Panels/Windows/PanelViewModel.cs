@@ -29,7 +29,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         
         public PanelDetailViewModel SelectedPanel {
             get {
-                return _selectedPanel;
+                return _selectedPanel;                
             }
             set {
                 _selectedPanel = value;
@@ -45,7 +45,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             foreach (var item in blocks)
             {
                 PanelsInModel.Add(new PanelDetailViewModel(item, panel));
-            }            
+            }
+            Show = new RelayCommand(OnShowExecute);
         }
 
         /// <summary>
@@ -63,7 +64,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set { RaisePropertyChanged(); }
         }
         public Brush MarkByFormulaBackground {
-            get {                return MarkAtr.Replace(" ", "")== MarkByFormula.Replace(" ", "") ? null : BadValueColor;            }
+            get {                return MarkAtr?.Replace(" ", "")== MarkByFormula?.Replace(" ", "") ? null : BadValueColor;            }
             set { RaisePropertyChanged(); }
         }
         public string MarkByFormulaDesc {
@@ -102,7 +103,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// Группа
         /// </summary>
         public string Group {
-            get { return panel.ItemGroup; }
+            get { return panel.Item_group; }
             set { RaisePropertyChanged(); }
         }
         public Brush GroupBackground {
@@ -118,7 +119,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// Длина
         /// </summary>
         public short? Length {
-            get { return panel.Lenght; }
+            get { return panel.Length; }
             set {
                 if (value != null)
                 {
@@ -219,26 +220,37 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return panel.Formwork; }
             set { RaisePropertyChanged(); }
         }
+
+        public string MountElement {
+            get { return panel.Mount_element; }
+            set { RaisePropertyChanged(); }
+        }
+
+        public string Prong {
+            get { return panel.Prong; }
+            set { RaisePropertyChanged(); }
+        }
+
         /// <summary>
         /// Балкон
         /// </summary>
         public string BalconyDoor {
-            get { return panel.BalconyDoor; }
+            get { return panel.Balcony_door; }
             set { RaisePropertyChanged(); }
         }
         public string BalconyDoorDesc {
-            get { return "Балкон " + panel.BalconyDoorItem?.Side; }
+            get { return "Балкон " + panel.Balcony_door_modif?.Side; }
             set { RaisePropertyChanged(); }
         }
         /// <summary>
         /// Подрезка
         /// </summary>
         public string BalconyCut {
-            get { return panel.BalconyCut; }
+            get { return panel.Balcony_cut; }
             set { RaisePropertyChanged(); }
         }
         public string BalconyCutDesc {
-            get { return "Подрезка " + panel.BalconyCutItem?.Size?.ToString() + " " + panel.BalconyCutItem?.Side; }
+            get { return "Подрезка " + panel.Balcony_cut_modif?.Measure + " " + panel.Balcony_cut_modif?.Side; }
             set { RaisePropertyChanged(); }
         }
         /// <summary>
@@ -302,6 +314,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             }
         }
 
+        public int? StepHeightIndex { get { return panel.Step_height; } set { RaisePropertyChanged(); } }
+        public string StepHeightDesc {
+            get { return panel.Step_height_modif?.Measure?.ToString(); }
+            set { RaisePropertyChanged(); }
+        }
+        public int? StepCount { get { return panel.Steps; } set { RaisePropertyChanged(); } }
+        public int? StepFirst { get { return panel.First_step; } set { RaisePropertyChanged(); } }
+
         /// <summary>
         /// Описание ошибки
         /// </summary>
@@ -319,7 +339,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set { RaisePropertyChanged(); }
         }
         public string ErrorStatusDesc {
-            get {                 return panel.GetErrorStatusDesc();            }
+            get { return panel.GetErrorStatusDesc();            }
             set { RaisePropertyChanged(); }
         }
 
@@ -350,7 +370,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// <summary>
         /// Команда - показать панель на чертеже
         /// </summary>
-        public ICommand Show { get { return new RelayCommand(() => panel.Show(), () => panel.CanShow()); } }
+        public RelayCommand Show { get; set; }
 
         /// <summary>
         /// Исключение
@@ -360,6 +380,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         {
             model.DeleteRow(this);
             model.CheckState();
+        }
+
+        private void OnShowExecute()
+        {
+            panel?.Show();
         }
     }
 }

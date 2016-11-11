@@ -52,6 +52,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Model\Panels\ParserMarkTests.cs" />
+    <Compile Include="Model\Panels\StairParserTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

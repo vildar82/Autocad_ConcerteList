@@ -40,7 +40,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         private static Panel DefinePanel(ObjectId idEnt, ref List<Panel> panels)
         {
-            AcadLib.Result res;
+            Result res;
             Panel p = new Panel();
             try
             {
@@ -55,11 +55,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
             catch (IgnoreBlockException i)
             {
-                res = AcadLib.Result.Fail($"Игнорируемое имя блока - {i.BlName}");
+                res = Result.Fail($"Игнорируемое имя блока - {i.BlName}");
             }
             catch (Exception ex)
             {
-                res = AcadLib.Result.Fail(ex.Message);
+                res = Result.Fail(ex.Message);
             }
             if (!string.IsNullOrEmpty(res.Error))
             {

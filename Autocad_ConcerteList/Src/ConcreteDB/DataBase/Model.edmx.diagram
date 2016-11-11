@@ -4,23 +4,35 @@
   <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
-      <Diagram DiagramId="03464ff3e69146a4af6d8306afa006c2" Name="Diagram1">
-        <EntityTypeShape EntityType="SAPRModel.I_C_Formula" Width="1.5" PointX="0.75" PointY="2.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPRModel.I_J_ItemConstruction" Width="1.875" PointX="5.25" PointY="1" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPRModel.I_J_ItemSeries" Width="1.5" PointX="8.125" PointY="0.5" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPRModel.I_S_BalconyCut" Width="1.5" PointX="7.5" PointY="3" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPRModel.I_S_BalconyDoor" Width="1.5" PointX="9.375" PointY="3.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="SAPRModel.I_S_ItemGroup" Width="1.5" PointX="3" PointY="1.25" IsExpanded="true" />
-        <AssociationConnector Association="SAPRModel.FK_I_S_ItemGroup_I_C_Formula" ManuallyRouted="false" />
-        <AssociationConnector Association="SAPRModel.FK_I_J_ItemConstruction_I_S_BalconyCut" ManuallyRouted="false" />
-        <AssociationConnector Association="SAPRModel.FK_I_J_ItemConstruction_I_S_BalconyDoor" ManuallyRouted="false" />
-        <AssociationConnector Association="SAPRModel.FK_I_J_ItemConstruction_I_S_ItemGroup" ManuallyRouted="false" />
-        <AssociationConnector Association="SAPRModel.FK_I_J_ItemSeries_I_J_ItemConstruction" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="SAPRModel.I_C_Series" Width="1.5" PointX="10.5" PointY="0.625" />
-        <AssociationConnector Association="SAPRModel.FK_I_J_ItemSeries_I_C_Series" />
-        <EntityTypeShape EntityType="SAPRModel.I_S_Side" Width="1.5" PointX="12" PointY="4.5" />
-        <AssociationConnector Association="SAPRModel.FK_I_S_BalconyCut_I_S_Side" />
-        <AssociationConnector Association="SAPRModel.FK_I_S_BalconyDoor_I_S_Side" />
+      <Diagram DiagramId="7c5b557d99ac4a39bf00188cec449688" Name="Diagram1">
+        <EntityTypeShape EntityType="MDMModel.Item_colour" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Item_construction" Width="2" PointX="6.375" PointY="0.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Item_construction_colour" Width="2" PointX="2.875" PointY="0.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Item_group" Width="1.875" PointX="3.5" PointY="4.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Item_group_long" Width="1.625" PointX="1" PointY="4.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Item_group_short" Width="1.75" PointX="1" PointY="6.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Item_modification" Width="2.125" PointX="9.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Item_modification_type" Width="2.375" PointX="13.125" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="MDMModel.Side" Width="1.5" PointX="13.125" PointY="3.125" IsExpanded="true" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_colour_Item_colour" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_Balcony_cut" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_Balcony_door" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_colour_Item_construction" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_Item_group" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_Mount_element" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_Prong" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_Step_height" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_group_Item_group_long" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_group_long_Item_group_short" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_modification_Item_modification_type" ManuallyRouted="false" />
+        <AssociationConnector Association="MDMModel.FK_Item_modification_Side" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="MDMModel.Formula" Width="2.625" PointX="6.125" PointY="7.625" />
+        <AssociationConnector Association="MDMModel.FK_Item_group_Formula" />
+        <EntityTypeShape EntityType="MDMModel.Item_construction_Product" Width="2.375" PointX="10.25" PointY="6.125" />
+        <EntityTypeShape EntityType="MDMModel.Product" Width="1.5" PointX="13.875" PointY="6.5" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_Product_Item_construction" />
+        <AssociationConnector Association="MDMModel.FK_Item_construction_Product_Product" />
+        <AssociationConnector Association="MDMModel.FK_Product_Product" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

@@ -20,6 +20,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         private string _curFilter;
         private string _search = "";
 
+        public CheckPanelsViewModel (List<KeyValuePair<Panel, List<Panel>>> panels) : base(panels)
+        {
+            // Фильтр панелей с ошибками
+            CurFilter = filterErrors;
+        }
+
         public string Search {
             get { return _search; }
             set {
@@ -37,7 +43,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 Filtering();
                 RaisePropertyChanged();
             }
-        }
+        }        
 
         private void Searching ()
         {
@@ -71,12 +77,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             {
                 Panels.Add(item);
             }
-        }
-
-        public CheckPanelsViewModel(List<KeyValuePair<Panel, List<Panel>>> panels): base(panels)
-        {
-            // Фильтр панелей с ошибками
-            CurFilter = filterErrors;
         }        
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"             
         xmlns:local="clr-namespace:Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows"        
         mc:Ignorable="d"
-        Background="{Binding Background, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">
+        Background="{Binding Background, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:DesignWidth="899" d:DesignHeight="555">
     <Window.Resources>
         <Style x:Key="ColumnHeaderEditable" TargetType="{x:Type DataGridColumnHeader}">
             <Setter Property="VerticalContentAlignment" Value="Center" />
@@ -119,7 +119,20 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="Б" Binding="{Binding BalconyDoor}" IsReadOnly="True">
+                <DataGridTextColumn Binding="{Binding MountElement}" IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Д" ToolTip="Закладная"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn  Binding="{Binding Prong}" IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Г" ToolTip="Зубец"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding BalconyDoor}" IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Б" ToolTip="Балконная дверь"/>
+                    </DataGridTextColumn.Header>
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
@@ -127,7 +140,10 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="П" Binding="{Binding BalconyCut}" IsReadOnly="True">
+                <DataGridTextColumn Binding="{Binding BalconyCut}" IsReadOnly="True">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="П" ToolTip="Подрезка"/>
+                    </DataGridTextColumn.Header>
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
@@ -135,7 +151,10 @@
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
-                <DataGridTextColumn Header="э" Binding="{Binding Electrics}" IsReadOnly="True" >
+                <DataGridTextColumn  Binding="{Binding Electrics}" IsReadOnly="True" >
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="э" ToolTip="Электрика"/>
+                    </DataGridTextColumn.Header>
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
@@ -154,6 +173,22 @@
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Проем" Binding="{Binding Aperture}" IsReadOnly="False" 
                                     HeaderStyle="{StaticResource ColumnHeaderEditable}"/>
+                <DataGridTextColumn Binding="{Binding StepHeightIndex}" IsReadOnly="True" Width="Auto" 
+                                    ToolTipService.ToolTip="{Binding StepHeightDesc}">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="Ст." ToolTip="Индекс высоты ступеней (ЛМ)"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding StepHeightIndex}" IsReadOnly="True" Width="Auto" ToolTipService.ToolTip="Количество ступеней">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="шт." ToolTip="Количество ступеней (ЛМ)"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
+                <DataGridTextColumn Binding="{Binding StepFirst}" IsReadOnly="True" Width="Auto" ToolTipService.ToolTip="Высота первой ступени">
+                    <DataGridTextColumn.Header>
+                        <TextBlock Text="h" ToolTip="Высота первой ступени (ЛМ)"/>
+                    </DataGridTextColumn.Header>
+                </DataGridTextColumn>
             </DataGrid.Columns>
             <DataGrid.RowDetailsTemplate>
                 <DataTemplate>

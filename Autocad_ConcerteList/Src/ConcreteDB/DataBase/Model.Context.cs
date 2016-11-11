@@ -14,9 +14,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class SAPREntities : DbContext
+    public partial class MDMEntities : DbContext
     {
-        public SAPREntities(DbConnection dbCon)
+        public MDMEntities(DbConnection dbCon)
             : base(dbCon, true)
         {
         }
@@ -26,13 +26,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<I_C_Formula> I_C_Formula { get; set; }
-        public virtual DbSet<I_J_ItemConstruction> I_J_ItemConstruction { get; set; }
-        public virtual DbSet<I_J_ItemSeries> I_J_ItemSeries { get; set; }
-        public virtual DbSet<I_S_BalconyCut> I_S_BalconyCut { get; set; }
-        public virtual DbSet<I_S_BalconyDoor> I_S_BalconyDoor { get; set; }
-        public virtual DbSet<I_S_ItemGroup> I_S_ItemGroup { get; set; }
-        public virtual DbSet<I_C_Series> I_C_Series { get; set; }
-        public virtual DbSet<I_S_Side> I_S_Side { get; set; }
+        public virtual DbSet<Item_colour> Item_colour { get; set; }
+        public virtual DbSet<Item_construction> Item_construction { get; set; }
+        public virtual DbSet<Item_construction_colour> Item_construction_colour { get; set; }
+        public virtual DbSet<Item_group> Item_group { get; set; }
+        public virtual DbSet<Item_group_long> Item_group_long { get; set; }
+        public virtual DbSet<Item_group_short> Item_group_short { get; set; }
+        public virtual DbSet<Item_modification> Item_modification { get; set; }
+        public virtual DbSet<Item_modification_type> Item_modification_type { get; set; }
+        public virtual DbSet<Side> Side { get; set; }
+        public virtual DbSet<Formula> Formula { get; set; }
+        public virtual DbSet<Item_construction_Product> Item_construction_Product { get; set; }
+        public virtual DbSet<Product> Product { get; set; }
     }
 }

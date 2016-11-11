@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows"
         mc:Ignorable="d"
         Background="{Binding Background, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-        Title="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}">    
+        Title="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:DesignWidth="810" d:DesignHeight="537">    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -75,9 +75,14 @@
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="Опалубка" Binding="{Binding Formwork}" ElementStyle="{StaticResource TextCenter}"/>
+                <DataGridTextColumn Header="Д" Binding="{Binding MountElement}" ElementStyle="{StaticResource TextCenter}"/>
+                <DataGridTextColumn Header="Г" Binding="{Binding Prong}" ElementStyle="{StaticResource TextCenter}"/>
                 <DataGridTextColumn Header="Б" Binding="{Binding BalconyDoor}" ElementStyle="{StaticResource TextCenter}"/>
                 <DataGridTextColumn Header="П" Binding="{Binding BalconyCut}" ElementStyle="{StaticResource TextCenter}"/>
                 <DataGridTextColumn Header="э" Binding="{Binding Electrics}" ElementStyle="{StaticResource TextCenter}"/>
+                <DataGridTextColumn Header="Ст." Binding="{Binding StepHeightIndex}" Width="Auto" ToolTipService.ToolTip="Высота ступени" ElementStyle="{StaticResource TextCenter}"/>
+                <DataGridTextColumn Header="шт." Binding="{Binding StepHeightIndex}"  Width="Auto" ToolTipService.ToolTip="Количество ступеней" ElementStyle="{StaticResource TextCenter}"/>
+                <DataGridTextColumn Header="h" Binding="{Binding StepFirst}" Width="Auto" ToolTipService.ToolTip="Высота первой ступени" ElementStyle="{StaticResource TextCenter}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

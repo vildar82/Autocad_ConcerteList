@@ -9,7 +9,7 @@ using System.Windows;
 using AcadLib;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.ConcreteDB.Formula;
+using Autocad_ConcerteList.Src.ConcreteDB.FormulaEval;
 using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
@@ -43,12 +43,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Соответствие игнорируемых имен блоков.
         /// </summary>
-        public static List<string> IgnoredBlockNamesMatch { get; } = new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук", @"\$", @"^\*" };
+        public static List<string> IgnoredBlockNamesMatch { get; } = 
+            new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук", @"\$", @"^\*" };
 
-        public bool CanShow ()
-        {
-            return !_isNullExtents;
-        }
+        /// <summary>
+        /// Игнорирование габаритов (ЛМ)
+        /// </summary>
+        public bool IsIgnoreGab { get; set; }
 
         /// <summary>
         /// Альбом изделия - ?
@@ -59,10 +60,36 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         public string Aperture { get; set; }
         public List<AttributeInfo> AtrsInfo { get; set; }
-        public string BalconyCut { get; set; }
-        public BalconyCutDbo BalconyCutItem { get; set; }
-        public string BalconyDoor { get; set; }
-        public BalconyDoorDbo BalconyDoorItem { get; set; }
+        public string Balcony_cut { get; set; }
+        public ModificatorDbo Balcony_cut_modif { get; set; }
+        //public BalconyCutDbo BalconyCutItem { get; set; }
+        public string Balcony_door { get; set; }
+        public ModificatorDbo Balcony_door_modif { get; set; }
+        //public BalconyDoorDbo BalconyDoorItem { get; set; }
+
+        /// <summary>
+        /// Закладная. Например: Д или пусто
+        /// </summary>
+        public string Mount_element { get; set; }
+        public ModificatorDbo Mount_element_modif { get; set; }
+        /// <summary>
+        /// Зубец. Например: Г или пусто
+        /// </summary>
+        public string Prong { get; set; }
+        public ModificatorDbo Prong_modif { get; set; }
+        /// <summary>
+        /// Высота ступени - индекс - 1,2,3 (ЛМ-1.11-15)
+        /// </summary>
+        public int? Step_height { get; set; }
+        public ModificatorDbo Step_height_modif { get; set; }
+        /// <summary>
+        /// Кол. ступеней. - 11,12
+        /// </summary>
+        public int? Steps { get; set; }
+        /// <summary>
+        /// Высота первой ступени
+        /// </summary>
+        public int? First_step { get; set; }             
         /// <summary>
         /// Имя блока
         /// </summary>
@@ -80,16 +107,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Элемтрика - 1э, 2э
         /// </summary>
-        public string Electrics { get; set; }        
-        public bool HasErrors
-        {
-            get
-            {
-                return ErrorStatus != ErrorStatusEnum.None ||                    
-                    !string.IsNullOrEmpty(Warning);
-            }
-        }
-
+        public string Electrics { get; set; } 
         /// <summary>
         /// Опалубка
         /// </summary>
@@ -107,39 +125,195 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         public bool? IsNew { get { return _isNew; } set { _isNew = value; } }
 
+        //public string Info
+        //{
+        //    get
+        //    {
+        //        if (_info == null)
+        //        {
+        //            _info = GetInfo();
+        //        }
+        //        return _info;
+        //    }
+        //    set { _info = value; }
+        //}
+        ///// <summary>
+        ///// Имя блока соответствует атрибуту марки.
+        ///// Имя блока должно быть равно марке, за исключением индекса класса (2П, 2В, 3В, 3НСНг2)
+        ///// </summary>
+        //public bool IsCorrectBlockName { get; set; }
+        /// <summary>
+        /// Группа изделия - В, П, 3НСг
+        /// </summary>
+        public string Item_group { get; set; }
+        public bool IsItemGroupOk { get; set; }
+        public string ItemGroupDesc { get; set; }
+        /// <summary>
+        /// Длина (атр)
+        /// </summary>                   
+        public short? Length { get; set; }
+        public bool IsLengthOk { get; set; } = true;
+        public string LengthDesc { get; set; }
+        /// <summary>
+        /// Марка от конструкторов - из атрибута
+        /// </summary>
+        public string Mark { get; set; }
+        /// <summary>
+        /// Марка из базы
+        /// </summary>
+        public string MarkByFormula { get; set; }
+        /// <summary>
+        /// Марка из базы без пробелов
+        /// </summary>
+        public string MarkByFormulaWoSpace { get; set; }
+        /// <summary>
+        /// Марка без пробелов
+        /// </summary>
+        public string MarkWoSpace { get; set; }
+        public ParserMark ParseMark { get; set; }
+        public Point3d Position { get; set; }
+        /// <summary>
+        /// Толщина (атр)
+        /// </summary>
+        public short? Thickness { get; set; }
+        public bool IsThicknessOk { get; set; } = true;
+        public string ThicknessDesc { get; set; }
+        public float? Volume { get; set; }
+        /// <summary>
+        /// Пояснение по ошибкам в блоке
+        /// </summary>
+        public string Warning { get; set; }
+        /// <summary>
+        /// Масса
+        /// </summary>
+        public float? Weight { get; set; }
+        public bool IsWeightOk { get; set; } = true;
+        public string WeightDesc { get; set; }
+        /// <summary>
+        /// Рабочая область
+        /// </summary>
+        public Workspace WS { get; set; }
+        public decimal ItemConstructionId { get; internal set; }
+
         /// <summary>
         /// Статус изделия - ок,
         /// </summary>
         public ErrorStatusEnum ErrorStatus { get; set; }
-        public Extents3d Extents
-        {
-            get
-            {
-                if (!_alreadyCalcExtents)
-                {
-                    //FindBlock();
-#pragma warning disable CS0618
-                    using (var blRef = IdBlRef.Open(OpenMode.ForRead, false, true) as BlockReference)
-                    {
-                        try
-                        {
-                            _extents = blRef.GeometricExtents;
-                            _alreadyCalcExtents = true;
-                        }
-                        catch
-                        {
-                            _isNullExtents = true;
-                        }
-                    }
-#pragma warning restore CS0618
-                }
-                if (_isNullExtents)
-                {
-                    Autodesk.AutoCAD.ApplicationServices.Application.ShowAlertDialog("Границы объекта не определены.");
-                }
-                return _extents;
+        public bool HasErrors {
+            get {
+                return ErrorStatus != ErrorStatusEnum.None ||
+                    !string.IsNullOrEmpty(Warning);
             }
-        }       
+        }
+        //        public Extents3d Extents
+        //        {
+        //            get
+        //            {
+        //                if (!_alreadyCalcExtents)
+        //                {
+        //                    //FindBlock();
+        //#pragma warning disable CS0618
+        //                    using (var blRef = IdBlRef.Open(OpenMode.ForRead, false, true) as BlockReference)
+        //                    {
+        //                        try
+        //                        {
+        //                            _extents = blRef.GeometricExtents;
+        //                            _alreadyCalcExtents = true;
+        //                        }
+        //                        catch
+        //                        {
+        //                            _isNullExtents = true;
+        //                        }
+        //                    }
+        //#pragma warning restore CS0618
+        //                }
+        //                if (_isNullExtents)
+        //                {
+        //                    Autodesk.AutoCAD.ApplicationServices.Application.ShowAlertDialog("Границы объекта не определены.");
+        //                }
+        //                return _extents;
+        //            }
+        //        }       
+
+        /// <summary>
+        /// Опеределение блока ЖБИ изделия.
+        /// </summary>        
+        public Result Define (ObjectId idBlRef)
+        {
+            // определить параметры панели из блока
+            var blRef = idBlRef.GetObject(OpenMode.ForRead, false, true) as BlockReference;
+            {
+                if (blRef == null) return Result.Fail("");
+                if (blRef.BlockTableRecord.IsNull)
+                {
+                    Logger.Log.Error("blRef.BlockTableRecord.IsNull");
+                    Commands.HasNullObjectId = true;
+                    return Result.Fail("");
+                }
+
+                IdBlRef = idBlRef;
+                IdBtr = blRef.BlockTableRecord;
+                Position = blRef.Position;
+                BlockName = blRef.GetEffectiveName();
+                if (IsIgnoredBlockName(BlockName))
+                {
+                    // Игнорируемое имя блока
+                    return Result.Fail("");
+                }
+                AtrsInfo = AttributeInfo.GetAttrRefs(blRef);
+                foreach (var atr in AtrsInfo)
+                {
+                    if (atr.Tag.Equals(AtrTagMark, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Mark = atr.Text.Trim();
+                        MarkWoSpace = Mark.Replace(" ", "");
+                    }
+                    else if (atr.Tag.Equals(AtrTagLength, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Length = GetShortNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals(AtrTagHeight, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Height = GetShortNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals(AtrTagThickness, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Thickness = GetShortNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals(AtrTagWeight, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Weight = GetFloatNullable(atr.Text);
+                    }
+                    else if (atr.Tag.Equals(AtrTagColor, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Color = GetColorWithoutBrackets(atr.Text);
+                    }
+                    else if (atr.Tag.Equals(AtrTagAperture, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Aperture = atr.Text.Trim();
+                    }
+                    else if (atr.Tag.Equals(AtrTagAlbum, StringComparison.OrdinalIgnoreCase))
+                    {
+                        Album = atr.Text.Trim();
+                    }
+                }
+            }
+
+            if (string.IsNullOrEmpty(Mark))
+            {
+
+                return Result.Fail("");
+            }
+
+            return Result.Ok();
+        }
+
+        private string GetColorWithoutBrackets (string text)
+        {
+            var res = text.Trim();
+            res = res.Replace("(", "").Replace(")", "");
+            return res;
+        }
 
         /// <summary>
         /// Изменение длины в атрибуте - во всех блоках
@@ -151,26 +325,35 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             // Проверка длины
             if (value == null)
             {
-                return Lenght;
+                return Length;
             }
             // Длина должна соответствовать марке
             if (CheckGabInput(value.Value, DbGroup.LengthFactor, ParseMark.Length))
             {
-                Lenght = value;                
-                SetPanelsAtrValue(panelsInModel, AtrTagLength, Lenght.Value.ToString());
+                Length = value;                
+                SetPanelsAtrValue(panelsInModel, AtrTagLength, Length.Value.ToString());
                 foreach (var item in panelsInModel)
                 {
-                    item.Lenght = value;
+                    item.Length = value;
                 }
                 // Обновление статуса панели
                 Checks();
-                return Lenght;
+                return Length;
             }
             else
             {
                 return null;
             }       
-        }        
+        }
+
+        /// <summary>
+        /// Марка вместе с колористикой
+        /// </summary>
+        /// <returns></returns>
+        public string GetMarkWithColor ()
+        {
+            return $"{MarkByFormula}({Color})";
+        }
 
         /// <summary>
         /// Изменение высоты в атрибуте - во всех блоках
@@ -326,84 +509,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 MessageBox.Show($"Ошибка обновления атрибутов - {ex.Message}");
             }
-        }
-
-        
+        }        
 
         public string GetErrorStatusDesc ()
         {
             return ErrorStatusEnameToString(ErrorStatus);
-        }
-
-        //public string Info
-        //{
-        //    get
-        //    {
-        //        if (_info == null)
-        //        {
-        //            _info = GetInfo();
-        //        }
-        //        return _info;
-        //    }
-        //    set { _info = value; }
-        //}
-        /// <summary>
-        /// Имя блока соответствует атрибуту марки.
-        /// Имя блока должно быть равно марке, за исключением индекса класса (2П, 2В, 3В, 3НСНг2)
-        /// </summary>
-        //public bool IsCorrectBlockName { get; set; }
-        /// <summary>
-        /// Группа изделия - В, П, 3НСг
-        /// </summary>
-        public string ItemGroup { get; set; }
-        public bool IsItemGroupOk { get; set; }
-        public string ItemGroupDesc { get; set; }
-        /// <summary>
-        /// Длина (атр)
-        /// </summary>                   
-        public short? Lenght { get; set; }
-        public bool IsLengthOk { get; set; } = true;
-        public string LengthDesc { get; set; }
-        /// <summary>
-        /// Марка от конструкторов - из атрибута
-        /// </summary>
-        public string Mark { get; set; }
-        /// <summary>
-        /// Марка из базы
-        /// </summary>
-        public string MarkByFormula { get; set; }        
-        /// <summary>
-        /// Марка из базы без пробелов
-        /// </summary>
-        public string MarkByFormulaWoSpace { get; set; }
-        /// <summary>
-        /// Марка без пробелов
-        /// </summary>
-        public string MarkWoSpace { get; set; }
-        public ParserMark ParseMark { get; set; }
-        public Point3d Position { get; set; }
-        /// <summary>
-        /// Толщина (атр)
-        /// </summary>
-        public short? Thickness { get; set; }
-        public bool IsThicknessOk { get; set; } = true;
-        public string ThicknessDesc { get; set; }
-        public float? Volume { get; set; }
-        /// <summary>
-        /// Пояснение по ошибкам в блоке
-        /// </summary>
-        public string Warning { get; set; }
-        /// <summary>
-        /// Масса
-        /// </summary>
-        public float? Weight { get; set; }
-        public bool IsWeightOk { get; set; } = true;
-        public string WeightDesc { get; set; }
-        /// <summary>
-        /// Рабочая область
-        /// </summary>
-        public Workspace WS { get; set; }
-        public decimal ItemConstructionId { get; internal set; }
+        }        
 
         public static float? GetFloatNullable(object obj)
         {
@@ -423,8 +534,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             try
             {
-                var value = obj.ToString();
-                if (value == "") return null;
+                var value = obj?.ToString();
+                if (value == null || value == "") return null;
                 return short.Parse(value);
             }
             catch
@@ -451,7 +562,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public void Checks ()
         {
             // Сброс статусов
-            ResetStatuses();
+            ResetStatuses();           
+
             try
             {
                 ParseMark = new ParserMark(Mark);
@@ -469,6 +581,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
                 // Определение марки по формуле по параметрам
                 DefineMarkByFormulaInDb();
+
 
                 CheckBlockParams();
                 CheckBdParams();
@@ -493,7 +606,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             this.LengthDesc = null;
             this.ThicknessDesc = null;
             this.WeightDesc = null;
-            this.Warning = null;                
+            this.Warning = null;
+            this.Mount_element = null;
+            this.Prong = null;
+            this.First_step = null;
+            this.Step_height = null;
+            this.Steps = null;        
         }
 
         private void CheckBlockParams()
@@ -515,12 +633,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
 
             // Соответствие параметров и марки                   
-            if (DbGroup != null && DbGroup.HasFormula!= null && DbGroup.HasFormula.Value)
+            if (DbGroup != null && DbGroup.HasFormula!= null && DbGroup.HasFormula.Value && !IsIgnoreGab)
             {
                 // Определение длин из распарсенной марки
                 bool isOk;                
                 string desc;
-                CheckGab(out isOk, parserFormula.Length, Lenght, DbGroup.LengthFactor, "Длина", out desc);
+                CheckGab(out isOk, parserFormula.Length, Length, DbGroup.LengthFactor, "Длина", out desc);
                 IsLengthOk = isOk;                
                 LengthDesc = desc;
                 
@@ -602,80 +720,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 // Атрибут габарита задан, а в базе нет значения
                 desc = $"{nameGab}(атр)={gab}, по марке=нет";
             }               
-        }
-
-        /// <summary>
-        /// Опеределение блока ЖБИ изделия.
-        /// </summary>        
-        public Result Define(ObjectId idBlRef)
-        {
-            // определить параметры панели из блока
-            var blRef = idBlRef.GetObject(OpenMode.ForRead, false, true) as BlockReference;
-            {
-                if (blRef == null) return Result.Fail("");
-                if (blRef.BlockTableRecord.IsNull)
-                {
-                    Logger.Log.Error("blRef.BlockTableRecord.IsNull");
-                    Commands.HasNullObjectId = true;
-                    return Result.Fail("");
-                }
-            
-                IdBlRef = idBlRef;
-                IdBtr = blRef.BlockTableRecord;
-                Position = blRef.Position;
-                BlockName = blRef.GetEffectiveName();
-                if (IsIgnoredBlockName(BlockName))
-                {
-                    // Игнорируемое имя блока
-                    return Result.Fail("");
-                }
-                AtrsInfo = AttributeInfo.GetAttrRefs(blRef);
-                foreach (var atr in AtrsInfo)
-                {
-                    if (atr.Tag.Equals(AtrTagMark, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Mark = atr.Text.Trim();
-                        MarkWoSpace = Mark.Replace(" ", "");
-                    }
-                    else if (atr.Tag.Equals(AtrTagLength, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Lenght = GetShortNullable(atr.Text);
-                    }
-                    else if (atr.Tag.Equals(AtrTagHeight, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Height = GetShortNullable(atr.Text);
-                    }
-                    else if (atr.Tag.Equals(AtrTagThickness, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Thickness = GetShortNullable(atr.Text);
-                    }                    
-                    else if (atr.Tag.Equals(AtrTagWeight, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Weight = GetFloatNullable(atr.Text);
-                    }
-                    else if (atr.Tag.Equals(AtrTagColor, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Color = atr.Text.Trim();
-                    }
-                    else if (atr.Tag.Equals(AtrTagAperture, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Aperture = atr.Text.Trim();
-                    }
-                    else if (atr.Tag.Equals(AtrTagAlbum, StringComparison.OrdinalIgnoreCase))
-                    {
-                        Album = atr.Text.Trim();
-                    }
-                }
-            }
-
-            if (string.IsNullOrEmpty(Mark))
-            {
-
-                return Result.Fail("");
-            }            
-
-            return Result.Ok();
-        }
+        }        
 
         private void DefineDbParams ()
         {
@@ -700,12 +745,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public void DefineItemGroup ()
         {
-            DbGroup = DbService.FindGroup(ItemGroup);
+            DbGroup = DbService.FindGroup(Item_group);
             if (DbGroup == null)
             {
                 IsItemGroupOk = false;
                 ItemGroupDesc = $"Неопределенная группа.";
-                Warning += $" Неопределенная группа {ItemGroup}. ";
+                Warning += $" Неопределенная группа {Item_group}. ";
                 return;
                 //throw new Exception($"Неопределенная группа {ItemGroup}.");
             }
@@ -723,8 +768,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     return;
                 }
                 Editor ed = doc.Editor;
-                ed.Zoom(Extents);
-                IdBlRef.FlickObjectHighlight(1, 100, 0);
+                IdBlRef.ShowEnt();
+                //ed.Zoom(Extents);
+                //IdBlRef.FlickObjectHighlight(1, 100, 0);
             }
         }
 
@@ -751,6 +797,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     else
                     {
                         Warning += " " + res.Error;
+                        ErrorStatus = ErrorStatusEnum.OtherError;
                     }
                 }
                 else
@@ -762,21 +809,36 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             catch (Exception ex)
             {
                 Warning += " Ошибка формирования марки панели по параметрам - " + ex.Message + ". ";
+                ErrorStatus = ErrorStatusEnum.OtherError;
             }
         }
 
         private void FillParseParams()
         {
-            ItemGroup = ParseMark.ItemGroup;
+            Item_group = ParseMark.ItemGroup;
             Formwork = ParseMark.Formwork;
             //FormworkMirror = ParseMark.FormworkMirror;
-            BalconyCut = ParseMark.BalconyCut;
-            BalconyCutItem = DbService.GetBalconyCutItem(BalconyCut);
-            BalconyDoor = ParseMark.BalconyDoor;
-            BalconyDoorItem = DbService.GetBalconyDoorItem(BalconyDoor);
+            Balcony_cut = ParseMark.BalconyCut;
+            Balcony_cut_modif = DbService.GetModificatorId(Balcony_cut, DbService.BalconyCutParamName);
+            Balcony_door = ParseMark.BalconyDoor;
+            Balcony_door_modif = DbService.GetModificatorId(Balcony_door, DbService.BalconyDoorParamName);
+            //BalconyDoorItem = DbService.GetBalconyDoorItem(BalconyDoor);
             Electrics = ParseMark.Electrics;
+            Mount_element = ParseMark.MountIndex;
+            Mount_element_modif = DbService.GetModificatorId(Mount_element, DbService.MountParamName);
+            Prong = ParseMark.ProngIndex;
+            Prong_modif = DbService.GetModificatorId(Prong, DbService.PrognParamName);
+            Step_height = ParseMark.StepHeightIndex;
+            Step_height_modif = DbService.GetModificatorId(Step_height?.ToString(), DbService.StepHeightParamName);
+            Steps = ParseMark.StepsCount;
+            First_step = ParseMark.StepFirstHeight;
             // Определение правильности габаритов - определенных по марке и заданных в атрибутах    
-                    
+
+            // Для ЛМ - игнорирование габаритов
+            if (Item_group.Equals ("ЛМ"))
+            {
+                IsIgnoreGab = true;
+            }
         }
         
         /// <summary>
@@ -785,20 +847,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <returns></returns>
         public string ParamsToString ()
         {
-            return $"Марка={Mark},Группа={ItemGroup},Lenght={Lenght},Height={Height},Thickness={Thickness},Formwork={Formwork}" +
-                $"BalconyDoor={BalconyDoor},BalconyCut={BalconyCut},Electrics={Electrics}.";            
+            return $"Марка={Mark},Группа={Item_group},Lenght={Length},Height={Height},Thickness={Thickness},Formwork={Formwork}" +
+                $"BalconyDoor={Balcony_door},BalconyCut={Balcony_cut},Electrics={Electrics}.";            
         }
 
         public string ErrorStatusEnameToString (ErrorStatusEnum status)
         {
             StringBuilder sb = new StringBuilder (status.ToString());
 
-            sb.Replace("None", "Ok");
-            sb.Replace("IncorrectMarkAndParams", "Параметры габаритов из атрибутов не соответствуют марке(атр)");
-            sb.Replace("IncorrectBlockName", $"Несоответствие имени блока '{BlockName}' и марки (атр) '{Mark}'");
-            sb.Replace("MarkHasLatin", "В марке есть латинские символы");
-            sb.Replace("IncorrectMarkAndFormula", $"Марка(атр) '{Mark}' отличается от марки по формуле '{MarkByFormula}'.");
-            sb.Replace("DifferentParamInGroup", "Различные параметры в панелях(блоках) одной марки.");            
+            sb.Replace(nameof(ErrorStatusEnum.None), "Ok");
+            sb.Replace(nameof(ErrorStatusEnum.IncorrectMarkAndParams), "Параметры габаритов из атрибутов не соответствуют марке(атр)");
+            sb.Replace(nameof(ErrorStatusEnum.IncorrectBlockName), $"Несоответствие имени блока '{BlockName}' и марки (атр) '{Mark}'");
+            sb.Replace(nameof(ErrorStatusEnum.MarkHasLatin), "В марке есть латинские символы");
+            sb.Replace(nameof(ErrorStatusEnum.IncorrectMarkAndFormula), $"Марка(атр) '{Mark}' отличается от марки по формуле '{MarkByFormula}'.");
+            sb.Replace(nameof(ErrorStatusEnum.DifferentParamInGroup), "Различные параметры в панелях(блоках) одной марки.");
+            sb.Replace(nameof(ErrorStatusEnum.OtherError), Warning);
 
             var res = sb.ToString();
 
@@ -813,7 +876,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             return Mark.Equals(other.Mark) &&
                    BlockName.Equals(other.BlockName) &&
-                   Lenght == other.Lenght &&
+                   Length == other.Length &&
                    Height == other.Height &&
                    Thickness == other.Thickness &&
                    Weight == other.Weight &&
@@ -828,6 +891,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public override int GetHashCode ()
         {
             return MarkWoSpace.GetHashCode();
-        }
+        }        
     }
 }

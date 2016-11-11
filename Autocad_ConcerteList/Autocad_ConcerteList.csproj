@@ -90,28 +90,42 @@
   <ItemGroup>
     <Compile Include="Commands.cs" />
     <Compile Include="Src\ConcreteDB\Access.cs" />
-    <Compile Include="Src\ConcreteDB\DataBase\I_C_Formula.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\DataSet1.cs">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\DataSet1.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\Formula.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Src\ConcreteDB\DataBase\I_C_Series.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\Item_colour.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Src\ConcreteDB\DataBase\I_J_ItemConstruction.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\Item_construction.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Src\ConcreteDB\DataBase\I_J_ItemSeries.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\Item_construction_colour.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Src\ConcreteDB\DataBase\I_S_BalconyCut.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\Item_construction_Product.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Src\ConcreteDB\DataBase\I_S_BalconyDoor.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\Item_group.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Src\ConcreteDB\DataBase\I_S_ItemGroup.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\Item_group_long.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
-    <Compile Include="Src\ConcreteDB\DataBase\I_S_Side.cs">
+    <Compile Include="Src\ConcreteDB\DataBase\Item_group_short.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\Item_modification.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\Item_modification_type.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
     <Compile Include="Src\ConcreteDB\DataBase\Model.Context.cs">
@@ -129,10 +143,17 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Model.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\Product.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Src\ConcreteDB\DataBase\Side.cs">
+      <DependentUpon>Model.tt</DependentUpon>
+    </Compile>
     <Compile Include="Src\ConcreteDB\DataObjects\BalconyDoorDbo.cs" />
     <Compile Include="Src\ConcreteDB\DataObjects\BalconyCutDbo.cs" />
     <Compile Include="Src\ConcreteDB\DataObjects\ItemConstructionDbo.cs" />
     <Compile Include="Src\ConcreteDB\DataObjects\ItemGroupDb.cs" />
+    <Compile Include="Src\ConcreteDB\DataObjects\ModificatorDbo.cs" />
     <Compile Include="Src\ConcreteDB\DataObjects\SerieDb.cs" />
     <Compile Include="Src\ConcreteDB\Formula\Eval.cs" />
     <Compile Include="Src\ConcreteDB\iItem.cs" />
@@ -146,11 +167,19 @@
     </Compile>
     <Compile Include="Src\ConcreteDB\Options\Options.cs" />
     <Compile Include="Src\ConcreteDB\Panels\FilterPanel.cs" />
-    <Compile Include="Src\ConcreteDB\Panels\ParserMark.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\ParsersMark\ParserMark.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\ParsersMark\IMarkParser.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\ParsersMark\StairMarkParser.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\RegColors.cs" />
     <Compile Include="Src\ConcreteDB\Panels\RegPanels.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\PanelColorViewModel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\PanelsBaseView.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\RegColorViewModel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\RegPanelsViewModel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\Windows\PanelViewModel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\Windows\WindowRegColors.xaml.cs">
+      <DependentUpon>WindowRegColors.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Src\ConcreteDB\Panels\Windows\WindowRegPanels.xaml.cs">
       <DependentUpon>WindowRegPanels.xaml</DependentUpon>
     </Compile>
@@ -179,17 +208,28 @@
   <ItemGroup>
     <None Include="app.config" />
     <None Include="AutoCADNetLoad.scr" />
-    <EntityDeploy Include="Src\ConcreteDB\DataBase\Model.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>Model.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <None Include="Src\ConcreteDB\DataBase\Model.edmx.diagram">
-      <DependentUpon>Model.edmx</DependentUpon>
-    </None>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <EntityDeploy Include="Src\ConcreteDB\DataBase\Model.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>Model.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Src\ConcreteDB\DataBase\DataSet1.xsc">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Src\ConcreteDB\DataBase\DataSet1.xsd">
+      <SubType>Designer</SubType>
+      <Generator>MSDataSetGenerator</Generator>
+      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Src\ConcreteDB\DataBase\DataSet1.xss">
+      <DependentUpon>DataSet1.xsd</DependentUpon>
+    </None>
+    <None Include="Src\ConcreteDB\DataBase\Model.edmx.diagram">
+      <DependentUpon>Model.edmx</DependentUpon>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -206,6 +246,10 @@
   </ItemGroup>
   <ItemGroup>
     <Page Include="Src\ConcreteDB\Panels\Windows\WindowCheckPanels.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Src\ConcreteDB\Panels\Windows\WindowRegColors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -235,7 +279,6 @@
       <LastGenOutput>Model.cs</LastGenOutput>
     </Content>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

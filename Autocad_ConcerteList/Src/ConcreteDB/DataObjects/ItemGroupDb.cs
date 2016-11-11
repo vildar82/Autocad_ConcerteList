@@ -8,7 +8,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
     public class ItemGroupDbo
     {
-        public decimal ItemGroupId { get; set; }        
+        public int ItemGroupId { get; set; }        
         public string ItemGroup { get; set; }        
         public Nullable<bool> HasFormula { get; set; }
         public string Formula { get; set; }

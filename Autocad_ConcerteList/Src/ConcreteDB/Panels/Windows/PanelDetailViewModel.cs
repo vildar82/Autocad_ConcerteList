@@ -22,6 +22,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         {
             panelDetail = itemDetail;
             panelFirst = firstPanel;
+            Show = new RelayCommand(OnShowExecute);
         }        
 
         public Panel PanelDetail {
@@ -54,11 +55,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// Длина
         /// </summary>
         public short? Length {
-            get { return panelDetail.Lenght; }
+            get { return panelDetail.Length; }
             set {RaisePropertyChanged();}
         }
         public Brush LengthBackground {
-            get { return panelDetail.Lenght == panelFirst.Lenght ? null : BadValue; }
+            get { return panelDetail.Length == panelFirst.Length ? null : BadValue; }
             set { RaisePropertyChanged(); }
         }        
 
@@ -125,7 +126,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// <summary>
         /// Команда - показать панель на чертеже
         /// </summary>
-        public ICommand Show { get { return new RelayCommand(() => panelDetail.Show(), () => panelDetail.CanShow()); } }
+        public RelayCommand Show { get; set; }
+
+        private void OnShowExecute ()
+        {
+            panelDetail?.Show();
+        }
 
         internal void UpdateCheckPanel ()
         {

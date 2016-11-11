@@ -32,8 +32,8 @@ namespace TestAcadConsole.Tests.DB
         {
             // В706.26.18-1-3э
             Panel p = new Panel {
-                ItemGroup = "В",
-                Lenght = 7060,
+                Item_group = "В",
+                Length = 7060,
                 Height = 2620,
                 Thickness = 180,
                 Formwork = 1,

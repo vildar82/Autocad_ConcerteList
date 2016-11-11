@@ -35,6 +35,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Различные параметры в панелях одной марки
         /// </summary>
-        DifferentParamInGroup = 0x10
+        DifferentParamInGroup = 0x10,
+            /// <summary>
+            /// Прочая ошибка
+            /// </summary>
+        OtherError = 0x20
     }
 }

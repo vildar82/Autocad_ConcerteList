@@ -11,11 +11,11 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
 {
     [TestClass()]
     public class ParserMarkTests
-    {   
+    {
         [TestMethod()]
         public void ParseSlabTest()
-        {
-            ParserMark parser = new ParserMark("2П 544.363-1-2э");
+        {            
+              ParserMark parser = new ParserMark("2П 544.363-1-2э");
             parser.Parse();
             bool check = parser.ItemGroup.Equals("2П") &&
                          parser.GroupIndexClass == 2 &&
@@ -226,7 +226,23 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
                          parser.BalconyDoor == "Б1";
             Assert.AreEqual(check, true);
         }
-
+        [TestMethod()]
+        public void ParseOutPanelTest44 ()
+        {
+            ParserMark parser = new ParserMark("3НСг 72.29.32-6Б");
+            parser.Parse();
+            bool check = parser.ItemGroup.Equals("3НСг") &&
+                         parser.GroupIndexClass == 0 &&
+                         parser.MarkWoGroupClassIndex == "3НСг 72.29.32-6Б" &&
+                         parser.Length == 72 &&
+                         parser.Height == 29 &&
+                         parser.Thickness == 32 &&
+                         parser.Formwork == 6 &&
+                         string.IsNullOrEmpty(parser.Electrics) &&                         
+                         parser.BalconyDoor == "Б";
+            Assert.AreEqual(true, check);
+        }
+        
         [TestMethod()]
         public void ParseOutPanelTest4()
         {
@@ -330,6 +346,44 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
                          parser.Thickness == null &&
                          parser.Formwork == 4 &&
                          string.IsNullOrEmpty(parser.Electrics) &&
+                         string.IsNullOrEmpty(parser.BalconyCut) &&
+                         string.IsNullOrEmpty(parser.BalconyDoor);
+            Assert.AreEqual(check, true);
+        }
+
+        [TestMethod()]
+        public void ParseOutPanelMountTest ()
+        {            
+            ParserMark parser = new ParserMark("3НСНг2 60.29.42-10Д-1э");
+            parser.Parse();
+            bool check = parser.ItemGroup.Equals("3НСНг2") &&
+                         parser.GroupIndexClass == 2 &&
+                         parser.MarkWoGroupClassIndex == "3НСНг 60.29.42-10Д-1э" &&
+                         parser.Length == 60 &&
+                         parser.Height == 29 &&
+                         parser.Thickness == 42 &&
+                         parser.Formwork == 10 &&
+                         parser.Electrics == "1э" &&
+                         parser.MountIndex == "Д" &&
+                         string.IsNullOrEmpty(parser.BalconyCut) &&
+                         string.IsNullOrEmpty(parser.BalconyDoor);
+            Assert.AreEqual(check, true);
+        }
+        [TestMethod()]
+        public void ParseOutPanelMountTest2 ()
+        {
+            ParserMark parser = new ParserMark("3НСНг2 60.29.42-10ДГ-1э");
+            parser.Parse();
+            bool check = parser.ItemGroup.Equals("3НСНг2") &&
+                         parser.GroupIndexClass == 2 &&
+                         parser.MarkWoGroupClassIndex == "3НСНг 60.29.42-10ДГ-1э" &&
+                         parser.Length == 60 &&
+                         parser.Height == 29 &&
+                         parser.Thickness == 42 &&
+                         parser.Formwork == 10 &&
+                         parser.Electrics == "1э" &&
+                         parser.MountIndex == "Д" &&
+                         parser.ProngIndex == "Г" &&
                          string.IsNullOrEmpty(parser.BalconyCut) &&
                          string.IsNullOrEmpty(parser.BalconyDoor);
             Assert.AreEqual(check, true);

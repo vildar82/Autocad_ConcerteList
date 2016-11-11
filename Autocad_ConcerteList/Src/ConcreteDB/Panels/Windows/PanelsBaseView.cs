@@ -20,6 +20,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         private ObservableCollection<PanelViewModel> _panelsViewModel;
 
         protected List<KeyValuePair<Panel, List<Panel>>> _panels;
+
+        public PanelsBaseView (List<KeyValuePair<Panel, List<Panel>>> panels)
+        {
+            _panels = panels;
+            UpdateAllPanels();
+            CheckState();
+        }
+
         public List<Panel> PanelsToReg {
             get {
                 return _panels.Select(s => s.Key).ToList();
@@ -72,12 +80,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             get { return $" Строк {CountRow} "; }
         }
 
-        public PanelsBaseView (List<KeyValuePair<Panel, List<Panel>>> panels)
-        {
-            _panels = panels;
-            UpdateAllPanels();
-            CheckState();
-        }
+        
 
         protected void UpdateAllPanels ()
         {
