@@ -15,8 +15,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             Panels = new ObservableCollection<PanelColorViewModel>(panels.Select(s=>new PanelColorViewModel(s)));            
         }
 
-        public ObservableCollection<PanelColorViewModel> Panels { get; set; }       
+        public ObservableCollection<PanelColorViewModel> Panels { get; set; }
 
-        
+        public PanelColorViewModel SelectedPanel { get { return selectedPanel; } set { selectedPanel = value; ShowPanel(); } }
+        PanelColorViewModel selectedPanel;
+
+        private void ShowPanel ()
+        {
+            selectedPanel.panel.Show();
+        }
     }
 }

@@ -38,6 +38,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             if (panelsColor.Any (p=>p.ErrorStatus!= ErrorStatusEnum.None))
             {
                 Inspector.AddError($"Нельзя выполнить регистрацию колористических индексов, т.к. есть панели с ошибками.");
+                var panelsWithErr = panelsColor.Where(p => p.ErrorStatus != ErrorStatusEnum.None);
+                foreach (var item in panelsWithErr)
+                {
+                    Inspector.AddError($"Панель с ошибками - {item.Mark}. {item.GetErrorStatusDesc()}", item.IdBlRef, System.Drawing.SystemIcons.Error);
+                }
                 return;
             }
 
