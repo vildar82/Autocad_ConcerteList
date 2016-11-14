@@ -20,6 +20,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
     {
         public const string MountParamName = "Закладная";
         public const string PrognParamName = "Зубцы";
+
+        
+
         public const string BalconyCutParamName = "Подрезка";
         public const string BalconyDoorParamName = "Балконная дверь";
         public const string StepHeightParamName = "Ступень";
@@ -27,6 +30,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         static List<ItemGroupDbo> Groups;
         static List<ItemConstructionDbo> Items;
         static Dictionary<string, Item_colour> dictColors;
+        static List<string> colorsHandMarkFull;
         public static List<SerieDbo> Series { get; set; }
 
         public static MDMEntities ConnectEntities()
@@ -71,6 +75,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
 
                 // Загрузка всех панелей
                 LoadItems(ents);
+
+                // Список цветов (item_construction_colors hand_mark)
+                colorsHandMarkFull = ents.Item_construction_colour.Select(s => s.Hand_mark).ToList();
             }
         }        
 
@@ -395,5 +402,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         //{
         //    return BalconyDoors.Where(b => b.Name.Equals(balconyDoor)).FirstOrDefault();
         //}        
+
+        public static bool HasColorFullHandMark (string colorFullMark)
+        {
+            var res = colorsHandMarkFull.Contains(colorFullMark);
+            return res;
+        }
     }
 }

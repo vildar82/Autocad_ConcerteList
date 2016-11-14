@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows"
         mc:Ignorable="d"
         Background="{Binding Background, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-        Title="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:DesignWidth="810" d:DesignHeight="537">    
+        Title="{Binding Title, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}" d:DesignWidth="452" d:DesignHeight="295">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition />
@@ -20,7 +20,7 @@
                   Margin="5" FrozenColumnCount="1" FontSize="12" Grid.Row="0" AlternatingRowBackground="LightGray"
                   RowDetailsVisibilityMode="Collapsed" IsReadOnly="True">
             <DataGrid.Resources>
-                <Style x:Key="TextCenter" TargetType="{x:Type TextBlock}">                    
+                <Style x:Key="TextCenter" TargetType="{x:Type TextBlock}">
                     <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
                 </Style>
             </DataGrid.Resources>
@@ -70,7 +70,7 @@
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Background" Value="{Binding ThicknessBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding ThicknessDesc}" />
-                            <Setter Property="TextBlock.VerticalAlignment" Value="Center" />                            
+                            <Setter Property="TextBlock.VerticalAlignment" Value="Center" />
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -150,7 +150,7 @@
                     </Border>
                 </DataTemplate>
             </DataGrid.RowDetailsTemplate>
-        </DataGrid>        
+        </DataGrid>
         <TextBlock Grid.Row="1" Text="{Binding SelectedPanel.Warning}" FontSize="12"                        
                    Background="WhiteSmoke" TextWrapping="WrapWithOverflow" Padding="5"/>
         <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="5">
