@@ -16,8 +16,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         private string partDop;
         private static Dictionary<string, IMarkParser> dictMarkParsers = new Dictionary<string, IMarkParser> {
             { "ЛМ", new StairMarkParser() }
-        };
-        
+        };        
 
         /// <summary>
         /// Входная марка - из атрибута блока

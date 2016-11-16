@@ -247,7 +247,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                     var item = new ItemConstructionDbo() {
                         Panel = panel,
                         IsIgnoreGab = panel.IsIgnoreGab,
-                        HandMarkNoColour = panel.Mark,
+                        HandMarkNoColour = panel.GetHandMarkNoColor(),
                         ItemGroupId = panel.DbGroup.ItemGroupId,
                         Length = panel.Length,
                         Height = panel.Height,

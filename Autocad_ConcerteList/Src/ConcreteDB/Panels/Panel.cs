@@ -323,6 +323,38 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return Result.Ok();
         }
 
+        /// <summary>
+        /// Марка из атрибута,
+        /// без колористики
+        /// без пробелов (за исключением 2 на конце группы)
+        /// </summary>        
+        public string GetHandMarkNoColor ()
+        {
+            string handMarkNoColor;
+            if (Item_group.Trim().Last()== '2')
+            {
+                handMarkNoColor = Mark;
+            }
+            else
+            {
+                handMarkNoColor = Mark.Replace(" ", "").Replace(" ", "");
+            }
+            return handMarkNoColor;
+        }
+
+        /// <summary>
+        /// Марка вместе с колористикой
+        /// </summary>
+        /// <returns></returns>
+        public string GetMarkWithColor ()
+        {
+            if (string.IsNullOrEmpty(Color))
+            {
+                return GetHandMarkNoColor();
+            }
+            return $"{GetHandMarkNoColor()}({Color.Replace(" ","").Replace(" ", "")})";
+        }
+
         private string GetColorWithoutBrackets (string text)
         {
             var res = text.Trim();
@@ -359,20 +391,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 return null;
             }       
-        }
-
-        /// <summary>
-        /// Марка вместе с колористикой
-        /// </summary>
-        /// <returns></returns>
-        public string GetMarkWithColor ()
-        {
-            if (string.IsNullOrEmpty(Color))
-            {
-                return Mark;
-            }
-            return $"{Mark}({Color})";
-        }
+        }        
 
         /// <summary>
         /// Изменение высоты в атрибуте - во всех блоках
