@@ -26,17 +26,6 @@ namespace Autocad_ConcerteList.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=cad01pik;Initial Catalog=SAPR;Persist Security Info=True;User ID=cad_" +
-            "ar;Password=qwerty!2345")]
-        public string SAPRConnectionString {
-            get {
-                return ((string)(this["SAPRConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
         [global::System.Configuration.DefaultSettingValueAttribute(@"metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string=""data source=cad01pik;initial catalog=SAPR;persist security info=True;user id=cad_ar;password=qwerty!2345;MultipleActiveResultSets=True;App=EntityFramework""")]
         public string SaprCon {
             get {
@@ -47,34 +36,10 @@ namespace Autocad_ConcerteList.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=cad01pik;Initial Catalog=MDM;Persist Security Info=True;User ID=SAS;P" +
-            "assword=\'23ыфьыгтп*\"\'")]
-        public string MDMConnectionString {
-            get {
-                return ((string)(this["MDMConnectionString"]));
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute(@"metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string=""Server=cad01pik; Database=MDM; User Id=Vildar;Password=28Vildar; MultipleActiveResultSets=True; App=EntityFramework""")]
         public string MdmCon {
             get {
                 return ((string)(this["MdmCon"]));
-            }
-            set {
-                this["MdmCon"] = value;
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute("Data Source=cad01pik;Initial Catalog=MDM;Persist Security Info=True;User ID=Vilda" +
-            "r;Password=28Vildar")]
-        public string MDMConnectionString1 {
-            get {
-                return ((string)(this["MDMConnectionString1"]));
             }
         }
     }

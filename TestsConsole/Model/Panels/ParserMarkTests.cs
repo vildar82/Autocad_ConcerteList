@@ -388,5 +388,49 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
                          string.IsNullOrEmpty(parser.BalconyDoor);
             Assert.AreEqual(check, true);
         }
+
+        [TestMethod()]
+        public void ParseOutPanelTest45 ()
+        {
+            ParserMark parser = new ParserMark("3НСг 72.29.32Д");
+            parser.Parse();
+            bool check = parser.ItemGroup.Equals("3НСг") &&
+                         parser.GroupIndexClass == 0 &&
+                         parser.MarkWoGroupClassIndex == "3НСг 72.29.32Д" &&
+                         parser.Length == 72 &&
+                         parser.Height == 29 &&
+                         parser.Thickness == 32 &&                         
+                         string.IsNullOrEmpty(parser.Electrics) &&
+                         parser.MountIndex == "Д";
+            Assert.AreEqual(true, check);
+        }
+
+        [TestMethod()]
+        public void ParseLMPanelTest()
+        {
+            ParserMark parser = new ParserMark("ЛМ-1.9-18");
+            parser.Parse();
+            bool check = parser.ItemGroup.Equals("ЛМ") &&
+                         parser.GroupIndexClass == 0 &&
+                         parser.MarkWoGroupClassIndex == "ЛМ-1.9-18" &&
+                         parser.StepHeightIndex == 1 &&
+                         parser.StepsCount == 9 &&
+                         parser.StepFirstHeight == 18;
+            Assert.AreEqual(true, check);
+        }
+
+        [TestMethod()]
+        public void ParseLMPanelTest2 ()
+        {
+            ParserMark parser = new ParserMark("ЛМ-1.9");
+            parser.Parse();
+            bool check = parser.ItemGroup.Equals("ЛМ") &&
+                         parser.GroupIndexClass == 0 &&
+                         parser.MarkWoGroupClassIndex == "ЛМ-1.9" &&
+                         parser.StepHeightIndex == 1 &&
+                         parser.StepsCount == 9 &&
+                         parser.StepFirstHeight == null;
+            Assert.AreEqual(true, check);
+        }
     }
 }

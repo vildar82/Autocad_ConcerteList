@@ -90,14 +90,6 @@
   <ItemGroup>
     <Compile Include="Commands.cs" />
     <Compile Include="Src\ConcreteDB\Access.cs" />
-    <Compile Include="Src\ConcreteDB\DataBase\DataSet1.cs">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </Compile>
-    <Compile Include="Src\ConcreteDB\DataBase\DataSet1.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </Compile>
     <Compile Include="Src\ConcreteDB\DataBase\Formula.cs">
       <DependentUpon>Model.tt</DependentUpon>
     </Compile>
@@ -217,17 +209,6 @@
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>Model.Designer.cs</LastGenOutput>
     </EntityDeploy>
-    <None Include="Src\ConcreteDB\DataBase\DataSet1.xsc">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </None>
-    <None Include="Src\ConcreteDB\DataBase\DataSet1.xsd">
-      <SubType>Designer</SubType>
-      <Generator>MSDataSetGenerator</Generator>
-      <LastGenOutput>DataSet1.Designer.cs</LastGenOutput>
-    </None>
-    <None Include="Src\ConcreteDB\DataBase\DataSet1.xss">
-      <DependentUpon>DataSet1.xsd</DependentUpon>
-    </None>
     <None Include="Src\ConcreteDB\DataBase\Model.edmx.diagram">
       <DependentUpon>Model.edmx</DependentUpon>
     </None>

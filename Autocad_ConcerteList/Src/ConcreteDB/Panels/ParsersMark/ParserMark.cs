@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using AcadLib;
 using AcadLib.Errors;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
@@ -203,16 +204,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     Thickness = GetShort(splitDot[2], "Толщина");
                 }
             }
+            if (partGab.IndexOf("Д") != -1)
+            {
+                MountIndex = "Д";
+            }
         }
 
         private short GetShort(string input, string nameParam)
         {
-            short res;
-            if (!short.TryParse(input, out res))
-            {
-                throw new Exception($"Не определено '{nameParam}={input}'");
-            }
-            return res;
+            return (short)GetStartInteger(input);            
         }
 
         private void parsePartDop()

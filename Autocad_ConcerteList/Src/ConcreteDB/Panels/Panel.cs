@@ -195,6 +195,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public Workspace WS { get; set; }
         public decimal ItemConstructionId { get; internal set; }
 
+        public bool IsExteriorWall {
+            get {
+                var res = Item_group.IndexOf("НС") != -1;
+                return res;
+            }
+        }
+
+        public bool IsInnerWall {
+            get {
+                var res = Item_group.IndexOf("В") != -1;
+                return res;
+            }
+        }
+
+
         /// <summary>
         /// Статус изделия - ок,
         /// </summary>
@@ -699,8 +714,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             desc = "пусто";
             if (gab != null && parseMarkGab != null)
             {
-                var gabDiv = Eval.GetRoundValue(gab.Value / factor);
+                short gabDiv;
                 //parseMarkGab = (short)(parseMarkGab * factor);
+                if (gab.Value == 3018 && IsExteriorWall && nameGab == "Высота")
+                {
+                    gabDiv = 31;
+                }
+                else if (gab.Value == 2790 && IsInnerWall && nameGab == "Высота")
+                {
+                    gabDiv = 29;
+                }
+                else
+                {
+                    gabDiv = Eval.GetRoundValue(gab.Value / factor);
+                }
+
                 if (gabDiv != parseMarkGab.Value)
                 {
                     isOk = false;

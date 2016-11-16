@@ -14,6 +14,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
         public short? Height { get; set; }
         public short? Thickness { get; set; }
         public string Formula { get; private set; }
+        /// <summary>
+        /// Результативная марка
+        /// </summary>
         public string Result { get; private set; }
         public List<Eval> Evals { get; private set; }
         private iItem item;        
@@ -33,20 +36,29 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
                 Eval eval = new Eval(evalItem, item);
                 eval.Evaluate();           
                 Evals.Add(eval);
-                if (evalItem.Contains("Lenght"))
+                if (evalItem.Contains("Length"))
                 {
                     Length =short.Parse(eval.ValueString);
                 }
                 else if (evalItem.Contains("Height"))
                 {
                     Height = short.Parse(eval.ValueString);
+                    if (item.Height == 3018 && item.IsExteriorWall)
+                    {
+                        eval.ValueString = "31";
+                        Height = 31;
+                    }
+                    else if (item.Height == 2790 && item.IsInnerWall)
+                    {
+                        eval.ValueString = "29";
+                        Height = 29;
+                    }
                 }
                 else if (evalItem.Contains("Thickness"))
                 {
                     Thickness = short.Parse(eval.ValueString);
                 }                
             }
-
             // Соединение значений по формуле
             Result = string.Join("", Evals).Replace("--", "-").Replace("--", "-").TrimEnd('-');
         }        

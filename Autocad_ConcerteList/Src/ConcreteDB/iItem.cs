@@ -43,5 +43,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         /// Высота первой ступени
         /// </summary>
         int? First_step { get; }
+        /// <summary>
+        /// Что это наружная стеновая панель
+        /// </summary>
+        bool IsExteriorWall { get; }
+        bool IsInnerWall { get; }
     }
 }

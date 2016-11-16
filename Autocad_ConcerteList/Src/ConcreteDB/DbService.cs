@@ -20,16 +20,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
     {
         public const string MountParamName = "Закладная";
         public const string PrognParamName = "Зубцы";
-
-        
-
         public const string BalconyCutParamName = "Подрезка";
         public const string BalconyDoorParamName = "Балконная дверь";
         public const string StepHeightParamName = "Ступень";
         static List<ModificatorDbo> Modificators;        
         static List<ItemGroupDbo> Groups;
-        static List<ItemConstructionDbo> Items;
-        static Dictionary<string, Item_colour> dictColors;
+        static List<ItemConstructionDbo> Items;        
         static List<string> colorsHandMarkFull;
         public static List<SerieDbo> Series { get; set; }
 
