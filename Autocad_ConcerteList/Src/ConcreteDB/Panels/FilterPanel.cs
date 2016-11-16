@@ -35,7 +35,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 t.Commit();
             }
             definePanelsWS(panels, ws);
-            Panels = panels.OrderBy(p=>p.Mark).ToList();
+            // Панели только в раб.областях., отсортированные по марке            
+            Panels = panels.Where(p=>p.WS!= null).OrderBy(p=>p.Mark, AcadLib.Comparers.AlphanumComparator.New).ToList();
         }
 
         private static Panel DefinePanel(ObjectId idEnt, ref List<Panel> panels)

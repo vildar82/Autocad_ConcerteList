@@ -367,7 +367,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <returns></returns>
         public string GetMarkWithColor ()
         {
-            return $"{MarkByFormula}({Color})";
+            if (string.IsNullOrEmpty(Color))
+            {
+                return Mark;
+            }
+            return $"{Mark}({Color})";
         }
 
         /// <summary>

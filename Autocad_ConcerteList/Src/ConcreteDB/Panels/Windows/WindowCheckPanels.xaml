@@ -179,7 +179,7 @@
                         <TextBlock Text="Ст." ToolTip="Индекс высоты ступеней (ЛМ)"/>
                     </DataGridTextColumn.Header>
                 </DataGridTextColumn>
-                <DataGridTextColumn Binding="{Binding StepHeightIndex}" IsReadOnly="True" Width="Auto" ToolTipService.ToolTip="Количество ступеней">
+                <DataGridTextColumn Binding="{Binding StepCount}" IsReadOnly="True" Width="Auto" ToolTipService.ToolTip="Количество ступеней">
                     <DataGridTextColumn.Header>
                         <TextBlock Text="шт." ToolTip="Количество ступеней (ЛМ)"/>
                     </DataGridTextColumn.Header>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using System.Data.Entity.Core.EntityClient;
 using System.Linq;
+using System.Text;
 using AcadLib;
 using AcadLib.Errors;
 using Autocad_ConcerteList.Properties;
@@ -283,6 +284,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         {
             using (var ents = ConnectEntities())
             {
+                var registeredColors = new List<Panel>();
                 // Запись колористических индексов в справочник
                 Dictionary<string, int> dictColors;
                 FillColorsIndexes(panelsColor, ents, out dictColors);
@@ -297,12 +299,22 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                         };
                         ents.Item_construction_colour.Add(colorItemNew);
                         ents.SaveChanges();
+
+                        registeredColors.Add(item);
                     }
                     catch
                     {
                         // Ошибка если такая колористика уже есть. Стас сказал что это нормально.
                     }                    
-                }                
+                }
+
+                // Лог зарегистрированной колористики
+                var sbRegs = new StringBuilder("Зарегистрированная колористика:");
+                foreach (var item in registeredColors)
+                {
+                    sbRegs.AppendLine($"{item.MarkByFormula}, {item.Color} = {item.GetMarkWithColor()}");
+                }
+                Logger.Log.Error(sbRegs.ToString());
             }
         }
 
@@ -323,8 +335,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             }
             foreach (var item in colorsIndexes)
             {
-                dictColors.Add(item, ents.Item_colour
-                    .First(f => f.Item_colour1.Equals(item, StringComparison.OrdinalIgnoreCase)).Item_colour_id);
+                var colorId = ents.Item_colour.First(f => 
+                        f.Item_colour1.Equals(item, StringComparison.OrdinalIgnoreCase)).Item_colour_id;
+                dictColors.Add(item, colorId);
             }
         }
 
@@ -366,13 +379,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 // запись панели в таблицу Item_construction_colour, без привязки к Color
                 ents.Item_construction_colour.Add(new Item_construction_colour {
                    Item_construction = newItem,
-                   Hand_mark = panel.Panel.GetMarkWithColor(),
+                   Hand_mark = panel.Panel.Mark,
                    Item_colour_id = 1
                 });
 
                 ents.SaveChanges();
-                id = newItem.Item_construction_id;                
-
+                id = newItem.Item_construction_id;
             }
             return true;
         }

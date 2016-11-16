@@ -81,7 +81,7 @@
                 <DataGridTextColumn Header="П" Binding="{Binding BalconyCut}" ElementStyle="{StaticResource TextCenter}"/>
                 <DataGridTextColumn Header="э" Binding="{Binding Electrics}" ElementStyle="{StaticResource TextCenter}"/>
                 <DataGridTextColumn Header="Ст." Binding="{Binding StepHeightIndex}" Width="Auto" ToolTipService.ToolTip="Высота ступени" ElementStyle="{StaticResource TextCenter}"/>
-                <DataGridTextColumn Header="шт." Binding="{Binding StepHeightIndex}"  Width="Auto" ToolTipService.ToolTip="Количество ступеней" ElementStyle="{StaticResource TextCenter}"/>
+                <DataGridTextColumn Header="шт." Binding="{Binding StepCount}"  Width="Auto" ToolTipService.ToolTip="Количество ступеней" ElementStyle="{StaticResource TextCenter}"/>
                 <DataGridTextColumn Header="h" Binding="{Binding StepFirst}" Width="Auto" ToolTipService.ToolTip="Высота первой ступени" ElementStyle="{StaticResource TextCenter}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
