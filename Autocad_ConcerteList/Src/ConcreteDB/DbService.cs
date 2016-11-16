@@ -370,7 +370,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 // запись панели в таблицу Item_construction_colour, без привязки к Color
                 ents.Item_construction_colour.Add(new Item_construction_colour {
                    Item_construction = newItem,
-                   Hand_mark = panel.Panel.GetMarkWithColor()
+                   Hand_mark = panel.Panel.GetMarkWithColor(),
+                   Item_colour_id = 1
                 });
 
                 ents.SaveChanges();
