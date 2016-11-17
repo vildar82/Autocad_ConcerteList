@@ -60,11 +60,11 @@
           <Property Name="Item_construction_colour_id_access" Type="int" />
           <Property Name="Code_1C" Type="int" Nullable="false" />
           <Property Name="Article_1C" Type="nvarchar" MaxLength="20" />
-          <Property Name="Hand_mark" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Item_construction_id" Type="int" Nullable="false" />
           <Property Name="Item_colour_id" Type="int" />
           <Property Name="Document_link" Type="nvarchar(max)" />
           <Property Name="Additional" Type="nvarchar" MaxLength="20" />
+          <Property Name="Hand_mark" Type="nvarchar" MaxLength="100" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_construction_Product">
           <Key>
@@ -472,7 +472,7 @@
           <Property Name="Item_construction_colour_id_access" Type="Int32" />
           <Property Name="Code_1C" Type="Int32" Nullable="false" />
           <Property Name="Article_1C" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
-          <Property Name="Hand_mark" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Hand_mark" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Item_construction_id" Type="Int32" Nullable="false" />
           <Property Name="Item_colour_id" Type="Int32" />
           <Property Name="Document_link" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
