@@ -27,24 +27,24 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             var panelsNoInDb = panelsColor.Where(p => p.DbItem == null);
             if (panelsNoInDb.Any ())
             {
-                Inspector.AddError($"Нельзя выполнить регистрацию колористических индексов, т.к. не все панели найдены в базе. См. ошибки.");
+                Inspector.AddError($"Необходимо проверить панели с ошибками перед регистрацией колористики. См. ошибки.");
                 foreach (var item in panelsNoInDb)
                 {
                     Inspector.AddError($"Панель не найдена в базе - {item.Mark}. ", item.IdBlRef, System.Drawing.SystemIcons.Error);
-                }
-                return;
+                }                
             }
 
             if (panelsColor.Any (p=>p.ErrorStatus!= ErrorStatusEnum.None))
             {
-                Inspector.AddError($"Нельзя выполнить регистрацию колористических индексов, т.к. есть панели с ошибками.");
+                Inspector.AddError($"Необходимо проверить панели с ошибками перед регистрацией колористики. См. ошибки.");
                 var panelsWithErr = panelsColor.Where(p => p.ErrorStatus != ErrorStatusEnum.None);
                 foreach (var item in panelsWithErr)
                 {
                     Inspector.AddError($"Панель с ошибками - {item.Mark}. {item.GetErrorStatusDesc()}", item.IdBlRef, System.Drawing.SystemIcons.Error);
-                }
-                return;
+                }                
             }
+
+            Inspector.ShowDialog();
 
             // Форма регистрации колористики
             var windowRegColor = new WindowRegColors();
