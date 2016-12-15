@@ -8,6 +8,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     /// <summary>
     /// Парсер марки лестничного марша (ЛМ-1.11-24)
+    /// Изм. от 15.12.2016 - доб.ширина - ЛМ-1.11.105-24, 105 = Height/10, необязательный параметр!
     /// </summary>
     public class StairMarkParser : IMarkParser
     {
@@ -30,16 +31,29 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         }
 
         /// <summary>
-        /// Разбор части марки после ЛМ-, типа 1.11-24 - 
+        /// Разбор части марки после ЛМ-, типа 1.11-24. 
         /// Новая запись марки для ЛМ.
+        /// Изм. 1.11.105-24, причем 105 необязательный
         /// </summary>
         /// <param name="markFromStep"></param>
         private void parseNew (string markFromStep)
         {
             var dots = markFromStep.Split('.');
             parserBase.StepHeightIndex = int.Parse(dots[0]);
-            var dashs = dots[1].Split('-');
-            parserBase.StepsCount = int.Parse(dashs[0]);
+            string[] dashs;
+            if (dots.Length == 3)
+            {
+                // Задана ширина
+                parserBase.StepsCount = int.Parse(dots[1]);
+                dashs = dots[2].Split('-');
+                parserBase.Height = (short)(short.Parse(dashs[0])*10);
+            }
+            else
+            {
+                dashs = dots[1].Split('-');
+                parserBase.StepsCount = int.Parse(dashs[0]);
+                parserBase.Height = 1050;
+            }
             if (dashs.Length>1)
             {
                 parserBase.StepFirstHeight = int.Parse(dashs[1]);

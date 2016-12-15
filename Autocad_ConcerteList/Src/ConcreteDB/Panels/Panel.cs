@@ -620,7 +620,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 // Определение марки по формуле по параметрам
                 DefineMarkByFormulaInDb();
 
-
                 CheckBlockParams();
                 CheckBdParams();
             }
@@ -835,10 +834,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         private void DefineMarkByFormulaInDb()
         {
+            bool isStair1050 = false;
             try
             {
                 if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
                 {
+                    
+                    if (string.Equals("ЛМ", Item_group) && Height ==1050)
+                    {
+                        isStair1050 = true;
+                        Height = null;
+                    }
                     var res = DbService.GetDbMark(this, out parserFormula);
                     if (res.Success)
                     {
@@ -861,6 +867,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 Warning += " Ошибка формирования марки панели по параметрам - " + ex.Message + ". ";
                 ErrorStatus = ErrorStatusEnum.OtherError;
+            }
+            finally
+            {
+                if (isStair1050)
+                {
+                    Height = 1050;
+                }
             }
         }
 

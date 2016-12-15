@@ -36,31 +36,34 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
                 Eval eval = new Eval(evalItem, item);
                 eval.Evaluate();           
                 Evals.Add(eval);
-                if (evalItem.Contains("Length"))
+                if (!string.IsNullOrEmpty(eval.ValueString))
                 {
-                    Length =short.Parse(eval.ValueString);
-                }
-                else if (evalItem.Contains("Height"))
-                {
-                    Height = short.Parse(eval.ValueString);
-                    if (item.Height == 3018 && item.IsExteriorWall)
+                    if (evalItem.Contains("Length"))
                     {
-                        eval.ValueString = "31";
-                        Height = 31;
+                        Length = short.Parse(eval.ValueString);
                     }
-                    else if (item.Height == 2790 && item.IsInnerWall)
+                    else if (evalItem.Contains("Height"))
                     {
-                        eval.ValueString = "29";
-                        Height = 29;
+                        Height = short.Parse(eval.ValueString);
+                        if (item.Height == 3018 && item.IsExteriorWall)
+                        {
+                            eval.ValueString = "31";
+                            Height = 31;
+                        }
+                        else if (item.Height == 2790 && item.IsInnerWall)
+                        {
+                            eval.ValueString = "29";
+                            Height = 29;
+                        }
                     }
-                }
-                else if (evalItem.Contains("Thickness"))
-                {
-                    Thickness = short.Parse(eval.ValueString);
-                }                
+                    else if (evalItem.Contains("Thickness"))
+                    {
+                        Thickness = short.Parse(eval.ValueString);
+                    }
+                }               
             }
             // Соединение значений по формуле
-            Result = string.Join("", Evals).Replace("--", "-").Replace("--", "-").TrimEnd('-');
+            Result = string.Join("", Evals).Replace("--", "-").Replace("--", "-").Replace(".-","-").TrimEnd('-').TrimEnd('.');
         }        
     }
 }
