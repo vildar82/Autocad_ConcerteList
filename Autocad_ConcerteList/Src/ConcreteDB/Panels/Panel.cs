@@ -44,7 +44,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Соответствие игнорируемых имен блоков.
         /// </summary>
         public static List<string> IgnoredBlockNamesMatch { get; } = 
-            new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук", @"\$", @"^\*" };
+            new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук", @"\$", @"^\*", "^РМВ" };
 
         /// <summary>
         /// Игнорирование габаритов (ЛМ)
@@ -314,7 +314,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 }
             }
 
-            if (string.IsNullOrEmpty(Mark))
+            if (string.IsNullOrWhiteSpace(Mark))
             {
 
                 return Result.Fail("");
@@ -818,7 +818,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     return;
                 }
                 Editor ed = doc.Editor;
-                IdBlRef.ShowEnt();
+                IdBlRef.ShowEnt(1,50,50);
                 //ed.Zoom(Extents);
                 //IdBlRef.FlickObjectHighlight(1, 100, 0);
             }

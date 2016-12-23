@@ -198,7 +198,10 @@
                                   Background="AliceBlue" CanUserAddRows="False" CanUserDeleteRows="False" 
                                   CanUserReorderColumns="False" CanUserResizeColumns="True" CanUserSortColumns="True"
                                   AutoGenerateColumns="False" Margin="5" FrozenColumnCount="1" FontSize="12" Grid.Row="0"
-                                  AlternatingRowBackground="LightGray" IsReadOnly="True" MaxHeight="600">                            
+                                  AlternatingRowBackground="LightGray" IsReadOnly="True" MaxHeight="600">
+                            <DataGrid.InputBindings>
+                                <MouseBinding Gesture="LeftClick" Command="{Binding Show}"/>
+                            </DataGrid.InputBindings>
                             <DataGrid.Columns>
                                 <DataGridTextColumn Header="Марка(атр)" Binding="{Binding MarkAtr}">
                                     <DataGridTextColumn.ElementStyle>

@@ -78,9 +78,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         }
         public string CountString {
             get { return $" Строк {CountRow} "; }
-        }
-
-        
+        }        
 
         protected void UpdateAllPanels ()
         {
@@ -113,7 +111,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 Title = "Новые панели. Панелей с ошибками нет.";
             }
         }
-
 
         public void DeleteRow (PanelViewModel panelView)
         {
