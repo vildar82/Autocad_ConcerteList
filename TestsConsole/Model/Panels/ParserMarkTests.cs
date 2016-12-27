@@ -176,11 +176,11 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
         [TestMethod()]
         public void ParseOutPanelTest()
         {
-            ParserMark parser = new ParserMark("3НСНг2 60.29.42-10-1э");
+            ParserMark parser = new ParserMark("3НСНг2 60.29.42-10-1Э");
             parser.Parse();
             bool check = parser.ItemGroup.Equals("3НСНг2") &&
                          parser.GroupIndexClass == 2 &&
-                         parser.MarkWoGroupClassIndex == "3НСНг 60.29.42-10-1э" &&
+                         parser.MarkWoGroupClassIndex == "3НСНг 60.29.42-10-1Э" &&
                          parser.Length == 60 &&
                          parser.Height == 29 &&
                          parser.Thickness == 42 &&
@@ -199,6 +199,24 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             bool check = parser.ItemGroup.Equals("3НСНг2") &&
                          parser.GroupIndexClass == 2 &&
                          parser.MarkWoGroupClassIndex == "3НСНг 60.29.42-10Б1П1-1э" &&
+                         parser.Length == 60 &&
+                         parser.Height == 29 &&
+                         parser.Thickness == 42 &&
+                         parser.Formwork == 10 &&
+                         parser.Electrics == "1э" &&
+                         parser.BalconyCut == "П1" &&
+                         parser.BalconyDoor == "Б1";
+            Assert.AreEqual(check, true);
+        }
+
+        [TestMethod()]
+        public void ParseOutPanelTest23()
+        {
+            ParserMark parser = new ParserMark("3НСНгн 60.29.42-10Б1П1-1э");
+            parser.Parse();
+            bool check = parser.ItemGroup.Equals("3НСНгн") &&
+                         parser.GroupIndexClass == 0 &&
+                         parser.MarkWoGroupClassIndex == "3НСНгн 60.29.42-10Б1П1-1э" &&
                          parser.Length == 60 &&
                          parser.Height == 29 &&
                          parser.Thickness == 42 &&

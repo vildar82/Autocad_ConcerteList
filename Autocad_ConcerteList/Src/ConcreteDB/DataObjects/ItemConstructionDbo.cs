@@ -70,15 +70,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
                 Height == other.Height &&
                 Thickness == other.Thickness)) &&
                 Formwork == other.Formwork &&
-                MountElement == other.MountElement &&
-                Prong == other.Prong &&
-                BalconyCut == other.BalconyCut &&
-                BalconyDoor == other.BalconyDoor &&
+                string.Equals(MountElement, other.MountElement, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(Prong, other.Prong, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(BalconyCut, other.BalconyCut, StringComparison.OrdinalIgnoreCase) &&
+                string.Equals(BalconyDoor, other.BalconyDoor, StringComparison.OrdinalIgnoreCase) &&
                 FormworkMirror == other.FormworkMirror &&
                 StepHeightIndex == other.StepHeightIndex &&
                 StepCount == other.StepCount &&
                 StepFirstHeight == other.StepFirstHeight &&
-                Electrics == other.Electrics;
+                string.Equals(Electrics, other.Electrics, StringComparison.OrdinalIgnoreCase);
         }
 
         public override int GetHashCode()

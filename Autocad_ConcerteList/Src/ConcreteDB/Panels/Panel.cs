@@ -784,7 +784,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     // Поиск панели в базе по параметрам                    
                     DbItem = DbService.FindByParametersFromAllLoaded(this);
                 }
-                else
+                if (DbItem == null)
                 {
                     // Поиск по марке
                     DbItem = DbService.FindByMark(Mark);
@@ -938,13 +938,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public bool Equals (Panel other)
         {
-            return Mark.Equals(other.Mark) &&
-                   BlockName.Equals(other.BlockName) &&
+            return string.Equals(Mark, other.Mark, StringComparison.OrdinalIgnoreCase) &&
+                   string.Equals(BlockName, other.BlockName, StringComparison.OrdinalIgnoreCase) &&
                    Length == other.Length &&
                    Height == other.Height &&
                    Thickness == other.Thickness &&
                    Weight == other.Weight &&
-                   Aperture == other.Aperture;                    
+                   string.Equals(Aperture, other.Aperture, StringComparison.OrdinalIgnoreCase);                   
         }
 
         public int CompareTo (Panel other)
