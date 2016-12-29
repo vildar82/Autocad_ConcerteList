@@ -21,22 +21,38 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public void Registry ()
         {
             // отобрать панели с колористикой
-            var panelsColor = panels.Where(p => !string.IsNullOrWhiteSpace(p.Color)).ToList();
-
-            // Если есть панели не найденные в базе - то это ошибка.
-            var panelsNoInDb = panelsColor.Where(p => p.DbItem == null);
-            if (panelsNoInDb.Any ())
+            //var panelsWithColor = panels.Where(p => !string.IsNullOrWhiteSpace(p.Color)).ToList();
+            // Если есть панели не найденные в базе - то это ошибка.            
+            var panelsColor = new List<Panel>();
+            var panelsNew = new List<Panel>();
+            var panelsErr = new List<Panel>();
+            foreach (var item in panels)
             {
-                Inspector.AddError($"Необходимо проверить панели с ошибками перед регистрацией колористики. См. ошибки.");
-                foreach (var item in panelsNoInDb)
+                if (string.IsNullOrWhiteSpace(item.Color)) continue;
+
+                if (item.DbItem == null)
                 {
-                    Inspector.AddError($"Панель не найдена в базе - {item.Mark}. ", item.IdBlRef, System.Drawing.SystemIcons.Error);
+                    panelsNew.Add(item);
+                }
+                else
+                {
+                    panelsColor.Add(item);
                 }                
             }
 
+            if (panelsNew.Any())
+            {
+                Inspector.AddError($"!Перед регистрацией колористики, нужно зарегистрировать новые панели (не найденные в базе). См.список. Для этих панелей не будет зарегистрирована колористика.");                
+                foreach (var item in panelsNew.GroupBy(g=>g.Mark))
+                {
+                    Inspector.AddError($"Новая панель (не найдена в базе) - {item.Key}. ", item.First().IdBlRef,
+                        System.Drawing.SystemIcons.Error);
+                }
+            }            
+
             if (panelsColor.Any (p=>p.ErrorStatus!= ErrorStatusEnum.None))
             {
-                Inspector.AddError($"Необходимо проверить панели с ошибками перед регистрацией колористики. См. ошибки.");
+                Inspector.AddError($"!Необходимо проверить панели с ошибками перед регистрацией колористики. См. ошибки. Для этих панелей будет зарегистрирована колористика.");
                 var panelsWithErr = panelsColor.Where(p => p.ErrorStatus != ErrorStatusEnum.None);
                 foreach (var item in panelsWithErr)
                 {
