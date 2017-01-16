@@ -19,9 +19,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
         /// </summary>
         public string Result { get; private set; }
         public List<Eval> Evals { get; private set; }
-        private iItem item;        
+        private iPanel item;        
 
-        public ParserFormula(string formula, iItem item)
+        public ParserFormula(string formula, iPanel item)
         {
             Formula = formula;
             this.item = item;

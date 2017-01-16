@@ -19,16 +19,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         private Brush _background;
         private ObservableCollection<PanelViewModel> _panelsViewModel;
 
-        protected List<KeyValuePair<Panel, List<Panel>>> _panels;
+        protected List<KeyValuePair<iPanel, List<iPanel>>> _panels;
 
-        public PanelsBaseView (List<KeyValuePair<Panel, List<Panel>>> panels)
+        public PanelsBaseView (List<KeyValuePair<iPanel, List<iPanel>>> panels)
         {
             _panels = panels;
             UpdateAllPanels();
             CheckState();
         }
 
-        public List<Panel> PanelsToReg {
+        public List<iPanel> PanelsToReg {
             get {
                 return _panels.Select(s => s.Key).ToList();
             }

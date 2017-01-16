@@ -10,7 +10,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
     public class RegColorViewModel : ObservableObject
     {
-        public RegColorViewModel (List<Panel> panels)
+        public RegColorViewModel (List<iPanel> panels)
         {
             Panels = new ObservableCollection<PanelColorViewModel>(panels.Select(s=>new PanelColorViewModel(s)));            
         }

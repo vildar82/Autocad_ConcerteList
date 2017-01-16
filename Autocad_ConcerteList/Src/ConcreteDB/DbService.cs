@@ -122,7 +122,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             }
         }        
 
-        public static ItemConstructionDbo FindByParametersFromAllLoaded(Panel panel)
+        public static ItemConstructionDbo FindByParametersFromAllLoaded(iPanel panel)
         {
             if (Items == null)
             {
@@ -182,7 +182,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         /// <summary>
         /// Определение марки панели по формуле из базы
         /// </summary>
-        public static Result<string> GetDbMark (Panel panel, out ParserFormula parseFormula)
+        public static Result<string> GetDbMark (iPanel panel, out ParserFormula parseFormula)
         {
             string markDb = null;
             parseFormula = null;
@@ -237,9 +237,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             return Result.Ok(markDb);
         }
 
-        public static void Register (List<Panel> panels, SerieDbo ser)
+        public static void Register (List<iPanel> panels, SerieDbo ser)
         {
-            List<Panel> registerPanelsToLog = new List<Panel> ();
+            var registerPanelsToLog = new List<iPanel> ();
             foreach (var panel in panels)
             {
                 try
@@ -280,11 +280,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         /// <summary>
         /// Регистрация колористики
         /// </summary>        
-        public static void RegisterColors (List<Panel> panelsColor)
+        public static void RegisterColors (List<iPanel> panelsColor)
         {
             using (var ents = ConnectEntities())
             {
-                var registeredColors = new List<Panel>();
+                var registeredColors = new List<iPanel>();
                 // Запись колористических индексов в справочник
                 Dictionary<string, int> dictColors;
                 FillColorsIndexes(panelsColor, ents, out dictColors);
@@ -293,7 +293,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                     try
                     {
                         var colorItemNew = new Item_construction_colour {
-                            Item_colour_id = dictColors[item.Color],
+                            Item_colour_id = dictColors[item.ColorMark],
                             Hand_mark = item.GetMarkWithColor(),
                             Item_construction_id = item.DbItem.ItemConstructionId                                                                                     
                         };
@@ -312,16 +312,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 var sbRegs = new StringBuilder("Зарегистрированная колористика:");
                 foreach (var item in registeredColors)
                 {
-                    sbRegs.AppendLine($"{item.MarkByFormula}, {item.Color} = {item.GetMarkWithColor()}");
+                    sbRegs.AppendLine($"{item.MarkByFormula}, {item.ColorMark} = {item.GetMarkWithColor()}");
                 }
                 Logger.Log.Error(sbRegs.ToString());
             }
         }
 
-        private static void FillColorsIndexes (List<Panel> panelsColor, MDMEntities ents, out Dictionary<string, int> dictColors)
+        private static void FillColorsIndexes (List<iPanel> panelsColor, MDMEntities ents, out Dictionary<string, int> dictColors)
         {
             dictColors = new Dictionary<string, int>();
-            var colorsIndexes = panelsColor.Select(s => s.Color).GroupBy(g => g).Select(s => s.Key);
+            var colorsIndexes = panelsColor.Select(s => s.ColorMark).GroupBy(g => g).Select(s => s.Key);
             var colorsNew = colorsIndexes.Where(w => !ents.Item_colour.Any(a => a.Item_colour1.Equals(w, StringComparison.OrdinalIgnoreCase)));
             if (colorsNew.Any())
             {
@@ -341,7 +341,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             }
         }
 
-        private static string getLogRegistryPanels (List<Panel> registerPanelsToLog)
+        private static string getLogRegistryPanels (List<iPanel> registerPanelsToLog)
         {
             string res = string.Join("; ", registerPanelsToLog.Select(p=> p.Mark +  " id=" + p.ItemConstructionId));
             return res;

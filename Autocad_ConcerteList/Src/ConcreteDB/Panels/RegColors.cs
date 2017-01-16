@@ -11,9 +11,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class RegColors
     {
-        private List<Panel> panels;
+        private List<iPanel> panels;
 
-        public RegColors (List<Panel> panels)
+        public RegColors (List<iPanel> panels)
         {
             this.panels = panels;
         }
@@ -23,12 +23,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             // отобрать панели с колористикой
             //var panelsWithColor = panels.Where(p => !string.IsNullOrWhiteSpace(p.Color)).ToList();
             // Если есть панели не найденные в базе - то это ошибка.            
-            var panelsColor = new List<Panel>();
-            var panelsNew = new List<Panel>();
-            var panelsErr = new List<Panel>();
+            var panelsColor = new List<iPanel>();
+            var panelsNew = new List<iPanel>();
+            var panelsErr = new List<iPanel>();
             foreach (var item in panels)
             {
-                if (string.IsNullOrWhiteSpace(item.Color)) continue;
+                if (string.IsNullOrWhiteSpace(item.ColorMark)) continue;
 
                 if (item.DbItem == null)
                 {

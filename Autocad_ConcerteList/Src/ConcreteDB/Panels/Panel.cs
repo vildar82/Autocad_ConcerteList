@@ -21,16 +21,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     /// <summary>
     /// ЖБИ изделие полученное из автокада
     /// </summary>
-    public class Panel : iItem, IEquatable<Panel>, IComparable<Panel>
+    public class Panel : BlockBase, iPanel, IEquatable<Panel>, IComparable<Panel>
     {
-        private const string AtrTagMark = "МАРКА";
-        private const string AtrTagLength = "ДЛИНА";
-        private const string AtrTagHeight = "ВЫСОТА";
-        private const string AtrTagThickness = "ТОЛЩИНА";
-        private const string AtrTagWeight = "МАССА";
-        private const string AtrTagColor = "ПОКРАСКА";
-        private const string AtrTagAperture = "ПРОЕМ";
-        private const string AtrTagAlbum = "ДОК";
+        public const string AtrTagMark = "МАРКА";
+        public const string AtrTagLength = "ДЛИНА";
+        public const string AtrTagHeight = "ВЫСОТА";
+        public const string AtrTagThickness = "ТОЛЩИНА";
+        public const string AtrTagWeight = "МАССА";
+        public const string AtrTagColor = "ПОКРАСКА";
+        public const string AtrTagAperture = "ПРОЕМ";
+        public const string AtrTagAlbum = "ДОК";
 
         private static AcadLib.Comparers.AlphanumComparator alpha = AcadLib.Comparers.AlphanumComparator.New;
 
@@ -40,11 +40,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         private Extents3d _extents;
         //private string _info;
         private bool _isNullExtents;
-        /// <summary>
-        /// Соответствие игнорируемых имен блоков.
-        /// </summary>
-        public static List<string> IgnoredBlockNamesMatch { get; } = 
-            new List<string> { "ММС", "^_", "^оси", "^ось", "^узел", "^узлы", "^формат", "rab_obl", "^жук", @"\$", @"^\*", "^РМВ" };
+
+        public Panel(BlockReference blRef, string blName) : base(blRef, blName)
+        {
+        }    
 
         /// <summary>
         /// Игнорирование габаритов (ЛМ)
@@ -97,7 +96,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Покраска
         /// </summary>
-        public string Color { get; set; }        
+        public string ColorMark { get; set; }        
         /// <summary>
         /// Изделие в базе
         /// </summary>
@@ -117,9 +116,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         public short? Height { get; set; }
         public bool IsHeightOk { get; set; } = true;
-        public string HeightDesc { get; set; }
-        public ObjectId IdBlRef { get; set; }
-        public ObjectId IdBtr { get; set; }
+        public string HeightDesc { get; set; }        
         /// <summary>
         /// Это новая панель - нет в базе (DbItem == null)
         /// </summary>
@@ -170,8 +167,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Марка без пробелов
         /// </summary>
         public string MarkWoSpace { get; set; }
-        public ParserMark ParseMark { get; set; }
-        public Point3d Position { get; set; }
+        public IParserMark ParseMark { get; set; }        
         /// <summary>
         /// Толщина (атр)
         /// </summary>
@@ -193,7 +189,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Рабочая область
         /// </summary>
         public Workspace WS { get; set; }
-        public decimal ItemConstructionId { get; internal set; }
+        public int ItemConstructionId { get; set; }
 
         public bool IsExteriorWall {
             get {
@@ -208,7 +204,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 return res;
             }
         }
-
 
         /// <summary>
         /// Статус изделия - ок,
@@ -301,7 +296,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     }
                     else if (atr.Tag.Equals(AtrTagColor, StringComparison.OrdinalIgnoreCase))
                     {
-                        Color = GetColorWithoutBrackets(atr.Text);
+                        ColorMark = GetColorWithoutBrackets(atr.Text);
                     }
                     else if (atr.Tag.Equals(AtrTagAperture, StringComparison.OrdinalIgnoreCase))
                     {
@@ -348,11 +343,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <returns></returns>
         public string GetMarkWithColor ()
         {
-            if (string.IsNullOrEmpty(Color))
+            if (string.IsNullOrEmpty(ColorMark))
             {
                 return GetHandMarkNoColor();
             }
-            return $"{GetHandMarkNoColor()}({Color.Replace(" ","").Replace(" ", "")})";
+            return $"{GetHandMarkNoColor()}({ColorMark.Replace(" ","").Replace(" ", "")})";
         }
 
         private string GetColorWithoutBrackets (string text)
@@ -367,7 +362,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateLength (short? value, List<Panel> panelsInModel)
+        public short? UpdateLength (short? value, List<iPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -398,7 +393,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateHeight (short? value, List<Panel> panelsInModel)
+        public short? UpdateHeight (short? value, List<iPanel> panelsInModel)
         {
             // Проверка высоты
             if (value == null)
@@ -429,7 +424,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateThickness (short? value, List<Panel> panelsInModel)
+        public short? UpdateThickness (short? value, List<iPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -460,7 +455,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public float? UpdateWeight (float? value, List<Panel> panelsInModel)
+        public float? UpdateWeight (float? value, List<iPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -483,7 +478,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public string UpdateAperture (string value, List<Panel> panelsInModel)
+        public string UpdateAperture (string value, List<iPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -519,7 +514,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return true;
         }
 
-        private void SetPanelsAtrValue (List<Panel> panels, string tag, string value)
+        private void SetPanelsAtrValue (List<iPanel> panels, string tag, string value)
         {
             try
             {
@@ -529,15 +524,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     {
                         foreach (var item in panels)
                         {
-                            var atrInfo = item.AtrsInfo.FirstOrDefault(a => a.Tag.Equals(tag));
-                            if (atrInfo != null)
-                            {
-                                var atrRef = atrInfo.IdAtr.GetObject(OpenMode.ForWrite, false, true) as AttributeReference;
-                                if (atrRef != null)
-                                {
-                                    atrRef.TextString = value;
-                                }
-                            }
+                            item.SetAtr(tag, value);
+                            //var atrInfo = item.AtrsInfo.FirstOrDefault(a => a.Tag.Equals(tag));
+                            //if (atrInfo != null)
+                            //{
+                            //    var atrRef = atrInfo.IdAtr.GetObject(OpenMode.ForWrite, false, true) as AttributeReference;
+                            //    if (atrRef != null)
+                            //    {
+                            //        atrRef.TextString = value;
+                            //    }
+                            //}
                         }
                         t.Commit();
                     }
@@ -582,20 +578,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
         }
 
-        /// <summary>
-        /// проверка - это игнорируемое имя блока - точно не изделие ЖБИ, например ММС
-        /// </summary>
-        public static bool IsIgnoredBlockName(string blockName)
-        {
-            foreach (var item in IgnoredBlockNamesMatch)
-            {
-                if (Regex.IsMatch(blockName, item, RegexOptions.IgnoreCase))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
+        
 
         public void Checks ()
         {
@@ -603,8 +586,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             ResetStatuses();           
 
             try
-            {
-                ParseMark = new ParserMark(Mark);
+            {                 
+                ParseMark = ParserMarkFactory.Create(Mark);// new ParserMark(Mark);
                 ParseMark.Parse();
                 // Перенос распарсеных параметров в панель
                 FillParseParams();
@@ -955,6 +938,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public override int GetHashCode ()
         {
             return MarkWoSpace.GetHashCode();
-        }        
+        }
+
+        /// <summary>
+        /// Запись значения атрибута
+        /// </summary>        
+        public void SetAtr(string tag, string value)
+        {
+            FillPropValue(tag, value);
+        }
     }
 }

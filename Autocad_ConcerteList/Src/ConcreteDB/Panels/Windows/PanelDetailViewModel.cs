@@ -15,17 +15,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
     {
         private static Brush BadValue = new SolidColorBrush(Colors.Brown);        
 
-        private Panel panelDetail;
-        private Panel panelFirst; 
+        private iPanel panelDetail;
+        private iPanel panelFirst; 
 
-        public PanelDetailViewModel (Panel itemDetail, Panel firstPanel)
+        public PanelDetailViewModel (iPanel itemDetail, iPanel firstPanel)
         {
             panelDetail = itemDetail;
             panelFirst = firstPanel;
             Show = new RelayCommand(OnShowExecute);
         }        
 
-        public Panel PanelDetail {
+        public iPanel PanelDetail {
             get { return panelDetail; }
         }
 

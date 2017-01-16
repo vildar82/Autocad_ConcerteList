@@ -19,7 +19,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         private static Brush NewPanelColor = new SolidColorBrush(Colors.LawnGreen);
 
         private PanelsBaseView model;
-        internal Panel panel;
+        internal iPanel panel;
         private PanelDetailViewModel _selectedPanel;        
 
         /// <summary>
@@ -37,7 +37,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             }
         }        
 
-        public PanelViewModel (Panel panel, List<Panel> blocks, PanelsBaseView model)
+        public PanelViewModel (iPanel panel, List<iPanel> blocks, PanelsBaseView model)
         {
             this.model = model;
             this.panel = panel;            

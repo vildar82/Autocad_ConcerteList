@@ -163,8 +163,12 @@
     </Compile>
     <Compile Include="Src\ConcreteDB\Options\Options.cs" />
     <Compile Include="Src\ConcreteDB\Panels\FilterPanel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\PanelFabric.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\PanelTypes\ExteriorPanel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\ParsersMark\IParserMark.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\ParsersMark\MarkPart.cs" />
     <Compile Include="Src\ConcreteDB\Panels\ParsersMark\ParserMark.cs" />
-    <Compile Include="Src\ConcreteDB\Panels\ParsersMark\IMarkParser.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\ParsersMark\ParserMarkFactory.cs" />
     <Compile Include="Src\ConcreteDB\Panels\ParsersMark\StairMarkParser.cs" />
     <Compile Include="Src\ConcreteDB\Panels\RegColors.cs" />
     <Compile Include="Src\ConcreteDB\Panels\RegPanels.cs" />

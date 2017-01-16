@@ -10,7 +10,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
     public class ItemConstructionDbo : IEquatable<ItemConstructionDbo>
     {
-        public Panel Panel { get; set; }
+        public iPanel Panel { get; set; }
         public bool IsIgnoreGab { get; set; }
         public int ItemConstructionId { get; set; }
         public string HandMarkNoColour { get; set; }

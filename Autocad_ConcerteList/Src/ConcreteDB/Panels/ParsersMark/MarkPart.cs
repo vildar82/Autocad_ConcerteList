@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
-    public interface IMarkParser
+    public struct MarkPart
     {
-        void Parse (ParserMark parserBase);
+        public string PartGroup { get; set; }
+        public string PartGab { get; set; }
+        public string PartDop { get; set; }
     }
 }

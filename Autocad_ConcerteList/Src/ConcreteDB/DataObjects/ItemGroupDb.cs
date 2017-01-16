@@ -10,7 +10,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
     {
         public int ItemGroupId { get; set; }        
         public string ItemGroup { get; set; }        
-        public Nullable<bool> HasFormula { get; set; }
+        public bool? HasFormula { get; set; }
         public string Formula { get; set; }
         public short LengthFactor { get; set; }
         public short HeightFactor { get; set; }

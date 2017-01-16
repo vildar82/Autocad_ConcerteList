@@ -12,11 +12,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class FilterPanel
     {
-        public List<Panel> Panels { get; private set; }        
+        public List<iPanel> Panels { get; private set; }        
 
         public void Filter()
         {
-            var panels = new List<Panel>();
+            var panels = new List<iPanel>();
             var ws = new List<Workspace>();
             Database db = HostApplicationServices.WorkingDatabase;
             using (var t = db.TransactionManager.StartTransaction())
@@ -39,18 +39,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             Panels = panels.Where(p=>p.WS!= null).OrderBy(p=>p.Mark, AcadLib.Comparers.AlphanumComparator.New).ToList();
         }
 
-        private static Panel DefinePanel(ObjectId idEnt, ref List<Panel> panels)
+        private static iPanel DefinePanel(ObjectId idEnt, ref List<iPanel> panels)
         {
-            Result res;
-            Panel p = new Panel();
+            Result res;            
             try
             {
-                res = p.Define(idEnt);
-                if (res.Success)
+                iPanel p = PanelFactory.Define(idEnt);
+                //res = p.Define(idEnt);
+                if (p != null)
                 {
                     //p.Check();
                     p.Checks();
-                    panels.Add(p);                    
+                    panels.Add(p);
                     return p;
                 }                
             }
@@ -62,14 +62,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 res = Result.Fail(ex.Message);
             }
-            if (!string.IsNullOrEmpty(res.Error))
-            {
-                Inspector.AddError($"Отфильтрован блок {p.BlockName} - {res.Error}.", idEnt, System.Drawing.SystemIcons.Exclamation);
-            }
-            return p;
+            //if (!string.IsNullOrEmpty(res.Error))
+            //{
+            //    Inspector.AddError($"Отфильтрован блок {p.BlockName} - {res.Error}.", idEnt, System.Drawing.SystemIcons.Exclamation);
+            //}
+            return null;
         }
 
-        private void definePanelsWS(List<Panel> panels, List<Workspace> ws)
+        private void definePanelsWS(List<iPanel> panels, List<Workspace> ws)
         {
             RTreeLib.RTree<Workspace> rtree = new RTreeLib.RTree<Workspace>();
             foreach (var w in ws)

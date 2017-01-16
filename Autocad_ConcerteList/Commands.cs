@@ -50,20 +50,27 @@ namespace Autocad_ConcerteList
                     using (var t = db.TransactionManager.StartTransaction())
                     {
                         DbService.Init();
-                        Panel panel = new Panel();
-                        var resDefine = panel.Define(sel.ObjectId);
-                        if (resDefine.Failure)
+                        var panel =  PanelFactory.Define(sel.ObjectId);
+                        if (panel == null)
                         {
-                            ed.WriteMessage("\nНе определен блок панели - " + resDefine.Error);
+                            ed.WriteMessage("\nБлок панели не определен.");
                             return;
                         }
+                                                        
+                        //Panel panel = new Panel();
+                        //var resDefine = panel.Define(sel.ObjectId);
+                        //if (resDefine.Failure)
+                        //{
+                            //ed.WriteMessage("\nНе определен блок панели - " + resDefine.Error);
+                            //return;
+                        //}
                         // Проверка соответствия марки и параметров в блоке панели                        
                         panel.Checks();                        
 
                         if (panel.HasErrors || !panel.IsWeightOk)
                         {
-                            var checkPanel = new List<KeyValuePair<Panel, List<Panel>>> ();
-                            checkPanel.Add(new KeyValuePair<Panel, List<Panel>>(panel, new List<Panel> { panel }));
+                            var checkPanel = new List<KeyValuePair<iPanel, List<iPanel>>> ();
+                            checkPanel.Add(new KeyValuePair<iPanel, List<iPanel>>(panel, new List<iPanel> { panel }));
                             CheckPanelsViewModel model = new CheckPanelsViewModel (checkPanel);
                             WindowCheckPanels winPanels = new WindowCheckPanels(model);
                             Application.ShowModalWindow(winPanels);                            
@@ -105,7 +112,7 @@ namespace Autocad_ConcerteList
                 var groupedMarkPanels = panels.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, AcadLib.Comparers.AlphanumComparator.New);
 
                 // Проверка одинаковости панелей в группе (должны быть одинаковыми все параметры)
-                List<KeyValuePair<Panel, List<Panel>>> checkedPanels = new List<KeyValuePair<Panel, List<Panel>>> ();
+                var checkedPanels = new List<KeyValuePair<iPanel, List<iPanel>>> ();
                 foreach (var item in groupedMarkPanels)
                 {
                     var first = item.FirstOrDefault(i=>i.IsNew!=null && !i.IsNew.Value);
@@ -124,7 +131,7 @@ namespace Autocad_ConcerteList
                     // Добавлять все панели в список       
                     //if (first.IsNew != null && first.IsNew.Value || first.HasErrors | !first.IsWeightOk)
                     //{
-                        checkedPanels.Add(new KeyValuePair<Panel, List<Panel>>(first, item.ToList()));
+                        checkedPanels.Add(new KeyValuePair<iPanel, List<iPanel>>(first, item.ToList()));
                     //}
                     //else
                     //{
