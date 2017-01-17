@@ -13,9 +13,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     {
         private MarkPart markPart;
 
-        public ParserMark (string mark, MarkPart markPart)
+        public ParserMark (MarkPart markPart)
         {
-            MarkInput = mark;
+            MarkInput = markPart.Mark;
             this.markPart = markPart;
         }
 
@@ -90,7 +90,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public virtual void Parse()
         {
-            parsePartGroup();
+            DefinePartGroup();
             parsePartGab();
             parsePartDop();
             // определение индекса класса бетона по группе
@@ -99,7 +99,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public static Result DefineParts(string mark, out MarkPart markGroup)
         {
-            markGroup = new MarkPart();
+            markGroup = new MarkPart(mark);
             int indexFirstDot = mark.IndexOf('.');
             if (indexFirstDot != -1)
             {
@@ -121,11 +121,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 int indexDash = mark.IndexOf('-');
                 if (indexDash == -1)
                 {
-                    return Result.Fail("В марке определена только группа панели.");
+                    return Result.Fail("Ошибка определения блока панели - В марке определена только группа панели.");
                 }
                 else
                 {
-                    markGroup.PartGroup = mark.Substring(0, indexDash);
+                    markGroup.PartGroup = mark.Substring(0, indexDash)?.Trim();
+                    if (string.IsNullOrEmpty(markGroup.PartGroup))
+                    {
+                        return Result.Fail("Не определена группа панели.");
+                    }
                     markGroup.PartDop = mark.Substring(indexDash + 1);
                 }
             }
@@ -139,7 +143,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 if (!char.IsDigit(markInput[i]))
                 {
-                    return markInput.Substring(0, i+1);
+                    return markInput.Substring(0, i + 1).Trim('-').Trim();
                 }
             }
             return string.Empty;
@@ -162,7 +166,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
         }
 
-        private void parsePartGroup()
+        protected void DefinePartGroup()
         {
             // Разбор группы. например partGroup = "2П"
             ItemGroup = markPart.PartGroup.Replace(" ", "").Replace("-", "");
@@ -337,16 +341,32 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         private void defineIndexClass()
         {
+            if  (ItemGroup.StartsWith("2"))
+            {
+                GroupIndexClass = 2;
+                MarkWoGroupClassIndex = MarkInput.Substring(1);
+                return;
+            }          
+            else if (ItemGroup.EndsWith("2"))
+            {
+                GroupIndexClass = 2;
+                MarkWoGroupClassIndex = MarkInput.Remove(ItemGroup.Length-1, 1);
+                return;
+            }
             switch (ItemGroup.ToUpper())
             {
-                case "2П":
-                    GroupIndexClass = 2;
-                    MarkWoGroupClassIndex = MarkInput.Substring(1);
-                    break;
-                case "2В":
-                    GroupIndexClass = 2;
-                    MarkWoGroupClassIndex = MarkInput.Substring(1);
-                    break;
+                //case "2П":
+                //    GroupIndexClass = 2;
+                //    MarkWoGroupClassIndex = MarkInput.Substring(1);
+                //    break;
+                //case "2ПБ":
+                //    GroupIndexClass = 2;
+                //    MarkWoGroupClassIndex = MarkInput.Substring(1);
+                //    break;
+                //case "2В":
+                //    GroupIndexClass = 2;
+                //    MarkWoGroupClassIndex = MarkInput.Substring(1);
+                //    break;
                 case "3В":
                     GroupIndexClass = 3;
                     MarkWoGroupClassIndex = MarkInput.Substring(1);

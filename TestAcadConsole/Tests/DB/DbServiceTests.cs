@@ -27,20 +27,20 @@ namespace TestAcadConsole.Tests.DB
         //    Assert.IsNotNull(item);
         //}
 
-        [Test(Description = "Тест загрузки всех панелей - и поиска")]
-        public void FindPanelByAllParametersTest ()
-        {
-            // В706.26.18-1-3э
-            Panel p = new Panel {
-                Item_group = "В",
-                Length = 7060,
-                Height = 2620,
-                Thickness = 180,
-                Formwork = 1,
-                Electrics = "3э"
-            };
-            var item = DbService.FindByParametersFromAllLoaded(p);
-            Assert.IsNotNull(item);
-        }
+        //[Test(Description = "Тест загрузки всех панелей - и поиска")]
+        //public void FindPanelByAllParametersTest ()
+        //{
+        //    // В706.26.18-1-3э
+        //    var p = new Panel() {
+        //        Item_group = "В",
+        //        Length = 7060,
+        //        Height = 2620,
+        //        Thickness = 180,
+        //        Formwork = 1,
+        //        Electrics = "3э"
+        //    };
+        //    var item = DbService.FindByParametersFromAllLoaded(p);
+        //    Assert.IsNotNull(item);
+        //}
     }
 }

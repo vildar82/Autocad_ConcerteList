@@ -220,28 +220,32 @@
                                 <DataGridTextColumn Header="Длина" Binding="{Binding Length}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Background" Value="{Binding LengthBackground}"/>                                            
+                                            <Setter Property="Background" Value="{Binding LengthBackground}"/>
+                                            <Setter Property="ToolTipService.ToolTip" Value="{Binding LengthDesc}" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="Высота" Binding="{Binding Height}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Background" Value="{Binding HeightBackground}"/>                                            
+                                            <Setter Property="Background" Value="{Binding HeightBackground}"/>
+                                            <Setter Property="ToolTipService.ToolTip" Value="{Binding HeightDesc}" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
                                 <DataGridTextColumn Header="Толщина" Binding="{Binding Thickness}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Background" Value="{Binding ThicknessBackground}"/>                                            
+                                            <Setter Property="Background" Value="{Binding ThicknessBackground}"/>
+                                            <Setter Property="ToolTipService.ToolTip" Value="{Binding ThicknessDesc}" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>                                
                                 <DataGridTextColumn Header="Масса" Binding="{Binding Weight}">
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
-                                            <Setter Property="Background" Value="{Binding WeightBackground}"/>                                            
+                                            <Setter Property="Background" Value="{Binding WeightBackground}"/>
+                                            <Setter Property="ToolTipService.ToolTip" Value="{Binding WeightDesc}" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
@@ -249,6 +253,7 @@
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding ApertureBackground}"/>
+                                            <Setter Property="ToolTipService.ToolTip" Value="{Binding ApertureDesc}" />
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>

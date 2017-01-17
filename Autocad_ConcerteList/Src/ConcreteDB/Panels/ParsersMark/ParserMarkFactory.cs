@@ -13,31 +13,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             { "ЛМ", typeof(StairMarkParser) }
         };
 
-        public static IParserMark Create(string mark)
+        public static IParserMark Create(MarkPart markPart)
         {
             IParserMark parserMark = null;
-            MarkPart markPart;
-            var resDefPart = ParserMark.DefineParts(mark, out markPart);
-            if (resDefPart.Success)
-            {                
-                Type parserType;
-                //  Для указанных групп - индивидуальные парсеры
-                if (dictMarkParsers.TryGetValue(markPart.PartGroup, out parserType))
-                {
-                    parserMark = (IParserMark)Activator.CreateInstance(parserType, mark, markPart);
-                }
-                else
-                {
-                    // Для всех остальных групп
-                    parserMark = new ParserMark(mark, markPart);
-                }
+            Type parserType;
+            //  Для указанных групп - индивидуальные парсеры
+            if (dictMarkParsers.TryGetValue(markPart.PartGroup, out parserType))
+            {
+                parserMark = (IParserMark)Activator.CreateInstance(parserType, markPart);
             }
             else
             {
-                ///???
-                Inspector.AddError($"Ошибка определения панели - {resDefPart.Error}");                
+                // Для всех остальных групп
+                parserMark = new ParserMark(markPart);
             }
             return parserMark;
-        }        
+        }       
     }
 }

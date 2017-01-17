@@ -50,7 +50,9 @@ namespace Autocad_ConcerteList
                     using (var t = db.TransactionManager.StartTransaction())
                     {
                         DbService.Init();
-                        var panel =  PanelFactory.Define(sel.ObjectId);
+                        BlockReference blRef;
+                        string blName;
+                        var panel =  PanelFactory.Define(sel.ObjectId, out blRef, out blName);
                         if (panel == null)
                         {
                             ed.WriteMessage("\nБлок панели не определен.");
@@ -71,8 +73,8 @@ namespace Autocad_ConcerteList
                         {
                             var checkPanel = new List<KeyValuePair<iPanel, List<iPanel>>> ();
                             checkPanel.Add(new KeyValuePair<iPanel, List<iPanel>>(panel, new List<iPanel> { panel }));
-                            CheckPanelsViewModel model = new CheckPanelsViewModel (checkPanel);
-                            WindowCheckPanels winPanels = new WindowCheckPanels(model);
+                            var model = new CheckPanelsViewModel (checkPanel);
+                            var winPanels = new WindowCheckPanels(model);
                             Application.ShowModalWindow(winPanels);                            
                         }
                         else
@@ -104,7 +106,7 @@ namespace Autocad_ConcerteList
                 DbService.Init();
 
                 // Поиск изделей в чертеже
-                FilterPanel filter = new FilterPanel();
+                var filter = new FilterPanel();
                 filter.Filter();
                 var panels = filter.Panels;
 
@@ -146,7 +148,7 @@ namespace Autocad_ConcerteList
                 else
                 {
                     var model = new CheckPanelsViewModel (checkedPanels);
-                    WindowCheckPanels winPanels = new WindowCheckPanels(model);
+                    var winPanels = new WindowCheckPanels(model);
                     Application.ShowModelessWindow(winPanels);
                 }
                 ed.WriteMessage($"\nОбработано {panels.Count} блоков панелей.");
@@ -174,11 +176,11 @@ namespace Autocad_ConcerteList
 
                 DbService.Init();
 
-                FilterPanel filter = new FilterPanel();
+                var filter = new FilterPanel();
                 filter.Filter();
                 var panels = filter.Panels;
 
-                RegPanels regPanels = new RegPanels(panels);
+                var regPanels = new RegPanels(panels);
                 regPanels.Registry();                
             });
         }

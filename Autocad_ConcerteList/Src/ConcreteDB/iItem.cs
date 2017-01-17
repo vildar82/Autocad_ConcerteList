@@ -2,18 +2,20 @@
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 using Autocad_ConcerteList.Src.ConcreteDB.Panels;
 using Autodesk.AutoCAD.DatabaseServices;
+using Autodesk.AutoCAD.Geometry;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autocad_ConcerteList.Src.ConcreteDB.FormulaEval;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB
 {
     /// <summary>
     /// Изделие
     /// </summary>
-    public interface iPanel
+    public interface iPanel : IEquatable<iPanel>, IComparable<iPanel>
     {        
         string Mark { get; }               
         string Item_group { get;  }
@@ -34,7 +36,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         /// <summary>
         /// Зубец. Например: Г или пусто
         /// </summary>
-        string Prong { get; }
+        string Prong { get; }       
+
         /// <summary>
         /// Высота ступени - индекс - 1,2,3 (ЛМ-1.11-15)
         /// </summary>
@@ -54,7 +57,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         bool IsInnerWall { get; }
         bool HasErrors { get;  }
         bool IsWeightOk { get; set; }
-        string BlockName { get; set; }
+        string BlName { get; set; }
         string Aperture { get; set; }
         Workspace WS { get; set; }
         string MarkByFormula { get; set; }
@@ -80,6 +83,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         int ItemConstructionId { get; set; }
         string MarkWoSpace { get; set; }
         bool IsIgnoreGab { get; set; }
+        Point3d Position { get; set; }
+
+        bool LengthHasProperty { get; set; }
+        bool HeightHasProperty { get; set; }
+        bool ThicknessHasProperty { get; set; }
+        bool WeightHasProperty { get; set; }
+        bool ApertureHasProperty { get; set; }        
 
         void Checks();
         void Show();
@@ -94,5 +104,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         string GetMarkWithColor();
         string GetHandMarkNoColor();
         string ParamsToString();
+        string CorrectLentghParseValue(string valueString);
+        string CorrectHeightParseValue(string valueString);
+        string CorrectthicknessParseValue(string valueString);
     }
 }

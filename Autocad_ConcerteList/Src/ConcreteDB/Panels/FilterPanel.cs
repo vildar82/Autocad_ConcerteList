@@ -24,50 +24,26 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 var ms = db.CurrentSpaceId.GetObject(OpenMode.ForRead) as BlockTableRecord;
                 foreach (var idEnt in ms)
                 {
-                    if (idEnt.ObjectClass.Name != "AcDbBlockReference") continue;                    
-                    var p = DefinePanel(idEnt, ref panels);
-                    if (p.BlockName == Options.Instance.WorkspaceBlockName)
+                    if (!idEnt.IsValidEx()) continue;
+                    BlockReference blRef;
+                    string blName;
+                    var panel = PanelFactory.Define(idEnt, out blRef, out blName);
+                    if (panel != null)
                     {
-                        Workspace w = new Workspace(idEnt);
-                        ws.Add(w);
-                    }
+                        panel.Checks();
+                        panels.Add(panel);
+                    }                    
+                    else if (blRef != null && blName.Equals(Options.Instance.WorkspaceBlockName, StringComparison.OrdinalIgnoreCase))
+                    {                        
+                        ws.Add(new Workspace(blRef));
+                    }                    
                 }                
                 t.Commit();
             }
             definePanelsWS(panels, ws);
             // Панели только в раб.областях., отсортированные по марке            
             Panels = panels.Where(p=>p.WS!= null).OrderBy(p=>p.Mark, AcadLib.Comparers.AlphanumComparator.New).ToList();
-        }
-
-        private static iPanel DefinePanel(ObjectId idEnt, ref List<iPanel> panels)
-        {
-            Result res;            
-            try
-            {
-                iPanel p = PanelFactory.Define(idEnt);
-                //res = p.Define(idEnt);
-                if (p != null)
-                {
-                    //p.Check();
-                    p.Checks();
-                    panels.Add(p);
-                    return p;
-                }                
-            }
-            catch (IgnoreBlockException i)
-            {
-                res = Result.Fail($"Игнорируемое имя блока - {i.BlName}");
-            }
-            catch (Exception ex)
-            {
-                res = Result.Fail(ex.Message);
-            }
-            //if (!string.IsNullOrEmpty(res.Error))
-            //{
-            //    Inspector.AddError($"Отфильтрован блок {p.BlockName} - {res.Error}.", idEnt, System.Drawing.SystemIcons.Exclamation);
-            //}
-            return null;
-        }
+        }       
 
         private void definePanelsWS(List<iPanel> panels, List<Workspace> ws)
         {

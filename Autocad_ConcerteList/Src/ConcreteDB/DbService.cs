@@ -44,6 +44,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                           join f in ents.Formula on s.Formula_id equals f.Formula_id into gf
                           from fJoined in gf.DefaultIfEmpty()
                           select new ItemGroupDbo {
+                              ItemGroupLongId = s.Item_group_long_id,
                               ItemGroupId = s.Item_group_id,
                               ItemGroup = s.Item_group1,
                               HasFormula = s.Formula_usage,
@@ -76,7 +77,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 // Список цветов (item_construction_colors hand_mark)
                 colorsHandMarkFull = ents.Item_construction_colour.Select(s => s.Hand_mark).ToList();
             }
-        }        
+        }
+
+        /// <summary>
+        /// GroupLongID - общая группа панелей (типа Панели стеновые наружные)
+        /// </summary>
+        /// <param name="partGroup">Имя группы (3НС)</param>        
+        public static int GetGroupLongId(string group)
+        {
+            return Groups.FirstOrDefault(g => g.ItemGroup.Equals(group, StringComparison.OrdinalIgnoreCase))?.ItemGroupLongId ?? 0;
+        }
 
         private static ItemConstructionDbo SelectItemPanelFromFinds (List<ItemConstructionDbo> panels)
         {
@@ -223,9 +233,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                     {
                         parseFormula.Parse();
                     }
-                    catch
+                    catch (Exception ex)
                     {
-                        return Result.Fail<string>($" Ошибка определения марки по формуле. ");
+                        return Result.Fail<string>($" Ошибка определения марки по формуле - {ex.Message}");
                     }                    
                     markDb = parseFormula.Result;
                 }

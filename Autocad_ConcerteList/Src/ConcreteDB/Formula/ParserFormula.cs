@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using AcadLib.Errors;
+using Autocad_ConcerteList.Src.ConcreteDB.Panels;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
 {
@@ -37,27 +38,20 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
                 eval.Evaluate();           
                 Evals.Add(eval);
                 if (!string.IsNullOrEmpty(eval.ValueString))
-                {
-                    if (evalItem.Contains("Length"))
+                {                    
+                    if (evalItem.Contains(Panel.LengthNameEng))
                     {
+                        eval.ValueString = item.CorrectLentghParseValue(eval.ValueString);
                         Length = short.Parse(eval.ValueString);
                     }
-                    else if (evalItem.Contains("Height"))
+                    else if (evalItem.Contains(Panel.HeightNameEng))
                     {
-                        Height = short.Parse(eval.ValueString);
-                        if (item.Height == 3018 && item.IsExteriorWall)
-                        {
-                            eval.ValueString = "31";
-                            Height = 31;
-                        }
-                        else if (item.Height == 2790 && item.IsInnerWall)
-                        {
-                            eval.ValueString = "29";
-                            Height = 29;
-                        }
+                        eval.ValueString = item.CorrectHeightParseValue(eval.ValueString);                        
+                        Height = short.Parse(eval.ValueString);                        
                     }
-                    else if (evalItem.Contains("Thickness"))
+                    else if (evalItem.Contains(Panel.ThicknessNameEng))
                     {
+                        eval.ValueString = item.CorrectHeightParseValue(eval.ValueString);
                         Thickness = short.Parse(eval.ValueString);
                     }
                 }               

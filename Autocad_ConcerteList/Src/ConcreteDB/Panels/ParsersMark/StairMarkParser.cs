@@ -12,7 +12,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     /// </summary>
     public class StairMarkParser : ParserMark
     {
-        public StairMarkParser(string mark, MarkPart markPart) : base(mark, markPart)
+        public StairMarkParser(MarkPart markPart) : base(markPart)
         {
 
         }
@@ -23,6 +23,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public override void Parse()
         {
             // Предполагаемый состав оставшейся части марки - 1.11-24 (1-индекс высоты ступеней, 11-кол ступеней, 24- высота первой ступени)
+            DefinePartGroup();
             parseNew(MarkInput.Substring(3));
         }
 

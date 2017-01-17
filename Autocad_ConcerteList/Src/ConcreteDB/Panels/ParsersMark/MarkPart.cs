@@ -6,10 +6,19 @@ using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
-    public struct MarkPart
+    public class MarkPart
     {
+        public string Mark { get; set; }
         public string PartGroup { get; set; }
         public string PartGab { get; set; }
         public string PartDop { get; set; }
+
+        public MarkPart (string mark)
+        {
+            Mark = mark;
+            PartGroup = null;
+            PartGab = null;
+            PartDop = null;
+        }
     }
 }

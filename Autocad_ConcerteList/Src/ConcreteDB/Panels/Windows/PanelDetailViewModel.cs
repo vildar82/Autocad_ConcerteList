@@ -13,7 +13,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
     public class PanelDetailViewModel : ObservableObject
     {
-        private static Brush BadValue = new SolidColorBrush(Colors.Brown);        
+        private static Brush BadValue = new SolidColorBrush(Colors.Brown);
+        private static Brush NoParameterColor = new SolidColorBrush(Colors.Gray);
 
         private iPanel panelDetail;
         private iPanel panelFirst; 
@@ -44,11 +45,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// Имя блока
         /// </summary>               
         public string BlockName {
-            get { return panelDetail.BlockName; }
+            get { return panelDetail.BlName; }
             set { RaisePropertyChanged(); }
         }
         public Brush BlockNameBackground {
-            get { return panelDetail.BlockName == panelFirst.BlockName ? null : BadValue; }
+            get { return panelDetail.BlName == panelFirst.BlName ? null : BadValue; }
             set { RaisePropertyChanged(); }
         }
         /// <summary>
@@ -59,9 +60,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set {RaisePropertyChanged();}
         }
         public Brush LengthBackground {
-            get { return panelDetail.Length == panelFirst.Length ? null : BadValue; }
+            get {
+                if (panelDetail.LengthHasProperty)
+                    return panelDetail.Length == panelFirst.Length ? null : BadValue;
+                else
+                    return NoParameterColor;
+            }
             set { RaisePropertyChanged(); }
-        }        
+        }
+        public string LengthDesc {
+            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
+        }
 
         /// <summary>
         /// Высота
@@ -71,9 +80,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set { RaisePropertyChanged(); }
         }
         public Brush HeightBackground {
-            get { return panelDetail.Height == panelFirst.Height ? null : BadValue; }
+            get {
+                if (panelDetail.HeightHasProperty)
+                    return panelDetail.Height == panelFirst.Height ? null : BadValue;
+                else
+                    return NoParameterColor;
+            }
             set { RaisePropertyChanged(); }
-        }                
+        }
+        public string HeightDesc {
+            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
+        }
         /// <summary>
         /// Ширина
         /// </summary>
@@ -82,9 +99,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set { RaisePropertyChanged(); }
         }
         public Brush ThicknessBackground {
-            get { return panelDetail.Thickness == panelFirst.Thickness ? null : BadValue; }
+            get {
+                if (panelDetail.ThicknessHasProperty)
+                    return panelDetail.Thickness == panelFirst.Thickness ? null : BadValue;
+                else
+                    return NoParameterColor;
+            }
             set { RaisePropertyChanged(); }
-        }                                
+        }
+        public string ThicknessDesc {
+            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
+        }
         /// <summary>
         /// Вес
         /// </summary>
@@ -93,8 +118,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set { RaisePropertyChanged(); }
         }
         public Brush WeightBackground {
-            get { return panelDetail.Weight == panelFirst.Weight ? null : BadValue; }
+            get {
+                if (panelDetail.WeightHasProperty)
+                    return panelDetail.Weight == panelFirst.Weight ? null : BadValue;
+                else
+                    return NoParameterColor;
+            }
             set { RaisePropertyChanged(); }
+        }
+        public string WeightDesc {
+            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
         }
 
         /// <summary>
@@ -105,8 +138,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set { RaisePropertyChanged(); }
         }
         public Brush ApertureBackground {
-            get { return panelDetail.Aperture == panelFirst.Aperture ? null : BadValue; }
+            get {
+                if (panelDetail.ApertureHasProperty)
+                    return panelDetail.Aperture == panelFirst.Aperture ? null : BadValue;
+                else
+                    return NoParameterColor;
+            }
             set { RaisePropertyChanged(); }
+        }
+        public string ApertureDesc {
+            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
         }
 
         public string Section {

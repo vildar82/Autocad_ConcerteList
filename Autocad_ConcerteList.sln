@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Autocad_ConcerteList", "Autocad_ConcerteList\Autocad_ConcerteList.csproj", "{EB2BA448-1FDA-4FF0-B7E1-E66E556945CB}"
 EndProject
@@ -26,19 +26,15 @@ Global
 		{F06DBD36-E499-4FE2-A40C-45638270334B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{F06DBD36-E499-4FE2-A40C-45638270334B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F06DBD36-E499-4FE2-A40C-45638270334B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F06DBD36-E499-4FE2-A40C-45638270334B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8394E203-C619-42D1-8BAA-DA37B0FE9A45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8394E203-C619-42D1-8BAA-DA37B0FE9A45}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8394E203-C619-42D1-8BAA-DA37B0FE9A45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8394E203-C619-42D1-8BAA-DA37B0FE9A45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2CBDD1E7-9AD5-4CBC-ABFB-27A1188C5740}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2CBDD1E7-9AD5-4CBC-ABFB-27A1188C5740}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2CBDD1E7-9AD5-4CBC-ABFB-27A1188C5740}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2CBDD1E7-9AD5-4CBC-ABFB-27A1188C5740}.Release|Any CPU.Build.0 = Release|Any CPU
 		{98E53271-42C0-465F-ADDE-0AC26F1698F3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{98E53271-42C0-465F-ADDE-0AC26F1698F3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{98E53271-42C0-465F-ADDE-0AC26F1698F3}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{98E53271-42C0-465F-ADDE-0AC26F1698F3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

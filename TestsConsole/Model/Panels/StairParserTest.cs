@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Autocad_ConcerteList.Src.ConcreteDB.Panels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Autocad_ConcerteList.Src.Panels.Tests;
 
 namespace TestsConsole.Model.Panels
 {
@@ -12,16 +13,15 @@ namespace TestsConsole.Model.Panels
     public class StairParserTest
     {
         [TestMethod()]
-        public void ParseSlabTest ()
+        public void ParseSlabTest()
         {
-            var parserBase = new ParserMark("ЛМ-1.11-28");
-            var stairMarkParser = new StairMarkParser();
-            stairMarkParser.Parse(parserBase);
+            var parser = ParserMarkTests.GetParser("ЛМ-1.11-28");
+            parser.Parse();
 
-            var res = parserBase.StepHeightIndex == 1 &&
-                parserBase.StepsCount == 11 &&
-                parserBase.StepFirstHeight == 28 &&
-                parserBase.Height == 1050;
+            var res = parser.StepHeightIndex == 1 &&
+                parser.StepsCount == 11 &&
+                parser.StepFirstHeight == 28 &&
+                parser.Height == 1050;
 
             Assert.IsTrue(res);
         }
@@ -29,14 +29,13 @@ namespace TestsConsole.Model.Panels
         [TestMethod()]
         public void ParseSlabTest2()
         {
-            var parserBase = new ParserMark("ЛМ-1.9");
-            var stairMarkParser = new StairMarkParser();
-            stairMarkParser.Parse(parserBase);
+            var parser = ParserMarkTests.GetParser("ЛМ-1.9");
+            parser.Parse();            
 
-            var res = parserBase.StepHeightIndex == 1 &&
-                parserBase.StepsCount == 9 &&
-                parserBase.StepFirstHeight == null &&
-                parserBase.Height == 1050;
+            var res = parser.StepHeightIndex == 1 &&
+                parser.StepsCount == 9 &&
+                parser.StepFirstHeight == null &&
+                parser.Height == 1050;
 
             Assert.IsTrue(res);
         }
@@ -44,14 +43,13 @@ namespace TestsConsole.Model.Panels
         [TestMethod()]
         public void ParseSlabTest3()
         {
-            var parserBase = new ParserMark("ЛМ-1.11.114");
-            var stairMarkParser = new StairMarkParser();
-            stairMarkParser.Parse(parserBase);
+            var parser = ParserMarkTests.GetParser("ЛМ-1.11.114");
+            parser.Parse();            
 
-            var res = parserBase.StepHeightIndex == 1 &&
-                parserBase.StepsCount == 11 &&
-                parserBase.StepFirstHeight == null &&
-                parserBase.Height == 1140;
+            var res = parser.StepHeightIndex == 1 &&
+                parser.StepsCount == 11 &&
+                parser.StepFirstHeight == null &&
+                parser.Height == 1140;
 
             Assert.IsTrue(res);
         }
@@ -59,16 +57,15 @@ namespace TestsConsole.Model.Panels
         [TestMethod()]
         public void ParseSlabTest4()
         {
-            var parserBase = new ParserMark("ЛМ-1.11.114-28");
-            var stairMarkParser = new StairMarkParser();
-            stairMarkParser.Parse(parserBase);
+            var parser = ParserMarkTests.GetParser("ЛМ-1.11.114-28");
+            parser.Parse();            
 
-            var res = parserBase.StepHeightIndex == 1 &&
-                parserBase.StepsCount == 11 &&
-                parserBase.StepFirstHeight == 28 &&
-                parserBase.Height == 1140;
+            var res = parser.StepHeightIndex == 1 &&
+                parser.StepsCount == 11 &&
+                parser.StepFirstHeight == 28 &&
+                parser.Height == 1140;
 
             Assert.IsTrue(res);
-        }        
+        }
     }
 }

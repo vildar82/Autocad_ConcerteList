@@ -8,28 +8,28 @@ using Autodesk.AutoCAD.DatabaseServices;
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     /// <summary>
-    /// Наружная стеновая панель
+    /// Внутренние стеновые панели
     /// </summary>
-    public class ExteriorPanel : Panel
+    public class InternalPanel : Panel
     {
-        public ExteriorPanel(MarkPart markPart, BlockReference blRef, string blName) : base(markPart, blRef, blName)
+        public InternalPanel(MarkPart markPart, BlockReference blRef, string blName) : base(markPart, blRef, blName)
         {
         }
 
         public override short GetGab(string nameGabRu, short value, double factor)
         {
-            if (value == 3018 && nameGabRu == LengthNameRu)
+            if (value == 2790 && nameGabRu == HeightNameRu)
             {
-                return 31;
+                return 29;
             }
             return base.GetGab(nameGabRu, value, factor);
         }
 
         public override string CorrectHeightParseValue(string valueString)
         {
-            if (Height == 3018)
+            if (Height ==2790)
             {
-                return  "31";                
+                return  "29";                
             }
             return valueString;
         }

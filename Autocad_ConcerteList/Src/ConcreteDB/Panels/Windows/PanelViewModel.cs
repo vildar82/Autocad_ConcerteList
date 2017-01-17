@@ -64,7 +64,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             set { RaisePropertyChanged(); }
         }
         public Brush MarkByFormulaBackground {
-            get {                return MarkAtr?.Replace(" ", "")== MarkByFormula?.Replace(" ", "") ? null : BadValueColor;            }
+            get { return MarkAtr?.Replace(" ", "")== MarkByFormula?.Replace(" ", "") ? null : BadValueColor;            }
             set { RaisePropertyChanged(); }
         }
         public string MarkByFormulaDesc {
