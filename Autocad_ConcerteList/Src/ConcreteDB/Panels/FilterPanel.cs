@@ -30,7 +30,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     var panel = PanelFactory.Define(idEnt, out blRef, out blName);
                     if (panel != null)
                     {
-                        panel.Checks();
+                        //panel.Checks();
                         panels.Add(panel);
                     }                    
                     else if (blRef != null && blName.Equals(Options.Instance.WorkspaceBlockName, StringComparison.OrdinalIgnoreCase))
@@ -42,7 +42,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
             definePanelsWS(panels, ws);
             // Панели только в раб.областях., отсортированные по марке            
-            Panels = panels.Where(p=>p.WS!= null).OrderBy(p=>p.Mark, AcadLib.Comparers.AlphanumComparator.New).ToList();
+            Panels = panels.Where(p=> {
+                if (p.WS != null)
+                {
+                    p.Checks();
+                    return true;
+                }
+                else
+                    return false;
+            }).OrderBy(p=>p.Mark, AcadLib.Comparers.AlphanumComparator.New).ToList();            
         }       
 
         private void definePanelsWS(List<iPanel> panels, List<Workspace> ws)

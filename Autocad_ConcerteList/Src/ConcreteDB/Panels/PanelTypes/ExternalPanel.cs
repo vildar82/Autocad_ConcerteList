@@ -10,15 +10,15 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     /// <summary>
     /// Наружная стеновая панель
     /// </summary>
-    public class ExteriorPanel : Panel
+    public class ExternalPanel : Panel
     {
-        public ExteriorPanel(MarkPart markPart, BlockReference blRef, string blName) : base(markPart, blRef, blName)
+        public ExternalPanel(MarkPart markPart, BlockReference blRef, string blName) : base(markPart, blRef, blName)
         {
         }
 
         public override short GetGab(string nameGabRu, short value, double factor)
         {
-            if (value == 3018 && nameGabRu == LengthNameRu)
+            if (value == 3018 && nameGabRu == HeightNameRu)
             {
                 return 31;
             }

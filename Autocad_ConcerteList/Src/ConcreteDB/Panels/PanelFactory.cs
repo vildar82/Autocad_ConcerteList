@@ -33,7 +33,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         static Dictionary<int, Type> dictPanelTypesByGroupLongId = new Dictionary<int, Type>() {
             { 12, typeof(InternalPanel) }, // Внутренние стеновые панели
-            { 13, typeof(InternalPanel) }, // Наружные стеновые панели
+            { 13, typeof(ExternalPanel) }, // Наружные стеновые панели
         };
 
         /// <summary>

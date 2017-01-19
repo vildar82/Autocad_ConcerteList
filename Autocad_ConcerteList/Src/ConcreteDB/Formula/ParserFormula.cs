@@ -51,7 +51,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
                     }
                     else if (evalItem.Contains(Panel.ThicknessNameEng))
                     {
-                        eval.ValueString = item.CorrectHeightParseValue(eval.ValueString);
+                        eval.ValueString = item.CorrectThicknessParseValue(eval.ValueString);
                         Thickness = short.Parse(eval.ValueString);
                     }
                 }               

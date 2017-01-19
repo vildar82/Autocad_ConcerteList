@@ -106,6 +106,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         string ParamsToString();
         string CorrectLentghParseValue(string valueString);
         string CorrectHeightParseValue(string valueString);
-        string CorrectthicknessParseValue(string valueString);
+        string CorrectThicknessParseValue(string valueString);
     }
 }

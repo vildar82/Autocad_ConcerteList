@@ -164,7 +164,7 @@
     <Compile Include="Src\ConcreteDB\Options\Options.cs" />
     <Compile Include="Src\ConcreteDB\Panels\FilterPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\PanelFactory.cs" />
-    <Compile Include="Src\ConcreteDB\Panels\PanelTypes\ExteriorPanel.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\PanelTypes\ExternalPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\PanelTypes\InternalPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\PanelTypes\PL.cs" />
     <Compile Include="Src\ConcreteDB\Panels\PanelTypes\Stair.cs" />

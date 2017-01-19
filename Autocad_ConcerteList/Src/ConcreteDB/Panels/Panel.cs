@@ -906,7 +906,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return valueString;
         }
 
-        public virtual string CorrectthicknessParseValue(string valueString)
+        public virtual string CorrectThicknessParseValue(string valueString)
         {
             return valueString;
         }
