@@ -33,26 +33,29 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return base.GetGab(nameGabRu, value, factor);
         }
 
-        public override string CorrectLentghParseValue(string valueString)
+        public override string GetLengthMarkPart(short lengthFactor)
         {
             if (Length == 7270)
             {
-                return "72";
+                LengthMark = 72;
+                return LengthMark.ToString();
             }
             else if (Length == 7180)
             {
-                return "71";
+                LengthMark = 71;
+                return LengthMark.ToString();                
             }
-            return valueString;
+            return base.GetLengthMarkPart(lengthFactor);
         }
 
-        public override string CorrectHeightParseValue(string valueString)
+        public override string GetHeightMarkPart(short heightFactor)
         {
             if (Height == 1840)
             {
-                return "19";
+                HeightMark = 19;
+                return HeightMark.ToString();
             }
-            return valueString;
-        }
+            return base.GetHeightMarkPart(heightFactor);
+        }        
     }
 }

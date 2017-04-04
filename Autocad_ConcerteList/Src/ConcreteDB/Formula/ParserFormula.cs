@@ -7,22 +7,18 @@ using System.Threading.Tasks;
 using AcadLib.Errors;
 using Autocad_ConcerteList.Src.ConcreteDB.Panels;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
+namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
 {
     public class ParserFormula
-    {
-        public short? Length { get; set; }
-        public short? Height { get; set; }
-        public short? Thickness { get; set; }
-        public string Formula { get; private set; }
+    {        
+        public FormulaItem Formula { get; set; }
         /// <summary>
         /// Результативная марка
         /// </summary>
-        public string Result { get; private set; }
-        public List<Eval> Evals { get; private set; }
-        private iPanel item;        
+        public string Result { get; private set; }        
+        private IIPanel item;        
 
-        public ParserFormula(string formula, iPanel item)
+        public ParserFormula(FormulaItem formula, IIPanel item)
         {
             Formula = formula;
             this.item = item;
@@ -30,34 +26,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
 
         public void Parse()
         {
-            Evals = new List<Eval>();
-            var evalsSplit = Formula.Split(';');
-            foreach (var evalItem in evalsSplit)
-            {
-                Eval eval = new Eval(evalItem, item);
-                eval.Evaluate();           
-                Evals.Add(eval);
-                if (!string.IsNullOrEmpty(eval.ValueString))
-                {                    
-                    if (evalItem.Contains(Panel.LengthNameEng))
-                    {
-                        eval.ValueString = item.CorrectLentghParseValue(eval.ValueString);
-                        Length = short.Parse(eval.ValueString);
-                    }
-                    else if (evalItem.Contains(Panel.HeightNameEng))
-                    {
-                        eval.ValueString = item.CorrectHeightParseValue(eval.ValueString);                        
-                        Height = short.Parse(eval.ValueString);                        
-                    }
-                    else if (evalItem.Contains(Panel.ThicknessNameEng))
-                    {
-                        eval.ValueString = item.CorrectThicknessParseValue(eval.ValueString);
-                        Thickness = short.Parse(eval.ValueString);
-                    }
-                }               
-            }
-            // Соединение значений по формуле
-            Result = string.Join("", Evals).Replace("--", "-").Replace("--", "-").Replace(".-","-").TrimEnd('-').TrimEnd('.');
+            Result = Formula.FormulaFunc(Formula.FormulaParams, item).Replace("--", "-").Replace("--", "-").Replace(".-", "-").TrimEnd('-').TrimEnd('.');            
         }        
     }
 }

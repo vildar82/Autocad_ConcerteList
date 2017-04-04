@@ -9,19 +9,19 @@ using System.Windows;
 using AcadLib;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.ConcreteDB.FormulaEval;
 using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
 using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
+using Autocad_ConcerteList.Src.ConcreteDB.Formula;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     /// <summary>
     /// ЖБИ изделие полученное из автокада
     /// </summary>
-    public class Panel : BlockBase, iPanel
+    public class Panel : BlockBase, IIPanel
     {
         public const string LengthNameRu = "Длина";
         public const string HeightNameRu = "Высота";
@@ -53,8 +53,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             this.markPart = markPart;
             Mark = markPart.Mark;
             MarkWoSpace = Mark.Replace(" ", "");
-            bool hasProperty;
-            Length = GetShortNullable(GetPropValue<string>(AtrTagLength,out hasProperty, false));
+            Length = GetShortNullable(GetPropValue<string>(AtrTagLength, out bool hasProperty, false));
             LengthHasProperty = hasProperty;
             Height = GetShortNullable(GetPropValue<string>(AtrTagHeight, out hasProperty, false));
             HeightHasProperty = hasProperty;
@@ -66,6 +65,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             Aperture = GetPropValue<string>(AtrTagAperture, out hasProperty, false);
             ApertureHasProperty = hasProperty;
             Album = GetPropValue<string>(AtrTagAlbum, false);
+            PanelSeria = markPart.PanelSeria;
+            PanelType = markPart.PanelType;
+            //DbGroup = markPart.DBGroup;
+            ItemGroupWoClassNew = markPart.ItemGroupWoClassNew;
         }
 
         /// <summary>
@@ -167,6 +170,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Группа изделия - В, П, 3НСг
         /// </summary>
         public string Item_group { get; set; }
+        public string ItemGroupWoClassNew { get; set; }
         public bool IsItemGroupOk { get; set; }
         public string ItemGroupDesc { get; set; }
         /// <summary>
@@ -219,18 +223,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Рабочая область
         /// </summary>
         public Workspace WS { get; set; }
-        public int ItemConstructionId { get; set; }
+        public int ItemConstructionId { get; set; }        
 
         public bool IsExteriorWall {
             get {
-                var res = Item_group.IndexOf("НС") != -1;
+                var res = PanelType == PanelTypeEnum.WallOuter;
                 return res;
             }
         }
 
         public bool IsInnerWall {
             get {
-                var res = Item_group.IndexOf("В") != -1;
+                var res = PanelType == PanelTypeEnum.WallInner;
                 return res;
             }
         }
@@ -245,6 +249,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     !string.IsNullOrEmpty(Warning);
             }
         }
+
+        public short? LengthMark { get; set; }
+        public short? HeightMark { get; set; }
+        public short? ThicknessMark { get; set; }
+        public FormulaItem Formula { get; set; }
+        public PanelSeria PanelSeria { get; set; }
+        public PanelTypeEnum PanelType { get; set; }
+
         //        public Extents3d Extents
         //        {
         //            get
@@ -320,7 +332,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateLength (short? value, List<iPanel> panelsInModel)
+        public short? UpdateLength (short? value, List<IIPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -328,7 +340,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 return Length;
             }
             // Длина должна соответствовать марке
-            if (CheckGabInput(value.Value, DbGroup.LengthFactor, ParseMark.Length))
+            if (CheckGabInput(value.Value, Formula.FormulaParams.LengthFactor, ParseMark.Length))
             {
                 Length = value;                
                 SetPanelsAtrValue(panelsInModel, AtrTagLength, Length.Value.ToString());
@@ -352,7 +364,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateHeight (short? value, List<iPanel> panelsInModel)
+        public short? UpdateHeight (short? value, List<IIPanel> panelsInModel)
         {
             // Проверка высоты
             if (value == null)
@@ -360,7 +372,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 return Height;
             }
             // должна соответствовать марке
-            if (CheckGabInput(value.Value, DbGroup.HeightFactor, ParseMark.Height))
+            if (CheckGabInput(value.Value, Formula.FormulaParams.HeightFactor, ParseMark.Height))
             {
                 Height = value;
                 SetPanelsAtrValue(panelsInModel, AtrTagHeight, Height.Value.ToString());
@@ -384,7 +396,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateThickness (short? value, List<iPanel> panelsInModel)
+        public short? UpdateThickness (short? value, List<IIPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -392,7 +404,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 return Thickness;
             }
             // Длина должна соответствовать марке
-            if (CheckGabInput(value.Value, DbGroup.ThicknessFactor, ParseMark.Thickness))
+            if (CheckGabInput(value.Value, Formula.FormulaParams.ThicknessFactor, ParseMark.Thickness))
             {
                 Thickness = value;
                 SetPanelsAtrValue(panelsInModel, AtrTagThickness, Thickness.Value.ToString());
@@ -416,7 +428,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public float? UpdateWeight (float? value, List<iPanel> panelsInModel)
+        public float? UpdateWeight (float? value, List<IIPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -440,7 +452,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public string UpdateAperture (string value, List<iPanel> panelsInModel)
+        public string UpdateAperture (string value, List<IIPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -465,7 +477,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 return true;
             }
-            if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
+            if (Formula != null)
             {
                 var lenDiv = Eval.GetRoundValue(val / factor);
                 if (lenDiv != parseGab)
@@ -477,7 +489,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return true;
         }
 
-        private void SetPanelsAtrValue (List<iPanel> panels, string tag, string value)
+        private void SetPanelsAtrValue (List<IIPanel> panels, string tag, string value)
         {
             try
             {
@@ -547,7 +559,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 // Исправление порядка габаритов в распарсенной марке - в соответствии с ключом GabKey в таблице формулы
                 if (DbGroup != null)
                 {
-                    ParseMark.UpdateGab(DbGroup.GabKey);
+                    ParseMark.UpdateGab(Formula?.GabKey);
                 }
 
                 // Определение марки по формуле по параметрам
@@ -561,9 +573,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 Logger.Log.Error(ex, $"Panel.Checks() - марка - {Mark}");
                 AddWarning("Ошибка при проверка параметров панели - " + ex.Message);                
             }
-        }
-
-        
+        }        
 
         private void ResetStatuses ()
         {
@@ -597,7 +607,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
 
             // Проверка имени блока
-            var isCorBlName = BlName.Replace(" ", "").Equals(ParseMark.MarkWoGroupClassIndex.Replace(" ", ""), StringComparison.OrdinalIgnoreCase);
+            var blNameWoSpaces = BlName.Replace(" ", "");
+            var isCorBlName = blNameWoSpaces.Equals(ParseMark.MarkWoGroupClassIndex.Replace(" ", ""), StringComparison.OrdinalIgnoreCase) ||
+                              blNameWoSpaces.Equals(ParseMark.MarkInput.Replace(" ", ""), StringComparison.OrdinalIgnoreCase);
             if (!isCorBlName)
             {
                 ErrorStatus |= ErrorStatusEnum.IncorrectBlockName;
@@ -605,20 +617,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
 
             // Соответствие параметров и марки                   
-            if (DbGroup != null && DbGroup.HasFormula!= null && DbGroup.HasFormula.Value && !IsIgnoreGab)
+            if (DbGroup != null && Formula!= null && !IsIgnoreGab)
             {
                 // Определение длин из распарсенной марки
-                bool isOk;                
-                string desc;
-                CheckGab(out isOk, parserFormula.Length, Length, DbGroup.LengthFactor, LengthNameRu, out desc);
+                CheckGab(out bool isOk, LengthMark, Length, Formula.FormulaParams.LengthFactor, LengthNameRu, out string desc);
                 IsLengthOk = isOk;                
                 LengthDesc = desc;
                 
-                CheckGab(out isOk, parserFormula.Height, Height, DbGroup.HeightFactor, HeightNameRu, out desc);
+                CheckGab(out isOk, HeightMark, Height, Formula.FormulaParams.HeightFactor, HeightNameRu, out desc);
                 IsHeightOk = isOk;                
                 HeightDesc = desc;
                 
-                CheckGab(out isOk, parserFormula.Thickness, Thickness, DbGroup.ThicknessFactor, ThicknessNameRu, out desc);
+                CheckGab(out isOk, ThicknessMark, Thickness, Formula.FormulaParams.ThicknessFactor, ThicknessNameRu, out desc);
                 IsThicknessOk = isOk;                
                 ThicknessDesc = desc;                
 
@@ -712,7 +722,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
             if (DbGroup != null)
             {
-                if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
+                Formula = FormulaFactory.GetFormula(PanelSeria, PanelType);
+                if (Formula != null)
                 {
                     // Поиск панели в базе по параметрам                    
                     DbItem = DbService.FindByParametersFromAllLoaded(this);
@@ -728,7 +739,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public void DefineItemGroup ()
         {
-            DbGroup = DbService.FindGroup(Item_group);
+            DbGroup = DbService.FindGroup(ItemGroupWoClassNew);
             if (DbGroup == null)
             {
                 IsItemGroupOk = false;
@@ -768,12 +779,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         private void DefineMarkByFormulaInDb()
         {            
             try
-            {
-                if (DbGroup.HasFormula.HasValue && DbGroup.HasFormula.Value)
+            {                
+                if (Formula != null)
                 {
                     BeforeDefineMarkBuFormula();                              
 
-                    var res = DbService.GetDbMark(this, out parserFormula);
+                    var res = GetDbMark(out parserFormula);
                     if (res.Success)
                     {
                         MarkByFormula = res.Value;
@@ -817,6 +828,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         private void FillParseParams()
         {
             Item_group = ParseMark.ItemGroup;
+            ItemGroupWoClassNew = ParseMark.ItemGroupWoClass;
             Formwork = ParseMark.Formwork;
             //FormworkMirror = ParseMark.FormworkMirror;
             Balcony_cut = ParseMark.BalconyCut;
@@ -867,7 +879,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return res;
         }
 
-        public bool Equals (iPanel other)
+        public bool Equals (IIPanel other)
         {
             return string.Equals(Mark, other.Mark, StringComparison.OrdinalIgnoreCase) &&
                    string.Equals(BlName, other.BlName, StringComparison.OrdinalIgnoreCase) &&
@@ -878,7 +890,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                    string.Equals(Aperture, other.Aperture, StringComparison.OrdinalIgnoreCase);                   
         }
 
-        public int CompareTo (iPanel other)
+        public int CompareTo (IIPanel other)
         {
             return alpha.Compare(MarkWoSpace, other.MarkWoSpace);
         }
@@ -894,26 +906,79 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public void SetAtr(string tag, string value)
         {
             FillPropValue(tag, value);
-        }
-
-        public virtual string CorrectLentghParseValue(string valueString)
-        {
-            return valueString;
-        }
-
-        public virtual string CorrectHeightParseValue(string valueString)
-        {
-            return valueString;
-        }
-
-        public virtual string CorrectThicknessParseValue(string valueString)
-        {
-            return valueString;
-        }
+        }        
 
         protected void AddWarning(string msg)
         {
             Warning += msg + "\r\n";
+        }
+
+        public virtual string GetLengthMarkPart(short lengthFactor)
+        {
+            if (Length.HasValue)
+            {
+                LengthMark = Convert.ToInt16(Length.Value / (double)lengthFactor);
+                return LengthMark.ToString();
+            }
+            return null;
+        }
+
+        public virtual string GetHeightMarkPart(short heightFactor)
+        {
+            if (Height.HasValue)
+            {
+                HeightMark = Convert.ToInt16(Height.Value / (double)heightFactor);
+                return HeightMark.ToString();
+            }
+            return null;
+        }
+
+        public virtual string GetThicknessMarkPart(short thicknessFactor)
+        {
+            if (Thickness.HasValue)
+            {
+                ThicknessMark = Convert.ToInt16(Thickness.Value / (double)thicknessFactor);
+                return ThicknessMark.ToString();
+            }
+            return null;
+        }
+
+        /// <summary>
+        /// Определение марки панели по формуле из базы
+        /// </summary>
+        public Result<string> GetDbMark(out ParserFormula parseFormula)
+        {
+            string markDb = null;
+            parseFormula = null;
+
+            // Получение id группы  
+            if (DbGroup == null)
+            {
+                DefineItemGroup();
+            }
+            if (DbGroup == null)
+            {
+                return Result.Fail<string>($"Не найдена группа {Item_group}.");
+            }                        
+            if (Formula == null)
+            {
+                markDb = Mark;
+            }
+            else
+            {
+                // Получение марки панели по формуле                    
+                parseFormula = new ParserFormula(Formula, this);
+                try
+                {
+                    parseFormula.Parse();
+                }
+                catch (Exception ex)
+                {
+                    return Result.Fail<string>($" Ошибка определения марки по формуле - {ex.Message}");
+                }
+                markDb = parseFormula.Result;
+            }
+            return Result.Ok(markDb);
         }
     }
 }

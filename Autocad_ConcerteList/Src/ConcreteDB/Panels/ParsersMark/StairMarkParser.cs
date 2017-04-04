@@ -24,7 +24,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             // Предполагаемый состав оставшейся части марки - 1.11-24 (1-индекс высоты ступеней, 11-кол ступеней, 24- высота первой ступени)
             DefinePartGroup();
-            parseNew(MarkInput.Substring(3));
+            ParseNewStair(MarkInput.Substring(3));
+            DefineIndexClass();
         }
 
         /// <summary>
@@ -33,7 +34,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Изм. 1.11.105-24, причем 105 необязательный
         /// </summary>
         /// <param name="markFromStep"></param>
-        private void parseNew (string markFromStep)
+        private void ParseNewStair (string markFromStep)
         {
             var dots = markFromStep.Split('.');
             StepHeightIndex = int.Parse(dots[0]);
@@ -55,7 +56,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 StepFirstHeight = int.Parse(dashs[1]);
             }
-            MarkWoGroupClassIndex = MarkInput;                        
+            MarkWoGroupClassIndex = MarkInput;            
         }
     }
 }

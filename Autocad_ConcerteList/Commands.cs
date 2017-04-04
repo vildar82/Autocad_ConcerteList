@@ -50,29 +50,22 @@ namespace Autocad_ConcerteList
                     using (var t = db.TransactionManager.StartTransaction())
                     {
                         DbService.Init();
-                        BlockReference blRef;
-                        string blName;
-                        var panel =  PanelFactory.Define(sel.ObjectId, out blRef, out blName);
+                        var panel = PanelFactory.Define(sel.ObjectId, out BlockReference blRef, out string blName);
                         if (panel == null)
                         {
                             ed.WriteMessage("\nБлок панели не определен.");
                             return;
-                        }
-                                                        
-                        //Panel panel = new Panel();
-                        //var resDefine = panel.Define(sel.ObjectId);
-                        //if (resDefine.Failure)
-                        //{
-                            //ed.WriteMessage("\nНе определен блок панели - " + resDefine.Error);
-                            //return;
-                        //}
+                        }                                                        
+                        
                         // Проверка соответствия марки и параметров в блоке панели                        
                         panel.Checks();                        
 
                         if (panel.HasErrors || !panel.IsWeightOk)
                         {
-                            var checkPanel = new List<KeyValuePair<iPanel, List<iPanel>>> ();
-                            checkPanel.Add(new KeyValuePair<iPanel, List<iPanel>>(panel, new List<iPanel> { panel }));
+                            var checkPanel = new List<KeyValuePair<IIPanel, List<IIPanel>>>
+                            {
+                                new KeyValuePair<IIPanel, List<IIPanel>>(panel, new List<IIPanel> { panel })
+                            };
                             var model = new CheckPanelsViewModel (checkPanel);
                             var winPanels = new WindowCheckPanels(model);
                             Application.ShowModalWindow(winPanels);                            
@@ -114,10 +107,10 @@ namespace Autocad_ConcerteList
                 var groupedMarkPanels = panels.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, AcadLib.Comparers.AlphanumComparator.New);
 
                 // Проверка одинаковости панелей в группе (должны быть одинаковыми все параметры)
-                var checkedPanels = new List<KeyValuePair<iPanel, List<iPanel>>> ();
+                var checkedPanels = new List<KeyValuePair<IIPanel, List<IIPanel>>> ();
                 foreach (var item in groupedMarkPanels)
                 {
-                    var first = item.FirstOrDefault(i=>i.IsNew!=null && !i.IsNew.Value);
+                    var first = item.FirstOrDefault(i => i.IsNew != null && !i.IsNew.Value);
                     if (first == null)
                     {
                         first = item.First();
@@ -126,21 +119,12 @@ namespace Autocad_ConcerteList
                     if (someParams.Skip(1).Any())
                     {
                         // Ошибка - разные параметры в панелях с одной маркой
-                        first.ErrorStatus |= ErrorStatusEnum.DifferentParamInGroup;                        
+                        first.ErrorStatus |= ErrorStatusEnum.DifferentParamInGroup;
                         first.Warning += " Разные атрибуты в блоках, см. детальный вид. ";
                     }
-                              
-                    // Добавлять все панели в список       
-                    //if (first.IsNew != null && first.IsNew.Value || first.HasErrors | !first.IsWeightOk)
-                    //{
-                        checkedPanels.Add(new KeyValuePair<iPanel, List<iPanel>>(first, item.ToList()));
-                    //}
-                    //else
-                    //{
-                    //    ed.WriteMessage($"\nВ панеле марки {first.Mark} не найдено ошибок и она есть в базе.");
-                    //}
+                    checkedPanels.Add(new KeyValuePair<IIPanel, List<IIPanel>>(first, item.ToList()));
                 }
-
+                
                 if (checkedPanels.Count == 0)
                 {
                     ed.WriteMessage($"\nПанели не найдены.");

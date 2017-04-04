@@ -17,82 +17,57 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     /// </summary>
     public static class PanelFactory
     {
-        private const string GroupKeyStair = "ЛМ";
-        private const string GroupKeyPL = "ПЛ";
+        //private const string GroupKeyStair = "ЛМ";
+        //private const string GroupKeyPL = "ПЛ";
         //private const string GroupKeyExteriorWall = "НС";
         //private const string GroupKeyInteriorWall = "В";
         /// <summary>
         /// Типы панелей по ключевому имени группы
         /// </summary>
-        static Dictionary<string, Type> dictPanelTypesByGroupKey = new Dictionary<string, Type>() {
-            { GroupKeyStair, typeof(Stair) },
-            { GroupKeyPL, typeof(PL) }
-        };
-        /// <summary>
-        /// Типы панелей по item_group_long_id 
-        /// </summary>
-        static Dictionary<int, Type> dictPanelTypesByGroupLongId = new Dictionary<int, Type>() {
-            { 12, typeof(InternalPanel) }, // Внутренние стеновые панели
-            { 13, typeof(ExternalPanel) }, // Наружные стеновые панели
-        };
+        static Dictionary<PanelTypeEnum, Type> dictPanelTypesByGroupKey = new Dictionary<PanelTypeEnum, Type>() {
+            { PanelTypeEnum.Stair, typeof(Stair) },
+            { PanelTypeEnum.PL, typeof(PL) },
+            { PanelTypeEnum.WallInner, typeof(InternalPanel) },
+            { PanelTypeEnum.WallOuter, typeof(ExternalPanel) }
+        };        
 
         /// <summary>
         /// Определение панели. Должна быть запущена транзакция!
         /// </summary>
         /// <param name="objectId">Entity</param>
         /// <returns>Панель или null если это не панель</returns>
-        public static iPanel Define(ObjectId objectId, out BlockReference blRef, out string blName)
+        public static IIPanel Define(ObjectId objectId, out BlockReference blRef, out string blName)
         {
-            iPanel panel = null;            
-            string markAtr;            
-
-            if (IsPanel(objectId, out blRef, out markAtr, out blName))
+            IIPanel panel = null;
+            if (IsPanel(objectId, out blRef, out string markAtr, out blName))
             {
-                // Есть атрибут Марки - значит это блок панели
-                MarkPart markPart;
-                var resDefMarkPart = ParserMark.DefineParts(markAtr, out markPart);
-                if (resDefMarkPart.Success)
+                try
                 {
-                    Type typePanel;
-                    if (!dictPanelTypesByGroupKey.TryGetValue(GetGroupKey(markPart.PartGroup), out typePanel))
+                    // Есть атрибут Марки - значит это блок панели                
+                    var resDefMarkPart = ParserMarkFactory.DefineParts(markAtr);
+                    if (resDefMarkPart.Success)
                     {
-                        var groupLongId = DbService.GetGroupLongId(markPart.PartGroup);
-                        if (!dictPanelTypesByGroupLongId.TryGetValue(groupLongId, out typePanel))
+                        MarkPart markPart = resDefMarkPart.Value;
+                        if (!dictPanelTypesByGroupKey.TryGetValue(markPart.PanelType, out Type typePanel))
                         {
                             // Общая панель
                             typePanel = typeof(Panel);
                         }
+                        panel = Activator.CreateInstance(typePanel, markPart, blRef, blName) as Panel;
                     }
-                    panel = Activator.CreateInstance(typePanel, markPart, blRef, blName) as Panel;
+                    else
+                    {
+                        Inspector.AddError(resDefMarkPart.Error, blRef, System.Drawing.SystemIcons.Error);
+                    }
                 }
-                else
+                catch(Exception ex)
                 {
-                    Inspector.AddError(resDefMarkPart.Error, blRef, System.Drawing.SystemIcons.Error);
+                    Logger.Log.Error(ex, $"Define - {blName}");
+                    Inspector.AddError($"Ошибка при обработке блока '{blName}'. {ex.Message}", blRef);
                 }
-            }            
+            }
             return panel;
-        }
-
-        private static string GetGroupKey(string partGroup)
-        {
-            if (partGroup == GroupKeyStair)
-            {
-                return GroupKeyStair;
-            }
-            else if (partGroup == GroupKeyPL)
-            {
-                return GroupKeyPL;
-            }
-            //else if (partGroup.IndexOf(GroupKeyExteriorWall) != -1)
-            //{
-            //    return GroupKeyExteriorWall;
-            //}
-            //else if (partGroup.IndexOf(GroupKeyInteriorWall) != -1)
-            //{
-            //    return GroupKeyInteriorWall;
-            //}
-            return partGroup;
-        }
+        }        
 
         private static bool IsPanel(ObjectId objectId, out BlockReference blRef, out string markAtr, out string blName)
         {

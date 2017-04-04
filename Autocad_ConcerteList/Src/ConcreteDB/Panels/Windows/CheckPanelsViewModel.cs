@@ -20,7 +20,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         private string _curFilter;
         private string _search = "";
 
-        public CheckPanelsViewModel (List<KeyValuePair<iPanel, List<iPanel>>> panels) : base(panels)
+        public CheckPanelsViewModel (List<KeyValuePair<IIPanel, List<IIPanel>>> panels) : base(panels)
         {
             // Фильтр панелей с ошибками
             CurFilter = filterErrors;

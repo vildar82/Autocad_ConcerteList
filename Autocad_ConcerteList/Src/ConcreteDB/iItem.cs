@@ -8,17 +8,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Autocad_ConcerteList.Src.ConcreteDB.FormulaEval;
+using Autocad_ConcerteList.Src.ConcreteDB.Formula;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB
 {
     /// <summary>
     /// Изделие
     /// </summary>
-    public interface iPanel : IEquatable<iPanel>, IComparable<iPanel>
-    {        
-        string Mark { get; }               
-        string Item_group { get;  }
+    public interface IIPanel : IEquatable<IIPanel>, IComparable<IIPanel>
+    {
+        FormulaItem Formula { get; set; }
+        short? LengthMark { get; set; }
+        short? HeightMark { get; set; }
+        short? ThicknessMark { get; set; }
+        PanelSeria PanelSeria { get; set; }
+        PanelTypeEnum PanelType { get; set; }
+
+        string Mark { get; }      
+        // Имя группы полное
+        string Item_group { get; }
+        // имя группы без нового класса - по которому ищется группа в базе
+        string ItemGroupWoClassNew { get; }
         short? Length { get; set; }
         short? Height { get; set; }
         short? Thickness { get; set; }        
@@ -93,19 +103,26 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
 
         void Checks();
         void Show();
-        short?  UpdateLength(short? value, List<iPanel> list);
-        short? UpdateHeight(short? value, List<iPanel> list);
-        short? UpdateThickness(short? value, List<iPanel> list);
-        float? UpdateWeight(float? value, List<iPanel> list);
-        string UpdateAperture(string value, List<iPanel> list);
+        short? UpdateLength(short? value, List<IIPanel> list);
+        short? UpdateHeight(short? value, List<IIPanel> list);
+        short? UpdateThickness(short? value, List<IIPanel> list);
+        float? UpdateWeight(float? value, List<IIPanel> list);
+        string UpdateAperture(string value, List<IIPanel> list);
         string GetErrorStatusDesc();
         void SetAtr(string tag, string value);
         void DefineItemGroup();
         string GetMarkWithColor();
         string GetHandMarkNoColor();
-        string ParamsToString();
-        string CorrectLentghParseValue(string valueString);
-        string CorrectHeightParseValue(string valueString);
-        string CorrectThicknessParseValue(string valueString);
+        string ParamsToString();     
+        /// <summary>
+        /// Определение габарита длины в марке по параметру длины и фактору длины.
+        /// Запись в LengthMark
+        /// </summary>        
+        string GetLengthMarkPart(short lengthFactor);
+        string GetHeightMarkPart(short heightFactor);
+        string GetThicknessMarkPart(short thicknessFactor);
+        //string CorrectLentghParseValue(short? valueString);
+        //string CorrectHeightParseValue(short? valueString);
+        //string CorrectThicknessParseValue(short? valueString);
     }
 }

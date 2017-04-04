@@ -152,6 +152,9 @@
     <Compile Include="Src\ConcreteDB\DataObjects\ModificatorDbo.cs" />
     <Compile Include="Src\ConcreteDB\DataObjects\SerieDb.cs" />
     <Compile Include="Src\ConcreteDB\Formula\Eval.cs" />
+    <Compile Include="Src\ConcreteDB\Formula\FormulaFactory.cs" />
+    <Compile Include="Src\ConcreteDB\Formula\FormulaItem.cs" />
+    <Compile Include="Src\ConcreteDB\Formula\FormulaParameters.cs" />
     <Compile Include="Src\ConcreteDB\iItem.cs" />
     <Compile Include="Src\ConcreteDB\Formula\ParserFormula.cs" />
     <Compile Include="Src\ConcreteDB\IgnoreBlockException.cs" />
@@ -164,6 +167,8 @@
     <Compile Include="Src\ConcreteDB\Options\Options.cs" />
     <Compile Include="Src\ConcreteDB\Panels\FilterPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\PanelFactory.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\PanelSeria.cs" />
+    <Compile Include="Src\ConcreteDB\Panels\PanelTypeEnum.cs" />
     <Compile Include="Src\ConcreteDB\Panels\PanelTypes\ExternalPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\PanelTypes\InternalPanel.cs" />
     <Compile Include="Src\ConcreteDB\Panels\PanelTypes\PL.cs" />

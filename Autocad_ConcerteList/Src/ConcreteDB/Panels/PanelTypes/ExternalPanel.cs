@@ -25,13 +25,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return base.GetGab(nameGabRu, value, factor);
         }
 
-        public override string CorrectHeightParseValue(string valueString)
+        public override string GetHeightMarkPart(short heightFactor)
         {
             if (Height == 3018)
             {
-                return  "31";                
+                HeightMark = 31;
+                return HeightMark.ToString();
             }
-            return valueString;
-        }
+            return base.GetHeightMarkPart(heightFactor);
+        }        
     }
 }

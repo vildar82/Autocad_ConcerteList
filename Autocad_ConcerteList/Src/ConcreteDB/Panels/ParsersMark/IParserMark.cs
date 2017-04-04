@@ -9,9 +9,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         string Electrics { get; set; }
         Error Error { get; set; }
         short? Formwork { get; set; }
-        int GroupIndexClass { get; set; }
+        /// <summary>
+        /// Индек класса бетона (включен в название группы - число перед группой или после)
+        /// </summary>
+        string GroupIndexConcreteClass { get; set; }
+        /// <summary>
+        /// Новый индекс группы - для навесных панелеи и ПИК2 - через пробел после группы
+        /// </summary>
+        string GroupIndexClassNew { get; set; }
         short? Height { get; set; }
         string ItemGroup { get; set; }
+        string ItemGroupWoClass { get; set; }
         short? Length { get; set; }
         string MarkInput { get; }
         string MarkWoGroupClassIndex { get; set; }

@@ -6,23 +6,23 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.FormulaEval
+namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
 {
     public class Eval
     {        
         public string EvalString { get; set; }
         public string ValueString { get; set; }
         public bool IsEvaluable { get; set; }
-        private iPanel item;
+        private IIPanel item;
         private static DataTable t = new DataTable();
         private static char[] charOperands = new char[] { '/', '*', '-', '+' };
 
         // Публичные свойства в классе ItemEntryData        
-        private static Dictionary<string, PropertyInfo> dictItemProperties = typeof(iPanel)
+        private static Dictionary<string, PropertyInfo> dictItemProperties = typeof(IIPanel)
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                             .ToDictionary(f => f.Name);        
 
-        public Eval (string eval, iPanel item)
+        public Eval (string eval, IIPanel item)
         {            
             EvalString = eval;
             this.item = item;

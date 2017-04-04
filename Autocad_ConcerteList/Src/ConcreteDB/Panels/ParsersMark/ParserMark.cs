@@ -22,7 +22,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Входная марка - из атрибута блока
         /// </summary>
-        public string MarkInput { get; private set; }
+        public string MarkInput { get; private set; }        
         /// <summary>
         /// Марка без индекса "Класса бетона" GroupIndexClass
         /// Нужна для проверки имени блока, имя блока должно быть без индекса
@@ -34,10 +34,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Группа изделия. Например "3НСг". 
         /// </summary>
         public string ItemGroup { get; set; }
+        public string ItemGroupWoClass { get; set; }
         /// <summary>
         /// Индекс "Класса Бетона" - Например 2,3 - 2П, 2В, 3В, 3НСг2 (2).
         /// </summary>
-        public int GroupIndexClass { get;  set; }
+        public string GroupIndexConcreteClass { get;  set; }
         /// <summary>
         /// Длина - первое число в габаритах марки. Для группы вентблоков это может быть высота.
         /// </summary>        
@@ -86,93 +87,26 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Электрика. 1э, 2э. 
         /// </summary>
-        public string Electrics { get;  set; }        
+        public string Electrics { get;  set; }
+        public string GroupIndexClassNew { get; set; }
 
         public virtual void Parse()
         {
             DefinePartGroup();
-            parsePartGab();
-            parsePartDop();
+            ParsePartGab();
+            ParsePartDop();
             // определение индекса класса бетона по группе
-            defineIndexClass();                       
+            DefineIndexClass();                       
         }       
 
-        public static Result DefineParts(string mark, out MarkPart markGroup)
-        {
-            markGroup = new MarkPart(mark);
-            int indexFirstDot = mark.IndexOf('.');
-            if (indexFirstDot != -1)
-            {
-                // Есть точка. Значит группа соеденена с габаритом длины. "2П72"
-                markGroup.PartGroup = SeparateGroupFromLen(mark, indexFirstDot - 1);
-                if (string.IsNullOrEmpty(markGroup.PartGroup))
-                {
-                    return Result.Fail("Не определена группа панели.");                    
-                }
-                else
-                {                    
-                    string gabAndDop = mark.Substring(markGroup.PartGroup.Length);
-                    DefineGabAndDop(gabAndDop, ref markGroup);
-                }
-            }
-            else
-            {
-                // нет габаритов в марке. Разделить по первому тире
-                int indexDash = mark.IndexOf('-');
-                if (indexDash == -1)
-                {
-                    return Result.Fail("Ошибка определения блока панели - В марке определена только группа панели.");
-                }
-                else
-                {
-                    markGroup.PartGroup = mark.Substring(0, indexDash)?.Trim();
-                    if (string.IsNullOrEmpty(markGroup.PartGroup))
-                    {
-                        return Result.Fail("Не определена группа панели.");
-                    }
-                    markGroup.PartDop = mark.Substring(indexDash + 1);
-                }
-            }
-            return Result.Ok();
-        }
-
-        private static string SeparateGroupFromLen(string markInput, int indexFirstDot)
-        {
-            // Отделить группу от длины в строке марки. "2П72.29"
-            for (int i = indexFirstDot; i >= 0; i--)
-            {
-                if (!char.IsDigit(markInput[i]))
-                {
-                    return markInput.Substring(0, i + 1).Trim('-').Trim();
-                }
-            }
-            return string.Empty;
-        }
-
-        private static void DefineGabAndDop(string input, ref MarkPart markGroup)
-        {
-            // На входе - "544.363-1-2э", получить 544.363 и 1-2э
-            var splitDash = input.Split(new[] { '-' }, 2);
-            if (splitDash.Length>1)
-            {
-                // Есть и габариты и доп параметры
-                markGroup.PartGab = splitDash[0];
-                markGroup.PartDop = splitDash[1];
-            }
-            else
-            {
-                // Нет тире - нет доп параметров. Только габариты.
-                markGroup.PartGab = input;                
-            }
-        }
-
         protected void DefinePartGroup()
-        {
+        {            
             // Разбор группы. например partGroup = "2П"
-            ItemGroup = markPart.PartGroup.Replace(" ", "").Replace("-", "");
+            //ItemGroup = markPart.PartGroup.Replace(" ", "").Replace("-", "").Trim();
+            ItemGroup = markPart.PartGroup.Replace("-", "").Trim();
         }
 
-        private void parsePartGab()
+        private void ParsePartGab()
         {
             // Разбор части строки относящейся к габаритам панели. Они разделены точками. Например partGab = "544.363"
             if (string.IsNullOrEmpty(markPart.PartGab)) return;
@@ -180,7 +114,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             if (splitDot.Length > 3)
             {
                 // Ошибка. максимум, только 3 габарита - Длина, Высота, Толщина
-                addErrorMsg("Определено больше трех габаритов разделенных точкой.");
+                AddErrorMsg("Определено больше трех габаритов разделенных точкой.");
             }
             Length = GetShort(splitDot[0], "Длина");
             if (splitDot.Length > 1)
@@ -202,7 +136,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return (short)GetStartInteger(input);            
         }
 
-        private void parsePartDop()
+        private void ParsePartDop()
         {
             // partDop - например "5-1-1э" - теперь без зеркальности "5-1э"
             if (string.IsNullOrEmpty(markPart.PartDop)) return;
@@ -210,13 +144,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             if (splitDash.Length>2)
             {
                 // Ошибка. Может быть только опалубка и электрика. От Зеркальности отказались.
-                addErrorMsg("Определено больше двух возможных дополнительных параметра панели - опалубки и электрики.");
+                AddErrorMsg("Определено больше двух возможных дополнительных параметра панели - опалубки и электрики.");
             }            
             if (splitDash.Length == 1)
             {
                 if (markPart.PartDop.IndexOf("э", StringComparison.OrdinalIgnoreCase) == -1)
                 {
-                    definePartFormwork(markPart.PartDop);
+                    DefinePartFormwork(markPart.PartDop);
                 }
                 else
                 {
@@ -225,7 +159,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
             else if (splitDash.Length>1)
             {
-                definePartFormwork(splitDash[0]);
+                DefinePartFormwork(splitDash[0]);
                 //Formwork = GetShort(splitDash[1], "Опалубка");                
                 Electrics = splitDash[1];                
             }
@@ -244,7 +178,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             //}
         }
 
-        private void definePartFormwork(string input)
+        private void DefinePartFormwork(string input)
         {
             // Разбор части опалубки. Могут быть Подрезки и Балконы, типа 2П1Б1, где 2 - опалубка, П1-подреза, Б1-балкон
 
@@ -339,50 +273,28 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// 3НСНг2 - индекс 2
         /// Других вариантов НЕТ!
         /// </summary>
-        private void defineIndexClass()
+        protected void DefineIndexClass()
         {
-            if  (ItemGroup.StartsWith("2"))
+            string groupWoClass = markPart.ItemGroupWoClassNew;
+            if (markPart.PanelType != PanelTypeEnum.WallOuter && char.IsDigit(groupWoClass[0]))
             {
-                GroupIndexClass = 2;
-                MarkWoGroupClassIndex = MarkInput.Substring(1);
-                return;
-            }          
-            else if (ItemGroup.EndsWith("2"))
-            {
-                GroupIndexClass = 2;
-                MarkWoGroupClassIndex = MarkInput.Remove(ItemGroup.Length-1, 1);
-                return;
+                GroupIndexConcreteClass = groupWoClass.Substring(0,1);
+                groupWoClass = groupWoClass.Substring(1).Trim();
             }
-            switch (ItemGroup.ToUpper())
+            var lastChar = groupWoClass.Last();
+            if (char.IsDigit(lastChar))
             {
-                //case "2П":
-                //    GroupIndexClass = 2;
-                //    MarkWoGroupClassIndex = MarkInput.Substring(1);
-                //    break;
-                //case "2ПБ":
-                //    GroupIndexClass = 2;
-                //    MarkWoGroupClassIndex = MarkInput.Substring(1);
-                //    break;
-                //case "2В":
-                //    GroupIndexClass = 2;
-                //    MarkWoGroupClassIndex = MarkInput.Substring(1);
-                //    break;
-                case "3В":
-                    GroupIndexClass = 3;
-                    MarkWoGroupClassIndex = MarkInput.Substring(1);
-                    break;
-                case "3НСНГ2":
-                    GroupIndexClass = 2;
-                    MarkWoGroupClassIndex = MarkInput.Remove(5, 1);
-                    break;
-                default:
-                    GroupIndexClass = 0;
-                    MarkWoGroupClassIndex = MarkInput;
-                    break;
+                GroupIndexConcreteClass += lastChar;
+                groupWoClass = groupWoClass.Substring(0, groupWoClass.Length - 1);
             }
+
+            ItemGroupWoClass = groupWoClass;
+            markPart.ItemGroupWoClassNew = groupWoClass;
+            GroupIndexClassNew = markPart.GroupIndexClassNew;            
+            MarkWoGroupClassIndex = $"{groupWoClass}{markPart.MarkInputAfterGroup}";
         }
 
-        private void addErrorMsg(string msg)
+        private void AddErrorMsg(string msg)
         {
             if (Error == null)
             {
@@ -408,12 +320,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             var h = Height; // 1
             var t = Thickness; // 2
                         
-            Length = getGabByKey("L", gabKey, l, h, t);
-            Height = getGabByKey("H", gabKey, l, h, t);
-            Thickness = getGabByKey("T", gabKey, l, h, t);
+            Length = GetGabByKey("L", gabKey, l, h, t);
+            Height = GetGabByKey("H", gabKey, l, h, t);
+            Thickness = GetGabByKey("T", gabKey, l, h, t);
         }
 
-        private short? getGabByKey (string k, string gabKey, short? l, short? h, short? t)
+        private short? GetGabByKey (string k, string gabKey, short? l, short? h, short? t)
         {
             var index = gabKey.ToUpper().IndexOf(k);
             switch (index)

@@ -31,6 +31,16 @@
                   CanUserResizeColumns="True" CanUserSortColumns="True" AutoGenerateColumns="False"
                   Margin="5" FrozenColumnCount="1" FontSize="12" AlternatingRowBackground="LightGray"
                   RowDetailsVisibilityMode="Collapsed">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Margin" Value="1"/>
+                    <!--<Setter Property="FontFamily" Value="Arial"/>
+                    <Setter Property="FontWeight" Value="Bold"/>
+                    <Setter Property="Foreground" Value="White"/>
+                    <Setter Property="Background" Value="Black"/>-->
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Columns>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
@@ -53,7 +63,8 @@
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="Background" Value="{Binding MarkByFormulaBackground}"/>
-                            <Setter Property="ToolTipService.ToolTip" Value="{Binding MarkByFormulaDesc}" />                            
+                            <Setter Property="ToolTipService.ToolTip" Value="{Binding MarkByFormulaDesc}" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -63,13 +74,15 @@
                             <Setter Property="Background" Value="{Binding ErrorStatusBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding ErrorStatusDesc}" />
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
                 <DataGridTextColumn Header="В базе" Binding="{Binding ExistsInBase}" IsReadOnly="True">
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
-                            <Setter Property="Background" Value="{Binding ExistsInBaseBackground}"/>                            
+                            <Setter Property="Background" Value="{Binding ExistsInBaseBackground}"/>
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -79,6 +92,7 @@
                             <Setter Property="Background" Value="{Binding GroupBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding GroupDesc}" />
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -89,6 +103,7 @@
                             <Setter Property="Background" Value="{Binding LengthBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding LengthDesc}" />
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -99,6 +114,7 @@
                             <Setter Property="Background" Value="{Binding HeightBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding HeightDesc}" />
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -109,6 +125,7 @@
                             <Setter Property="Background" Value="{Binding ThicknessBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding ThicknessDesc}" />
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -116,6 +133,7 @@
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">                            
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -137,6 +155,7 @@
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding BalconyDoorDesc}" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -148,6 +167,7 @@
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding BalconyCutDesc}" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -158,6 +178,7 @@
                     <DataGridTextColumn.ElementStyle>
                         <Style TargetType="{x:Type TextBlock}">
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -168,6 +189,7 @@
                             <Setter Property="Background" Value="{Binding WeightBackground}"/>
                             <Setter Property="ToolTipService.ToolTip" Value="{Binding WeightDesc}" />
                             <Setter Property="TextBlock.TextAlignment" Value="Center" />
+                            <Setter Property="Margin" Value="1"/>
                         </Style>
                     </DataGridTextColumn.ElementStyle>
                 </DataGridTextColumn>
@@ -207,6 +229,7 @@
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding MarkAtrBackground}"/>
+                                            <Setter Property="Margin" Value="1"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>                                
@@ -214,6 +237,7 @@
                                     <DataGridTextColumn.ElementStyle>
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding BlockNameBackground}"/>
+                                            <Setter Property="Margin" Value="1"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
@@ -222,6 +246,7 @@
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding LengthBackground}"/>
                                             <Setter Property="ToolTipService.ToolTip" Value="{Binding LengthDesc}" />
+                                            <Setter Property="Margin" Value="1"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
@@ -230,6 +255,7 @@
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding HeightBackground}"/>
                                             <Setter Property="ToolTipService.ToolTip" Value="{Binding HeightDesc}" />
+                                            <Setter Property="Margin" Value="1"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
@@ -238,6 +264,7 @@
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding ThicknessBackground}"/>
                                             <Setter Property="ToolTipService.ToolTip" Value="{Binding ThicknessDesc}" />
+                                            <Setter Property="Margin" Value="1"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>                                
@@ -246,6 +273,7 @@
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding WeightBackground}"/>
                                             <Setter Property="ToolTipService.ToolTip" Value="{Binding WeightDesc}" />
+                                            <Setter Property="Margin" Value="1"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>
@@ -254,6 +282,7 @@
                                         <Style TargetType="{x:Type TextBlock}">
                                             <Setter Property="Background" Value="{Binding ApertureBackground}"/>
                                             <Setter Property="ToolTipService.ToolTip" Value="{Binding ApertureDesc}" />
+                                            <Setter Property="Margin" Value="1"/>
                                         </Style>
                                     </DataGridTextColumn.ElementStyle>
                                 </DataGridTextColumn>

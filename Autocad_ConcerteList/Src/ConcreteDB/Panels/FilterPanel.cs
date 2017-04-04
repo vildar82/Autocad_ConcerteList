@@ -12,11 +12,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class FilterPanel
     {
-        public List<iPanel> Panels { get; private set; }        
+        public List<IIPanel> Panels { get; private set; }        
 
         public void Filter()
         {
-            var panels = new List<iPanel>();
+            var panels = new List<IIPanel>();
             var ws = new List<Workspace>();
             Database db = HostApplicationServices.WorkingDatabase;
             using (var t = db.TransactionManager.StartTransaction())
@@ -25,19 +25,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 foreach (var idEnt in ms)
                 {
                     if (!idEnt.IsValidEx()) continue;
-                    BlockReference blRef;
-                    string blName;
-                    var panel = PanelFactory.Define(idEnt, out blRef, out blName);
+                    var panel = PanelFactory.Define(idEnt, out BlockReference blRef, out string blName);
                     if (panel != null)
                     {
                         //panel.Checks();
                         panels.Add(panel);
-                    }                    
+                    }
                     else if (blRef != null && blName.Equals(Options.Instance.WorkspaceBlockName, StringComparison.OrdinalIgnoreCase))
-                    {                        
+                    {
                         ws.Add(new Workspace(blRef));
-                    }                    
-                }                
+                    }
+                }             
                 t.Commit();
             }
             definePanelsWS(panels, ws);
@@ -53,7 +51,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }).OrderBy(p=>p.Mark, AcadLib.Comparers.AlphanumComparator.New).ToList();            
         }       
 
-        private void definePanelsWS(List<iPanel> panels, List<Workspace> ws)
+        private void definePanelsWS(List<IIPanel> panels, List<Workspace> ws)
         {
             RTreeLib.RTree<Workspace> rtree = new RTreeLib.RTree<Workspace>();
             foreach (var w in ws)

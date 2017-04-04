@@ -9,8 +9,8 @@ using AcadLib.Errors;
 using Autocad_ConcerteList.Properties;
 using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.ConcreteDB.FormulaEval;
 using Autocad_ConcerteList.Src.ConcreteDB.Panels;
+using Autocad_ConcerteList.Src.ConcreteDB.Formula;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB
 {
@@ -46,13 +46,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                           select new ItemGroupDbo {
                               ItemGroupLongId = s.Item_group_long_id,
                               ItemGroupId = s.Item_group_id,
-                              ItemGroup = s.Item_group1,
-                              HasFormula = s.Formula_usage,
-                              Formula = (fJoined == null) ? null : fJoined.Formula1,
-                              LengthFactor = (fJoined == null) ? (short)1 : fJoined.Formula_Length_Factor,
-                              HeightFactor = (fJoined == null) ? (short)1 : fJoined.Formula_Height_Factor,
-                              ThicknessFactor = (fJoined == null) ? (short)1 : fJoined.Formula_Thickness_Factor,
-                              GabKey = (fJoined == null) ? null : fJoined.Formula_Gab_Key
+                              ItemGroup = s.Item_group1.Trim()                              
                           }).ToList();
                 Modificators = (from i in ents.Item_modification.AsNoTracking()
                                 join m in ents.Item_modification_type on i.Item_modification_type_id equals m.Item_modification_type_id into mf
@@ -132,7 +126,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             }
         }        
 
-        public static ItemConstructionDbo FindByParametersFromAllLoaded(iPanel panel)
+        public static ItemConstructionDbo FindByParametersFromAllLoaded(IIPanel panel)
         {
             if (Items == null)
             {
@@ -187,69 +181,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                              Volume = s.Volume
                          }).ToList();
             //}           
-        }
+        }        
 
-        /// <summary>
-        /// Определение марки панели по формуле из базы
-        /// </summary>
-        public static Result<string> GetDbMark (iPanel panel, out ParserFormula parseFormula)
+        public static void Register (List<IIPanel> panels, SerieDbo ser)
         {
-            string markDb = null;
-            parseFormula = null;
-
-            // Получение id группы  
-            if (panel.DbGroup == null)
-            {
-                panel.DefineItemGroup();
-            }            
-            if (panel.DbGroup == null)
-            {
-                return Result.Fail<string>($"Не найдена группа {panel.Item_group}.");
-                //throw new Exception($"Не найдена группа {panel.ItemGroup}");
-            }
-                                                
-            if (panel.DbGroup.HasFormula == null)
-            {
-                // Не задано значение HasFormula - считается, что это ошибка определения формулы для группы.
-                return Result.Fail<string>($"Не задана формула формирования марки для этой группы панелей {panel.Item_group}.");
-                //throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
-            }
-            bool hasFormula = panel.DbGroup.HasFormula.Value;
-            if (hasFormula)
-            {
-                // Формула для группы панели
-                string formula = panel.DbGroup.Formula;
-                if (formula == null)
-                {
-                    return Result.Fail<string>($"Не задана формула формирования марки для этой группы панелей {panel.Item_group}.");
-                    // Добавление ошибки в панель.
-                    //throw new Exception($"Не задана формула формирования марки для этой группы панелей {panel.ItemGroup}");
-                }
-                else
-                {
-                    // Получение марки панели по формуле
-                    parseFormula = new ParserFormula(formula, panel);
-                    try
-                    {
-                        parseFormula.Parse();
-                    }
-                    catch (Exception ex)
-                    {
-                        return Result.Fail<string>($" Ошибка определения марки по формуле - {ex.Message}");
-                    }                    
-                    markDb = parseFormula.Result;
-                }
-            }
-            else
-            {
-                markDb = panel.Mark;
-            }
-            return Result.Ok(markDb);
-        }
-
-        public static void Register (List<iPanel> panels, SerieDbo ser)
-        {
-            var registerPanelsToLog = new List<iPanel> ();
+            var registerPanelsToLog = new List<IIPanel> ();
             foreach (var panel in panels)
             {
                 try
@@ -272,8 +208,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                         StepFirstHeight = panel.First_step,
                         Electrics = panel.Electrics
                     };
-                    int id;
-                    Register(item, ser, out id);
+                    Register(item, ser, out int id);
                     panel.ItemConstructionId = id;
                     registerPanelsToLog.Add(panel);
                 }
@@ -284,20 +219,19 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                     Logger.Log.Error(ex, $"Ошибка сохранения панели в базу - '{panel.ParamsToString()}'");
                 }
             }
-            Logger.Log.Error("Зарегистрированы новые изделия ЖБИ: " + getLogRegistryPanels(registerPanelsToLog));
+            Logger.Log.Error("Зарегистрированы новые изделия ЖБИ: " + GetLogRegistryPanels(registerPanelsToLog));
         }
 
         /// <summary>
         /// Регистрация колористики
         /// </summary>        
-        public static void RegisterColors (List<iPanel> panelsColor)
+        public static void RegisterColors (List<IIPanel> panelsColor)
         {
             using (var ents = ConnectEntities())
             {
-                var registeredColors = new List<iPanel>();
+                var registeredColors = new List<IIPanel>();
                 // Запись колористических индексов в справочник
-                Dictionary<string, int> dictColors;
-                FillColorsIndexes(panelsColor, ents, out dictColors);
+                FillColorsIndexes(panelsColor, ents, out Dictionary<string, int> dictColors);
                 foreach (var item in panelsColor)
                 {
                     try
@@ -328,7 +262,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             }
         }
 
-        private static void FillColorsIndexes (List<iPanel> panelsColor, MDMEntities ents, out Dictionary<string, int> dictColors)
+        private static void FillColorsIndexes (List<IIPanel> panelsColor, MDMEntities ents, out Dictionary<string, int> dictColors)
         {
             dictColors = new Dictionary<string, int>();
             var colorsIndexes = panelsColor.Select(s => s.ColorMark).GroupBy(g => g).Select(s => s.Key);
@@ -351,10 +285,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             }
         }
 
-        private static string getLogRegistryPanels (List<iPanel> registerPanelsToLog)
+        private static string GetLogRegistryPanels (List<IIPanel> registerPanelsToLog)
         {
-            string res = string.Join("; ", registerPanelsToLog.Select(p=> p.Mark +  " id=" + p.ItemConstructionId));
-            return res;
+            return string.Join("; ", registerPanelsToLog.Select(p=> p.Mark +  " id=" + p.ItemConstructionId));            
         }
 
         public static bool Register(ItemConstructionDbo panel, SerieDbo ser, out int id)

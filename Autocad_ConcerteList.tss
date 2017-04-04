@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<ArrayOfArrayOfArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <ArrayOfArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Commands.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\Panels\Panel.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\Panels\ParsersMark\ParserMarkFactory.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\Panels\PanelFactory.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\Formula\FormulaParameters.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\Formula\FormulaFactory.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\iItem.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\Panels\ParsersMark\ParserMark.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\Panels\ParsersMark\MarkPart.cs</string>
+    </ArrayOfString>
+    <ArrayOfString>
+      <string>C:\dev\КР-СБ-ГК\Autocad_ConcerteList\Autocad_ConcerteList\Src\ConcreteDB\DbService.cs</string>
+    </ArrayOfString>
+  </ArrayOfArrayOfString>
+</ArrayOfArrayOfArrayOfString>
