@@ -342,7 +342,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
 
         public static ItemGroupDbo FindGroup(string itemGroup)
         {
-            return Groups.FirstOrDefault(g => g.ItemGroup.Equals(itemGroup, StringComparison.OrdinalIgnoreCase));
+            var dbGroup = Groups.FirstOrDefault(g => g.ItemGroup.Equals(itemGroup, StringComparison.OrdinalIgnoreCase));
+            if (dbGroup == null)
+            {
+                dbGroup = Groups.FirstOrDefault(g => g.ItemGroup.Equals(itemGroup.Replace(" ", "").Trim(), StringComparison.OrdinalIgnoreCase));
+            }
+            return dbGroup;
         }
 
         //public static BalconyCutDbo GetBalconyCutItem(string balconyCut)

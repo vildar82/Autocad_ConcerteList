@@ -18,6 +18,12 @@
                   CanUserResizeColumns="True" CanUserSortColumns="True" AutoGenerateColumns="False"
                   Margin="5" FrozenColumnCount="1" FontSize="12" Grid.Row="0" AlternatingRowBackground="LightGray"
                   IsReadOnly="True">
+            <DataGrid.RowStyle>
+                <Style TargetType="{x:Type DataGridRow}">
+                    <Setter Property="FontSize" Value="14"/>
+                    <Setter Property="Margin" Value="1"/>
+                </Style>
+            </DataGrid.RowStyle>
             <DataGrid.Resources>
                 <Style x:Key="TextCenter" TargetType="{x:Type TextBlock}">
                     <Setter Property="TextBlock.VerticalAlignment" Value="Center" />

@@ -34,11 +34,7 @@
             <DataGrid.RowStyle>
                 <Style TargetType="{x:Type DataGridRow}">
                     <Setter Property="FontSize" Value="14"/>
-                    <Setter Property="Margin" Value="1"/>
-                    <!--<Setter Property="FontFamily" Value="Arial"/>
-                    <Setter Property="FontWeight" Value="Bold"/>
-                    <Setter Property="Foreground" Value="White"/>
-                    <Setter Property="Background" Value="Black"/>-->
+                    <Setter Property="Margin" Value="1"/>                    
                 </Style>
             </DataGrid.RowStyle>
             <DataGrid.Columns>

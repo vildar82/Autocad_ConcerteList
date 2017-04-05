@@ -557,9 +557,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 DefineDbParams();
 
                 // Исправление порядка габаритов в распарсенной марке - в соответствии с ключом GabKey в таблице формулы
-                if (DbGroup != null)
+                if (Formula != null)
                 {
-                    ParseMark.UpdateGab(Formula?.GabKey);
+                    ParseMark.UpdateGab(Formula.GabKey);
                 }
 
                 // Определение марки по формуле по параметрам
@@ -617,7 +617,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             }
 
             // Соответствие параметров и марки                   
-            if (DbGroup != null && Formula!= null && !IsIgnoreGab)
+            if (Formula!= null && !IsIgnoreGab)
             {
                 // Определение длин из распарсенной марки
                 CheckGab(out bool isOk, LengthMark, Length, Formula.FormulaParams.LengthFactor, LengthNameRu, out string desc);
@@ -715,36 +715,34 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             return Eval.GetRoundValue(value / factor);
         }
 
-        private void DefineDbParams ()
+        private void DefineDbParams()
         {
             // Проверка есть ли такая группа ЖБИ в базе
             DefineItemGroup();
 
-            if (DbGroup != null)
+            Formula = FormulaFactory.GetFormula(PanelSeria, PanelType);
+            if (Formula != null)
             {
-                Formula = FormulaFactory.GetFormula(PanelSeria, PanelType);
-                if (Formula != null)
-                {
-                    // Поиск панели в базе по параметрам                    
-                    DbItem = DbService.FindByParametersFromAllLoaded(this);
-                }
-                if (DbItem == null)
-                {
-                    // Поиск по марке
-                    DbItem = DbService.FindByMark(Mark);
-                }
-                _isNew = DbItem == null;
-            }            
+                // Поиск панели в базе по параметрам                    
+                DbItem = DbService.FindByParametersFromAllLoaded(this);
+            }
+            if (DbItem == null)
+            {
+                // Поиск по марке
+                DbItem = DbService.FindByMark(Mark);
+            }
+            _isNew = DbItem == null;
         }
 
         public void DefineItemGroup ()
         {
-            DbGroup = DbService.FindGroup(ItemGroupWoClassNew);
+            DbGroup = DbService.FindGroup(Item_group);
             if (DbGroup == null)
             {
                 IsItemGroupOk = false;
-                ItemGroupDesc = $"Неопределенная группа.";
+                ItemGroupDesc = $"Неопределенная группа.";                
                 AddWarning( $" Неопределенная группа {Item_group}. ");
+                ErrorStatus = ErrorStatusEnum.OtherError;
                 return;
                 //throw new Exception($"Неопределенная группа {ItemGroup}.");
             }
@@ -792,7 +790,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     }
                     else
                     {
-                        AddWarning( res.Error);
+                        AddWarning(res.Error);
                         ErrorStatus = ErrorStatusEnum.OtherError;
                     }
                 }
@@ -950,16 +948,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             string markDb = null;
             parseFormula = null;
-
-            // Получение id группы  
-            if (DbGroup == null)
-            {
-                DefineItemGroup();
-            }
-            if (DbGroup == null)
-            {
-                return Result.Fail<string>($"Не найдена группа {Item_group}.");
-            }                        
+            
             if (Formula == null)
             {
                 markDb = Mark;
