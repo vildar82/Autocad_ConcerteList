@@ -49,9 +49,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
             var resVal = string.Empty;
 
             // Значение поумолчанию заданное в строке формулы для этого параметра - в конце ='0'
-            string defaultEvalValue = string.Empty;
+            var defaultEvalValue = string.Empty;
             var splitEqually = evalEnter.Split('=');
-            string evaluate = splitEqually[0];
+            var evaluate = splitEqually[0];
             if (splitEqually.Length > 1)
             {
                 // Дефолтное значение заданное в формуле
@@ -64,8 +64,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
             {
                 if (itemOperand.Contains("dbo"))
                 {
-                    string fieldName = itemOperand.Split('.').Last().Trim();                    
-                    string fieldValue = getFieldValue(fieldName);
+                    var fieldName = itemOperand.Split('.').Last().Trim();                    
+                    var fieldValue = getFieldValue(fieldName);
                     if (fieldValue == null)
                     {
                         evaluate = string.Empty;

@@ -67,7 +67,7 @@ namespace ClassLibrary1 {
         public DataSet1() {
             this.BeginInit();
             this.InitClass();
-            global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
+            var schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
             base.Tables.CollectionChanged += schemaChangedHandler;
             base.Relations.CollectionChanged += schemaChangedHandler;
             this.EndInit();
@@ -79,14 +79,14 @@ namespace ClassLibrary1 {
                 base(info, context, false) {
             if ((this.IsBinarySerialized(info, context) == true)) {
                 this.InitVars(false);
-                global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler1 = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
+                var schemaChangedHandler1 = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
                 this.Tables.CollectionChanged += schemaChangedHandler1;
                 this.Relations.CollectionChanged += schemaChangedHandler1;
                 return;
             }
-            string strSchema = ((string)(info.GetValue("XmlSchema", typeof(string))));
+            var strSchema = ((string)(info.GetValue("XmlSchema", typeof(string))));
             if ((this.DetermineSchemaSerializationMode(info, context) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
-                global::System.Data.DataSet ds = new global::System.Data.DataSet();
+                var ds = new global::System.Data.DataSet();
                 ds.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
                 if ((ds.Tables["I_C_Formula"] != null)) {
                     base.Tables.Add(new I_C_FormulaDataTable(ds.Tables["I_C_Formula"]));
@@ -128,7 +128,7 @@ namespace ClassLibrary1 {
                 this.ReadXmlSchema(new global::System.Xml.XmlTextReader(new global::System.IO.StringReader(strSchema)));
             }
             this.GetSerializationData(info, context);
-            global::System.ComponentModel.CollectionChangeEventHandler schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
+            var schemaChangedHandler = new global::System.ComponentModel.CollectionChangeEventHandler(this.SchemaChanged);
             base.Tables.CollectionChanged += schemaChangedHandler;
             this.Relations.CollectionChanged += schemaChangedHandler;
         }
@@ -265,7 +265,7 @@ namespace ClassLibrary1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public override global::System.Data.DataSet Clone() {
-            DataSet1 cln = ((DataSet1)(base.Clone()));
+            var cln = ((DataSet1)(base.Clone()));
             cln.InitVars();
             cln.SchemaSerializationMode = this.SchemaSerializationMode;
             return cln;
@@ -288,7 +288,7 @@ namespace ClassLibrary1 {
         protected override void ReadXmlSerializable(global::System.Xml.XmlReader reader) {
             if ((this.DetermineSchemaSerializationMode(reader) == global::System.Data.SchemaSerializationMode.IncludeSchema)) {
                 this.Reset();
-                global::System.Data.DataSet ds = new global::System.Data.DataSet();
+                var ds = new global::System.Data.DataSet();
                 ds.ReadXml(reader);
                 if ((ds.Tables["I_C_Formula"] != null)) {
                     base.Tables.Add(new I_C_FormulaDataTable(ds.Tables["I_C_Formula"]));
@@ -335,7 +335,7 @@ namespace ClassLibrary1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         protected override global::System.Xml.Schema.XmlSchema GetSchemaSerializable() {
-            global::System.IO.MemoryStream stream = new global::System.IO.MemoryStream();
+            var stream = new global::System.IO.MemoryStream();
             this.WriteXmlSchema(new global::System.Xml.XmlTextWriter(stream, null));
             stream.Position = 0;
             return global::System.Xml.Schema.XmlSchema.Read(new global::System.Xml.XmlTextReader(stream), null);
@@ -544,21 +544,21 @@ namespace ClassLibrary1 {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedDataSetSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-            DataSet1 ds = new DataSet1();
-            global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-            global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-            global::System.Xml.Schema.XmlSchemaAny any = new global::System.Xml.Schema.XmlSchemaAny();
+            var ds = new DataSet1();
+            var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+            var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+            var any = new global::System.Xml.Schema.XmlSchemaAny();
             any.Namespace = ds.Namespace;
             sequence.Items.Add(any);
             type.Particle = sequence;
-            global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+            var dsSchema = ds.GetSchemaSerializable();
             if (xs.Contains(dsSchema.TargetNamespace)) {
-                global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                var s1 = new global::System.IO.MemoryStream();
+                var s2 = new global::System.IO.MemoryStream();
                 try {
                     global::System.Xml.Schema.XmlSchema schema = null;
                     dsSchema.Write(s1);
-                    for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                    for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                         schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                         s2.SetLength(0);
                         schema.Write(s2);
@@ -783,8 +783,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public I_C_FormulaRow AddI_C_FormulaRow(string FormulaValue, string FormulaAuthor, string FormulaCreateDate, string Description, short LengthFactor, short HeightFactor, short ThicknessFactor, string GabKey) {
-                I_C_FormulaRow rowI_C_FormulaRow = ((I_C_FormulaRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowI_C_FormulaRow = ((I_C_FormulaRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         null,
                         FormulaValue,
                         FormulaAuthor,
@@ -809,7 +809,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                I_C_FormulaDataTable cln = ((I_C_FormulaDataTable)(base.Clone()));
+                var cln = ((I_C_FormulaDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -938,37 +938,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "I_C_FormulaDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -1107,8 +1107,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public I_C_ItemGroupLongRow AddI_C_ItemGroupLongRow(string ItemGroupLong, I_C_ItemGroupShortRow parentI_C_ItemGroupShortRowByFK_I_C_ItemGroupLong_I_C_ItemGroupShort) {
-                I_C_ItemGroupLongRow rowI_C_ItemGroupLongRow = ((I_C_ItemGroupLongRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowI_C_ItemGroupLongRow = ((I_C_ItemGroupLongRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         null,
                         ItemGroupLong,
                         null};
@@ -1130,7 +1130,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                I_C_ItemGroupLongDataTable cln = ((I_C_ItemGroupLongDataTable)(base.Clone()));
+                var cln = ((I_C_ItemGroupLongDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -1232,37 +1232,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "I_C_ItemGroupLongDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -1391,8 +1391,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public I_C_ItemGroupShortRow AddI_C_ItemGroupShortRow(string ItemGroupShort) {
-                I_C_ItemGroupShortRow rowI_C_ItemGroupShortRow = ((I_C_ItemGroupShortRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowI_C_ItemGroupShortRow = ((I_C_ItemGroupShortRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         null,
                         ItemGroupShort};
                 rowI_C_ItemGroupShortRow.ItemArray = columnValuesArray;
@@ -1410,7 +1410,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                I_C_ItemGroupShortDataTable cln = ((I_C_ItemGroupShortDataTable)(base.Clone()));
+                var cln = ((I_C_ItemGroupShortDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -1509,37 +1509,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "I_C_ItemGroupShortDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -1778,8 +1778,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public I_J_ItemConstructionRow AddI_J_ItemConstructionRow(string HandMarkNoColour, I_S_ItemGroupRow parentI_S_ItemGroupRowByFK_I_J_ItemConstruction_I_S_ItemGroup, short Lenght, short Height, short Thickness, short Formwork, I_S_BalconyDoorRow parentI_S_BalconyDoorRowByFK_I_J_ItemConstruction_I_S_BalconyDoor, I_S_BalconyCutRow parentI_S_BalconyCutRowByFK_I_J_ItemConstruction_I_S_BalconyCut, short FormworkMirror, string Electrics, float Weight, float Volume) {
-                I_J_ItemConstructionRow rowI_J_ItemConstructionRow = ((I_J_ItemConstructionRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowI_J_ItemConstructionRow = ((I_J_ItemConstructionRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         null,
                         HandMarkNoColour,
                         null,
@@ -1817,7 +1817,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                I_J_ItemConstructionDataTable cln = ((I_J_ItemConstructionDataTable)(base.Clone()));
+                var cln = ((I_J_ItemConstructionDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -1950,37 +1950,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "I_J_ItemConstructionDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -2129,8 +2129,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public I_S_BalconyCutRow AddI_S_BalconyCutRow(string BalconyCut, int BalconyCutSize, I_S_SideRow parentI_S_SideRowByFK_I_S_BalconyCut_I_S_Side) {
-                I_S_BalconyCutRow rowI_S_BalconyCutRow = ((I_S_BalconyCutRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowI_S_BalconyCutRow = ((I_S_BalconyCutRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         null,
                         BalconyCut,
                         BalconyCutSize,
@@ -2153,7 +2153,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                I_S_BalconyCutDataTable cln = ((I_S_BalconyCutDataTable)(base.Clone()));
+                var cln = ((I_S_BalconyCutDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -2258,37 +2258,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "I_S_BalconyCutDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -2427,8 +2427,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public I_S_BalconyDoorRow AddI_S_BalconyDoorRow(string BalconyDoor, I_S_SideRow parentI_S_SideRowByFK_I_S_BalconyDoor_I_S_Side) {
-                I_S_BalconyDoorRow rowI_S_BalconyDoorRow = ((I_S_BalconyDoorRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowI_S_BalconyDoorRow = ((I_S_BalconyDoorRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         null,
                         BalconyDoor,
                         null};
@@ -2450,7 +2450,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                I_S_BalconyDoorDataTable cln = ((I_S_BalconyDoorDataTable)(base.Clone()));
+                var cln = ((I_S_BalconyDoorDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -2552,37 +2552,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "I_S_BalconyDoorDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -2821,8 +2821,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public I_S_ItemGroupRow AddI_S_ItemGroupRow(bool ItemGroupUsage, string ItemGroup, I_C_ItemGroupLongRow parentI_C_ItemGroupLongRowByFK_I_S_ItemGroup_I_C_ItemGroupLong, string ItemGroupTextISO, decimal BuildingPartId, string ItemGroupISO, string ItemDescription, string ItemGroupStatic, string ItemGroupCut, string ItemGroupLayer, bool HasFormula, I_C_FormulaRow parentI_C_FormulaRowByFK_I_S_ItemGroup_I_C_Formula) {
-                I_S_ItemGroupRow rowI_S_ItemGroupRow = ((I_S_ItemGroupRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowI_S_ItemGroupRow = ((I_S_ItemGroupRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         null,
                         ItemGroupUsage,
                         ItemGroup,
@@ -2857,7 +2857,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                I_S_ItemGroupDataTable cln = ((I_S_ItemGroupDataTable)(base.Clone()));
+                var cln = ((I_S_ItemGroupDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -2996,37 +2996,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "I_S_ItemGroupDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -3155,8 +3155,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public I_S_SideRow AddI_S_SideRow(string Side) {
-                I_S_SideRow rowI_S_SideRow = ((I_S_SideRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowI_S_SideRow = ((I_S_SideRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         null,
                         Side};
                 rowI_S_SideRow.ItemArray = columnValuesArray;
@@ -3174,7 +3174,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                I_S_SideDataTable cln = ((I_S_SideDataTable)(base.Clone()));
+                var cln = ((I_S_SideDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -3273,37 +3273,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "I_S_SideDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -3512,8 +3512,8 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public vil_GroupsHasFormulaRow Addvil_GroupsHasFormulaRow(string ItemGroup, bool HasFormula, string FormulaValue, string Description, string GabKey, short LengthFactor, short HeightFactor, short ThicknessFactor) {
-                vil_GroupsHasFormulaRow rowvil_GroupsHasFormulaRow = ((vil_GroupsHasFormulaRow)(this.NewRow()));
-                object[] columnValuesArray = new object[] {
+                var rowvil_GroupsHasFormulaRow = ((vil_GroupsHasFormulaRow)(this.NewRow()));
+                var columnValuesArray = new object[] {
                         ItemGroup,
                         null,
                         HasFormula,
@@ -3540,7 +3540,7 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public override global::System.Data.DataTable Clone() {
-                vil_GroupsHasFormulaDataTable cln = ((vil_GroupsHasFormulaDataTable)(base.Clone()));
+                var cln = ((vil_GroupsHasFormulaDataTable)(base.Clone()));
                 cln.InitVars();
                 return cln;
             }
@@ -3671,37 +3671,37 @@ namespace ClassLibrary1 {
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             public static global::System.Xml.Schema.XmlSchemaComplexType GetTypedTableSchema(global::System.Xml.Schema.XmlSchemaSet xs) {
-                global::System.Xml.Schema.XmlSchemaComplexType type = new global::System.Xml.Schema.XmlSchemaComplexType();
-                global::System.Xml.Schema.XmlSchemaSequence sequence = new global::System.Xml.Schema.XmlSchemaSequence();
-                DataSet1 ds = new DataSet1();
-                global::System.Xml.Schema.XmlSchemaAny any1 = new global::System.Xml.Schema.XmlSchemaAny();
+                var type = new global::System.Xml.Schema.XmlSchemaComplexType();
+                var sequence = new global::System.Xml.Schema.XmlSchemaSequence();
+                var ds = new DataSet1();
+                var any1 = new global::System.Xml.Schema.XmlSchemaAny();
                 any1.Namespace = "http://www.w3.org/2001/XMLSchema";
                 any1.MinOccurs = new decimal(0);
                 any1.MaxOccurs = decimal.MaxValue;
                 any1.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any1);
-                global::System.Xml.Schema.XmlSchemaAny any2 = new global::System.Xml.Schema.XmlSchemaAny();
+                var any2 = new global::System.Xml.Schema.XmlSchemaAny();
                 any2.Namespace = "urn:schemas-microsoft-com:xml-diffgram-v1";
                 any2.MinOccurs = new decimal(1);
                 any2.ProcessContents = global::System.Xml.Schema.XmlSchemaContentProcessing.Lax;
                 sequence.Items.Add(any2);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute1 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute1.Name = "namespace";
                 attribute1.FixedValue = ds.Namespace;
                 type.Attributes.Add(attribute1);
-                global::System.Xml.Schema.XmlSchemaAttribute attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
+                var attribute2 = new global::System.Xml.Schema.XmlSchemaAttribute();
                 attribute2.Name = "tableTypeName";
                 attribute2.FixedValue = "vil_GroupsHasFormulaDataTable";
                 type.Attributes.Add(attribute2);
                 type.Particle = sequence;
-                global::System.Xml.Schema.XmlSchema dsSchema = ds.GetSchemaSerializable();
+                var dsSchema = ds.GetSchemaSerializable();
                 if (xs.Contains(dsSchema.TargetNamespace)) {
-                    global::System.IO.MemoryStream s1 = new global::System.IO.MemoryStream();
-                    global::System.IO.MemoryStream s2 = new global::System.IO.MemoryStream();
+                    var s1 = new global::System.IO.MemoryStream();
+                    var s2 = new global::System.IO.MemoryStream();
                     try {
                         global::System.Xml.Schema.XmlSchema schema = null;
                         dsSchema.Write(s1);
-                        for (global::System.Collections.IEnumerator schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
+                        for (var schemas = xs.Schemas(dsSchema.TargetNamespace).GetEnumerator(); schemas.MoveNext(); ) {
                             schema = ((global::System.Xml.Schema.XmlSchema)(schemas.Current));
                             s2.SetLength(0);
                             schema.Write(s2);
@@ -5815,7 +5815,7 @@ namespace ClassLibrary1.DataSet1TableAdapters {
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -5831,7 +5831,7 @@ namespace ClassLibrary1.DataSet1TableAdapters {
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -5875,7 +5875,7 @@ namespace ClassLibrary1.DataSet1TableAdapters {
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "I_C_Formula";
             tableMapping.ColumnMappings.Add("FormulaId", "FormulaId");
@@ -5972,7 +5972,7 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description, L
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -5982,7 +5982,7 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description, L
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.I_C_FormulaDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.I_C_FormulaDataTable dataTable = new DataSet1.I_C_FormulaDataTable();
+            var dataTable = new DataSet1.I_C_FormulaDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -6061,13 +6061,13 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description, L
             else {
                 this.Adapter.DeleteCommand.Parameters[11].Value = ((string)(Original_GabKey));
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            var previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -6115,13 +6115,13 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description, L
             else {
                 this.Adapter.InsertCommand.Parameters[7].Value = ((string)(GabKey));
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            var previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -6228,13 +6228,13 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description, L
                 this.Adapter.UpdateCommand.Parameters[19].Value = ((string)(Original_GabKey));
             }
             this.Adapter.UpdateCommand.Parameters[20].Value = ((decimal)(FormulaId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            var previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.UpdateCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -6328,7 +6328,7 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description, L
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -6344,7 +6344,7 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description, L
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -6388,7 +6388,7 @@ SELECT FormulaId, FormulaValue, FormulaAuthor, FormulaCreateDate, Description, L
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "I_C_ItemGroupLong";
             tableMapping.ColumnMappings.Add("ItemGroupLongId", "ItemGroupLongId");
@@ -6455,7 +6455,7 @@ SELECT ItemGroupLongId, ItemGroupLong, ItemGroupShortId FROM I_C_ItemGroupLong W
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -6465,7 +6465,7 @@ SELECT ItemGroupLongId, ItemGroupLong, ItemGroupShortId FROM I_C_ItemGroupLong W
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.I_C_ItemGroupLongDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.I_C_ItemGroupLongDataTable dataTable = new DataSet1.I_C_ItemGroupLongDataTable();
+            var dataTable = new DataSet1.I_C_ItemGroupLongDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -6521,13 +6521,13 @@ SELECT ItemGroupLongId, ItemGroupLong, ItemGroupShortId FROM I_C_ItemGroupLong W
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            var previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -6554,13 +6554,13 @@ SELECT ItemGroupLongId, ItemGroupLong, ItemGroupShortId FROM I_C_ItemGroupLong W
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            var previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -6605,13 +6605,13 @@ SELECT ItemGroupLongId, ItemGroupLong, ItemGroupShortId FROM I_C_ItemGroupLong W
                 this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[7].Value = ((decimal)(ItemGroupLongId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            var previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.UpdateCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -6688,7 +6688,7 @@ SELECT ItemGroupLongId, ItemGroupLong, ItemGroupShortId FROM I_C_ItemGroupLong W
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -6704,7 +6704,7 @@ SELECT ItemGroupLongId, ItemGroupLong, ItemGroupShortId FROM I_C_ItemGroupLong W
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -6748,7 +6748,7 @@ SELECT ItemGroupLongId, ItemGroupLong, ItemGroupShortId FROM I_C_ItemGroupLong W
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "I_C_ItemGroupShort";
             tableMapping.ColumnMappings.Add("ItemGroupShortId", "ItemGroupShortId");
@@ -6808,7 +6808,7 @@ SELECT ItemGroupShortId, ItemGroupShort FROM I_C_ItemGroupShort WHERE (ItemGroup
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -6818,7 +6818,7 @@ SELECT ItemGroupShortId, ItemGroupShort FROM I_C_ItemGroupShort WHERE (ItemGroup
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.I_C_ItemGroupShortDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.I_C_ItemGroupShortDataTable dataTable = new DataSet1.I_C_ItemGroupShortDataTable();
+            var dataTable = new DataSet1.I_C_ItemGroupShortDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -6866,13 +6866,13 @@ SELECT ItemGroupShortId, ItemGroupShort FROM I_C_ItemGroupShort WHERE (ItemGroup
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_ItemGroupShort));
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            var previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -6893,13 +6893,13 @@ SELECT ItemGroupShortId, ItemGroupShort FROM I_C_ItemGroupShort WHERE (ItemGroup
             else {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((string)(ItemGroupShort));
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            var previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -6930,13 +6930,13 @@ SELECT ItemGroupShortId, ItemGroupShort FROM I_C_ItemGroupShort WHERE (ItemGroup
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_ItemGroupShort));
             }
             this.Adapter.UpdateCommand.Parameters[4].Value = ((decimal)(ItemGroupShortId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            var previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.UpdateCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -7013,7 +7013,7 @@ SELECT ItemGroupShortId, ItemGroupShort FROM I_C_ItemGroupShort WHERE (ItemGroup
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -7029,7 +7029,7 @@ SELECT ItemGroupShortId, ItemGroupShort FROM I_C_ItemGroupShort WHERE (ItemGroup
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -7073,7 +7073,7 @@ SELECT ItemGroupShortId, ItemGroupShort FROM I_C_ItemGroupShort WHERE (ItemGroup
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "I_J_ItemConstruction";
             tableMapping.ColumnMappings.Add("ItemConstructionId", "ItemConstructionId");
@@ -7237,7 +7237,7 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -7247,7 +7247,7 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.I_J_ItemConstructionDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.I_J_ItemConstructionDataTable dataTable = new DataSet1.I_J_ItemConstructionDataTable();
+            var dataTable = new DataSet1.I_J_ItemConstructionDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -7261,7 +7261,7 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -7271,7 +7271,7 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, false)]
         public virtual DataSet1.I_J_ItemConstructionDataTable GetDataByHand() {
             this.Adapter.SelectCommand = this.CommandCollection[1];
-            DataSet1.I_J_ItemConstructionDataTable dataTable = new DataSet1.I_J_ItemConstructionDataTable();
+            var dataTable = new DataSet1.I_J_ItemConstructionDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -7407,13 +7407,13 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
                 this.Adapter.DeleteCommand.Parameters[23].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[24].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            var previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -7500,13 +7500,13 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
             else {
                 this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            var previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -7717,13 +7717,13 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
                 this.Adapter.UpdateCommand.Parameters[36].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[37].Value = ((decimal)(ItemConstructionId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            var previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.UpdateCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -7825,7 +7825,7 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -7841,7 +7841,7 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -7885,7 +7885,7 @@ WHERE        (HandMarkNoColour LIKE N'3В%')";
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "I_S_BalconyCut";
             tableMapping.ColumnMappings.Add("BalconyCutId", "BalconyCutId");
@@ -7958,7 +7958,7 @@ SELECT BalconyCutId, BalconyCut, BalconyCutSize, SideId FROM I_S_BalconyCut WHER
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -7968,7 +7968,7 @@ SELECT BalconyCutId, BalconyCut, BalconyCutSize, SideId FROM I_S_BalconyCut WHER
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.I_S_BalconyCutDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.I_S_BalconyCutDataTable dataTable = new DataSet1.I_S_BalconyCutDataTable();
+            var dataTable = new DataSet1.I_S_BalconyCutDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -8032,13 +8032,13 @@ SELECT BalconyCutId, BalconyCut, BalconyCutSize, SideId FROM I_S_BalconyCut WHER
                 this.Adapter.DeleteCommand.Parameters[5].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            var previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -8071,13 +8071,13 @@ SELECT BalconyCutId, BalconyCut, BalconyCutSize, SideId FROM I_S_BalconyCut WHER
             else {
                 this.Adapter.InsertCommand.Parameters[2].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            var previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -8136,13 +8136,13 @@ SELECT BalconyCutId, BalconyCut, BalconyCutSize, SideId FROM I_S_BalconyCut WHER
                 this.Adapter.UpdateCommand.Parameters[9].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[10].Value = ((decimal)(BalconyCutId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            var previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.UpdateCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -8219,7 +8219,7 @@ SELECT BalconyCutId, BalconyCut, BalconyCutSize, SideId FROM I_S_BalconyCut WHER
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -8235,7 +8235,7 @@ SELECT BalconyCutId, BalconyCut, BalconyCutSize, SideId FROM I_S_BalconyCut WHER
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -8279,7 +8279,7 @@ SELECT BalconyCutId, BalconyCut, BalconyCutSize, SideId FROM I_S_BalconyCut WHER
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "I_S_BalconyDoor";
             tableMapping.ColumnMappings.Add("BalconyDoorId", "BalconyDoorId");
@@ -8344,7 +8344,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -8354,7 +8354,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.I_S_BalconyDoorDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.I_S_BalconyDoorDataTable dataTable = new DataSet1.I_S_BalconyDoorDataTable();
+            var dataTable = new DataSet1.I_S_BalconyDoorDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -8410,13 +8410,13 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                 this.Adapter.DeleteCommand.Parameters[3].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[4].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            var previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -8443,13 +8443,13 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
             else {
                 this.Adapter.InsertCommand.Parameters[1].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            var previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -8494,13 +8494,13 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                 this.Adapter.UpdateCommand.Parameters[6].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[7].Value = ((decimal)(BalconyDoorId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            var previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.UpdateCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -8577,7 +8577,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -8593,7 +8593,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -8637,7 +8637,7 @@ SELECT BalconyDoorId, BalconyDoor, SideId FROM I_S_BalconyDoor WHERE (BalconyDoo
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "I_S_ItemGroup";
             tableMapping.ColumnMappings.Add("ItemGroupId", "ItemGroupId");
@@ -8794,7 +8794,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -8804,7 +8804,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.I_S_ItemGroupDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.I_S_ItemGroupDataTable dataTable = new DataSet1.I_S_ItemGroupDataTable();
+            var dataTable = new DataSet1.I_S_ItemGroupDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -8933,13 +8933,13 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
                 this.Adapter.DeleteCommand.Parameters[22].Value = ((object)(1));
                 this.Adapter.DeleteCommand.Parameters[23].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            var previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -9021,13 +9021,13 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
             else {
                 this.Adapter.InsertCommand.Parameters[11].Value = global::System.DBNull.Value;
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            var previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -9226,13 +9226,13 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
                 this.Adapter.UpdateCommand.Parameters[35].Value = global::System.DBNull.Value;
             }
             this.Adapter.UpdateCommand.Parameters[36].Value = ((decimal)(ItemGroupId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            var previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.UpdateCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -9334,7 +9334,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -9350,7 +9350,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -9394,7 +9394,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "I_S_Side";
             tableMapping.ColumnMappings.Add("SideId", "SideId");
@@ -9453,7 +9453,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
             if ((this.ClearBeforeFill == true)) {
                 dataTable.Clear();
             }
-            int returnValue = this.Adapter.Fill(dataTable);
+            var returnValue = this.Adapter.Fill(dataTable);
             return returnValue;
         }
         
@@ -9463,7 +9463,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.I_S_SideDataTable GetData() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.I_S_SideDataTable dataTable = new DataSet1.I_S_SideDataTable();
+            var dataTable = new DataSet1.I_S_SideDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -9511,13 +9511,13 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
                 this.Adapter.DeleteCommand.Parameters[1].Value = ((object)(0));
                 this.Adapter.DeleteCommand.Parameters[2].Value = ((string)(Original_Side));
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
+            var previousConnectionState = this.Adapter.DeleteCommand.Connection.State;
             if (((this.Adapter.DeleteCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.DeleteCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.DeleteCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -9538,13 +9538,13 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
             else {
                 this.Adapter.InsertCommand.Parameters[0].Value = ((string)(Side));
             }
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.InsertCommand.Connection.State;
+            var previousConnectionState = this.Adapter.InsertCommand.Connection.State;
             if (((this.Adapter.InsertCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.InsertCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.InsertCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -9575,13 +9575,13 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
                 this.Adapter.UpdateCommand.Parameters[3].Value = ((string)(Original_Side));
             }
             this.Adapter.UpdateCommand.Parameters[4].Value = ((decimal)(SideId));
-            global::System.Data.ConnectionState previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
+            var previousConnectionState = this.Adapter.UpdateCommand.Connection.State;
             if (((this.Adapter.UpdateCommand.Connection.State & global::System.Data.ConnectionState.Open) 
                         != global::System.Data.ConnectionState.Open)) {
                 this.Adapter.UpdateCommand.Connection.Open();
             }
             try {
-                int returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
+                var returnValue = this.Adapter.UpdateCommand.ExecuteNonQuery();
                 return returnValue;
             }
             finally {
@@ -9658,7 +9658,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
                 if ((this.Adapter.UpdateCommand != null)) {
                     this.Adapter.UpdateCommand.Connection = value;
                 }
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     if ((this.CommandCollection[i] != null)) {
                         ((global::System.Data.SqlClient.SqlCommand)(this.CommandCollection[i])).Connection = value;
                     }
@@ -9674,7 +9674,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
             }
             set {
                 this._transaction = value;
-                for (int i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
+                for (var i = 0; (i < this.CommandCollection.Length); i = (i + 1)) {
                     this.CommandCollection[i].Transaction = this._transaction;
                 }
                 if (((this.Adapter != null) 
@@ -9718,7 +9718,7 @@ SELECT ItemGroupId, ItemGroupUsage, ItemGroup, ItemGroupLongId, ItemGroupTextISO
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private void InitAdapter() {
             this._adapter = new global::System.Data.SqlClient.SqlDataAdapter();
-            global::System.Data.Common.DataTableMapping tableMapping = new global::System.Data.Common.DataTableMapping();
+            var tableMapping = new global::System.Data.Common.DataTableMapping();
             tableMapping.SourceTable = "Table";
             tableMapping.DataSetTable = "vil_GroupsHasFormula";
             tableMapping.ColumnMappings.Add("ItemGroup", "ItemGroup");
@@ -9761,7 +9761,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
         [global::System.ComponentModel.DataObjectMethodAttribute(global::System.ComponentModel.DataObjectMethodType.Select, true)]
         public virtual DataSet1.vil_GroupsHasFormulaDataTable GetGroupsHasFormula() {
             this.Adapter.SelectCommand = this.CommandCollection[0];
-            DataSet1.vil_GroupsHasFormulaDataTable dataTable = new DataSet1.vil_GroupsHasFormulaDataTable();
+            var dataTable = new DataSet1.vil_GroupsHasFormulaDataTable();
             this.Adapter.Fill(dataTable);
             return dataTable;
         }
@@ -9985,7 +9985,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
         [global::System.ComponentModel.Browsable(false)]
         public int TableAdapterInstanceCount {
             get {
-                int count = 0;
+                var count = 0;
                 if ((this._i_C_FormulaTableAdapter != null)) {
                     count = (count + 1);
                 }
@@ -10020,9 +10020,9 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateUpdatedRows(DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
-            int result = 0;
+            var result = 0;
             if ((this._i_C_ItemGroupShortTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                var updatedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
@@ -10031,7 +10031,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                var updatedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
@@ -10040,7 +10040,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_C_ItemGroupLongTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_C_ItemGroupLong.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                var updatedRows = dataSet.I_C_ItemGroupLong.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
@@ -10049,7 +10049,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_SideTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_S_Side.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                var updatedRows = dataSet.I_S_Side.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
@@ -10058,7 +10058,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_BalconyCutTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                var updatedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
@@ -10067,7 +10067,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_BalconyDoorTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                var updatedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
@@ -10076,7 +10076,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_ItemGroupTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_S_ItemGroup.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                var updatedRows = dataSet.I_S_ItemGroup.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
@@ -10085,7 +10085,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_J_ItemConstructionTableAdapter != null)) {
-                global::System.Data.DataRow[] updatedRows = dataSet.I_J_ItemConstruction.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
+                var updatedRows = dataSet.I_J_ItemConstruction.Select(null, null, global::System.Data.DataViewRowState.ModifiedCurrent);
                 updatedRows = this.GetRealUpdatedRows(updatedRows, allAddedRows);
                 if (((updatedRows != null) 
                             && (0 < updatedRows.Length))) {
@@ -10102,9 +10102,9 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateInsertedRows(DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows) {
-            int result = 0;
+            var result = 0;
             if ((this._i_C_ItemGroupShortTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.Added);
+                var addedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_C_ItemGroupShortTableAdapter.Update(addedRows));
@@ -10112,7 +10112,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Added);
+                var addedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_C_FormulaTableAdapter.Update(addedRows));
@@ -10120,7 +10120,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_C_ItemGroupLongTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_C_ItemGroupLong.Select(null, null, global::System.Data.DataViewRowState.Added);
+                var addedRows = dataSet.I_C_ItemGroupLong.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_C_ItemGroupLongTableAdapter.Update(addedRows));
@@ -10128,7 +10128,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_SideTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_S_Side.Select(null, null, global::System.Data.DataViewRowState.Added);
+                var addedRows = dataSet.I_S_Side.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_S_SideTableAdapter.Update(addedRows));
@@ -10136,7 +10136,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_BalconyCutTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.Added);
+                var addedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_S_BalconyCutTableAdapter.Update(addedRows));
@@ -10144,7 +10144,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_BalconyDoorTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.Added);
+                var addedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_S_BalconyDoorTableAdapter.Update(addedRows));
@@ -10152,7 +10152,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_ItemGroupTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_S_ItemGroup.Select(null, null, global::System.Data.DataViewRowState.Added);
+                var addedRows = dataSet.I_S_ItemGroup.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_S_ItemGroupTableAdapter.Update(addedRows));
@@ -10160,7 +10160,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_J_ItemConstructionTableAdapter != null)) {
-                global::System.Data.DataRow[] addedRows = dataSet.I_J_ItemConstruction.Select(null, null, global::System.Data.DataViewRowState.Added);
+                var addedRows = dataSet.I_J_ItemConstruction.Select(null, null, global::System.Data.DataViewRowState.Added);
                 if (((addedRows != null) 
                             && (0 < addedRows.Length))) {
                     result = (result + this._i_J_ItemConstructionTableAdapter.Update(addedRows));
@@ -10176,9 +10176,9 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
         private int UpdateDeletedRows(DataSet1 dataSet, global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows) {
-            int result = 0;
+            var result = 0;
             if ((this._i_J_ItemConstructionTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_J_ItemConstruction.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                var deletedRows = dataSet.I_J_ItemConstruction.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_J_ItemConstructionTableAdapter.Update(deletedRows));
@@ -10186,7 +10186,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_ItemGroupTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_S_ItemGroup.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                var deletedRows = dataSet.I_S_ItemGroup.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_S_ItemGroupTableAdapter.Update(deletedRows));
@@ -10194,7 +10194,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_BalconyDoorTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                var deletedRows = dataSet.I_S_BalconyDoor.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_S_BalconyDoorTableAdapter.Update(deletedRows));
@@ -10202,7 +10202,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_BalconyCutTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                var deletedRows = dataSet.I_S_BalconyCut.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_S_BalconyCutTableAdapter.Update(deletedRows));
@@ -10210,7 +10210,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_S_SideTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_S_Side.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                var deletedRows = dataSet.I_S_Side.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_S_SideTableAdapter.Update(deletedRows));
@@ -10218,7 +10218,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_C_ItemGroupLongTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_C_ItemGroupLong.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                var deletedRows = dataSet.I_C_ItemGroupLong.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_C_ItemGroupLongTableAdapter.Update(deletedRows));
@@ -10226,7 +10226,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_C_FormulaTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                var deletedRows = dataSet.I_C_Formula.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_C_FormulaTableAdapter.Update(deletedRows));
@@ -10234,7 +10234,7 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
             }
             if ((this._i_C_ItemGroupShortTableAdapter != null)) {
-                global::System.Data.DataRow[] deletedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.Deleted);
+                var deletedRows = dataSet.I_C_ItemGroupShort.Select(null, null, global::System.Data.DataViewRowState.Deleted);
                 if (((deletedRows != null) 
                             && (0 < deletedRows.Length))) {
                     result = (result + this._i_C_ItemGroupShortTableAdapter.Update(deletedRows));
@@ -10258,9 +10258,9 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                         || (allAddedRows.Count < 1))) {
                 return updatedRows;
             }
-            global::System.Collections.Generic.List<global::System.Data.DataRow> realUpdatedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
-            for (int i = 0; (i < updatedRows.Length); i = (i + 1)) {
-                global::System.Data.DataRow row = updatedRows[i];
+            var realUpdatedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
+            for (var i = 0; (i < updatedRows.Length); i = (i + 1)) {
+                var row = updatedRows[i];
                 if ((allAddedRows.Contains(row) == false)) {
                     realUpdatedRows.Add(row);
                 }
@@ -10320,12 +10320,12 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 throw new global::System.ArgumentException("All TableAdapters managed by a TableAdapterManager must use the same connection s" +
                         "tring.");
             }
-            global::System.Data.IDbConnection workConnection = this.Connection;
+            var workConnection = this.Connection;
             if ((workConnection == null)) {
                 throw new global::System.ApplicationException("TableAdapterManager contains no connection information. Set each TableAdapterMana" +
                         "ger TableAdapter property to a valid TableAdapter instance.");
             }
-            bool workConnOpened = false;
+            var workConnOpened = false;
             if (((workConnection.State & global::System.Data.ConnectionState.Broken) 
                         == global::System.Data.ConnectionState.Broken)) {
                 workConnection.Close();
@@ -10334,16 +10334,16 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 workConnection.Open();
                 workConnOpened = true;
             }
-            global::System.Data.IDbTransaction workTransaction = workConnection.BeginTransaction();
+            var workTransaction = workConnection.BeginTransaction();
             if ((workTransaction == null)) {
                 throw new global::System.ApplicationException("The transaction cannot begin. The current data connection does not support transa" +
                         "ctions or the current state is not allowing the transaction to begin.");
             }
-            global::System.Collections.Generic.List<global::System.Data.DataRow> allChangedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
-            global::System.Collections.Generic.List<global::System.Data.DataRow> allAddedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
-            global::System.Collections.Generic.List<global::System.Data.Common.DataAdapter> adaptersWithAcceptChangesDuringUpdate = new global::System.Collections.Generic.List<global::System.Data.Common.DataAdapter>();
-            global::System.Collections.Generic.Dictionary<object, global::System.Data.IDbConnection> revertConnections = new global::System.Collections.Generic.Dictionary<object, global::System.Data.IDbConnection>();
-            int result = 0;
+            var allChangedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
+            var allAddedRows = new global::System.Collections.Generic.List<global::System.Data.DataRow>();
+            var adaptersWithAcceptChangesDuringUpdate = new global::System.Collections.Generic.List<global::System.Data.Common.DataAdapter>();
+            var revertConnections = new global::System.Collections.Generic.Dictionary<object, global::System.Data.IDbConnection>();
+            var result = 0;
             global::System.Data.DataSet backupDataSet = null;
             if (this.BackupDataSetBeforeUpdate) {
                 backupDataSet = new global::System.Data.DataSet();
@@ -10441,18 +10441,18 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 //
                 workTransaction.Commit();
                 if ((0 < allAddedRows.Count)) {
-                    global::System.Data.DataRow[] rows = new System.Data.DataRow[allAddedRows.Count];
+                    var rows = new System.Data.DataRow[allAddedRows.Count];
                     allAddedRows.CopyTo(rows);
-                    for (int i = 0; (i < rows.Length); i = (i + 1)) {
-                        global::System.Data.DataRow row = rows[i];
+                    for (var i = 0; (i < rows.Length); i = (i + 1)) {
+                        var row = rows[i];
                         row.AcceptChanges();
                     }
                 }
                 if ((0 < allChangedRows.Count)) {
-                    global::System.Data.DataRow[] rows = new System.Data.DataRow[allChangedRows.Count];
+                    var rows = new System.Data.DataRow[allChangedRows.Count];
                     allChangedRows.CopyTo(rows);
-                    for (int i = 0; (i < rows.Length); i = (i + 1)) {
-                        global::System.Data.DataRow row = rows[i];
+                    for (var i = 0; (i < rows.Length); i = (i + 1)) {
+                        var row = rows[i];
                         row.AcceptChanges();
                     }
                 }
@@ -10467,10 +10467,10 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                 }
                 else {
                     if ((0 < allAddedRows.Count)) {
-                        global::System.Data.DataRow[] rows = new System.Data.DataRow[allAddedRows.Count];
+                        var rows = new System.Data.DataRow[allAddedRows.Count];
                         allAddedRows.CopyTo(rows);
-                        for (int i = 0; (i < rows.Length); i = (i + 1)) {
-                            global::System.Data.DataRow row = rows[i];
+                        for (var i = 0; (i < rows.Length); i = (i + 1)) {
+                            var row = rows[i];
                             row.AcceptChanges();
                             row.SetAdded();
                         }
@@ -10515,10 +10515,10 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                     this._i_S_SideTableAdapter.Transaction = null;
                 }
                 if ((0 < adaptersWithAcceptChangesDuringUpdate.Count)) {
-                    global::System.Data.Common.DataAdapter[] adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];
+                    var adapters = new System.Data.Common.DataAdapter[adaptersWithAcceptChangesDuringUpdate.Count];
                     adaptersWithAcceptChangesDuringUpdate.CopyTo(adapters);
-                    for (int i = 0; (i < adapters.Length); i = (i + 1)) {
-                        global::System.Data.Common.DataAdapter adapter = adapters[i];
+                    for (var i = 0; (i < adapters.Length); i = (i + 1)) {
+                        var adapter = adapters[i];
                         adapter.AcceptChangesDuringUpdate = true;
                     }
                 }
@@ -10585,13 +10585,13 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "4.0.0.0")]
             private global::System.Data.DataRow GetRoot(global::System.Data.DataRow row, out int distance) {
                 global::System.Diagnostics.Debug.Assert((row != null));
-                global::System.Data.DataRow root = row;
+                var root = row;
                 distance = 0;
 
                 global::System.Collections.Generic.IDictionary<global::System.Data.DataRow, global::System.Data.DataRow> traversedRows = new global::System.Collections.Generic.Dictionary<global::System.Data.DataRow, global::System.Data.DataRow>();
                 traversedRows[row] = row;
 
-                global::System.Data.DataRow parent = row.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
+                var parent = row.GetParentRow(this._relation, global::System.Data.DataRowVersion.Default);
                 for (
                 ; ((parent != null) 
                             && (traversedRows.ContainsKey(parent) == false)); 
@@ -10633,11 +10633,11 @@ WHERE        (NOT (I_S_ItemGroup.HasFormula IS NULL))";
                     return 1;
                 }
 
-                int distance1 = 0;
-                global::System.Data.DataRow root1 = this.GetRoot(row1, out distance1);
+                var distance1 = 0;
+                var root1 = this.GetRoot(row1, out distance1);
 
-                int distance2 = 0;
-                global::System.Data.DataRow root2 = this.GetRoot(row2, out distance2);
+                var distance2 = 0;
+                var root2 = this.GetRoot(row2, out distance2);
 
                 if (object.ReferenceEquals(root1, root2)) {
                     return (this._childFirst * distance1.CompareTo(distance2));

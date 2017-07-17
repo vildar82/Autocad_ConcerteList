@@ -52,7 +52,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public static Result<MarkPart> DefineParts(string mark)
         {
             var markPart = new MarkPart(mark);
-            int indexFirstDot = mark.IndexOf('.');
+            var indexFirstDot = mark.IndexOf('.');
             if (indexFirstDot != -1)
             {
                 // Есть точка. Значит группа соеденена с габаритом длины. "2П72"
@@ -63,14 +63,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 }
                 else
                 {
-                    string gabAndDop = mark.Substring(markPart.PartGroup.Length);
+                    var gabAndDop = mark.Substring(markPart.PartGroup.Length);
                     DefineGabAndDop(gabAndDop, ref markPart);
                 }
             }
             else
             {
                 // нет габаритов в марке. Разделить по первому тире
-                int indexDash = mark.IndexOf('-');
+                var indexDash = mark.IndexOf('-');
                 if (indexDash == -1)
                 {
                     return Result.Fail<MarkPart>("Ошибка определения блока панели - В марке определена только группа панели.");
@@ -133,7 +133,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         private static string SeparateGroupFromLen(string markInput, int indexFirstDot)
         {
             // Отделить группу от длины в строке марки. "2П72.29"
-            for (int i = indexFirstDot; i >= 0; i--)
+            for (var i = indexFirstDot; i >= 0; i--)
             {
                 if (!char.IsDigit(markInput[i]))
                 {

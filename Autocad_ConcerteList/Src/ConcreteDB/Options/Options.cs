@@ -76,7 +76,7 @@ namespace Autocad_ConcerteList.Src
          // загрузка из файла настроек
          if (File.Exists(fileOptions))
          {
-            SerializerXml xmlSer = new SerializerXml(fileOptions);
+            var xmlSer = new SerializerXml(fileOptions);
             try
             {
                options = xmlSer.DeserializeXmlFile<Options>();
@@ -103,7 +103,7 @@ namespace Autocad_ConcerteList.Src
             {
                Directory.CreateDirectory(Path.GetDirectoryName(fileOptions));
             }
-            SerializerXml xmlSer = new SerializerXml(fileOptions);
+            var xmlSer = new SerializerXml(fileOptions);
             xmlSer.SerializeList(this);            
          }
          catch (Exception ex)
@@ -114,7 +114,7 @@ namespace Autocad_ConcerteList.Src
 
       public static void Show()
       {
-         FormOptions formOpt = new FormOptions((Options)Instance.MemberwiseClone());
+         var formOpt = new FormOptions((Options)Instance.MemberwiseClone());
          if (Application.ShowModalDialog(formOpt) == System.Windows.Forms.DialogResult.OK)
          {
             _instance = formOpt.Options;

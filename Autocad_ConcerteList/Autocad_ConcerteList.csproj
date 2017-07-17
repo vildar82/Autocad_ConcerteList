@@ -72,7 +72,8 @@
     </Reference>
     <Reference Include="MicroMvvm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\Package\MVVM\MicroMvvm.dll</HintPath>
+      <HintPath>..\..\..\ОБЩЕЕ\MVVM\MicroMvvm\bin\Release\MicroMvvm.dll</HintPath>
+      <Private>False</Private>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />

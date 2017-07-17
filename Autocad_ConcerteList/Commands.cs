@@ -34,11 +34,10 @@ namespace Autocad_ConcerteList
         [CommandMethod("PIK", "SB-CheckPanel", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
         public void SB_CheckPanel ()
         {
-            CommandStart.Start((doc) =>
-            {                
-                Doc = doc;
-                Editor ed = doc.Editor;
-                Database db = doc.Database;
+            CommandStart.Start(doc =>
+            {   
+                var ed = doc.Editor;
+                var db = doc.Database;
                 Inspector.Clear();
                 // Запрос выбора блока
                 var selOpt = new PromptEntityOptions("Выберите один блок панели для проверки");
@@ -72,7 +71,7 @@ namespace Autocad_ConcerteList
                         }
                         else
                         {
-                            string msg = "\nОшибок в панели не обнаружено. " + (panel.DbItem == null ? "В базе НЕТ." : "В базе ЕСТЬ.");
+                            var msg = "\nОшибок в панели не обнаружено. " + (panel.DbItem == null ? "В базе НЕТ." : "В базе ЕСТЬ.");
                             if (!string.IsNullOrEmpty(panel.Warning))
                             {
                                 msg += " Предупреждения: " + panel.Warning;
@@ -91,11 +90,10 @@ namespace Autocad_ConcerteList
         [CommandMethod("PIK", "SB-CheckPanels", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
         public void SB_CheckPanels ()
         {
-            CommandStart.Start((doc) =>
+            CommandStart.Start(doc =>
             {
                 HasNullObjectId = false;
-                Doc = doc;
-                Editor ed = doc.Editor;
+                var ed = doc.Editor;
                 DbService.Init();
 
                 // Поиск изделей в чертеже
@@ -147,10 +145,9 @@ namespace Autocad_ConcerteList
         [CommandMethod("PIK", "SB-RegPanels", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
         public void SB_RegPanels()
         {
-            CommandStart.Start((doc) =>
-            {                
-                Doc = doc;
-                Editor ed = doc.Editor;                
+            CommandStart.Start(doc =>
+            {   
+                var ed = doc.Editor;                
                 // Проверка доступа. Только Лукашовой?????
                 if (!Access.Success())
                 {
@@ -172,9 +169,8 @@ namespace Autocad_ConcerteList
         [CommandMethod("PIK", "SB-RegColors", CommandFlags.Modal | CommandFlags.NoPaperSpace | CommandFlags.NoBlockEditor)]
         public void SB_RegColors()
         {
-            CommandStart.Start((doc) =>
+            CommandStart.Start(doc =>
             {
-                Doc = doc;
                 var ed = doc.Editor;
                 // Проверка доступа. Только Лукашовой?????
                 if (!Access.Success())

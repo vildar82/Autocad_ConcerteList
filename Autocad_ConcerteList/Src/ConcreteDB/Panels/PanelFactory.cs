@@ -47,7 +47,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     var resDefMarkPart = ParserMarkFactory.DefineParts(markAtr);
                     if (resDefMarkPart.Success)
                     {
-                        MarkPart markPart = resDefMarkPart.Value;
+                        var markPart = resDefMarkPart.Value;
                         if (!dictPanelTypesByGroupKey.TryGetValue(markPart.PanelType, out Type typePanel))
                         {
                             // Общая панель

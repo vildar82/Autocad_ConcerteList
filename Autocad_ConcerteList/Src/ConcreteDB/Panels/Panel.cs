@@ -10,11 +10,11 @@ using AcadLib;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
 using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
-using Autodesk.AutoCAD.ApplicationServices;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.EditorInput;
 using Autodesk.AutoCAD.Geometry;
 using Autocad_ConcerteList.Src.ConcreteDB.Formula;
+using Application = Autodesk.AutoCAD.ApplicationServices.Application;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
@@ -493,7 +493,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             try
             {
-                using (Commands.Doc.LockDocument())
+                using (Autodesk.AutoCAD.ApplicationServices.Application.DocumentManager.MdiActiveDocument.LockDocument())
                 {
                     using (var t = panels.First().IdBlRef.Database.TransactionManager.StartTransaction())
                     {
@@ -858,7 +858,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public string ErrorStatusEnameToString (ErrorStatusEnum status)
         {
-            StringBuilder sb = new StringBuilder (status.ToString());
+            var sb = new StringBuilder (status.ToString());
 
             sb.Replace(nameof(ErrorStatusEnum.None), "Ok");
             sb.Replace(nameof(ErrorStatusEnum.IncorrectMarkAndParams), "Параметры габаритов из атрибутов не соответствуют марке(атр)");

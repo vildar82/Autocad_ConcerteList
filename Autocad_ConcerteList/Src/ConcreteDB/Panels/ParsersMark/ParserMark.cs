@@ -235,7 +235,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public static int GetStartInteger (string input)
         {
-            int value = 0;
+            var value = 0;
             var match = Regex.Match(input, @"^\d*");
             if (match.Success)
             {
@@ -250,7 +250,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         private string GetParamIndex (string parameter, string input)
         {
             string res = null;
-            int indexP = input.IndexOf(parameter);
+            var indexP = input.IndexOf(parameter);
             if (indexP != -1)
             {
                 // если след символ цифра - то включение ее в параметр
@@ -275,7 +275,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         protected void DefineIndexClass()
         {
-            string groupWoClass = markPart.ItemGroupWoClassNew;
+            var groupWoClass = markPart.ItemGroupWoClassNew;
             if (markPart.PanelType != PanelTypeEnum.WallOuter && char.IsDigit(groupWoClass[0]))
             {
                 GroupIndexConcreteClass = groupWoClass.Substring(0,1);

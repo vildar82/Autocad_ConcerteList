@@ -19,8 +19,8 @@ namespace CADTestRunner
         [CommandMethod("RunCADtests", CommandFlags.Session)]
         public void RunCADtests()
         {
-            string directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
-            string[] nunitArgs = new List<string>
+            var directoryName = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            var nunitArgs = new List<string>
                    {
                      // for details of options see  http://www.nunit.com/index.php?p=nunitliteOptions&r=3.0
                      "--verbose"                 // Tell me everything

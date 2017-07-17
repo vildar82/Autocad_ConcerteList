@@ -35,7 +35,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             Inspector.ShowDialog();
             Inspector.Clear();
 
-            Editor ed = Application.DocumentManager.MdiActiveDocument.Editor;
+            var ed = Application.DocumentManager.MdiActiveDocument.Editor;
             if (PanelsNewWoErr.Count == 0)
             {
                 ed.WriteMessage($"\nНет новых панелей без ошибок.");
@@ -50,8 +50,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 newPanels.Add(new KeyValuePair<IIPanel, List<IIPanel>>(item.First(), item.ToList()));
             }
 
-            RegPanelsViewModel model = new RegPanelsViewModel (newPanels, DbService.Series);
-            WindowRegPanels winPanels = new WindowRegPanels(model);
+            var model = new RegPanelsViewModel (newPanels, DbService.Series);
+            var winPanels = new WindowRegPanels(model);
             var dialogRes = Application.ShowModalWindow(winPanels);
             if (dialogRes.HasValue && dialogRes.Value)
             {                

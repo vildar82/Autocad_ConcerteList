@@ -35,13 +35,13 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             try
             {
                 // Get the Selected Row Button Object
-                Button ExpandCollapseObj = (Button)sender;
+                var ExpandCollapseObj = (Button)sender;
 
                 // Check the Button Object is null or Not
                 if (ExpandCollapseObj != null)
                 {
                     // Return the Contains which specified element
-                    DataGridRow DgrSelectedRowObj = DataGridRow.GetRowContainingElement(ExpandCollapseObj);
+                    var DgrSelectedRowObj = DataGridRow.GetRowContainingElement(ExpandCollapseObj);
 
                     // Check the DataGridRow Object is Null or Not
                     if (DgrSelectedRowObj != null)

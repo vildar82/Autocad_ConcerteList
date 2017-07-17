@@ -18,7 +18,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             var panels = new List<IIPanel>();
             var ws = new List<Workspace>();
-            Database db = HostApplicationServices.WorkingDatabase;
+            var db = HostApplicationServices.WorkingDatabase;
             using (var t = db.TransactionManager.StartTransaction())
             {
                 var ms = db.CurrentSpaceId.GetObject(OpenMode.ForRead) as BlockTableRecord;
@@ -53,17 +53,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         private void definePanelsWS(List<IIPanel> panels, List<Workspace> ws)
         {
-            RTreeLib.RTree<Workspace> rtree = new RTreeLib.RTree<Workspace>();
+            var rtree = new RTreeLib.RTree<Workspace>();
             foreach (var w in ws)
             {
-                RTreeLib.Rectangle r = new RTreeLib.Rectangle(w.Extents.MinPoint.X, w.Extents.MinPoint.Y,
+                var r = new RTreeLib.Rectangle(w.Extents.MinPoint.X, w.Extents.MinPoint.Y,
                                         w.Extents.MaxPoint.X, w.Extents.MaxPoint.Y, 0, 0);
                 rtree.Add(r, w);
             }
 
             foreach (var p in panels)
             {
-                RTreeLib.Point pt = new RTreeLib.Point(p.Position.X, p.Position.Y, 0);
+                var pt = new RTreeLib.Point(p.Position.X, p.Position.Y, 0);
                 var w = rtree.Nearest(pt, 1).FirstOrDefault();
                 p.WS = w;
             }

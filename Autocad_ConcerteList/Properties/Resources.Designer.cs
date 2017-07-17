@@ -39,7 +39,7 @@ namespace Autocad_ConcerteList.Properties {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Autocad_ConcerteList.Properties.Resources", typeof(Resources).Assembly);
+                    var temp = new global::System.Resources.ResourceManager("Autocad_ConcerteList.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -65,7 +65,7 @@ namespace Autocad_ConcerteList.Properties {
         /// </summary>
         internal static System.Drawing.Bitmap group {
             get {
-                object obj = ResourceManager.GetObject("group", resourceCulture);
+                var obj = ResourceManager.GetObject("group", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
