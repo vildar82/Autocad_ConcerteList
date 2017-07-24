@@ -99,8 +99,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         bool HeightHasProperty { get; set; }
         bool ThicknessHasProperty { get; set; }
         bool WeightHasProperty { get; set; }
-        bool ApertureHasProperty { get; set; }        
+        bool ApertureHasProperty { get; set; }
 
+	    void Init();
         void Checks();
         void Show();
         short? UpdateLength(short? value, List<IIPanel> list);

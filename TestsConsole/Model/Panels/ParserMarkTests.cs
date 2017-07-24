@@ -10,24 +10,24 @@ using Autocad_ConcerteList.Src.ConcreteDB;
 
 namespace Autocad_ConcerteList.Src.Panels.Tests
 {
-    [TestClass()]
+    [TestClass]
     public class ParserMarkTests
     {
-        [AssemblyInitialize()]
+        [AssemblyInitialize]
         public static void AssemblyInit(TestContext context)
         {
             DbService.Init();
             Console.WriteLine("AssemblyInit");
         }
 
-        [ClassInitialize()]
+        [ClassInitialize]
         public static void ClassInit(TestContext context)
         {
             Console.WriteLine("ClassInit");
             
         }
 
-        [TestInitialize()]
+        [TestInitialize]
         public void Initialize()
         {
             Console.WriteLine("TestMethodInit");
@@ -45,7 +45,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             throw new Exception("Не определены основные параметры марки.");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSlabTest()
         {            
             var parser = GetParser("2П 544.363-1-2э");
@@ -63,7 +63,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }        
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSlabTest2()
         {
             var parser = GetParser("2П544.363-1-2э");           
@@ -81,7 +81,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSlabTest3()
         {
             var parser = GetParser("П544.363-1-2э");            
@@ -99,7 +99,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSlabTest4()
         {
             var parser = GetParser("П544.363-2-3э");                        
@@ -117,7 +117,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseEBTest()
         {
             var parser = GetParser("ЭБ-25");            
@@ -135,7 +135,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseInnerPanelTest()
         {
             var parser = GetParser("В706.26.18-2-5э");            
@@ -153,7 +153,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseInnerPanelTest2()
         {
             var parser = GetParser("В526.28.18-3э");            
@@ -171,7 +171,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseInnerPanelTest3()
         {
             var parser = GetParser("2В526.28.18-3э");            
@@ -190,7 +190,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseInnerPanelTest4()
         {
             var parser = GetParser("3В526.28.18-3э");            
@@ -209,7 +209,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest()
         {
             var parser = GetParser("3НСНг2 60.29.42-10-1Э");            
@@ -228,7 +228,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest2()
         {
             var parser = GetParser("3НСНг2 60.29.42-10Б1П1-1э");            
@@ -247,7 +247,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest23()
         {
             var parser = GetParser("3НСНгн 60.29.42-10Б1П1-1э");            
@@ -265,7 +265,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest3()
         {
             var parser = GetParser("3НСНг2 60.29.42-10П1Б1-1э");            
@@ -282,7 +282,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
                          parser.BalconyDoor == "Б1";
             Assert.AreEqual(check, true);
         }
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest44()
         {
             var parser = GetParser("3НСг 72.29.32-6Б");            
@@ -298,7 +298,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(true, check);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest4()
         {
             var parser = GetParser("3НСг 75.29.32-7П");            
@@ -315,7 +315,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest5()
         {
             var parser = GetParser("3НСг 75.29.32-7Б");            
@@ -332,7 +332,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest6()
         {
             var parser = GetParser("3НСг 75.29.32-8БП3");            
@@ -349,7 +349,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest7()
         {
             var parser = GetParser("3НСг 75.29.32-8ПБ3");            
@@ -366,7 +366,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOLTest()
         {
             var parser = GetParser("ОЛ 8.66");            
@@ -383,7 +383,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLPTest()
         {
             var parser = GetParser("1 ЛП 25.14-4");            
@@ -401,7 +401,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelMountTest()
         {
             var parser = GetParser("3НСНг2 60.29.42-10Д-1э");            
@@ -419,7 +419,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
                          string.IsNullOrEmpty(parser.BalconyDoor);
             Assert.AreEqual(check, true);
         }
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelMountTest2()
         {
             var parser = GetParser("3НСНг2 60.29.42-10ДГ-1э");            
@@ -439,7 +439,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(check, true);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelTest45()
         {
             var parser = GetParser("3НСг 72.29.32Д");            
@@ -454,7 +454,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(true, check);
         }        
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLMPanelTest2()
         {
             var parser = GetParser("ЛМ-1.9");            
@@ -467,7 +467,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
             Assert.AreEqual(true, check);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseLMPanelTest()
         {
             var parser = GetParser("ЛМ-1.9-18");
@@ -483,7 +483,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
         /// <summary>
         /// ПИК2
         /// </summary>
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelPIK2Test()
         {            
             var parser = GetParser("3НСгн 359.294.36-1П8");
@@ -497,7 +497,7 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
                          parser.BalconyCut == "П8";                         
             Assert.AreEqual(check, true);            
         }
-        [TestMethod()]
+        [TestMethod]
         public void ParseOutPanelPIK2TestClass1()
         {
             var parser = GetParser("3НСгн 1 689.294.32-4");

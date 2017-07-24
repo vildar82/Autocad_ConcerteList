@@ -14,9 +14,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
     {
         public InternalPanel(MarkPart markPart, BlockReference blRef, string blName) : base(markPart, blRef, blName)
         {
+			
         }
 
-        public override short GetGab(string nameGabRu, short value, double factor)
+	    public override short GetGab(string nameGabRu, short value, double factor)
         {
             if (value == 2790 && nameGabRu == HeightNameRu)
             {

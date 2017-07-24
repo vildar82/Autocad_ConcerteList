@@ -36,31 +36,36 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 
         public Item_modification MountElementModif { get { return mountElementModif; }
             set { mountElementModif = value; MountElement = value?.Item_modification_code;  } }
-        Item_modification mountElementModif;
+
+	    private Item_modification mountElementModif;
 
         public Item_modification ProngModif {
             get { return prongModif; }
             set { prongModif = value; Prong = value?.Item_modification_code; }
         }
-        Item_modification prongModif;
+
+	    private Item_modification prongModif;
 
         public Item_modification BalconyCutModif {
             get { return balconyCutModif; }
             set { balconyCutModif = value; BalconyCut = value?.Item_modification_code; }
         }
-        Item_modification balconyCutModif;
+
+	    private Item_modification balconyCutModif;
 
         public Item_modification BalconyDoorModif {
             get { return balconyDoorModif; }
             set { balconyDoorModif = value; BalconyDoor = value?.Item_modification_code; }
         }
-        Item_modification balconyDoorModif;
+
+	    private Item_modification balconyDoorModif;
 
         public Item_modification StepHeightModif {
             get { return stepHeightModif; }
             set { stepHeightModif = value; StepHeightIndex = value == null? null : (int?)int.Parse(value.Item_modification_code); }
         }
-        Item_modification stepHeightModif;
+
+	    private Item_modification stepHeightModif;
 
         public bool Equals(ItemConstructionDbo other)
         {

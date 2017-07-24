@@ -21,15 +21,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         //private const string GroupKeyPL = "ПЛ";
         //private const string GroupKeyExteriorWall = "НС";
         //private const string GroupKeyInteriorWall = "В";
-        /// <summary>
-        /// Типы панелей по ключевому имени группы
-        /// </summary>
-        static Dictionary<PanelTypeEnum, Type> dictPanelTypesByGroupKey = new Dictionary<PanelTypeEnum, Type>() {
-            { PanelTypeEnum.Stair, typeof(Stair) },
-            { PanelTypeEnum.PL, typeof(PL) },
-            { PanelTypeEnum.WallInner, typeof(InternalPanel) },
-            { PanelTypeEnum.WallOuter, typeof(ExternalPanel) }
-        };        
+	    /// <summary>
+	    /// Типы панелей по ключевому имени группы
+	    /// </summary>
+	    private static readonly Dictionary<PanelTypeEnum, Type> dictPanelTypesByGroupKey =
+		    new Dictionary<PanelTypeEnum, Type>
+		    {
+			    {PanelTypeEnum.Stair, typeof(Stair)},
+			    {PanelTypeEnum.PL, typeof(PL)},
+			    {PanelTypeEnum.WallInner, typeof(InternalPanel)},
+			    {PanelTypeEnum.WallOuter, typeof(ExternalPanel)}
+		    };        
 
         /// <summary>
         /// Определение панели. Должна быть запущена транзакция!
@@ -54,6 +56,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                             typePanel = typeof(Panel);
                         }
                         panel = Activator.CreateInstance(typePanel, markPart, blRef, blName) as Panel;
+						panel?.Init();
                     }
                     else
                     {

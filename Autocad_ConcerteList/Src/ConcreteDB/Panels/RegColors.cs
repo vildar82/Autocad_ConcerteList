@@ -11,7 +11,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class RegColors
     {
-        private List<IIPanel> panels;
+        private readonly List<IIPanel> panels;
 
         public RegColors (List<IIPanel> panels)
         {

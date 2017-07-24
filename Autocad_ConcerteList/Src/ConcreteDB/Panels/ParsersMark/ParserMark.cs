@@ -11,7 +11,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
     public class ParserMark : IParserMark
     {
-        private MarkPart markPart;
+        private readonly MarkPart markPart;
 
         public ParserMark (MarkPart markPart)
         {

@@ -24,10 +24,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         public const string BalconyCutParamName = "Подрезка";
         public const string BalconyDoorParamName = "Балконная дверь";
         public const string StepHeightParamName = "Ступень";
-        static List<ModificatorDbo> Modificators;        
-        static List<ItemGroupDbo> Groups;
-        static List<ItemConstructionDbo> Items;        
-        static List<string> colorsHandMarkFull;
+	    private static List<ModificatorDbo> Modificators;
+	    private static List<ItemGroupDbo> Groups;
+	    private static List<ItemConstructionDbo> Items;
+	    private static List<string> colorsHandMarkFull;
         public static List<SerieDbo> Series { get; set; }
 
         public static MDMEntities ConnectEntities()
@@ -135,7 +135,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                     LoadItems(ents);
                 }
             }
-            var itemSearch = new ItemConstructionDbo()
+            var itemSearch = new ItemConstructionDbo
             {
                 ItemGroup = panel.Item_group,
                 Length = panel.Length,
@@ -190,7 +190,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             {
                 try
                 {
-                    var item = new ItemConstructionDbo() {
+                    var item = new ItemConstructionDbo
+                    {
                         Panel = panel,
                         IsIgnoreGab = panel.IsIgnoreGab,
                         HandMarkNoColour = panel.GetHandMarkNoColor(),
@@ -295,7 +296,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             id = -1;
             using (var ents = ConnectEntities())
             {
-                var newItem = ents.Item_construction.Add(new Item_construction() {
+                var newItem = ents.Item_construction.Add(new Item_construction
+                {
                     Hand_mark_no_colour = panel.HandMarkNoColour,
                     Item_group_id = panel.ItemGroupId,
                     Length = panel.Length,
@@ -313,7 +315,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
                 });
                 if (ser != null)
                 {
-                    ents.Item_construction_Product.Add(new Item_construction_Product() {
+                    ents.Item_construction_Product.Add(new Item_construction_Product
+                    {
                         Item_construction = newItem,
                         Product_id = ser.SeriesId
                     });

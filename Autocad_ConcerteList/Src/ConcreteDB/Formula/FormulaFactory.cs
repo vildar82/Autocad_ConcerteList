@@ -11,24 +11,27 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
     public static class FormulaFactory
     {
         // Внутрянки
-        static Func<FormulaParameters, IIPanel, string> FormulaLHT_FE = (f, p) =>
+	    private static readonly Func<FormulaParameters, IIPanel, string> FormulaLHT_FE = (f, p) =>
             $"{p.Item_group} {p.GetLengthMarkPart(f.LengthFactor)}.{p.GetHeightMarkPart(f.HeightFactor)}.{p.GetThicknessMarkPart(f.ThicknessFactor)}-{p.Formwork}-{p.Electrics}";
         // Наружки
-        static Func<FormulaParameters, IIPanel, string> FormulaLHT_FBPE = (f, p) =>
+	    private static readonly Func<FormulaParameters, IIPanel, string> FormulaLHT_FBPE = (f, p) =>
             $"{p.Item_group} {p.GetLengthMarkPart(f.LengthFactor)}.{p.GetHeightMarkPart(f.HeightFactor)}.{p.GetThicknessMarkPart(f.ThicknessFactor)}-{p.Formwork}{p.Balcony_door}{p.Balcony_cut}-{p.Electrics}";        
         // Плиты
-        static Func<FormulaParameters, IIPanel, string> FormulaLH_FE = (f, p) =>
+	    private static readonly Func<FormulaParameters, IIPanel, string> FormulaLH_FE = (f, p) =>
             $"{p.Item_group} {p.GetLengthMarkPart(f.LengthFactor)}.{p.GetHeightMarkPart(f.HeightFactor)}-{p.Formwork}-{p.Electrics}";
         // ОЛ
-        static Func<FormulaParameters, IIPanel, string> FormulaHL_FE = (f, p) =>
+	    private static readonly Func<FormulaParameters, IIPanel, string> FormulaHL_FE = (f, p) =>
             $"{p.Item_group} {p.GetHeightMarkPart(f.HeightFactor)}.{p.GetLengthMarkPart(f.LengthFactor)}-{p.Formwork}-{p.Electrics}";
 
         /// <summary>
         /// Key - Срия_Тип панели. 
         /// </summary>
-        static Dictionary<string, FormulaItem> dictFormules = new Dictionary<string, FormulaItem>() {            
+        private static readonly Dictionary<string, FormulaItem> dictFormules = new Dictionary<string, FormulaItem>
+        {            
             // внутрянки            
             { $"{PanelSeria.PIK1}_{PanelTypeEnum.WallInner}", new FormulaItem(FormulaLHT_FE, new FormulaParameters(10, 100, 10),"LHT") },            
+	        // внутрянки (3-значная высота (см))           
+	        { $"{PanelSeria.PIK2}_{PanelTypeEnum.WallInner}", new FormulaItem(FormulaLHT_FE, new FormulaParameters(10, 10, 10),"LHT") },            
             // наружки
             { $"{PanelSeria.PIK1}_{PanelTypeEnum.WallOuter}", new FormulaItem(FormulaLHT_FBPE, new FormulaParameters(100, 100, 10),"LHT") },
             { $"{PanelSeria.PIK2}_{PanelTypeEnum.WallOuter}", new FormulaItem(FormulaLHT_FBPE, new FormulaParameters(10, 10, 10),"LHT") },

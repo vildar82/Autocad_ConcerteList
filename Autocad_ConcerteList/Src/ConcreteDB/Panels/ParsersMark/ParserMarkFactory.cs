@@ -14,7 +14,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Сопоставление группы панели (без цифр!) с типом панели
         /// </summary>
-        private static Dictionary<string, PanelTypeEnum> dictPanelTypes = new Dictionary<string, PanelTypeEnum>() {            
+        private static readonly Dictionary<string, PanelTypeEnum> dictPanelTypes = new Dictionary<string, PanelTypeEnum>
+        {            
             { "ЭБ", PanelTypeEnum.EB },
             { "ЛП", PanelTypeEnum.LP },
             { "ОЛ", PanelTypeEnum.OL },
@@ -22,16 +23,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             { "ПБ", PanelTypeEnum.Slab },
             { "БП", PanelTypeEnum.Slab },
             { "П", PanelTypeEnum.Slab },
-            { "ЛМ", PanelTypeEnum.Stair },
+	        { "ПК", PanelTypeEnum.Slab },
+	        { "ПКД", PanelTypeEnum.Slab },
+	        { "ПКТ", PanelTypeEnum.Slab },
+			{ "ЛМ", PanelTypeEnum.Stair },
             { "БВ", PanelTypeEnum.VentBlock },
             { "ДУ", PanelTypeEnum.VentBlock },                        
             { "В", PanelTypeEnum.WallInner },
             { "ВЧ", PanelTypeEnum.WallInner }            
         };
 
-        private static Dictionary<PanelTypeEnum, Type> dictMarkParsers = new Dictionary<PanelTypeEnum, Type> {
-            { PanelTypeEnum.Stair, typeof(StairMarkParser) }
-        };
+	    private static readonly Dictionary<PanelTypeEnum, Type> dictMarkParsers =
+		    new Dictionary<PanelTypeEnum, Type>
+		    {
+			    {PanelTypeEnum.Stair, typeof(StairMarkParser)}
+		    };
 
         public static IParserMark Create(MarkPart markPart)
         {
@@ -127,6 +133,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                     }                    
                 }
             }
+			else if (markPart.PanelType == PanelTypeEnum.WallInner)
+            {
+				var indexHeight = markPart.PartGab.Split('.').Skip(1).FirstOrDefault();
+	            if (!string.IsNullOrEmpty(indexHeight) && indexHeight.Length == 3)
+	            {
+		            return PanelSeria.PIK2;
+	            }
+			}
             return PanelSeria.PIK1;
         }
 

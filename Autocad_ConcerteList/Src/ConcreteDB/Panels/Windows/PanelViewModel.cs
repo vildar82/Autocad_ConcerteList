@@ -15,10 +15,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
     public class PanelViewModel : ObservableObject
     {
-        private static Brush BadValueColor = new SolidColorBrush(Colors.Red);
-        private static Brush NewPanelColor = new SolidColorBrush(Colors.LawnGreen);
+        private static readonly Brush BadValueColor = new SolidColorBrush(Colors.Red);
+        private static readonly Brush NewPanelColor = new SolidColorBrush(Colors.LawnGreen);
 
-        private PanelsBaseView model;
+        private readonly PanelsBaseView model;
         internal IIPanel panel;
         private PanelDetailViewModel _selectedPanel;        
 

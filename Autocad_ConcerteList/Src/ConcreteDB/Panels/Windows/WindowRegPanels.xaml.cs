@@ -20,7 +20,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
     /// </summary>
     public partial class WindowRegPanels : Window
     {
-        private RegPanelsViewModel model;
+        private readonly RegPanelsViewModel model;
 
         public WindowRegPanels (RegPanelsViewModel model)
         {

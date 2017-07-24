@@ -35,7 +35,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             }
         }       
         public ObservableCollection<string> Filter { get; set; } 
-            = new ObservableCollection<string>() { filterAll, filterErrors };
+            = new ObservableCollection<string> { filterAll, filterErrors };
         public string CurFilter {
             get { return _curFilter; }
             set {

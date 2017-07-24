@@ -9,10 +9,10 @@ using Autocad_ConcerteList.Src.Panels.Tests;
 
 namespace TestsConsole.Model.Panels
 {
-    [TestClass()]
+    [TestClass]
     public class StairParserTest
     {
-        [TestMethod()]
+        [TestMethod]
         public void ParseSlabTest()
         {
             var parser = ParserMarkTests.GetParser("ЛМ-1.11-28");
@@ -26,7 +26,7 @@ namespace TestsConsole.Model.Panels
             Assert.IsTrue(res);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSlabTest2()
         {
             var parser = ParserMarkTests.GetParser("ЛМ-1.9");
@@ -40,7 +40,7 @@ namespace TestsConsole.Model.Panels
             Assert.IsTrue(res);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSlabTest3()
         {
             var parser = ParserMarkTests.GetParser("ЛМ-1.11.114");
@@ -54,7 +54,7 @@ namespace TestsConsole.Model.Panels
             Assert.IsTrue(res);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ParseSlabTest4()
         {
             var parser = ParserMarkTests.GetParser("ЛМ-1.11.114-28");

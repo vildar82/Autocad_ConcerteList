@@ -37,12 +37,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public const string AtrTagColor = "ПОКРАСКА";
         public const string AtrTagAperture = "ПРОЕМ";
         public const string AtrTagAlbum = "ДОК";        
-        private static AcadLib.Comparers.AlphanumComparator alpha = AcadLib.Comparers.AlphanumComparator.New;
+        private static readonly AcadLib.Comparers.AlphanumComparator alpha = AcadLib.Comparers.AlphanumComparator.New;
 
         private ParserFormula parserFormula;
-        private MarkPart markPart;
-        private bool? _isNew;
-        //private bool _alreadyCalcExtents;
+        private readonly MarkPart markPart;
+	    //private bool _alreadyCalcExtents;
         //private Extents3d _extents;
         //private bool _isNullExtents;
         //private string _info;
@@ -147,9 +146,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Это новая панель - нет в базе (DbItem == null)
         /// </summary>
-        public bool? IsNew { get { return _isNew; } set { _isNew = value; } }
+        public bool? IsNew { get; set; }
 
-        //public string Info
+	    //public string Info
         //{
         //    get
         //    {
@@ -285,7 +284,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         //                }
         //                return _extents;
         //            }
-        //        }               
+        //        }        
+
+	    public virtual void Init()
+	    {
+		    
+	    }
 
         /// <summary>
         /// Марка из атрибута,
@@ -520,7 +524,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             try
             {                
-                if (value == null || value == "") return null;
+                if (string.IsNullOrEmpty(value)) return null;
                 return float.Parse(value);
             }
             catch
@@ -533,7 +537,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             try
             {                
-                if (value == null || value == "") return null;
+                if (string.IsNullOrEmpty(value)) return null;
                 return short.Parse(value);
             }
             catch
@@ -731,7 +735,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 // Поиск по марке
                 DbItem = DbService.FindByMark(Mark);
             }
-            _isNew = DbItem == null;
+            IsNew = DbItem == null;
         }
 
         public void DefineItemGroup ()

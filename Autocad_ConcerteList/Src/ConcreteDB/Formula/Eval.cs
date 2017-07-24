@@ -13,12 +13,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
         public string EvalString { get; set; }
         public string ValueString { get; set; }
         public bool IsEvaluable { get; set; }
-        private IIPanel item;
-        private static DataTable t = new DataTable();
-        private static char[] charOperands = new char[] { '/', '*', '-', '+' };
+        private readonly IIPanel item;
+        private static readonly DataTable t = new DataTable();
+        private static readonly char[] charOperands = new char[] { '/', '*', '-', '+' };
 
         // Публичные свойства в классе ItemEntryData        
-        private static Dictionary<string, PropertyInfo> dictItemProperties = typeof(IIPanel)
+        private static readonly Dictionary<string, PropertyInfo> dictItemProperties = typeof(IIPanel)
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                             .ToDictionary(f => f.Name);        
 

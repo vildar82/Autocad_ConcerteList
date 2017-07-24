@@ -16,7 +16,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
         /// Результативная марка
         /// </summary>
         public string Result { get; private set; }        
-        private IIPanel item;        
+        private readonly IIPanel item;        
 
         public ParserFormula(FormulaItem formula, IIPanel item)
         {
