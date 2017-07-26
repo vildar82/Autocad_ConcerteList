@@ -108,7 +108,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 return PanelTypeEnum.WallOuter;
             }
-            if (Regex.IsMatch(itemGroupWoDigits, "НФ"))
+            if (Regex.IsMatch(itemGroupWoDigits, "НФ|ПСФ"))
             {
                 return PanelTypeEnum.WallOuterFreeze;
             }

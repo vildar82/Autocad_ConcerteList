@@ -35,7 +35,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
             // наружки
             { $"{PanelSeria.PIK1}_{PanelTypeEnum.WallOuter}", new FormulaItem(FormulaLHT_FBPE, new FormulaParameters(100, 100, 10),"LHT") },
             { $"{PanelSeria.PIK2}_{PanelTypeEnum.WallOuter}", new FormulaItem(FormulaLHT_FBPE, new FormulaParameters(10, 10, 10),"LHT") },
-            { $"{PanelSeria.PIK2}_{PanelTypeEnum.WallOuterFreeze}", new FormulaItem(FormulaLHT_FBPE, new FormulaParameters(10, 100, 10),"LHT") },            
+	        { $"{PanelSeria.PIK1}_{PanelTypeEnum.WallOuterFreeze}", new FormulaItem(FormulaLHT_FBPE, new FormulaParameters(100, 100, 10),"LHT") },
+			{ $"{PanelSeria.PIK2}_{PanelTypeEnum.WallOuterFreeze}", new FormulaItem(FormulaLHT_FBPE, new FormulaParameters(10, 100, 10),"LHT") },            
             // плиты
             { $"{PanelSeria.PIK1}_{PanelTypeEnum.Slab}", new FormulaItem(FormulaLH_FE, new FormulaParameters(10, 10, 0),"LH") },            
             // Плиты лоджий
