@@ -1,10 +1,9 @@
-﻿<Window x:Class="Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows.WindowRegColors"
+﻿<Window x:Class="Autocad_ConcerteList.ConcreteDB.Panels.Windows.WindowRegColors"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows"
-        xmlns:converters="clr-namespace:AcadLib.WPF.Converters;assembly=AcadLib"
+        xmlns:converters="clr-namespace:NetLib.WPF.Converters;assembly=NetLib"
         mc:Ignorable="d"
         Title="Регистрация колористики" Height="235" Width="372.5">
     <Grid>

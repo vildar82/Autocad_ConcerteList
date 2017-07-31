@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.IO;
-using System.Xml.Serialization;
-using AcadLib;
-using AcadLib.Files;
-using Autodesk.AutoCAD.ApplicationServices;
 
-namespace Autocad_ConcerteList.Src
+namespace Autocad_ConcerteList.ConcreteDB.Options
 {
    [Serializable]
    public class Options
    {
-      private static readonly string fileOptions = Path.Combine(
-                     AutoCAD_PIK_Manager.Settings.PikSettings.ServerShareSettingsFolder,
-                     "СБ-ГК\\SB_GK_ConcreteList.xml");
       private static Options _instance;
       public static Options Instance
       {
@@ -72,54 +63,7 @@ namespace Autocad_ConcerteList.Src
 
       public static Options Load()
       {
-         Options options = null;
-         // загрузка из файла настроек
-         if (File.Exists(fileOptions))
-         {
-            var xmlSer = new SerializerXml(fileOptions);
-            try
-            {
-               options = xmlSer.DeserializeXmlFile<Options>();
-               if (options != null)
-               {  
-                  return options;
-               }
-            }
-            catch (Exception ex)
-            {
-               Logger.Log.Error(ex, $"Не удалось десериализовать настройки из файла {fileOptions}");
-            }
-         }
-         options = new Options();
-         options.Save();
-         return options;
+         return new Options();
       }     
-
-      public void Save()
-      {
-         try
-         {
-            if (!File.Exists(fileOptions))
-            {
-               Directory.CreateDirectory(Path.GetDirectoryName(fileOptions));
-            }
-            var xmlSer = new SerializerXml(fileOptions);
-            xmlSer.SerializeList(this);            
-         }
-         catch (Exception ex)
-         {
-            Logger.Log.Error(ex, $"Не удалось сериализовать настройки в {fileOptions}");
-         }
-      }            
-
-      public static void Show()
-      {
-         var formOpt = new FormOptions((Options)Instance.MemberwiseClone());
-         if (Application.ShowModalDialog(formOpt) == System.Windows.Forms.DialogResult.OK)
-         {
-            _instance = formOpt.Options;
-            _instance.Save();
-         }
-      }
    }
 }

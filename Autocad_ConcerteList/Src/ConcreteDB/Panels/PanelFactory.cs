@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autodesk.AutoCAD.DatabaseServices;
-using AcadLib;
-using AcadLib.Extensions;
 using System.Text.RegularExpressions;
+using Autocad_ConcerteList.ConcreteDB.Panels.PanelTypes;
+using Autocad_ConcerteList.ConcreteDB.Panels.ParsersMark;
+using Autocad_ConcerteList.Errors;
+using Autocad_ConcerteList.Lib;
+using Autocad_ConcerteList.Lib.Blocks;
+using Autocad_ConcerteList.Log;
 using Autodesk.AutoCAD.ApplicationServices;
-using AcadLib.Errors;
+using Autodesk.AutoCAD.DatabaseServices;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
+namespace Autocad_ConcerteList.ConcreteDB.Panels
 {
     /// <summary>
     /// Создание панели
@@ -118,5 +119,33 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             return Regex.IsMatch(blName, @"^ММС|^_|оси|ось|узел|узлы|формат|rab_obl|жук|\$|@|^\*|^РМВ");            
         }
-    }
+
+	    public static IEnumerable<AttributeInfo> EnumerateAttributes(this BlockReference blRef)
+	    {
+		    if (blRef == null) yield break;
+
+		    if (blRef.AttributeCollection != null)
+		    {
+			    foreach (ObjectId idAtr in blRef.AttributeCollection)
+			    {
+				    if (!idAtr.IsValidEx()) continue;
+				    var atr = idAtr.GetObject(OpenMode.ForRead) as AttributeReference;
+				    if (atr == null) continue;
+				    yield return new AttributeInfo(atr);
+			    }
+		    }
+		    var btr = (BlockTableRecord)blRef.BlockTableRecord.GetObject(OpenMode.ForRead);
+		    if (btr.HasAttributeDefinitions)
+		    {
+			    foreach (var id in btr)
+			    {
+				    if (!id.IsValidEx()) continue;
+				    var attdef = id.GetObject(OpenMode.ForRead) as AttributeDefinition;
+				    if (attdef == null) continue;
+				    if (attdef.Constant)
+					    yield return new AttributeInfo(attdef);
+			    }
+		    }
+	    }
+	}
 }

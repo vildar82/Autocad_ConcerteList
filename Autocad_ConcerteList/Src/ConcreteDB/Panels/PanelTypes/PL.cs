@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Autocad_ConcerteList.ConcreteDB.Panels.ParsersMark;
 using Autodesk.AutoCAD.DatabaseServices;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
+namespace Autocad_ConcerteList.ConcreteDB.Panels.PanelTypes
 {
     /// <summary>
     /// ПЛ

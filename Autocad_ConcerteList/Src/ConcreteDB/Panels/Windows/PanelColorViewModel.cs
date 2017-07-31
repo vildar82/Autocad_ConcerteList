@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Media;
 using MicroMvvm;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
+namespace Autocad_ConcerteList.ConcreteDB.Panels.Windows
 {
     public enum ColorStatusEnum
     {

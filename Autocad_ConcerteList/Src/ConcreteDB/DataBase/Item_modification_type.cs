@@ -7,12 +7,12 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
+using System;
+using System.Collections.Generic;
+
+namespace Autocad_ConcerteList.ConcreteDB.DataBase
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class Item_modification_type
+	public partial class Item_modification_type
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Item_modification_type()

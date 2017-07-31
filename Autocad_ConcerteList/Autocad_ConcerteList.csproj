@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Autodesk\AutoCAD\Pik\Settings\Script\NET\КР-СБ-ГК\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,10 +42,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcadLib">
-      <HintPath>..\..\..\AcadLib\AcadLib\bin\Release\AcadLib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="AcCoreMgd, Version=20.0.0.0, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>packages\AutoCAD.NET.Core.20.0.1\lib\45\AcCoreMgd.dll</HintPath>
       <Private>False</Private>
@@ -58,10 +54,6 @@
       <HintPath>packages\AutoCAD.NET.20.0.1\lib\45\AcMgd.dll</HintPath>
       <Private>False</Private>
     </Reference>
-    <Reference Include="AutoCAD_PIK_Manager">
-      <HintPath>..\..\..\AutoCAD_PIK_Manager\AutoCAD_PIK_Manager\bin\Release\AutoCAD_PIK_Manager.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.dll</HintPath>
       <Private>True</Private>
@@ -70,10 +62,11 @@
       <HintPath>packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="MicroMvvm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ОБЩЕЕ\MVVM\MicroMvvm\bin\Release\MicroMvvm.dll</HintPath>
-      <Private>False</Private>
+    <Reference Include="MicroMvvm">
+      <HintPath>.\MicroMvvm.dll</HintPath>
+    </Reference>
+    <Reference Include="NetLib">
+      <HintPath>.\NetLib.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -213,6 +206,28 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="Src\Errors\Error.cs" />
+    <Compile Include="Src\Errors\ErrorStatus.cs" />
+    <Compile Include="Src\Errors\IError.cs" />
+    <Compile Include="Src\Errors\Inspector.cs" />
+    <Compile Include="Src\Errors\UI\ErrorModel.cs" />
+    <Compile Include="Src\Errors\UI\ErrorsView.xaml.cs">
+      <DependentUpon>ErrorsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Src\Errors\UI\ErrorsViewModel.cs" />
+    <Compile Include="Src\Lib\Blocks\AttributeInfo.cs" />
+    <Compile Include="Src\Lib\Blocks\BlockBase.cs" />
+    <Compile Include="Src\Lib\Blocks\Dublicate\BlockRefDublicateInfo.cs" />
+    <Compile Include="Src\Lib\Blocks\Dublicate\CheckDublicateBlocks.cs" />
+    <Compile Include="Src\Lib\Blocks\Dublicate\Tree\PointTree.cs" />
+    <Compile Include="Src\Lib\Extensions.cs" />
+    <Compile Include="Src\Lib\Blocks\Property.cs" />
+    <Compile Include="Src\Lib\Blocks\PropertyType.cs" />
+    <Compile Include="Src\Lib\SpatialIndex\Node.cs" />
+    <Compile Include="Src\Lib\SpatialIndex\Point.cs" />
+    <Compile Include="Src\Lib\SpatialIndex\Rectangle.cs" />
+    <Compile Include="Src\Lib\SpatialIndex\RTree.cs" />
+    <Compile Include="Src\Log\Logger.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -254,6 +269,10 @@
     <Page Include="Src\ConcreteDB\Panels\Windows\WindowRegPanels.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Src\Errors\UI\ErrorsView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>

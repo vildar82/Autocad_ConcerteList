@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using MicroMvvm;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
+namespace Autocad_ConcerteList.ConcreteDB.Panels.Windows
 {
     public class RegColorViewModel : ObservableObject
     {
@@ -17,7 +14,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 
         public ObservableCollection<PanelColorViewModel> Panels { get; set; }
 
-        public PanelColorViewModel SelectedPanel { get { return selectedPanel; } set { selectedPanel = value; ShowPanel(); } }
+        public PanelColorViewModel SelectedPanel { get => selectedPanel;
+	        set { selectedPanel = value; ShowPanel(); } }
 	    private PanelColorViewModel selectedPanel;
 
         private void ShowPanel ()

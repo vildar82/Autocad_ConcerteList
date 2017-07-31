@@ -1,6 +1,6 @@
-﻿using AcadLib.Errors;
+﻿using Autocad_ConcerteList.Errors;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
+namespace Autocad_ConcerteList.ConcreteDB.Panels.ParsersMark
 {
     public interface IParserMark
     {

@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB
+namespace Autocad_ConcerteList.ConcreteDB
 {
     public static class Access
     {
         //"kuznetsov_av"
-        private static readonly List<string> _accessUsers = new List<string> { "LukashovaTS", AutoCAD_PIK_Manager.Env.CadManLogin };
+        private static readonly List<string> _accessUsers = new List<string> { "LukashovaTS"};
 
         public static bool Success()
         {

@@ -1,17 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
+namespace Autocad_ConcerteList.ConcreteDB.DataObjects
 {
     public class BalconyCutDbo : IEquatable<BalconyCutDbo>
     {
         public decimal Id { get; set; }
         public string Name { get; set; }
         public string Side { get; internal set; }
-        public Nullable<int> Size { get; set; }
+        public int? Size { get; set; }
 
         public bool Equals(BalconyCutDbo other)
         {

@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using MicroMvvm;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
+namespace Autocad_ConcerteList.ConcreteDB.Panels.Windows
 {
     public class CheckPanelsViewModel : PanelsBaseView
     {
@@ -27,8 +20,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         }
 
         public string Search {
-            get { return _search; }
-            set {
+            get => _search;
+	        set {
                 _search = value;
                 Filtering();
                 RaisePropertyChanged();
@@ -37,8 +30,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public ObservableCollection<string> Filter { get; set; } 
             = new ObservableCollection<string> { filterAll, filterErrors };
         public string CurFilter {
-            get { return _curFilter; }
-            set {
+            get => _curFilter;
+	        set {
                 _curFilter = value;
                 Filtering();
                 RaisePropertyChanged();

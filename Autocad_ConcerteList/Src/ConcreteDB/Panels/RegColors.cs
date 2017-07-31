@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AcadLib.Errors;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
+using Autocad_ConcerteList.ConcreteDB.Panels.Windows;
+using Autocad_ConcerteList.Errors;
 using Autodesk.AutoCAD.ApplicationServices;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
+namespace Autocad_ConcerteList.ConcreteDB.Panels
 {
     public class RegColors
     {

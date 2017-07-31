@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Data.Entity.Core.EntityClient;
 using System.Linq;
 using System.Text;
-using AcadLib;
-using AcadLib.Errors;
-using Autocad_ConcerteList.Properties;
-using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
-using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels;
-using Autocad_ConcerteList.Src.ConcreteDB.Formula;
+using Autocad_ConcerteList.ConcreteDB.DataBase;
+using Autocad_ConcerteList.ConcreteDB.DataObjects;
+using Autocad_ConcerteList.Errors;
+using Autocad_ConcerteList.Log;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB
+namespace Autocad_ConcerteList.ConcreteDB
 {
     /// <summary>
     /// Сервисные функции работы с базой ЖБИ
@@ -28,11 +24,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
 	    private static List<ItemGroupDbo> Groups;
 	    private static List<ItemConstructionDbo> Items;
 	    private static List<string> colorsHandMarkFull;
-        public static List<SerieDbo> Series { get; set; }
+
+		public static List<SerieDbo> Series { get; set; }
 
         public static MDMEntities ConnectEntities()
         {   
-            var con = new EntityConnection(Settings.Default.MdmCon);            
+            var con = new EntityConnection(Properties.Settings.Default.MdmCon);            
             return new MDMEntities(con);
         }
 

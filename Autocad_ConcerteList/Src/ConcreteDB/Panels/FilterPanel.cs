@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using AcadLib;
-using AcadLib.Errors;
-using Autocad_ConcerteList.Src.ConcreteDB;
+using Autocad_ConcerteList.Lib;
+using Autocad_ConcerteList.Lib.SpatialIndex;
 using Autodesk.AutoCAD.DatabaseServices;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
+namespace Autocad_ConcerteList.ConcreteDB.Panels
 {
     public class FilterPanel
     {
@@ -31,7 +28,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                         //panel.Checks();
                         panels.Add(panel);
                     }
-                    else if (blRef != null && blName.Equals(Options.Instance.WorkspaceBlockName, StringComparison.OrdinalIgnoreCase))
+                    else if (blRef != null && blName.Equals(Options.Options.Instance.WorkspaceBlockName, StringComparison.OrdinalIgnoreCase))
                     {
                         ws.Add(new Workspace(blRef));
                     }
@@ -48,22 +45,22 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 }
                 else
                     return false;
-            }).OrderBy(p=>p.Mark, AcadLib.Comparers.AlphanumComparator.New).ToList();            
+            }).OrderBy(p=>p.Mark, NetLib.Comparers.AlphanumComparator.New).ToList();            
         }       
 
         private void definePanelsWS(List<IIPanel> panels, List<Workspace> ws)
         {
-            var rtree = new RTreeLib.RTree<Workspace>();
+            var rtree = new RTree<Workspace>();
             foreach (var w in ws)
             {
-                var r = new RTreeLib.Rectangle(w.Extents.MinPoint.X, w.Extents.MinPoint.Y,
+                var r = new Rectangle(w.Extents.MinPoint.X, w.Extents.MinPoint.Y,
                                         w.Extents.MaxPoint.X, w.Extents.MaxPoint.Y, 0, 0);
                 rtree.Add(r, w);
             }
 
             foreach (var p in panels)
             {
-                var pt = new RTreeLib.Point(p.Position.X, p.Position.Y, 0);
+                var pt = new Point(p.Position.X, p.Position.Y, 0);
                 var w = rtree.Nearest(pt, 1).FirstOrDefault();
                 p.WS = w;
             }

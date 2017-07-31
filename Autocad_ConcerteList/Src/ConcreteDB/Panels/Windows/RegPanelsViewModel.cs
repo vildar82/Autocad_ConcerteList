@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using MicroMvvm;
+using Autocad_ConcerteList.ConcreteDB.DataObjects;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
+namespace Autocad_ConcerteList.ConcreteDB.Panels.Windows
 {
     public class RegPanelsViewModel :PanelsBaseView
     {
@@ -18,8 +12,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         public bool CanRegistry { get; set; }
         public ObservableCollection<SerieDbo> Series { get; set; }
         public SerieDbo SelectedSerie {
-            get { return _selectedSerie; }
-            set {
+            get => _selectedSerie;
+	        set {
                 _selectedSerie = value;
                 RaisePropertyChanged();
             }

@@ -7,12 +7,11 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
+using System;
+
+namespace Autocad_ConcerteList.ConcreteDB.DataBase
 {
-    using System;
-    using System.Collections.Generic;
-    
-    public partial class Item_construction_colour
+	public partial class Item_construction_colour
     {
         public int Item_construction_colour_id { get; set; }
         public Nullable<int> Item_construction_colour_id_access { get; set; }

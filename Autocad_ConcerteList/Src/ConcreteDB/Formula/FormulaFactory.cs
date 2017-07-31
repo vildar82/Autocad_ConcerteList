@@ -1,12 +1,8 @@
-﻿using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Autocad_ConcerteList.ConcreteDB.Panels;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
+namespace Autocad_ConcerteList.ConcreteDB.Formula
 {
     public static class FormulaFactory
     {

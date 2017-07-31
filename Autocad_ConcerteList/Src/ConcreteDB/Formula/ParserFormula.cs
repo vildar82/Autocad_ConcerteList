@@ -1,13 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
-using AcadLib.Errors;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels;
-
-namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
+﻿namespace Autocad_ConcerteList.ConcreteDB.Formula
 {
     public class ParserFormula
     {        

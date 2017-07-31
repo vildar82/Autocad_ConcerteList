@@ -1,16 +1,15 @@
 ﻿using System;
-using AcadLib.Errors;
 using Autodesk.AutoCAD.DatabaseServices;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
+namespace Autocad_ConcerteList.ConcreteDB.Panels
 {
     public class Workspace
     {
         public Extents3d Extents { get; private set; }
         public string Section { get; private set; }
         public string Floor { get; private set; }
-        public bool IsOk { get { return string.IsNullOrEmpty(Error); } }
-        public string Error { get; private set; }
+        public bool IsOk => string.IsNullOrEmpty(Error);
+	    public string Error { get; private set; }
 
         public Workspace(ObjectId idBlRef)
         {
@@ -41,18 +40,18 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {
             if (blRef.AttributeCollection == null)
             {
-                Error = $"Не определены атрибуты: '{Options.Instance.WorkspaceAttrSection}', '{Options.Instance.WorkspaceAttrFloor}'.";
+                Error = $"Не определены атрибуты: '{Options.Options.Instance.WorkspaceAttrSection}', '{Options.Options.Instance.WorkspaceAttrFloor}'.";
             }
             else
             {
                 foreach (ObjectId idAtr in blRef.AttributeCollection)
                 {
                     var atrRef = idAtr.GetObject(OpenMode.ForRead, false, true) as AttributeReference;
-                    if (atrRef.Tag.Equals(Options.Instance.WorkspaceAttrSection, StringComparison.OrdinalIgnoreCase))
+                    if (atrRef.Tag.Equals(Options.Options.Instance.WorkspaceAttrSection, StringComparison.OrdinalIgnoreCase))
                     {
                         Section = atrRef.TextString;
                     }
-                    else if (atrRef.Tag.Equals(Options.Instance.WorkspaceAttrFloor, StringComparison.OrdinalIgnoreCase))
+                    else if (atrRef.Tag.Equals(Options.Options.Instance.WorkspaceAttrFloor, StringComparison.OrdinalIgnoreCase))
                     {
                         Floor = atrRef.TextString;
                     }

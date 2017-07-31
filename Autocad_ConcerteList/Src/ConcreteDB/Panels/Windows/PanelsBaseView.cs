@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
 using System.Windows.Media;
 using MicroMvvm;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
+namespace Autocad_ConcerteList.ConcreteDB.Panels.Windows
 {
     public class PanelsBaseView : ObservableObject
     {
@@ -34,29 +30,29 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             }
         }
         public ObservableCollection<PanelViewModel> Panels {
-            get { return _panelsViewModel; }
-            set {
+            get => _panelsViewModel;
+	        set {
                 _panelsViewModel = value;
                 RaisePropertyChanged();
             }
         }
         public Brush Background {
-            get { return _background; }
-            set {
+            get => _background;
+	        set {
                 _background = value;
                 RaisePropertyChanged();
             }
         }
         public PanelViewModel SelectedPanel {
-            get { return _selectedPanel; }
-            set {
+            get => _selectedPanel;
+	        set {
                 _selectedPanel = value;
                 RaisePropertyChanged();
             }
         }
         public string Title {
-            get { return _title; }
-            set {
+            get => _title;
+	        set {
                 _title = value;
                 RaisePropertyChanged();
             }
@@ -65,10 +61,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         /// <summary>
         /// Количество строй
         /// </summary>
-        public int CountRow {
-            get { return Panels.Count; }
-        }
-        /// <summary>
+        public int CountRow => Panels.Count;
+
+	    /// <summary>
         /// Количество блоков панелей
         /// </summary>
         public int CountBlocks {
@@ -76,11 +71,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 return Panels.Sum(s => s.PanelsInModel.Count);
             }
         }
-        public string CountString {
-            get { return $" Строк {CountRow} "; }
-        }        
+        public string CountString => $" Строк {CountRow} ";
 
-        protected void UpdateAllPanels ()
+	    protected void UpdateAllPanels ()
         {
             if (Panels != null)
             {

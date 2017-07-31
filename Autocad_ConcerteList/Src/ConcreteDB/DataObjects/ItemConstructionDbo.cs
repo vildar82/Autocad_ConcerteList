@@ -1,12 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels;
+using Autocad_ConcerteList.ConcreteDB.DataBase;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
+namespace Autocad_ConcerteList.ConcreteDB.DataObjects
 {
     public class ItemConstructionDbo : IEquatable<ItemConstructionDbo>
     {
@@ -14,12 +9,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
         public bool IsIgnoreGab { get; set; }
         public int ItemConstructionId { get; set; }
         public string HandMarkNoColour { get; set; }
-        public Nullable<int> ItemGroupId { get; set; }
+        public int? ItemGroupId { get; set; }
         public string ItemGroup { get; set; }
-        public Nullable<short> Length { get; set; }
-        public Nullable<short> Height { get; set; }
-        public Nullable<short> Thickness { get; set; }
-        public Nullable<short> Formwork { get; set; }     
+        public short? Length { get; set; }
+        public short? Height { get; set; }
+        public short? Thickness { get; set; }
+        public short? Formwork { get; set; }     
         public string MountElement { get; set; }
         public string Prong { get; set; }
         public string BalconyCut { get; set; }
@@ -29,40 +24,40 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
         public int? StepHeightIndex { get; set; }
         public int? StepCount { get; set; }
         public int? StepFirstHeight { get; set; }
-        public Nullable<short> FormworkMirror { get; set; }
+        public short? FormworkMirror { get; set; }
         public string Electrics { get; set; }
-        public Nullable<float> Weight { get; set; }
-        public Nullable<float> Volume { get; set; }
+        public float? Weight { get; set; }
+        public float? Volume { get; set; }
 
-        public Item_modification MountElementModif { get { return mountElementModif; }
-            set { mountElementModif = value; MountElement = value?.Item_modification_code;  } }
+        public Item_modification MountElementModif { get => mountElementModif;
+	        set { mountElementModif = value; MountElement = value?.Item_modification_code;  } }
 
 	    private Item_modification mountElementModif;
 
         public Item_modification ProngModif {
-            get { return prongModif; }
-            set { prongModif = value; Prong = value?.Item_modification_code; }
+            get => prongModif;
+	        set { prongModif = value; Prong = value?.Item_modification_code; }
         }
 
 	    private Item_modification prongModif;
 
         public Item_modification BalconyCutModif {
-            get { return balconyCutModif; }
-            set { balconyCutModif = value; BalconyCut = value?.Item_modification_code; }
+            get => balconyCutModif;
+	        set { balconyCutModif = value; BalconyCut = value?.Item_modification_code; }
         }
 
 	    private Item_modification balconyCutModif;
 
         public Item_modification BalconyDoorModif {
-            get { return balconyDoorModif; }
-            set { balconyDoorModif = value; BalconyDoor = value?.Item_modification_code; }
+            get => balconyDoorModif;
+	        set { balconyDoorModif = value; BalconyDoor = value?.Item_modification_code; }
         }
 
 	    private Item_modification balconyDoorModif;
 
         public Item_modification StepHeightModif {
-            get { return stepHeightModif; }
-            set { stepHeightModif = value; StepHeightIndex = value == null? null : (int?)int.Parse(value.Item_modification_code); }
+            get => stepHeightModif;
+	        set { stepHeightModif = value; StepHeightIndex = value == null? null : (int?)int.Parse(value.Item_modification_code); }
         }
 
 	    private Item_modification stepHeightModif;

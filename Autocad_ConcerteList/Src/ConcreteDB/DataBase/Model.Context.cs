@@ -7,14 +7,13 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.DataBase
+using System.Data.Common;
+using System.Data.Entity;
+using System.Data.Entity.Infrastructure;
+
+namespace Autocad_ConcerteList.ConcreteDB.DataBase
 {
-    using System;
-    using System.Data.Common;
-    using System.Data.Entity;
-    using System.Data.Entity.Infrastructure;
-    
-    public partial class MDMEntities : DbContext
+	public partial class MDMEntities : DbContext
     {
         public MDMEntities(DbConnection dbCon)
             : base(dbCon, true)

@@ -1,4 +1,4 @@
-﻿namespace Autocad_ConcerteList.Properties {
+﻿namespace Autocad_ConcerteList {
     
     
     // Этот класс позволяет обрабатывать определенные события в классе параметров:

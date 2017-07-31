@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
+namespace Autocad_ConcerteList.ConcreteDB.Formula
 {
     public class Eval
     {        
@@ -114,21 +112,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
             return Convert.ToInt16(objRes);
         }
 
-        private string getFieldValue(string fieldName)
-        {   
-            PropertyInfo property;            
-            if (dictItemProperties.TryGetValue(fieldName, out property))
-            {
-                return property.GetValue(item)?.ToString();
-            }
-            else
-            {
-                // Ошибка. Параметр из формулы не найден в списке параметров объекта ItemEntryData
-                throw new Exception($"Ошибка формирования марки панели по формуле. Не определен параметр {fieldName}");
-            }
-        }
+	    private string getFieldValue(string fieldName)
+	    {
+		    if (dictItemProperties.TryGetValue(fieldName, out PropertyInfo property))
+		    {
+			    return property.GetValue(item)?.ToString();
+		    }
+		    // Ошибка. Параметр из формулы не найден в списке параметров объекта ItemEntryData
+		    throw new Exception($"Ошибка формирования марки панели по формуле. Не определен параметр {fieldName}");
+	    }
 
-        public override string ToString()
+	    public override string ToString()
         {
             return ValueString;
         }
