@@ -11,7 +11,8 @@ namespace Autocad_ConcerteList.ConcreteDB
 
         public static bool Success()
         {
-            return _accessUsers.Contains(Environment.UserName, StringComparer.OrdinalIgnoreCase);
+	        return true;
+            //return _accessUsers.Contains(Environment.UserName, StringComparer.OrdinalIgnoreCase);
         }
     }
 }
