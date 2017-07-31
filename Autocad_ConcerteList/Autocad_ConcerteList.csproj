@@ -279,6 +279,13 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MicroMvvm.dll" />
+    <Content Include="NetLib.dll" />
+    <Content Include="Release\Autocad_ConcerteList.dll" />
+    <Content Include="Release\EntityFramework.dll" />
+    <Content Include="Release\EntityFramework.SqlServer.dll" />
+    <Content Include="Release\MicroMvvm.dll" />
+    <Content Include="Release\NetLib.dll" />
     <Content Include="Src\ConcreteDB\DataBase\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
