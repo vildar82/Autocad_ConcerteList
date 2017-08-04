@@ -12,7 +12,7 @@ namespace Autocad_ConcerteList.Properties {
     
     
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.0.1.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
         
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
@@ -26,20 +26,10 @@ namespace Autocad_ConcerteList.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string=""data source=cad01pik;initial catalog=SAPR;persist security info=True;user id=cad_ar;password=qwerty!2345;MultipleActiveResultSets=True;App=EntityFramework""")]
-        public string SaprCon {
+        [global::System.Configuration.DefaultSettingValueAttribute(@"metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string=""Server=SQL05DSK2; Database=MDMDev; User Id=MDM_Write;Password=MDMDev_Write; MultipleActiveResultSets=True; App=EntityFramework""")]
+        public string conMdmDev {
             get {
-                return ((string)(this["SaprCon"]));
-            }
-        }
-        
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.SpecialSettingAttribute(global::System.Configuration.SpecialSetting.ConnectionString)]
-        [global::System.Configuration.DefaultSettingValueAttribute(@"metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string=""Server=cad01pik; Database=MDM; User Id=Vildar;Password=28Vildar; MultipleActiveResultSets=True; App=EntityFramework""")]
-        public string MdmCon {
-            get {
-                return ((string)(this["MdmCon"]));
+                return ((string)(this["conMdmDev"]));
             }
         }
     }

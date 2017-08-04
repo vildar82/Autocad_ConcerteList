@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Data.Entity.Core.EntityClient;
 using System.Linq;
 using System.Text;
-using Autocad_ConcerteList.ConcreteDB.DataBase;
 using Autocad_ConcerteList.ConcreteDB.DataObjects;
 using Autocad_ConcerteList.Errors;
 using Autocad_ConcerteList.Log;
+using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
 
 namespace Autocad_ConcerteList.ConcreteDB
 {
@@ -29,7 +29,7 @@ namespace Autocad_ConcerteList.ConcreteDB
 
         public static MDMEntities ConnectEntities()
         {   
-            var con = new EntityConnection(Properties.Settings.Default.MdmCon);            
+            var con = new EntityConnection(Properties.Settings.Default.conMdmDev);            
             return new MDMEntities(con);
         }
 

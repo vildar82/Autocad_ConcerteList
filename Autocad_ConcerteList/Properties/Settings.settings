@@ -2,19 +2,12 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="Autocad_ConcerteList.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="SaprCon" Type="(Connection string)" Scope="Application">
+    <Setting Name="conMdmDev" Type="(Connection string)" Scope="Application">
       <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string="data source=cad01pik;initial catalog=SAPR;persist security info=True;user id=cad_ar;password=qwerty!2345;MultipleActiveResultSets=True;App=EntityFramework"&lt;/ConnectionString&gt;
+  &lt;ConnectionString&gt;metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string=""Server=SQL05DSK2; Database=MDMDev; User Id=MDM_Write;Password=MDMDev_Write; MultipleActiveResultSets=True; App=EntityFramework"&lt;/ConnectionString&gt;
 &lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string="data source=cad01pik;initial catalog=SAPR;persist security info=True;user id=cad_ar;password=qwerty!2345;MultipleActiveResultSets=True;App=EntityFramework"</Value>
-    </Setting>
-    <Setting Name="MdmCon" Type="(Connection string)" Scope="Application">
-      <DesignTimeValue Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
-&lt;SerializableConnectionString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
-  &lt;ConnectionString&gt;metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string="Server=cad01pik; Database=MDM; User Id=Vildar;Password=28Vildar; MultipleActiveResultSets=True; App=EntityFramework"&lt;/ConnectionString&gt;
-&lt;/SerializableConnectionString&gt;</DesignTimeValue>
-      <Value Profile="(Default)">metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string="Server=cad01pik; Database=MDM; User Id=Vildar;Password=28Vildar; MultipleActiveResultSets=True; App=EntityFramework"</Value>
+      <Value Profile="(Default)">metadata=res://*/Src.ConcreteDB.DataBase.Model.csdl|res://*/Src.ConcreteDB.DataBase.Model.ssdl|res://*/Src.ConcreteDB.DataBase.Model.msl;provider=System.Data.SqlClient;provider connection string=""Server=SQL05DSK2; Database=MDMDev; User Id=MDM_Write;Password=MDMDev_Write; MultipleActiveResultSets=True; App=EntityFramework"</Value>
     </Setting>
   </Settings>
 </SettingsFile>

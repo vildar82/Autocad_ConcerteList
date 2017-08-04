@@ -18,6 +18,7 @@
           <Property Name="Formula_Height_Factor" Type="smallint" Nullable="false" />
           <Property Name="Formula_Thickness_Factor" Type="smallint" Nullable="false" />
           <Property Name="Formula_Gab_Key" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Formula_Database" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityType Name="Item_colour">
           <Key>
@@ -27,6 +28,8 @@
           <Property Name="Item_colour_id_access" Type="int" />
           <Property Name="Item_colour" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Item_colour_hash" Type="nvarchar" MaxLength="20" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="updated_at" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_construction">
           <Key>
@@ -51,6 +54,8 @@
           <Property Name="First_step" Type="int" />
           <Property Name="Weight" Type="real" />
           <Property Name="Volume" Type="real" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="updated_at" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_construction_colour">
           <Key>
@@ -65,6 +70,8 @@
           <Property Name="Document_link" Type="nvarchar(max)" />
           <Property Name="Additional" Type="nvarchar" MaxLength="20" />
           <Property Name="Hand_mark" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="updated_at" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_construction_Product">
           <Key>
@@ -74,6 +81,8 @@
           <Property Name="Item_construction_Product_id_access" Type="int" />
           <Property Name="Item_construction_id" Type="int" Nullable="false" />
           <Property Name="Product_id" Type="int" Nullable="false" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="updated_at" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_group">
           <Key>
@@ -93,6 +102,9 @@
           <Property Name="Item_group_layer" Type="nvarchar" MaxLength="50" />
           <Property Name="Formula_usage" Type="bit" />
           <Property Name="Formula_id" Type="int" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="updated_at" Type="datetime2" Precision="7" Nullable="false" />
+          <Property Name="Item_group_Grad" Type="nvarchar" MaxLength="2" />
         </EntityType>
         <EntityType Name="Item_group_long">
           <Key>
@@ -102,6 +114,8 @@
           <Property Name="Item_group_long_id_access" Type="int" />
           <Property Name="Item_group_long" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="Item_group_short_id" Type="int" Nullable="false" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
+          <Property Name="updated_at" Type="datetime2" Precision="7" Nullable="false" />
         </EntityType>
         <EntityType Name="Item_group_short">
           <Key>
@@ -139,6 +153,7 @@
           <Property Name="Product_id_parent" Type="int" />
           <Property Name="Product" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Product_id_access" Type="int" />
+          <Property Name="guid" Type="uniqueidentifier" Nullable="false" />
         </EntityType>
         <EntityType Name="Side">
           <Key>
@@ -431,6 +446,8 @@
           <Property Name="Item_colour1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Item_colour_hash" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Item_construction_colour" Relationship="Self.FK_Item_construction_colour_Item_colour" FromRole="Item_colour" ToRole="Item_construction_colour" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="Item_construction">
           <Key>
@@ -463,6 +480,8 @@
           <NavigationProperty Name="ProngModif" Relationship="Self.FK_Item_construction_Prong" FromRole="Item_construction" ToRole="Item_modification" />
           <NavigationProperty Name="StepHeightModif" Relationship="Self.FK_Item_construction_Step_height" FromRole="Item_construction" ToRole="Item_modification" />
           <NavigationProperty Name="Item_construction_Product" Relationship="MDMModel.FK_Item_construction_Product_Item_construction" FromRole="Item_construction" ToRole="Item_construction_Product" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="Item_construction_colour">
           <Key>
@@ -479,6 +498,8 @@
           <Property Name="Additional" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Item_colour" Relationship="Self.FK_Item_construction_colour_Item_colour" FromRole="Item_construction_colour" ToRole="Item_colour" />
           <NavigationProperty Name="Item_construction" Relationship="Self.FK_Item_construction_colour_Item_construction" FromRole="Item_construction_colour" ToRole="Item_construction" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="Item_group">
           <Key>
@@ -501,6 +522,9 @@
           <Property Name="Formula_usage" Type="Boolean" />
           <Property Name="Formula_id" Type="Int32" />
           <NavigationProperty Name="Formula" Relationship="MDMModel.FK_Item_group_Formula" FromRole="Item_group" ToRole="Formula" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="7" />
+          <Property Name="Item_group_Grad" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="Item_group_long">
           <Key>
@@ -512,6 +536,8 @@
           <Property Name="Item_group_short_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Item_group" Relationship="Self.FK_Item_group_Item_group_long" FromRole="Item_group_long" ToRole="Item_group" />
           <NavigationProperty Name="Item_group_short" Relationship="Self.FK_Item_group_long_Item_group_short" FromRole="Item_group_long" ToRole="Item_group_short" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="Item_group_short">
           <Key>
@@ -795,6 +821,7 @@
           <Property Name="Formula_Thickness_Factor" Type="Int16" Nullable="false" />
           <Property Name="Formula_Gab_Key" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Item_group" Relationship="MDMModel.FK_Item_group_Formula" FromRole="Formula" ToRole="Item_group" />
+          <Property Name="Formula_Database" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_Item_group_Formula">
           <End Type="MDMModel.Formula" Role="Formula" Multiplicity="0..1" />
@@ -818,6 +845,8 @@
           <Property Name="Product_id" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Item_construction" Relationship="MDMModel.FK_Item_construction_Product_Item_construction" FromRole="Item_construction_Product" ToRole="Item_construction" />
           <NavigationProperty Name="Product" Relationship="MDMModel.FK_Item_construction_Product_Product" FromRole="Item_construction_Product" ToRole="Product" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
+          <Property Name="updated_at" Type="DateTime" Nullable="false" Precision="7" />
         </EntityType>
         <EntityType Name="Product">
           <Key>
@@ -830,6 +859,7 @@
           <NavigationProperty Name="Item_construction_Product" Relationship="MDMModel.FK_Item_construction_Product_Product" FromRole="Product" ToRole="Item_construction_Product" />
           <NavigationProperty Name="Product11" Relationship="MDMModel.FK_Product_Product" FromRole="Product" ToRole="Product1" />
           <NavigationProperty Name="Product2" Relationship="MDMModel.FK_Product_Product" FromRole="Product1" ToRole="Product" />
+          <Property Name="guid" Type="Guid" Nullable="false" />
         </EntityType>
         <Association Name="FK_Item_construction_Product_Item_construction">
           <End Type="MDMModel.Item_construction" Role="Item_construction" Multiplicity="1" />
@@ -876,6 +906,8 @@
           <EntitySetMapping Name="Item_colour">
             <EntityTypeMapping TypeName="MDMModel.Item_colour">
               <MappingFragment StoreEntitySet="Item_colour">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Item_colour_id" ColumnName="Item_colour_id" />
                 <ScalarProperty Name="Item_colour_id_access" ColumnName="Item_colour_id_access" />
                 <ScalarProperty Name="Item_colour1" ColumnName="Item_colour" />
@@ -886,6 +918,8 @@
           <EntitySetMapping Name="Item_construction">
             <EntityTypeMapping TypeName="MDMModel.Item_construction">
               <MappingFragment StoreEntitySet="Item_construction">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Item_construction_id" ColumnName="Item_construction_id" />
                 <ScalarProperty Name="Item_construction_id_access" ColumnName="Item_construction_id_access" />
                 <ScalarProperty Name="Hand_mark_no_colour" ColumnName="Hand_mark_no_colour" />
@@ -911,6 +945,8 @@
           <EntitySetMapping Name="Item_construction_colour">
             <EntityTypeMapping TypeName="MDMModel.Item_construction_colour">
               <MappingFragment StoreEntitySet="Item_construction_colour">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Item_construction_colour_id" ColumnName="Item_construction_colour_id" />
                 <ScalarProperty Name="Item_construction_colour_id_access" ColumnName="Item_construction_colour_id_access" />
                 <ScalarProperty Name="Code_1C" ColumnName="Code_1C" />
@@ -926,6 +962,9 @@
           <EntitySetMapping Name="Item_group">
             <EntityTypeMapping TypeName="MDMModel.Item_group">
               <MappingFragment StoreEntitySet="Item_group">
+                <ScalarProperty Name="Item_group_Grad" ColumnName="Item_group_Grad" />
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Formula_id" ColumnName="Formula_id" />
                 <ScalarProperty Name="Formula_usage" ColumnName="Formula_usage" />
                 <ScalarProperty Name="Item_group_id" ColumnName="Item_group_id" />
@@ -946,6 +985,8 @@
           <EntitySetMapping Name="Item_group_long">
             <EntityTypeMapping TypeName="MDMModel.Item_group_long">
               <MappingFragment StoreEntitySet="Item_group_long">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Item_group_long_id" ColumnName="Item_group_long_id" />
                 <ScalarProperty Name="Item_group_long_id_access" ColumnName="Item_group_long_id_access" />
                 <ScalarProperty Name="Item_group_long1" ColumnName="Item_group_long" />
@@ -996,6 +1037,7 @@
           <EntitySetMapping Name="Formula">
             <EntityTypeMapping TypeName="MDMModel.Formula">
               <MappingFragment StoreEntitySet="Formula">
+                <ScalarProperty Name="Formula_Database" ColumnName="Formula_Database" />
                 <ScalarProperty Name="Formula_Gab_Key" ColumnName="Formula_Gab_Key" />
                 <ScalarProperty Name="Formula_Thickness_Factor" ColumnName="Formula_Thickness_Factor" />
                 <ScalarProperty Name="Formula_Height_Factor" ColumnName="Formula_Height_Factor" />
@@ -1011,6 +1053,8 @@
           <EntitySetMapping Name="Item_construction_Product">
             <EntityTypeMapping TypeName="MDMModel.Item_construction_Product">
               <MappingFragment StoreEntitySet="Item_construction_Product">
+                <ScalarProperty Name="updated_at" ColumnName="updated_at" />
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Product_id" ColumnName="Product_id" />
                 <ScalarProperty Name="Item_construction_id" ColumnName="Item_construction_id" />
                 <ScalarProperty Name="Item_construction_Product_id_access" ColumnName="Item_construction_Product_id_access" />
@@ -1021,6 +1065,7 @@
           <EntitySetMapping Name="Product">
             <EntityTypeMapping TypeName="MDMModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="guid" ColumnName="guid" />
                 <ScalarProperty Name="Product_id_access" ColumnName="Product_id_access" />
                 <ScalarProperty Name="Product1" ColumnName="Product" />
                 <ScalarProperty Name="Product_id_parent" ColumnName="Product_id_parent" />
