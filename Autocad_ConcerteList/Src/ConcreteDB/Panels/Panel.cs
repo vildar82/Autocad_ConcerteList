@@ -17,7 +17,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
     /// <summary>
     /// ЖБИ изделие полученное из автокада
     /// </summary>
-    public class Panel : BlockBase, IIPanel
+    public class Panel : BlockBase, IPanel
     {
         public const string LengthNameRu = "Длина";
         public const string HeightNameRu = "Высота";
@@ -323,7 +323,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateLength (short? value, List<IIPanel> panelsInModel)
+        public short? UpdateLength (short? value, List<IPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -355,7 +355,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateHeight (short? value, List<IIPanel> panelsInModel)
+        public short? UpdateHeight (short? value, List<IPanel> panelsInModel)
         {
             // Проверка высоты
             if (value == null)
@@ -387,7 +387,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public short? UpdateThickness (short? value, List<IIPanel> panelsInModel)
+        public short? UpdateThickness (short? value, List<IPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -419,7 +419,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public float? UpdateWeight (float? value, List<IIPanel> panelsInModel)
+        public float? UpdateWeight (float? value, List<IPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -443,7 +443,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
         /// </summary>
         /// <param name="value">Новое значение</param>
         /// <param name="panelsInModel">Все панели в модели этой марки</param>        
-        public string UpdateAperture (string value, List<IIPanel> panelsInModel)
+        public string UpdateAperture (string value, List<IPanel> panelsInModel)
         {
             // Проверка длины
             if (value == null)
@@ -480,7 +480,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
             return true;
         }
 
-        private void SetPanelsAtrValue (List<IIPanel> panels, string tag, string value)
+        private void SetPanelsAtrValue (List<IPanel> panels, string tag, string value)
         {
             try
             {
@@ -561,7 +561,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
             }
             catch (Exception ex)
             {
-                Logger.Log.Error(ex, $"Panel.Checks() - марка - {Mark}");
+                //Logger.Log.Error(ex, $"Panel.Checks() - марка - {Mark}");
                 AddWarning("Ошибка при проверка параметров панели - " + ex.Message);                
             }
         }        
@@ -868,7 +868,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
             return res;
         }
 
-        public bool Equals (IIPanel other)
+        public bool Equals (IPanel other)
         {
             return string.Equals(Mark, other.Mark, StringComparison.OrdinalIgnoreCase) &&
                    string.Equals(BlName, other.BlName, StringComparison.OrdinalIgnoreCase) &&
@@ -879,7 +879,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
                    string.Equals(Aperture, other.Aperture, StringComparison.OrdinalIgnoreCase);                   
         }
 
-        public int CompareTo (IIPanel other)
+        public int CompareTo (IPanel other)
         {
             return alpha.Compare(MarkWoSpace, other.MarkWoSpace);
         }

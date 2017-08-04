@@ -4,7 +4,6 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using Autocad_ConcerteList.Errors;
-using Autocad_ConcerteList.Log;
 using Autodesk.AutoCAD.ApplicationServices.Core;
 using Autodesk.AutoCAD.Colors;
 using Autodesk.AutoCAD.DatabaseServices;
@@ -162,8 +161,6 @@ namespace Autocad_ConcerteList.Lib.Blocks
                     var err = $"Недопустимый тип значения параметра '{propMatch}'= {prop.Value}";
                     if (isRequired)
                         AddError(err);
-                    else
-                        Logger.Log.Error(ex, err);
                 }
             }
             else
@@ -196,7 +193,7 @@ namespace Autocad_ConcerteList.Lib.Blocks
                     }
                     catch (Exception ex)
                     {
-                        Logger.Log.Error(ex, $"BlockBase.GetPropValue - FillPropValue - '{propName}', блок {BlName}");
+                        //
                     }
                 }
                 return defaultValue;

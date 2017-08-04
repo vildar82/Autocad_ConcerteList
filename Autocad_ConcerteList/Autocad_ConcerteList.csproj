@@ -19,7 +19,7 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Autodesk\AutoCAD\Pik\Settings\Script\NET\КР-СБ-ГК\</OutputPath>
+    <OutputPath>bin\Debug\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -154,7 +154,7 @@
     <Compile Include="Src\ConcreteDB\Formula\FormulaFactory.cs" />
     <Compile Include="Src\ConcreteDB\Formula\FormulaItem.cs" />
     <Compile Include="Src\ConcreteDB\Formula\FormulaParameters.cs" />
-    <Compile Include="Src\ConcreteDB\iItem.cs" />
+    <Compile Include="Src\ConcreteDB\IPanel.cs" />
     <Compile Include="Src\ConcreteDB\Formula\ParserFormula.cs" />
     <Compile Include="Src\ConcreteDB\IgnoreBlockException.cs" />
     <Compile Include="Src\ConcreteDB\Options\FormOptions.cs">

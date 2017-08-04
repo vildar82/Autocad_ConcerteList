@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Autocad_ConcerteList.Errors;
 using Autocad_ConcerteList.Lib.Blocks.Dublicate.Tree;
-using Autocad_ConcerteList.Log;
 using Autodesk.AutoCAD.DatabaseServices;
 using Autodesk.AutoCAD.Geometry;
 using Application = Autodesk.AutoCAD.ApplicationServices.Core.Application;
@@ -80,7 +79,6 @@ namespace Autocad_ConcerteList.Lib.Blocks.Dublicate
             }
             catch (Exception ex)
             {
-                Logger.Log.Error(ex, $"CheckDublicateBlocks - {db.Filename}. {ex.StackTrace}");
                 return;
             }
 

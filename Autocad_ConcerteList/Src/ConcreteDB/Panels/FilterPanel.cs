@@ -9,11 +9,11 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
 {
     public class FilterPanel
     {
-        public List<IIPanel> Panels { get; private set; }        
+        public List<IPanel> Panels { get; private set; }        
 
         public void Filter()
         {
-            var panels = new List<IIPanel>();
+            var panels = new List<IPanel>();
             var ws = new List<Workspace>();
             var db = HostApplicationServices.WorkingDatabase;
             using (var t = db.TransactionManager.StartTransaction())
@@ -48,7 +48,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
             }).OrderBy(p=>p.Mark, NetLib.Comparers.AlphanumComparator.New).ToList();            
         }       
 
-        private void definePanelsWS(List<IIPanel> panels, List<Workspace> ws)
+        private void definePanelsWS(List<IPanel> panels, List<Workspace> ws)
         {
             var rtree = new RTree<Workspace>();
             foreach (var w in ws)

@@ -29,7 +29,7 @@ namespace Autocad_ConcerteList.Errors
         public static void Clear()
         {
             Errors = new List<IError>();
-            _doc = Autodesk.AutoCAD.ApplicationServices.Core.Application.DocumentManager.MdiActiveDocument;
+            _doc = Application.DocumentManager.MdiActiveDocument;
             if (_doc != null)
             {
                 _db = _doc.Database;
@@ -127,7 +127,8 @@ namespace Autocad_ConcerteList.Errors
         {
             if (HasErrors)
             {
-                Logger.Log.Error(string.Join("\n", Errors.Select(e => e.Message)));
+	            var messages = string.Join("\n", Errors.Select(e => e.Message));
+				//Logger.Log.Error(messages);
                 Errors = SortErrors(Errors);
 
                 //// WinForms
@@ -139,10 +140,9 @@ namespace Autocad_ConcerteList.Errors
         }
         public static void Show (List<IError> errors)
         {
-            var errVM = new ErrorsViewModel(errors);
-            errVM.IsDialog = false;
-            var errView = new UI.ErrorsView(errVM);
-            Autodesk.AutoCAD.ApplicationServices.Core.Application.ShowModelessWindow(errView);
+	        var errVM = new ErrorsViewModel(errors) {IsDialog = false};
+	        var errView = new ErrorsView(errVM);
+            Application.ShowModelessWindow(errView);
         }
 
         private static List<IError> SortErrors(List<IError> errors)
@@ -159,9 +159,7 @@ namespace Autocad_ConcerteList.Errors
         {
 	        if (HasErrors)
 	        {
-		        Logger.Log.Error(string.Join("\n", Errors.Select(e => e.Message)));
 		        Errors = SortErrors(Errors);
-
 		        // WPF
 		        if (ShowDialog(Errors) == true)
 		        {
@@ -177,12 +175,6 @@ namespace Autocad_ConcerteList.Errors
 	        var errVM = new ErrorsViewModel(errors) {IsDialog = true};
 	        var errView = new UI.ErrorsView(errVM);
             return Application.ShowModalWindow(errView);            
-        }
-
-        public static void LogErrors()
-        {
-            Logger.Log.Error(string.Join("\n", Errors.Select(e => e.Message)));
-            Errors.Sort();
         }
     }
 }

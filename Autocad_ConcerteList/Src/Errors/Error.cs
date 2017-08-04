@@ -55,7 +55,7 @@ namespace Autocad_ConcerteList.Errors
                                 }
                                 catch (Exception ex)
                                 {
-                                    Logger.Log.Error(ex, "AcadLib.Error.Extents ent.GeometricExtents;");
+                                    //Logger.Log.Error(ex, "AcadLib.Error.Extents ent.GeometricExtents;");
                                     _isNullExtents = true;
                                 }
                             }

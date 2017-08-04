@@ -8,17 +8,17 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels.Windows
         private static readonly Brush BadValue = new SolidColorBrush(Colors.Brown);
         private static readonly Brush NoParameterColor = new SolidColorBrush(Colors.Gray);
 
-        private readonly IIPanel panelDetail;
-        private readonly IIPanel panelFirst; 
+        private readonly IPanel panelDetail;
+        private readonly IPanel panelFirst; 
 
-        public PanelDetailViewModel (IIPanel itemDetail, IIPanel firstPanel)
+        public PanelDetailViewModel (IPanel itemDetail, IPanel firstPanel)
         {
             panelDetail = itemDetail;
             panelFirst = firstPanel;
             Show = new RelayCommand(OnShowExecute);
         }        
 
-        public IIPanel PanelDetail => panelDetail;
+        public IPanel PanelDetail => panelDetail;
 
 	    /// <summary>
         /// Марка панели из атрибута

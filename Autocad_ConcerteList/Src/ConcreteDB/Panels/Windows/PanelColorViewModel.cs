@@ -13,8 +13,8 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels.Windows
     }
     public class PanelColorViewModel : ObservableObject
     {
-        public IIPanel panel;
-        public PanelColorViewModel(IIPanel panel)
+        public IPanel panel;
+        public PanelColorViewModel(IPanel panel)
         {
             this.panel = panel;
             Mark = panel.Mark;

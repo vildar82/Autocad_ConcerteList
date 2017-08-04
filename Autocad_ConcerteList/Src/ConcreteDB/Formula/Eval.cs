@@ -11,16 +11,16 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
         public string EvalString { get; set; }
         public string ValueString { get; set; }
         public bool IsEvaluable { get; set; }
-        private readonly IIPanel item;
+        private readonly IPanel item;
         private static readonly DataTable t = new DataTable();
         private static readonly char[] charOperands = new char[] { '/', '*', '-', '+' };
 
         // Публичные свойства в классе ItemEntryData        
-        private static readonly Dictionary<string, PropertyInfo> dictItemProperties = typeof(IIPanel)
+        private static readonly Dictionary<string, PropertyInfo> dictItemProperties = typeof(IPanel)
                             .GetProperties(BindingFlags.Instance | BindingFlags.Public)
                             .ToDictionary(f => f.Name);        
 
-        public Eval (string eval, IIPanel item)
+        public Eval (string eval, IPanel item)
         {            
             EvalString = eval;
             this.item = item;

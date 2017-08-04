@@ -123,7 +123,7 @@ namespace Autocad_ConcerteList.ConcreteDB
             }
         }        
 
-        public static ItemConstructionDbo FindByParametersFromAllLoaded(IIPanel panel)
+        public static ItemConstructionDbo FindByParametersFromAllLoaded(IPanel panel)
         {
             if (Items == null)
             {
@@ -180,9 +180,9 @@ namespace Autocad_ConcerteList.ConcreteDB
             //}           
         }        
 
-        public static void Register (List<IIPanel> panels, SerieDbo ser)
+        public static void Register (List<IPanel> panels, SerieDbo ser)
         {
-            var registerPanelsToLog = new List<IIPanel> ();
+            var registerPanelsToLog = new List<IPanel> ();
             foreach (var panel in panels)
             {
                 try
@@ -214,20 +214,20 @@ namespace Autocad_ConcerteList.ConcreteDB
                 {
                     // Ошибка при сохранении панели
                     Inspector.AddError($"Ошибка сохранения панели в базу - '{panel.Mark}'");
-                    Logger.Log.Error(ex, $"Ошибка сохранения панели в базу - '{panel.ParamsToString()}'");
+                    //Logger.Log.Error(ex, $"Ошибка сохранения панели в базу - '{panel.ParamsToString()}'");
                 }
             }
-            Logger.Log.Error("Зарегистрированы новые изделия ЖБИ: " + GetLogRegistryPanels(registerPanelsToLog));
+            //Logger.Log.Error("Зарегистрированы новые изделия ЖБИ: " + GetLogRegistryPanels(registerPanelsToLog));
         }
 
         /// <summary>
         /// Регистрация колористики
         /// </summary>        
-        public static void RegisterColors (List<IIPanel> panelsColor)
+        public static void RegisterColors (List<IPanel> panelsColor)
         {
             using (var ents = ConnectEntities())
             {
-                var registeredColors = new List<IIPanel>();
+                var registeredColors = new List<IPanel>();
                 // Запись колористических индексов в справочник
                 FillColorsIndexes(panelsColor, ents, out Dictionary<string, int> dictColors);
                 foreach (var item in panelsColor)
@@ -256,11 +256,11 @@ namespace Autocad_ConcerteList.ConcreteDB
                 {
                     sbRegs.AppendLine($"{item.MarkByFormula}, {item.ColorMark} = {item.GetMarkWithColor()}");
                 }
-                Logger.Log.Error(sbRegs.ToString());
+                //Logger.Log.Error(sbRegs.ToString());
             }
         }
 
-        private static void FillColorsIndexes (List<IIPanel> panelsColor, MDMEntities ents, out Dictionary<string, int> dictColors)
+        private static void FillColorsIndexes (List<IPanel> panelsColor, MDMEntities ents, out Dictionary<string, int> dictColors)
         {
             dictColors = new Dictionary<string, int>();
             var colorsIndexes = panelsColor.Select(s => s.ColorMark).GroupBy(g => g).Select(s => s.Key);
@@ -283,7 +283,7 @@ namespace Autocad_ConcerteList.ConcreteDB
             }
         }
 
-        private static string GetLogRegistryPanels (List<IIPanel> registerPanelsToLog)
+        private static string GetLogRegistryPanels (List<IPanel> registerPanelsToLog)
         {
             return string.Join("; ", registerPanelsToLog.Select(p=> p.Mark +  " id=" + p.ItemConstructionId));            
         }

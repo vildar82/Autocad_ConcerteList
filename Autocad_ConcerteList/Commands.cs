@@ -58,9 +58,9 @@ namespace Autocad_ConcerteList
 
 						if (panel.HasErrors || !panel.IsWeightOk)
 						{
-							var checkPanel = new List<KeyValuePair<IIPanel, List<IIPanel>>>
+							var checkPanel = new List<KeyValuePair<IPanel, List<IPanel>>>
 							{
-								new KeyValuePair<IIPanel, List<IIPanel>>(panel, new List<IIPanel> {panel})
+								new KeyValuePair<IPanel, List<IPanel>>(panel, new List<IPanel> {panel})
 							};
 							var model = new CheckPanelsViewModel(checkPanel);
 							var winPanels = new WindowCheckPanels(model);
@@ -115,7 +115,7 @@ namespace Autocad_ConcerteList
 					.OrderBy(o => o.Key, NetLib.Comparers.AlphanumComparator.New);
 
 				// Проверка одинаковости панелей в группе (должны быть одинаковыми все параметры)
-				var checkedPanels = new List<KeyValuePair<IIPanel, List<IIPanel>>>();
+				var checkedPanels = new List<KeyValuePair<IPanel, List<IPanel>>>();
 				foreach (var item in groupedMarkPanels)
 				{
 					var first = item.FirstOrDefault(i => i.IsNew != null && !i.IsNew.Value);
@@ -130,7 +130,7 @@ namespace Autocad_ConcerteList
 						first.ErrorStatus |= ErrorStatusEnum.DifferentParamInGroup;
 						first.Warning += " Разные атрибуты в блоках, см. детальный вид. ";
 					}
-					checkedPanels.Add(new KeyValuePair<IIPanel, List<IIPanel>>(first, item.ToList()));
+					checkedPanels.Add(new KeyValuePair<IPanel, List<IPanel>>(first, item.ToList()));
 				}
 
 				if (checkedPanels.Count == 0)

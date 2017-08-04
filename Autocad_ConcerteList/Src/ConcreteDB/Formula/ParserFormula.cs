@@ -7,9 +7,9 @@
         /// Результативная марка
         /// </summary>
         public string Result { get; private set; }        
-        private readonly IIPanel item;        
+        private readonly IPanel item;        
 
-        public ParserFormula(FormulaItem formula, IIPanel item)
+        public ParserFormula(FormulaItem formula, IPanel item)
         {
             Formula = formula;
             this.item = item;

@@ -39,9 +39,9 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
         /// </summary>
         /// <param name="objectId">Entity</param>
         /// <returns>Панель или null если это не панель</returns>
-        public static IIPanel Define(ObjectId objectId, out BlockReference blRef, out string blName)
+        public static IPanel Define(ObjectId objectId, out BlockReference blRef, out string blName)
         {
-            IIPanel panel = null;
+            IPanel panel = null;
             if (IsPanel(objectId, out blRef, out string markAtr, out blName))
             {
                 try
@@ -66,7 +66,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
                 }
                 catch(Exception ex)
                 {
-                    Logger.Log.Error(ex, $"Define - {blName}");
+                    //Logger.Log.Error(ex, $"Define - {blName}");
                     Inspector.AddError($"Ошибка при обработке блока '{blName}'. {ex.Message}", blRef);
                 }
             }
@@ -83,7 +83,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
             blName = blRef.GetEffectiveName();
             if (blRef.BlockTableRecord.IsNull)
             {
-                Logger.Log.Error("blRef.BlockTableRecord.IsNull");
+                //Logger.Log.Error("blRef.BlockTableRecord.IsNull");
                 Commands.HasNullObjectId = true;
                 Application.DocumentManager.MdiActiveDocument.Editor.WriteMessage($"\nПропущен блок '{blName}'");
             }

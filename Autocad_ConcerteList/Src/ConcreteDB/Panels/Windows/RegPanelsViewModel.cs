@@ -19,7 +19,7 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels.Windows
             }
         }
 
-        public RegPanelsViewModel (List<KeyValuePair<IIPanel, List<IIPanel>>> regPanels, List<SerieDbo> series): base(regPanels)
+        public RegPanelsViewModel (List<KeyValuePair<IPanel, List<IPanel>>> regPanels, List<SerieDbo> series): base(regPanels)
         {
             Series = new ObservableCollection<SerieDbo>(series);
             SelectedSerie = Series.FirstOrDefault(s => s.Name.Equals("ПИК-1.0"));            

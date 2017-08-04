@@ -9,10 +9,10 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
 {
     public class RegPanels
     {
-        public List<IIPanel> Panels { get; private set; }
-        public List<IIPanel> PanelsNewWoErr { get; private set; }
+        public List<IPanel> Panels { get; private set; }
+        public List<IPanel> PanelsNewWoErr { get; private set; }
 
-        public RegPanels(List<IIPanel> panels)
+        public RegPanels(List<IPanel> panels)
         {
             Panels = panels;
         }
@@ -29,7 +29,6 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
             }
 
             Inspector.ShowDialog();
-            Inspector.Clear();
 
             var ed = Application.DocumentManager.MdiActiveDocument.Editor;
             if (PanelsNewWoErr.Count == 0)
@@ -39,11 +38,11 @@ namespace Autocad_ConcerteList.ConcreteDB.Panels
             }
 
             var groupedNewPanels = PanelsNewWoErr.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, NetLib.Comparers.AlphanumComparator.New);
-            var newPanels = new List<KeyValuePair<IIPanel, List<IIPanel>>> ();
+            var newPanels = new List<KeyValuePair<IPanel, List<IPanel>>> ();
 
             foreach (var item in groupedNewPanels)
             {
-                newPanels.Add(new KeyValuePair<IIPanel, List<IIPanel>>(item.First(), item.ToList()));
+                newPanels.Add(new KeyValuePair<IPanel, List<IPanel>>(item.First(), item.ToList()));
             }
 
             var model = new RegPanelsViewModel (newPanels, DbService.Series);

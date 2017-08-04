@@ -11,7 +11,7 @@ namespace Autocad_ConcerteList.ConcreteDB
     /// <summary>
     /// Изделие
     /// </summary>
-    public interface IIPanel : IEquatable<IIPanel>, IComparable<IIPanel>
+    public interface IPanel : IEquatable<IPanel>, IComparable<IPanel>
     {
         FormulaItem Formula { get; set; }
         short? LengthMark { get; set; }
@@ -100,11 +100,11 @@ namespace Autocad_ConcerteList.ConcreteDB
 	    void Init();
         void Checks();
         void Show();
-        short? UpdateLength(short? value, List<IIPanel> list);
-        short? UpdateHeight(short? value, List<IIPanel> list);
-        short? UpdateThickness(short? value, List<IIPanel> list);
-        float? UpdateWeight(float? value, List<IIPanel> list);
-        string UpdateAperture(string value, List<IIPanel> list);
+        short? UpdateLength(short? value, List<IPanel> list);
+        short? UpdateHeight(short? value, List<IPanel> list);
+        short? UpdateThickness(short? value, List<IPanel> list);
+        float? UpdateWeight(float? value, List<IPanel> list);
+        string UpdateAperture(string value, List<IPanel> list);
         string GetErrorStatusDesc();
         void SetAtr(string tag, string value);
         void DefineItemGroup();

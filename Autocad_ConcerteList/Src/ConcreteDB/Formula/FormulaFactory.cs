@@ -7,16 +7,16 @@ namespace Autocad_ConcerteList.ConcreteDB.Formula
     public static class FormulaFactory
     {
         // Внутрянки
-	    private static readonly Func<FormulaParameters, IIPanel, string> FormulaLHT_FE = (f, p) =>
+	    private static readonly Func<FormulaParameters, IPanel, string> FormulaLHT_FE = (f, p) =>
             $"{p.Item_group} {p.GetLengthMarkPart(f.LengthFactor)}.{p.GetHeightMarkPart(f.HeightFactor)}.{p.GetThicknessMarkPart(f.ThicknessFactor)}-{p.Formwork}-{p.Electrics}";
         // Наружки
-	    private static readonly Func<FormulaParameters, IIPanel, string> FormulaLHT_FBPE = (f, p) =>
+	    private static readonly Func<FormulaParameters, IPanel, string> FormulaLHT_FBPE = (f, p) =>
             $"{p.Item_group} {p.GetLengthMarkPart(f.LengthFactor)}.{p.GetHeightMarkPart(f.HeightFactor)}.{p.GetThicknessMarkPart(f.ThicknessFactor)}-{p.Formwork}{p.Balcony_door}{p.Balcony_cut}-{p.Electrics}";        
         // Плиты
-	    private static readonly Func<FormulaParameters, IIPanel, string> FormulaLH_FE = (f, p) =>
+	    private static readonly Func<FormulaParameters, IPanel, string> FormulaLH_FE = (f, p) =>
             $"{p.Item_group} {p.GetLengthMarkPart(f.LengthFactor)}.{p.GetHeightMarkPart(f.HeightFactor)}-{p.Formwork}-{p.Electrics}";
         // ОЛ
-	    private static readonly Func<FormulaParameters, IIPanel, string> FormulaHL_FE = (f, p) =>
+	    private static readonly Func<FormulaParameters, IPanel, string> FormulaHL_FE = (f, p) =>
             $"{p.Item_group} {p.GetHeightMarkPart(f.HeightFactor)}.{p.GetLengthMarkPart(f.LengthFactor)}-{p.Formwork}-{p.Electrics}";
 
         /// <summary>
