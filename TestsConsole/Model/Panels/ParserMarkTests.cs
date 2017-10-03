@@ -511,5 +511,64 @@ namespace Autocad_ConcerteList.Src.Panels.Tests
                          parser.Formwork == 4;                         
             Assert.AreEqual(check, true);            
         }
+
+        [TestMethod]
+        public void ParseOutPanelPIK2BulkinTest1()
+        {
+            var parser = GetParser("3НСг-269.294.32-1");
+            parser.Parse();
+            var check = parser.ItemGroupWoClass.Equals("3НСг") &&
+                        parser.MarkWoGroupClassIndex == "3НСг-269.294.32-1" &&
+                        parser.Length == 269 &&
+                        parser.Height == 294 &&
+                        parser.Thickness == 32 &&
+                        parser.Formwork == 1;
+            Assert.AreEqual(check, true);
+        }
+        [TestMethod]
+        public void ParseOutPanelPIK2BulkinTest2()
+        {
+            var parser = GetParser("3НСг 269.294.32-1");
+            parser.Parse();
+            var check = parser.ItemGroupWoClass.Equals("3НСг") &&
+                        parser.MarkWoGroupClassIndex == "3НСг269.294.32-1" &&
+                        parser.Length == 269 &&
+                        parser.Height == 294 &&
+                        parser.Thickness == 32 &&
+                        parser.Formwork == 1;
+            Assert.AreEqual(check, true);
+        }
+
+        [TestMethod]
+        public void ParseOutPanelPIK2BulkinTest3()
+        {
+            var parser = GetParser("3НСНг-Б1.2-389.294.42-2");
+            parser.Parse();
+            var check = parser.ItemGroupWoClass.Equals("3НСНг") &&
+                        parser.MarkWoGroupClassIndex == "3НСНг-Б1.2-389.294.42-2" &&
+                        parser.ItemGroup == "3НСНг-Б1.2" &&
+                        parser.ItemGroupForSearchInBD == "3НСНг" &&
+                        parser.Length == 389 &&
+                        parser.Height == 294 &&
+                        parser.Thickness == 42 &&
+                        parser.Formwork == 2;
+            Assert.AreEqual(check, true);
+        }
+
+        [TestMethod]
+        public void ParseOutPanelPIK2BulkinTest4()
+        {
+            var parser = GetParser("3НСНг-Б3-389.294.42-2");
+            parser.Parse();
+            var check = parser.ItemGroupWoClass.Equals("3НСНг") &&
+                        parser.MarkWoGroupClassIndex == "3НСНг-Б3-389.294.42-2" &&
+                        parser.ItemGroup == "3НСНг-Б3" &&
+                        parser.ItemGroupForSearchInBD == "3НСНг" &&
+                        parser.Length == 389 &&
+                        parser.Height == 294 &&
+                        parser.Thickness == 42 &&
+                        parser.Formwork == 2;
+            Assert.AreEqual(check, true);
+        }
     }
 }

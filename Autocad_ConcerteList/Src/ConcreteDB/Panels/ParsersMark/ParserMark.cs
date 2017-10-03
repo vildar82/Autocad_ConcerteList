@@ -34,6 +34,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Группа изделия. Например "3НСг". 
         /// </summary>
         public string ItemGroup { get; set; }
+        public string ItemGroupForSearchInBD { get; set; }
         public string ItemGroupWoClass { get; set; }
         /// <summary>
         /// Индекс "Класса Бетона" - Например 2,3 - 2П, 2В, 3В, 3НСг2 (2).
@@ -103,7 +104,16 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         {            
             // Разбор группы. например partGroup = "2П"
             //ItemGroup = markPart.PartGroup.Replace(" ", "").Replace("-", "").Trim();
-            ItemGroup = markPart.PartGroup.Replace("-", "").Trim();
+            if (markPart.IsNewBIndex)
+            {
+                ItemGroupForSearchInBD = markPart.PartGroup.Replace("-", "").Trim();
+                ItemGroup = ItemGroupForSearchInBD + "-" + markPart.NewBIndex;
+            }
+            else
+            {
+                ItemGroup = markPart.PartGroup.Replace("-", "").Trim();
+                ItemGroupForSearchInBD = ItemGroup;
+            }
         }
 
         private void ParsePartGab()

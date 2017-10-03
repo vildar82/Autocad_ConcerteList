@@ -169,6 +169,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Группа изделия - В, П, 3НСг
         /// </summary>
         public string Item_group { get; set; }
+        public string Item_groupForSearchInBD { get; set; }
         public string ItemGroupWoClassNew { get; set; }
         public bool IsItemGroupOk { get; set; }
         public string ItemGroupDesc { get; set; }
@@ -740,12 +741,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         public void DefineItemGroup ()
         {
-            DbGroup = DbService.FindGroup(Item_group);
+            DbGroup = DbService.FindGroup(Item_groupForSearchInBD);
             if (DbGroup == null)
             {
                 IsItemGroupOk = false;
                 ItemGroupDesc = $"Неопределенная группа.";                
-                AddWarning( $" Неопределенная группа {Item_group}. ");
+                AddWarning( $" Неопределенная группа {Item_groupForSearchInBD}. ");
                 ErrorStatus = ErrorStatusEnum.OtherError;
                 return;
                 //throw new Exception($"Неопределенная группа {ItemGroup}.");
@@ -830,6 +831,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         private void FillParseParams()
         {
             Item_group = ParseMark.ItemGroup;
+            Item_groupForSearchInBD = ParseMark.ItemGroupForSearchInBD;
             ItemGroupWoClassNew = ParseMark.ItemGroupWoClass;
             Formwork = ParseMark.Formwork;
             //FormworkMirror = ParseMark.FormworkMirror;

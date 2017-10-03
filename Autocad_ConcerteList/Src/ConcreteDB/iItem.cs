@@ -27,6 +27,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
         string Mark { get; }      
         // Имя группы полное
         string Item_group { get; }
+        /// <summary>
+        /// Имя группы для поиска в базе (без индекса -Б1.2-)
+        /// </summary>
+        string Item_groupForSearchInBD { get; }
         // имя группы без нового класса - по которому ищется группа в базе
         string ItemGroupWoClassNew { get; }
         short? Length { get; set; }

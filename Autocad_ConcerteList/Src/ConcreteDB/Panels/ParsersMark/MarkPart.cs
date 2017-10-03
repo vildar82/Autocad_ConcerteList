@@ -22,6 +22,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public PanelSeria PanelSeria { get; set; }
         public PanelTypeEnum PanelType { get; set; }        
         public string ItemGroupWoClassNew { get; set; }
+        /// <summary>
+        /// Новый индекс -Б1.2-, 
+        /// </summary>
+        public bool IsNewBIndex { get; set; }
+        /// <summary>
+        /// Значение нового индекса Б1.2
+        /// </summary>
+        public string NewBIndex { get; set; }
 
         public MarkPart (string mark)
         {

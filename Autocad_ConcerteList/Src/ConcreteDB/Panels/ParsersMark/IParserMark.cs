@@ -19,6 +19,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         string GroupIndexClassNew { get; set; }
         short? Height { get; set; }
         string ItemGroup { get; set; }
+        string ItemGroupForSearchInBD { get; set; }
         string ItemGroupWoClass { get; set; }
         short? Length { get; set; }
         string MarkInput { get; }
