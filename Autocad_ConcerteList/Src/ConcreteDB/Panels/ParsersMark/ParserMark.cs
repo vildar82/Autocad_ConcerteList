@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using AcadLib;
 using AcadLib.Errors;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
@@ -22,16 +18,17 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Входная марка - из атрибута блока
         /// </summary>
-        public string MarkInput { get; private set; }        
+        public string MarkInput { get; private set; }
+
         /// <summary>
         /// Марка без индекса "Класса бетона" GroupIndexClass
         /// Нужна для проверки имени блока, имя блока должно быть без индекса
         /// Т.к. индекс не влияет на геометрию блока изделия.
         /// </summary>
         public string MarkWoGroupClassIndex { get; set; }
-        public Error Error { get;  set; }        
+        public Error Error { get;  set; }
         /// <summary>
-        /// Группа изделия. Например "3НСг". 
+        /// Группа изделия. Например "3НСг".
         /// </summary>
         public string ItemGroup { get; set; }
         public string ItemGroupForSearchInBD { get; set; }
@@ -42,7 +39,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public string GroupIndexConcreteClass { get;  set; }
         /// <summary>
         /// Длина - первое число в габаритах марки. Для группы вентблоков это может быть высота.
-        /// </summary>        
+        /// </summary>
         public short? Length { get; set; }
         /// <summary>
         /// Высота - второе число в габаритах марки.
@@ -51,12 +48,12 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// <summary>
         /// Толщина - третий параметр в габаритах марки
         /// </summary>
-        public short? Thickness { get; set; }        
+        public short? Thickness { get; set; }
         /// <summary>
-        /// Опалубка. Например 1, 2. 
+        /// Опалубка. Например 1, 2.
         /// </summary>
         public short? Formwork { get;  set; }
-        //public short? FormworkMirror { get; private set; }   
+        //public short? FormworkMirror { get; private set; }
         /// <summary>
         /// Закладная. Например: Д или пусто
         /// </summary>
@@ -66,11 +63,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         public string ProngIndex { get; set; }
         /// <summary>
-        /// Балкон. Б, Б1. 
+        /// Балкон. Б, Б1.
         /// </summary>
-        public string BalconyDoor { get;  set; }        
+        public string BalconyDoor { get;  set; }
         /// <summary>
-        /// Подрезка. П, П1. 
+        /// Подрезка. П, П1.
         /// </summary>
         public string BalconyCut { get;  set; }
         /// <summary>
@@ -86,7 +83,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// </summary>
         public int? StepFirstHeight { get; set; }
         /// <summary>
-        /// Электрика. 1э, 2э. 
+        /// Электрика. 1э, 2э.
         /// </summary>
         public string Electrics { get;  set; }
         public string GroupIndexClassNew { get; set; }
@@ -97,11 +94,11 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             ParsePartGab();
             ParsePartDop();
             // определение индекса класса бетона по группе
-            DefineIndexClass();                       
-        }       
+            DefineIndexClass();
+        }
 
         protected void DefinePartGroup()
-        {            
+        {
             // Разбор группы. например partGroup = "2П"
             //ItemGroup = markPart.PartGroup.Replace(" ", "").Replace("-", "").Trim();
             if (markPart.IsNewBIndex)
@@ -143,7 +140,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
         private short GetShort(string input, string nameParam)
         {
-            return (short)GetStartInteger(input);            
+            return (short)GetStartInteger(input);
         }
 
         private void ParsePartDop()
@@ -155,7 +152,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             {
                 // Ошибка. Может быть только опалубка и электрика. От Зеркальности отказались.
                 AddErrorMsg("Определено больше двух возможных дополнительных параметра панели - опалубки и электрики.");
-            }            
+            }
             if (splitDash.Length == 1)
             {
                 if (markPart.PartDop.IndexOf("э", StringComparison.OrdinalIgnoreCase) == -1)
@@ -170,8 +167,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             else if (splitDash.Length>1)
             {
                 DefinePartFormwork(splitDash[0]);
-                //Formwork = GetShort(splitDash[1], "Опалубка");                
-                Electrics = splitDash[1];                
+                //Formwork = GetShort(splitDash[1], "Опалубка");
+                Electrics = splitDash[1];
             }
             //else if (splitDash.Length > 1)
             //{
@@ -184,7 +181,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             //    else
             //    {
             //        Electrics = val;
-            //    }                
+            //    }
             //}
         }
 
@@ -277,7 +274,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         }
 
         /// <summary>
-        /// Определение индекса класса бетона по группе 
+        /// Определение индекса класса бетона по группе
         /// 2П, 2В - индекс 2
         /// 3В - индекс 2
         /// 3НСНг2 - индекс 2
@@ -300,7 +297,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 
             ItemGroupWoClass = groupWoClass;
             markPart.ItemGroupWoClassNew = groupWoClass;
-            GroupIndexClassNew = markPart.GroupIndexClassNew;            
+            GroupIndexClassNew = markPart.GroupIndexClassNew;
             MarkWoGroupClassIndex = $"{groupWoClass}{markPart.MarkInputAfterGroup}";
         }
 
@@ -329,7 +326,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
             var l = Length; // 0
             var h = Height; // 1
             var t = Thickness; // 2
-                        
+
             Length = GetGabByKey("L", gabKey, l, h, t);
             Height = GetGabByKey("H", gabKey, l, h, t);
             Thickness = GetGabByKey("T", gabKey, l, h, t);

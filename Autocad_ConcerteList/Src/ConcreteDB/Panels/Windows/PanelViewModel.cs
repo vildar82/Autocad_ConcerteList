@@ -1,74 +1,66 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Collections.Specialized;
-using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using MicroMvvm;
+using NetLib.WPF;
+using NetLib.WPF.Data;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
-    public class PanelViewModel : ObservableObject
+    public class PanelViewModel : BaseModel
     {
         private static readonly Brush BadValueColor = new SolidColorBrush(Colors.Red);
         private static readonly Brush NewPanelColor = new SolidColorBrush(Colors.LawnGreen);
 
         private readonly PanelsBaseView model;
         internal IIPanel panel;
-        private PanelDetailViewModel _selectedPanel;        
+        private PanelDetailViewModel _selectedPanel;
 
         /// <summary>
         /// Панели на чертеже
         /// </summary>
         public ObservableCollection<PanelDetailViewModel> PanelsInModel { get; set; }
-        
-        public PanelDetailViewModel SelectedPanel {
-            get {
-                return _selectedPanel;                
-            }
-            set {
+
+        public PanelDetailViewModel SelectedPanel
+        {
+            get => _selectedPanel;
+            set
+            {
                 _selectedPanel = value;
                 _selectedPanel.Show.Execute(null);
             }
-        }        
+        }
 
         public PanelViewModel (IIPanel panel, List<IIPanel> blocks, PanelsBaseView model)
         {
             this.model = model;
-            this.panel = panel;            
+            this.panel = panel;
             PanelsInModel = new ObservableCollection<PanelDetailViewModel>();
             foreach (var item in blocks)
             {
                 PanelsInModel.Add(new PanelDetailViewModel(item, panel));
             }
+
             Show = new RelayCommand(OnShowExecute);
         }
 
         /// <summary>
         /// Марка панели из атрибута
-        /// </summary>               
-        public string MarkAtr {
-            get { return panel.Mark; }
-            set { RaisePropertyChanged(); }
-        }
+        /// </summary>
+        public string MarkAtr => panel.Mark;
+
         /// <summary>
         /// Марка по формуле
         /// </summary>
-        public string MarkByFormula {
-            get { return panel.MarkByFormula; }
-            set { RaisePropertyChanged(); }
-        }
-        public Brush MarkByFormulaBackground {
-            get { return MarkAtr?.Replace(" ", "")== MarkByFormula?.Replace(" ", "") ? null : BadValueColor;            }
-            set { RaisePropertyChanged(); }
-        }
-        public string MarkByFormulaDesc {
-            get {
+        public string MarkByFormula => panel.MarkByFormula;
+
+        public Brush MarkByFormulaBackground => MarkAtr?.Replace(" ", "")== MarkByFormula?.Replace(" ", "") ? null : BadValueColor;
+
+        public string MarkByFormulaDesc
+        {
+            get
+            {
                 if (MarkAtr == MarkByFormula)
                 {
                     return $"Марки совпадают, из атр и по формуле.";
@@ -78,48 +70,40 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                     return $"Марки отличаются атр={MarkAtr}, по формуле={MarkByFormula}.";
                 }
             }
-            set { RaisePropertyChanged(); }
         }
 
         /// <summary>
         /// Наличие в базе
         /// </summary>
-        public string ExistsInBase {
-            get {
+        public string ExistsInBase
+        {
+            get
+            {
                 if (panel.IsNew == null)
                 {
                     return "Не определено";
                 }
+
                 return panel.IsNew.Value ? "Новая" : "Есть";
             }
-            set { RaisePropertyChanged(); }
         }
-        public Brush ExistsInBaseBackground {
-            get { return (panel.IsNew== null || !panel.IsNew.Value) ? null : NewPanelColor; }
-            set { RaisePropertyChanged(); }
-        }
-        
+
+        public Brush ExistsInBaseBackground => (panel.IsNew == null || !panel.IsNew.Value) ? null : NewPanelColor;
+
         /// <summary>
         /// Группа
         /// </summary>
-        public string Group {
-            get { return panel.Item_group; }
-            set { RaisePropertyChanged(); }
-        }
-        public Brush GroupBackground {
-            get { return panel.IsItemGroupOk ? null : BadValueColor; }
-            set { RaisePropertyChanged(); }
-        }
-        public string GroupDesc {
-            get { return panel.ItemGroupDesc; }
-            set { RaisePropertyChanged(); }
-        }
+        public string Group => panel.Item_group;
+
+        public Brush GroupBackground => panel.IsItemGroupOk ? null : BadValueColor;
+
+        public string GroupDesc => panel.ItemGroupDesc;
 
         /// <summary>
         /// Длина
         /// </summary>
         public short? Length {
-            get { return panel.Length; }
+            get => panel.Length;
             set {
                 if (value != null)
                 {
@@ -132,29 +116,34 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                             item.Length = len;
                             item.UpdateCheckPanel();
                         }
+
                         // Обновление всех значений
                         UpdateRow();
-                        RaisePropertyChanged();
                     }
-                }                
+                }
             }
-        }        
-
-        public Brush LengthBackground {
-            get { return panel.IsLengthOk ? null : BadValueColor; }
-            set { RaisePropertyChanged(); }
         }
-        public string LengthDesc {
-            get { return panel.LengthDesc; }
-            set { RaisePropertyChanged(); }
+
+        public Brush LengthBackground
+        {
+            get => panel.IsLengthOk ? null : BadValueColor;
+            set { }
+        }
+
+        public string LengthDesc
+        {
+            get => panel.LengthDesc;
+            set => panel.LengthDesc = value;
         }
 
         /// <summary>
         /// Высота
         /// </summary>
-        public short? Height {
-            get { return panel.Height; }
-            set {
+        public short? Height
+        {
+            get => panel.Height;
+            set
+            {
                 if (value != null)
                 {
                     var height = panel.UpdateHeight(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
@@ -166,26 +155,30 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                             item.Height = height;
                             item.UpdateCheckPanel();
                         }
+
                         // Обновление всех значений
                         UpdateRow();
-                        RaisePropertyChanged();
                     }
-                }                
+                }
             }
         }
-        public Brush HeightBackground {
-            get { return panel.IsHeightOk ? null : BadValueColor; }
-            set { RaisePropertyChanged(); }
+        public Brush HeightBackground
+        {
+            get => panel.IsHeightOk ? null : BadValueColor;
+            set { }
         }
-        public string HeightDesc {
-            get { return panel.HeightDesc; }
-            set { RaisePropertyChanged(); }
+
+        public string HeightDesc
+        {
+            get => panel.HeightDesc;
+            set => panel.HeightDesc = value;
         }
+
         /// <summary>
         /// Ширина
         /// </summary>
         public short? Thickness {
-            get { return panel.Thickness; }
+            get => panel.Thickness;
             set {
                 if (value != null)
                 {
@@ -198,74 +191,61 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                             item.Thickness = thick;
                             item.UpdateCheckPanel();
                         }
+
                         // Обновление всех значений
                         UpdateRow();
-                        RaisePropertyChanged();
                     }
-                }                
+                }
             }
         }
-        public Brush ThicknessBackground {
-            get { return panel.IsThicknessOk ? null : BadValueColor; }
-            set { RaisePropertyChanged(); }
+        public Brush ThicknessBackground
+        {
+            get => panel.IsThicknessOk ? null : BadValueColor;
+            set { }
         }
-        public string ThicknessDesc {
-            get { return panel.ThicknessDesc; }
-            set { RaisePropertyChanged(); }
+
+        public string ThicknessDesc
+        {
+            get => panel.ThicknessDesc;
+            set => panel.ThicknessDesc = value;
         }
+
         /// <summary>
         /// Опалубка
         /// </summary>
-        public short? Formwork {
-            get { return panel.Formwork; }
-            set { RaisePropertyChanged(); }
-        }
+        public short? Formwork => panel.Formwork;
 
-        public string MountElement {
-            get { return panel.Mount_element; }
-            set { RaisePropertyChanged(); }
-        }
+        public string MountElement => panel.Mount_element;
 
-        public string Prong {
-            get { return panel.Prong; }
-            set { RaisePropertyChanged(); }
-        }
+        public string Prong => panel.Prong;
 
         /// <summary>
         /// Балкон
         /// </summary>
-        public string BalconyDoor {
-            get { return panel.Balcony_door; }
-            set { RaisePropertyChanged(); }
-        }
-        public string BalconyDoorDesc {
-            get { return "Балкон " + panel.Balcony_door_modif?.Side; }
-            set { RaisePropertyChanged(); }
-        }
+        public string BalconyDoor => panel.Balcony_door;
+
+        public string BalconyDoorDesc => "Балкон " + panel.Balcony_door_modif?.Side;
+
         /// <summary>
         /// Подрезка
         /// </summary>
-        public string BalconyCut {
-            get { return panel.Balcony_cut; }
-            set { RaisePropertyChanged(); }
-        }
-        public string BalconyCutDesc {
-            get { return "Подрезка " + panel.Balcony_cut_modif?.Measure + " " + panel.Balcony_cut_modif?.Side; }
-            set { RaisePropertyChanged(); }
-        }
+        public string BalconyCut => panel.Balcony_cut;
+
+        public string BalconyCutDesc => "Подрезка " + panel.Balcony_cut_modif?.Measure + " " + panel.Balcony_cut_modif?.Side;
+
         /// <summary>
         /// Электрика
         /// </summary>
-        public string Electrics {
-            get { return panel.Electrics; }
-            set { RaisePropertyChanged(); }
-        }
+        public string Electrics => panel.Electrics;
+
         /// <summary>
         /// Вес
         /// </summary>
-        public float? Weight {
-            get { return panel.Weight; }
-            set {
+        public float? Weight
+        {
+            get => panel.Weight;
+            set
+            {
                 if (value != null)
                 {
                     var wei = panel.UpdateWeight(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
@@ -277,70 +257,82 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                             item.Weight = wei;
                             item.UpdateCheckPanel();
                         }
+
                         // Обновление всех значений
                         UpdateRow();
-                        RaisePropertyChanged();
                     }
-                }                
+                }
             }
         }
-        public Brush WeightBackground {
-            get { return panel.IsWeightOk ? null : BadValueColor; }
-            set { RaisePropertyChanged(); }
+
+        public Brush WeightBackground
+        {
+            get => panel.IsWeightOk ? null : BadValueColor;
+            set { }
         }
-        public string WeightDesc {
-            get { return panel.WeightDesc; }
-            set { RaisePropertyChanged(); }
+
+        public string WeightDesc
+        {
+            get => panel.WeightDesc;
+            set => panel.WeightDesc = value;
         }
 
         /// <summary>
         /// Проем
         /// </summary>
-        public string Aperture {
-            get { return panel.Aperture; }
-            set {
+        public string Aperture
+        {
+            get => panel.Aperture;
+            set
+            {
                 if (value != null)
                 {
                     var res = panel.UpdateAperture(value, this.PanelsInModel.Select(s=>s.PanelDetail).ToList());
+
                     // обновление поля в деталях
                     foreach (var item in PanelsInModel)
                     {
                         item.Aperture = res;
                         item.UpdateCheckPanel();
                     }
+
                     UpdateRow();
-                    RaisePropertyChanged();
                 }
             }
         }
 
-        public int? StepHeightIndex { get { return panel.Step_height; } set { RaisePropertyChanged(); } }
-        public string StepHeightDesc {
-            get { return panel.Step_height_modif?.Measure?.ToString(); }
-            set { RaisePropertyChanged(); }
-        }
-        public int? StepCount { get { return panel.Steps; } set { RaisePropertyChanged(); } }
-        public int? StepFirst { get { return panel.First_step; } set { RaisePropertyChanged(); } }
+        public int? StepHeightIndex => panel.Step_height;
+
+        public string StepHeightDesc => panel.Step_height_modif?.Measure?.ToString();
+        public int? StepCount => panel.Steps;
+
+        public int? StepFirst => panel.First_step;
 
         /// <summary>
         /// Описание ошибки
         /// </summary>
-        public string Warning {
-            get { return panel.Warning; }
-            set { RaisePropertyChanged(); }
+        public string Warning
+        {
+            get => panel.Warning;
+            set => panel.Warning = value;
         }
 
-        public string ErrorStatus {
-            get { return panel.ErrorStatus.ToString("D"); }
-            set { RaisePropertyChanged(); }
+        public string ErrorStatus
+        {
+            get => panel.ErrorStatus.ToString("D");
+            set { }
         }
-        public Brush ErrorStatusBackground {
-            get { return panel.ErrorStatus == ErrorStatusEnum.None? null : BadValueColor; }
-            set { RaisePropertyChanged(); }
+
+        public Brush ErrorStatusBackground
+        {
+            get => panel.ErrorStatus == ErrorStatusEnum.None? null : BadValueColor;
+            set { }
         }
-        public string ErrorStatusDesc {
-            get { return panel.GetErrorStatusDesc();            }
-            set { RaisePropertyChanged(); }
+
+        public string ErrorStatusDesc
+        {
+            get => panel.GetErrorStatusDesc();
+            set { }
         }
 
         private void UpdateRow ()
@@ -348,16 +340,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             this.ErrorStatus = null;
             this.ErrorStatusBackground = null;
             this.ErrorStatusDesc = null;
-            this.ExistsInBase = null;
-            this.ExistsInBaseBackground = null;
             this.HeightBackground = null;
             this.HeightDesc = null;
             this.LengthBackground = null;
             this.LengthDesc = null;
-            this.MarkAtr = null;
-            this.MarkByFormula = null;
-            this.MarkByFormulaBackground = null;
-            this.MarkByFormulaDesc = null;
             this.ThicknessBackground = null;
             this.ThicknessDesc = null;
             this.Warning = null;

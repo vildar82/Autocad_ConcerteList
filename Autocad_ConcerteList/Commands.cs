@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AcadLib;
 using AcadLib.Errors;
 using Autocad_ConcerteList.Src.ConcreteDB;
@@ -102,7 +99,7 @@ namespace Autocad_ConcerteList
                 var panels = filter.Panels;
 
                 // группировка панелей - по уникальной марке (без пробелов)
-                var groupedMarkPanels = panels.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, AcadLib.Comparers.AlphanumComparator.New);
+                var groupedMarkPanels = panels.GroupBy(p=>p.MarkWoSpace).OrderBy(o=>o.Key, NetLib.Comparers.AlphanumComparator.New);
 
                 // Проверка одинаковости панелей в группе (должны быть одинаковыми все параметры)
                 var checkedPanels = new List<KeyValuePair<IIPanel, List<IIPanel>>> ();

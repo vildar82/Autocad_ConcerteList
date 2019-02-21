@@ -1,5 +1,4 @@
 ﻿using System;
-using AcadLib.Errors;
 using Autodesk.AutoCAD.DatabaseServices;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
@@ -9,7 +8,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public Extents3d Extents { get; private set; }
         public string Section { get; private set; }
         public string Floor { get; private set; }
-        public bool IsOk { get { return string.IsNullOrEmpty(Error); } }
+        public bool IsOk => string.IsNullOrEmpty(Error);
         public string Error { get; private set; }
 
         public Workspace(ObjectId idBlRef)

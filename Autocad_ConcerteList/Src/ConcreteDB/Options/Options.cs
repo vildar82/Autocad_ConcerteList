@@ -1,14 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.IO;
-using System.Xml.Serialization;
-using AcadLib;
-using AcadLib.Files;
-using Autodesk.AutoCAD.ApplicationServices;
-
-namespace Autocad_ConcerteList.Src
+﻿namespace Autocad_ConcerteList.Src
 {
+    using System;
+    using System.ComponentModel;
+    using System.IO;
+    using AcadLib;
+    using Autodesk.AutoCAD.ApplicationServices;
+    using NetLib;
+
    [Serializable]
    public class Options
    {
@@ -24,12 +22,13 @@ namespace Autocad_ConcerteList.Src
             {
                _instance = Load();
             }
+
             return _instance;
          }
       }
 
-      private Options() { }     
-      
+      private Options() { }
+
       /// <summary>
       /// Имя блока рабочей области.
       /// </summary>
@@ -73,6 +72,7 @@ namespace Autocad_ConcerteList.Src
       public static Options Load()
       {
          Options options = null;
+
          // загрузка из файла настроек
          if (File.Exists(fileOptions))
          {
@@ -81,7 +81,7 @@ namespace Autocad_ConcerteList.Src
             {
                options = xmlSer.DeserializeXmlFile<Options>();
                if (options != null)
-               {  
+               {
                   return options;
                }
             }
@@ -90,10 +90,11 @@ namespace Autocad_ConcerteList.Src
                Logger.Log.Error(ex, $"Не удалось десериализовать настройки из файла {fileOptions}");
             }
          }
+
          options = new Options();
          options.Save();
          return options;
-      }     
+      }
 
       public void Save()
       {
@@ -103,14 +104,15 @@ namespace Autocad_ConcerteList.Src
             {
                Directory.CreateDirectory(Path.GetDirectoryName(fileOptions));
             }
+
             var xmlSer = new SerializerXml(fileOptions);
-            xmlSer.SerializeList(this);            
+            xmlSer.SerializeList(this);
          }
          catch (Exception ex)
          {
             Logger.Log.Error(ex, $"Не удалось сериализовать настройки в {fileOptions}");
          }
-      }            
+      }
 
       public static void Show()
       {

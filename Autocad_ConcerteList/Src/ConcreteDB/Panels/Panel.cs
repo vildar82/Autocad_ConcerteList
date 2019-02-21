@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -9,12 +7,10 @@ using System.Windows;
 using AcadLib;
 using AcadLib.Blocks;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
 using Autodesk.AutoCAD.DatabaseServices;
-using Autodesk.AutoCAD.EditorInput;
-using Autodesk.AutoCAD.Geometry;
 using Autocad_ConcerteList.Src.ConcreteDB.Formula;
-using Application = Autodesk.AutoCAD.ApplicationServices.Application;
+using NetLib;
+using NetLib.Comparers;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
@@ -37,15 +33,10 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         public const string AtrTagColor = "ПОКРАСКА";
         public const string AtrTagAperture = "ПРОЕМ";
         public const string AtrTagAlbum = "ДОК";        
-        private static readonly AcadLib.Comparers.AlphanumComparator alpha = AcadLib.Comparers.AlphanumComparator.New;
+        private static readonly AlphanumComparator alpha = AlphanumComparator.New;
 
         private ParserFormula parserFormula;
         private readonly MarkPart markPart;
-	    //private bool _alreadyCalcExtents;
-        //private Extents3d _extents;
-        //private bool _isNullExtents;
-        //private string _info;
-
 
         public Panel(MarkPart markPart, BlockReference blRef, string blName) : base(blRef, blName)
         {
@@ -243,12 +234,9 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
         /// Статус изделия - ок,
         /// </summary>
         public ErrorStatusEnum ErrorStatus { get; set; }
-        public bool HasErrors {
-            get {
-                return ErrorStatus != ErrorStatusEnum.None ||
-                    !string.IsNullOrEmpty(Warning);
-            }
-        }
+        public bool HasErrors =>
+            ErrorStatus != ErrorStatusEnum.None ||
+            !string.IsNullOrEmpty(Warning);
 
         public short? LengthMark { get; set; }
         public short? HeightMark { get; set; }

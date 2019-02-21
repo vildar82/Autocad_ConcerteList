@@ -1,23 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using MicroMvvm;
-
-namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
+﻿namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
-    public class PanelsBaseView : ObservableObject
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Windows.Media;
+    using NetLib.WPF;
+
+    public class PanelsBaseView : BaseModel
     {
         protected Brush ColorBad = new SolidColorBrush(Colors.Red);
         protected Brush ColorGood = new SolidColorBrush(Colors.Lime);
-        private string _title;
-        private PanelViewModel _selectedPanel;
-        private Brush _background;
-        private ObservableCollection<PanelViewModel> _panelsViewModel;
 
         protected List<KeyValuePair<IIPanel, List<IIPanel>>> _panels;
 
@@ -33,52 +25,26 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
                 return _panels.Select(s => s.Key).ToList();
             }
         }
-        public ObservableCollection<PanelViewModel> Panels {
-            get { return _panelsViewModel; }
-            set {
-                _panelsViewModel = value;
-                RaisePropertyChanged();
-            }
-        }
-        public Brush Background {
-            get { return _background; }
-            set {
-                _background = value;
-                RaisePropertyChanged();
-            }
-        }
-        public PanelViewModel SelectedPanel {
-            get { return _selectedPanel; }
-            set {
-                _selectedPanel = value;
-                RaisePropertyChanged();
-            }
-        }
-        public string Title {
-            get { return _title; }
-            set {
-                _title = value;
-                RaisePropertyChanged();
-            }
-        }
+
+        public ObservableCollection<PanelViewModel> Panels { get; set; }
+
+        public Brush Background { get; set; }
+
+        public PanelViewModel SelectedPanel { get; set; }
+
+        public string Title { get; set; }
 
         /// <summary>
         /// Количество строй
         /// </summary>
-        public int CountRow {
-            get { return Panels.Count; }
-        }
+        public int CountRow => Panels.Count;
+
         /// <summary>
         /// Количество блоков панелей
         /// </summary>
-        public int CountBlocks {
-            get {
-                return Panels.Sum(s => s.PanelsInModel.Count);
-            }
-        }
-        public string CountString {
-            get { return $" Строк {CountRow} "; }
-        }        
+        public int CountBlocks => Panels.Sum(s => s.PanelsInModel.Count);
+
+        public string CountString => $" Строк {CountRow} ";
 
         protected void UpdateAllPanels ()
         {
@@ -90,7 +56,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             else
             {
                 Panels = new ObservableCollection<PanelViewModel>();
-            }            
+            }
+
             foreach (var item in _panels)
             {
                 Panels.Add(new PanelViewModel(item.Key, item.Value, this));

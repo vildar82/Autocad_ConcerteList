@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Common;
 using System.Data.Entity.Core.EntityClient;
 using System.Linq;
 using System.Text;
@@ -9,8 +8,6 @@ using AcadLib.Errors;
 using Autocad_ConcerteList.Properties;
 using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
 using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels;
-using Autocad_ConcerteList.Src.ConcreteDB.Formula;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB
 {

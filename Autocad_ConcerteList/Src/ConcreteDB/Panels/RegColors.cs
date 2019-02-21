@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AcadLib.Errors;
 using Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows;
 using Autodesk.AutoCAD.ApplicationServices;

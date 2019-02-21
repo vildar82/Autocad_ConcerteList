@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using MicroMvvm;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
@@ -27,23 +20,21 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         }
 
         public string Search {
-            get { return _search; }
+            get => _search;
             set {
                 _search = value;
                 Filtering();
-                RaisePropertyChanged();
             }
-        }       
-        public ObservableCollection<string> Filter { get; set; } 
+        }
+        public ObservableCollection<string> Filter { get; set; }
             = new ObservableCollection<string> { filterAll, filterErrors };
         public string CurFilter {
-            get { return _curFilter; }
+            get => _curFilter;
             set {
                 _curFilter = value;
                 Filtering();
-                RaisePropertyChanged();
             }
-        }        
+        }
 
         private void Searching ()
         {
@@ -59,13 +50,14 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         {
             UpdateAllPanels();
             switch (_curFilter)
-            {                
+            {
                 case filterErrors:
                     FilterErrorPanels();
                     break;
-                default:                    
+                default:
                     break;
             }
+
             Searching();
         }
 
@@ -77,6 +69,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             {
                 Panels.Add(item);
             }
-        }        
+        }
     }
 }

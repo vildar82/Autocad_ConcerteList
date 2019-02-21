@@ -1,10 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Autocad_ConcerteList.Src.ConcreteDB.DataBase;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
 {
@@ -34,34 +29,34 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.DataObjects
         public Nullable<float> Weight { get; set; }
         public Nullable<float> Volume { get; set; }
 
-        public Item_modification MountElementModif { get { return mountElementModif; }
+        public Item_modification MountElementModif { get => mountElementModif;
             set { mountElementModif = value; MountElement = value?.Item_modification_code;  } }
 
 	    private Item_modification mountElementModif;
 
         public Item_modification ProngModif {
-            get { return prongModif; }
+            get => prongModif;
             set { prongModif = value; Prong = value?.Item_modification_code; }
         }
 
 	    private Item_modification prongModif;
 
         public Item_modification BalconyCutModif {
-            get { return balconyCutModif; }
+            get => balconyCutModif;
             set { balconyCutModif = value; BalconyCut = value?.Item_modification_code; }
         }
 
 	    private Item_modification balconyCutModif;
 
         public Item_modification BalconyDoorModif {
-            get { return balconyDoorModif; }
+            get => balconyDoorModif;
             set { balconyDoorModif = value; BalconyDoor = value?.Item_modification_code; }
         }
 
 	    private Item_modification balconyDoorModif;
 
         public Item_modification StepHeightModif {
-            get { return stepHeightModif; }
+            get => stepHeightModif;
             set { stepHeightModif = value; StepHeightIndex = value == null? null : (int?)int.Parse(value.Item_modification_code); }
         }
 

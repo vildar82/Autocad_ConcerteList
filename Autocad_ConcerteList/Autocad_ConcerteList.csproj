@@ -9,26 +9,27 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Autocad_ConcerteList</RootNamespace>
     <AssemblyName>Autocad_ConcerteList</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile />
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\..\Autodesk\AutoCAD\Pik\Settings\Script\NET\КР-СБ-ГК\</OutputPath>
+    <OutputPath>c:\Autodesk\AutoCAD\Pik\Settings\Script\NET\КР-СБ-ГК\</OutputPath>
     <DefineConstants>TRACE;DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x64</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>c:\Autodesk\AutoCAD\Pik\Settings\Script\NET\КР-СБ-ГК\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -42,20 +43,6 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="AcadLib">
-      <HintPath>..\..\..\AcadLib\AcadLib\bin\Release\AcadLib.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="AutoCAD_PIK_Settings, Version=1.0.145.234, Culture=neutral, processorArchitecture=AMD64">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\Autodesk\AutoCAD\Pik\Settings\Dll\AutoCAD_PIK_Settings.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="MicroMvvm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\ОБЩЕЕ\MVVM\MicroMvvm\bin\Release\MicroMvvm.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -240,6 +227,7 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FodyWeavers.xml" />
     <Content Include="Src\ConcreteDB\DataBase\Model.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <DependentUpon>Model.edmx</DependentUpon>
@@ -252,18 +240,14 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="AutoCAD.NET">
-      <Version>20.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="AutoCAD.NET.Core">
-      <Version>20.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="AutoCAD.NET.Model">
-      <Version>20.0.1</Version>
-    </PackageReference>
+    <PackageReference Include="AcadLib" Version="1.1.116" ExcludeAssets="runtime;build" />
+    <PackageReference Include="Fody" Version="4.0.2" />
+    <PackageReference Include="GitVersionTask" Version="4.0.0" />
+    <PackageReference Include="NetLib" Version="1.1.119" ExcludeAssets="runtime;build" />
     <PackageReference Include="EntityFramework.ru">
       <Version>6.2.0</Version>
     </PackageReference>
+    <PackageReference Include="PropertyChanged.Fody" Version="2.6.0" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

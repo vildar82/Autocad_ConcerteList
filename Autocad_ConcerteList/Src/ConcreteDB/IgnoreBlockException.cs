@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB
 {
@@ -19,12 +15,6 @@ namespace Autocad_ConcerteList.Src.ConcreteDB
             BlName = blName;
         }
 
-        public override string Message
-        {
-            get
-            {
-                return $"Проигнорирован блок '{BlName}', это не блок ЖБИ.";
-            }
-        }
+        public override string Message => $"Проигнорирован блок '{BlName}', это не блок ЖБИ.";
     }
 }

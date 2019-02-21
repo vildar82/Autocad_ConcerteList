@@ -4,7 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows"
-        xmlns:converters="clr-namespace:AcadLib.WPF.Converters;assembly=AcadLib"
+        xmlns:converters="clr-namespace:NetLib.WPF.Converters;assembly=NetLib"
         mc:Ignorable="d"
         Title="Регистрация колористики" Height="235" Width="372.5">
     <Grid>

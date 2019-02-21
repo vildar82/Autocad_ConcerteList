@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 using System.Windows.Media;
-using MicroMvvm;
+using NetLib.WPF;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
@@ -16,7 +11,8 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
         [Description("Старая")]
         old
     }
-    public class PanelColorViewModel : ObservableObject
+
+    public class PanelColorViewModel : BaseModel
     {
         public IIPanel panel;
         public PanelColorViewModel(IIPanel panel)
@@ -27,7 +23,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             MarkWithColor = panel.GetMarkWithColor();
             if (DbService.HasColorFullHandMark(panel.GetMarkWithColor()))
             {
-                Status = ColorStatusEnum.old;                
+                Status = ColorStatusEnum.old;
             }
             else
             {

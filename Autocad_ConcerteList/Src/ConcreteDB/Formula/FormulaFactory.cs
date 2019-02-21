@@ -1,10 +1,6 @@
-﻿using Autocad_ConcerteList.Src.ConcreteDB.DataObjects;
-using Autocad_ConcerteList.Src.ConcreteDB.Panels;
+﻿using Autocad_ConcerteList.Src.ConcreteDB.Panels;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Formula
 {

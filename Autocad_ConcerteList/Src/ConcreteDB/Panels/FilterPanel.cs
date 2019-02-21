@@ -1,12 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using AcadLib;
-using AcadLib.Errors;
-using Autocad_ConcerteList.Src.ConcreteDB;
 using Autodesk.AutoCAD.DatabaseServices;
+using NetLib.Comparers;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
 {
@@ -48,7 +45,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels
                 }
                 else
                     return false;
-            }).OrderBy(p=>p.Mark, AcadLib.Comparers.AlphanumComparator.New).ToList();            
+            }).OrderBy(p=>p.Mark, AlphanumComparator.New).ToList();            
         }       
 
         private void definePanelsWS(List<IIPanel> panels, List<Workspace> ws)

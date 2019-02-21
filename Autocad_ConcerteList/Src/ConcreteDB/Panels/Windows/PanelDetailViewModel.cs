@@ -1,168 +1,179 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using System.Windows.Media;
-using MicroMvvm;
 
 namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
 {
-    public class PanelDetailViewModel : ObservableObject
+    using System.Windows.Media;
+    using NetLib.WPF;
+    using NetLib.WPF.Data;
+
+    public class PanelDetailViewModel : BaseModel
     {
         private static readonly Brush BadValue = new SolidColorBrush(Colors.Brown);
         private static readonly Brush NoParameterColor = new SolidColorBrush(Colors.Gray);
 
         private readonly IIPanel panelDetail;
-        private readonly IIPanel panelFirst; 
+        private readonly IIPanel panelFirst;
 
         public PanelDetailViewModel (IIPanel itemDetail, IIPanel firstPanel)
         {
             panelDetail = itemDetail;
             panelFirst = firstPanel;
             Show = new RelayCommand(OnShowExecute);
-        }        
-
-        public IIPanel PanelDetail {
-            get { return panelDetail; }
         }
+
+        public IIPanel PanelDetail => panelDetail;
 
         /// <summary>
         /// Марка панели из атрибута
-        /// </summary>               
-        public string MarkAtr {
-            get { return panelDetail.Mark; }
-            set { RaisePropertyChanged(); }
+        /// </summary>
+        public string MarkAtr
+        {
+            get => panelDetail.Mark;
+            set { }
         }
-        public Brush MarkAtrBackground {
-            get { return panelDetail.Mark == panelFirst.Mark ? null : BadValue; }
-            set { RaisePropertyChanged(); }
+
+        public Brush MarkAtrBackground
+        {
+            get => panelDetail.Mark == panelFirst.Mark ? null : BadValue;
+            set { }
         }
+
         /// <summary>
         /// Имя блока
-        /// </summary>               
-        public string BlockName {
-            get { return panelDetail.BlName; }
-            set { RaisePropertyChanged(); }
+        /// </summary>
+        public string BlockName
+        {
+            get => panelDetail.BlName;
+            set => panelDetail.BlName = value;
         }
-        public Brush BlockNameBackground {
-            get { return panelDetail.BlName == panelFirst.BlName ? null : BadValue; }
-            set { RaisePropertyChanged(); }
+
+        public Brush BlockNameBackground
+        {
+            get => panelDetail.BlName == panelFirst.BlName ? null : BadValue;
+            set { }
         }
+
         /// <summary>
         /// Длина
         /// </summary>
-        public short? Length {
-            get { return panelDetail.Length; }
-            set {RaisePropertyChanged();}
+        public short? Length
+        {
+            get => panelDetail.Length;
+            set => panelDetail.Length = value;
         }
-        public Brush LengthBackground {
-            get {
+
+        public Brush LengthBackground
+        {
+            get
+            {
                 if (panelDetail.LengthHasProperty)
                     return panelDetail.Length == panelFirst.Length ? null : BadValue;
                 else
                     return NoParameterColor;
             }
-            set { RaisePropertyChanged(); }
+            set { }
         }
-        public string LengthDesc {
-            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
-        }
+
+        public string LengthDesc => panelDetail.ApertureHasProperty ? "" : "Нет атрибута";
 
         /// <summary>
         /// Высота
         /// </summary>
-        public short? Height {
-            get { return panelDetail.Height; }
-            set { RaisePropertyChanged(); }
+        public short? Height
+        {
+            get => panelDetail.Height;
+            set => panelDetail.Height = value;
         }
-        public Brush HeightBackground {
-            get {
+
+        public Brush HeightBackground
+        {
+            get
+            {
                 if (panelDetail.HeightHasProperty)
                     return panelDetail.Height == panelFirst.Height ? null : BadValue;
                 else
                     return NoParameterColor;
             }
-            set { RaisePropertyChanged(); }
+            set { }
         }
-        public string HeightDesc {
-            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
-        }
+
+        public string HeightDesc => panelDetail.ApertureHasProperty ? "" : "Нет атрибута";
+
         /// <summary>
         /// Ширина
         /// </summary>
-        public short? Thickness {
-            get { return panelDetail.Thickness; }
-            set { RaisePropertyChanged(); }
+        public short? Thickness
+        {
+            get => panelDetail.Thickness;
+            set => panelDetail.Thickness = value;
         }
-        public Brush ThicknessBackground {
-            get {
+
+        public Brush ThicknessBackground
+        {
+            get
+            {
                 if (panelDetail.ThicknessHasProperty)
                     return panelDetail.Thickness == panelFirst.Thickness ? null : BadValue;
                 else
                     return NoParameterColor;
             }
-            set { RaisePropertyChanged(); }
+            set { }
         }
-        public string ThicknessDesc {
-            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
-        }
+
+        public string ThicknessDesc => panelDetail.ApertureHasProperty ? "" : "Нет атрибута";
+
         /// <summary>
         /// Вес
         /// </summary>
-        public float? Weight {
-            get { return panelDetail.Weight; }
-            set { RaisePropertyChanged(); }
+        public float? Weight
+        {
+            get => panelDetail.Weight;
+            set => panelDetail.Weight = value;
         }
-        public Brush WeightBackground {
-            get {
+
+        public Brush WeightBackground
+        {
+            get
+            {
                 if (panelDetail.WeightHasProperty)
                     return panelDetail.Weight == panelFirst.Weight ? null : BadValue;
                 else
                     return NoParameterColor;
             }
-            set { RaisePropertyChanged(); }
+            set { }
         }
-        public string WeightDesc {
-            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
-        }
+
+        public string WeightDesc => panelDetail.ApertureHasProperty ? "" : "Нет атрибута";
 
         /// <summary>
         /// Проем
         /// </summary>
-        public string Aperture {
-            get { return panelDetail.Aperture; }
-            set { RaisePropertyChanged(); }
+        public string Aperture
+        {
+            get => panelDetail.Aperture;
+            set => panelDetail.Aperture = value;
         }
-        public Brush ApertureBackground {
-            get {
+
+        public Brush ApertureBackground
+        {
+            get
+            {
                 if (panelDetail.ApertureHasProperty)
                     return panelDetail.Aperture == panelFirst.Aperture ? null : BadValue;
                 else
                     return NoParameterColor;
             }
-            set { RaisePropertyChanged(); }
-        }
-        public string ApertureDesc {
-            get { return panelDetail.ApertureHasProperty ? "" : "Нет атрибута"; }
+            set { }
         }
 
-        public string Section {
-            get {
-                return panelDetail.WS?.Section;
-            }
-        }
+        public string ApertureDesc => panelDetail.ApertureHasProperty ? "" : "Нет атрибута";
+
+        public string Section => panelDetail.WS?.Section;
+
         /// <summary>
         /// Этаж
         /// </summary>
-        public string Floor {
-            get {
-                return panelDetail.WS?.Floor;
-            }
-        }
+        public string Floor => panelDetail.WS?.Floor;
 
         /// <summary>
         /// Команда - показать панель на чертеже
