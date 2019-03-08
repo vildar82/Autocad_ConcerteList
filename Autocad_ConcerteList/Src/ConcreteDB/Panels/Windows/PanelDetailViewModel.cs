@@ -137,8 +137,7 @@ namespace Autocad_ConcerteList.Src.ConcreteDB.Panels.Windows
             {
                 if (panelDetail.WeightHasProperty)
                     return panelDetail.Weight == panelFirst.Weight ? null : BadValue;
-                else
-                    return NoParameterColor;
+                return NoParameterColor;
             }
             set { }
         }

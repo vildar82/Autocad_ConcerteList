@@ -90,8 +90,8 @@
     </When>
   </Choose>
   <ItemGroup>
-    <PackageReference Include="AcadLib" Version="1.1.116" ExcludeAssets="runtime;build" />
-    <PackageReference Include="NetLib" Version="1.1.119" ExcludeAssets="runtime;build" />
+    <PackageReference Include="AcadLib" Version="1.2.123" ExcludeAssets="runtime;build" />
+    <PackageReference Include="NetLib" Version="1.1.123" ExcludeAssets="runtime;build" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets" Condition="Exists('$(VSToolsPath)\TeamTest\Microsoft.TestTools.targets')" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
